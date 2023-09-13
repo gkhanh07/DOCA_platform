@@ -42,7 +42,7 @@ h2 {
     height: 200px; } }
 
 .half .contents {
-  background: #f6f7fc; }
+  background: #fff; }
 
 .half .contents, .half .bg {
   width: 50%; }
