@@ -1,0 +1,49 @@
+html {
+    height: 100%;
+}
+
+body {
+    padding: 120px 0px 0px 0px;
+    z-index: 0;
+    min-height: 100%;
+    background-color: blue;
+}
+
+.navbar-color {
+    background-color: rgb(230, 114, 98);
+
+}
+
+.btn {
+    background-color: #e04949;
+}
+
+.btn-primary {
+    border-color: red;
+}
+
+.navbar-search {
+    padding: 10px;
+    background-color: brown;
+    width: 50%;
+}
+
+.btn-notification {
+    background-color: rgba(255, 0, 0, 0.5);
+}
+
+.container-content {
+    margin-top: 30px;
+    background-color: black;
+}
+
+.nav-item {
+    margin: 20px;
+}
+
+.navbar-left {
+    background-color: rgb(230, 114, 98);
+}
+img {
+    width: 100%;
+}
