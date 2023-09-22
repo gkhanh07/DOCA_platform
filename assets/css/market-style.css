@@ -7,7 +7,7 @@ body {
     z-index: 0;
     min-height: 100%;
     background-color: #ffffff;
-    
+
 }
 
 .navbar-color {
@@ -27,6 +27,7 @@ body {
     background-color: brown;
     width: 50%;
 }
+
 .navbar-left {
     background-color: rgb(230, 114, 98);
     margin-top: -20px;
@@ -40,7 +41,7 @@ body {
 
 .container-content {
     margin-top: 30px;
-    background-color:white;
+    background-color: white;
 }
 
 .nav-item {
@@ -51,32 +52,41 @@ body {
 img {
     width: 100%;
 }
+
 .nav-link {
-    background-color:   rgb(232, 113, 97);
+    background-color: rgb(232, 113, 97);
     color: white;
 }
-.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
-    background-color:rgb(197, 48, 48);
-   
+
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+    background-color: rgb(197, 48, 48);
+
 }
+
 .img-avatar {
     width: 20%;
 }
-.row{
+
+.row {
     margin-right: 10px;
 }
-header{
+
+header {
     margin-bottom: -8px;
 }
-.barheader{
+
+.barheader {
     margin-bottom: 100px;
 }
+
 .pagination {
     display: flex;
     gap: 10px;
     margin: 20px;
     justify-content: center;
 }
+
 .page {
     cursor: pointer;
     padding: 5px 10px;
@@ -87,4 +97,85 @@ header{
 .page:hover {
     background-color: #555;
     color: #fff;
+}
+
+/* footer */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    display: inline-block;
+    /* Hiển thị các mục liên kết trên cùng 1 dòng */
+    margin-right: 10px;
+    /* Khoảng cách giữa các mục liên kết */
+}
+
+ul li:last-child {
+    margin-right: 0;
+    /* Loại bỏ khoảng cách ở mục cuối cùng */
+}
+
+ul li a {
+    text-decoration: none;
+    color: #333;
+    /* Màu chữ cho liên kết */
+}
+
+/* CSS cho footer */
+footer {
+    background-color: #333;
+    /* Màu nền của footer */
+    color: #fff;
+    /* Màu chữ trắng */
+    padding: 20px 0;
+    /* Khoảng cách giữa nội dung và viền dưới */
+}
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-logo img {
+    max-width: 100px;
+    /* Điều chỉnh kích thước của logo */
+}
+
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links ul li {
+    margin-bottom: 10px;
+}
+
+.footer-links ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 500;
+}
+
+.footer-links ul li a:hover {
+    text-decoration: underline;
+    /* Hiển thị gạch chân khi rê chuột qua liên kết */
+}
+
+.footer-social a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 18px;
+    margin-right: 10px;
+}
+
+.footer-info p {
+    margin: 5px 0;
+    font-size: 14px;
 }
