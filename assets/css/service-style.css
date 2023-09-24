@@ -196,3 +196,28 @@ footer {
     background-color: white;
     padding: 0;
 }
+.left-sidebar-main {
+    border-right-style: solid ;
+    border-right-color:brown ;
+    margin-right:20px;
+ }.createpost {
+    margin-top: 20px;
+    background-color: rgb(230, 114, 98);
+    border-radius: 30px;
+
+}
+.btn-createpost {
+    background-color: rgb(235, 222, 222);
+    color: black;
+    font-size: larger;
+    border-radius: 20px;
+    border-style: none;
+    box-shadow: #555;
+    text-align: start;
+}
+.btn-primary {
+    border-color: red;
+}
+.font{
+    color: #333;
+}

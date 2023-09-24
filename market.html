@@ -19,9 +19,12 @@
 
     <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- Link CSS -->
     <link rel="stylesheet" href="assets/css/market-style.css">
+    
 </head>
 
 <body>
@@ -67,11 +70,11 @@
     <!-- Chia content -->
 
 
-    <div class="container-fluid container-content">
+    <div class=" container-content">
         <div class="row row-content ">
             <!-- Side bar ben phai -->
-            <div class="  col-sm-2 align-items-center ">
-                <nav class=" navbar navbar-left navbar-expand-lg rounded position-fixed">
+            <div class="col-sm-2 align-items-center left-sidebar-main">
+                <nav class=" navbar navbar-left navbar-expand-lg rounded position-fixed justify-content-center">
                     <div class="container-fluid justify-content-center ">
                         <ul class=" navbar-nav flex-column">
                             <li class="nav-item ">
@@ -90,7 +93,7 @@
             </div>
 
             <!-- sub navbar -->
-            <div class="col-sm-7 row-content">
+            <div class="col-sm-8 row-content">
 
 
 
@@ -130,6 +133,81 @@
                         </div>
                     </nav>
                 </div>
+
+                <!--create post-->
+                <div class="row justify-content-center d-grid createpost align-items-center">
+                    <div class="col-md-2"><img src="./assets/images/tải xuống.jpeg"
+                            class="rounded-circle img-avatar-small" alt="Cinque Terre"></div>
+                    <div class="col-md-10 ">
+                        <div class="d-flex align-items-center"></div>
+                        <button type="button" class="btn btn-primary btn-createpost btn-block " data-bs-toggle="modal"
+                            data-bs-target="#exampleModal" data-bs-whatever="@mdo"><i class="fa fa-edit"></i> Create a
+                            post</button>
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Your Post</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+                                            <div class="mb-3">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
+                                                        value="option1">
+                                                    <label class="form-check-label" for="inlineCheckbox1">Story</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
+                                                        value="option2">
+                                                    <label class="form-check-label" for="inlineCheckbox2">Training
+                                                        Tips</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
+                                                        value="option3">
+                                                    <label class="form-check-label" for="inlineCheckbox2">Care
+                                                        Tips</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
+                                                        value="option4">
+                                                    <label class="form-check-label" for="inlineCheckbox2">Events</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
+                                                        value="option5">
+                                                    <label class="form-check-label" for="inlineCheckbox2">Lost</label>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="message-text" class="col-form-label">Content:
+                                                </label>
+                                                <textarea class="form-control" id="message-text" rows="7"></textarea>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="formFile" class="form-label"><i class="fa fa-picture-o"></i>
+                                                    Choose images: </label>
+                                                <input class="form-control" type="file" id="formFile">
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Post</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                
                 <div class="row justify-content-end">
                     <div class="btn-group dropleft">
                         <button type="button" class="btn btn-secondary " data-toggle="dropdown" aria-haspopup="true"
@@ -147,37 +225,37 @@
                 </div>
 
 
-
+           
 
                 <!-- Content area -->
 
 
 
-                <div class=" row content-area justify-content-center">
+                <div class=" row content-area justify-content-start">
 
 
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane fade show active" id="marketDog">
                             <a href="detal.html" class="post">
                                 <img class="image" src="assets/images/cho.jpg" alt="Hình ảnh">
-                                <div>
-                                    <h5>choancutbaongu</h5>
+                                <div class="font">
+                                    <h5><strong>Choancutbaongu</strong></h5>
                                     <h6>2.500.000 đ</h6>
                                     <p>Khu vực: Thành phố Hồ chí Minh</p>
                                 </div>
                             </a>
                             <a href="detal.html" class="post">
                                 <img class="image" src="assets/images/cho.jpg" alt="Hình ảnh">
-                                <div>
-                                    <h5>choancutbaongu</h5>
+                                <div class="font">
+                                    <h5><strong>Choancutbaongu</strong></h5>
                                     <h6>2.500.000 đ</h6>
                                     <p>Khu vực: Thành phố Hồ chí Minh</p>
                                 </div>
                             </a>
                             <a href="detal.html" class="post">
                                 <img class="image" src="assets/images/cho.jpg" alt="Hình ảnh">
-                                <div>
-                                    <h5>choancutbaongu</h5>
+                                <div class="font">
+                                    <h5><strong>choancutbaongu</strong></h5>
                                     <h6>2.500.000 đ</h6>
                                     <p>Khu vực: Thành phố Hồ chí Minh</p>
                                 </div>
