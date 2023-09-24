@@ -31,38 +31,42 @@
 
     <!-- Header -->
     <header>
-        <nav class="navbar navbar-dark navbar-expand-sm fixed-top navbar-color">
-            <div class="container-fluid d-flex justify-content-around">
-                <nav class="navbar navbar-light">
-                    <a class="navbar-brand" href="#">
-                        <img src="assets/images/logoDoca.png" class="rounded-circle" 
-                            alt="">
-                    </a>
-                    <span class="navbar-brand mb-0 h1">DOCA</span>
-                </nav>
-                <div class="navbar-search">
-                    <form action="">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search in Forum" name="search">
-                            <div class="input-group-btn">
-                                <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+        <div>
+            <nav class="navbar navbar-dark navbar-expand-sm fixed-top navbar-color">
+                <div class="container-fluid d-flex justify-content-around">
+                    <nav class="navbar navbar-light">
+                        <a class="navbar-brand" href="#">
+                            <img src="assets/images/logoDoca.png" class="rounded-circle" width="100px" height="100px"
+                                alt="">
+                        </a>
+                        <span class="navbar-brand mb-0 h1">DOCA</span>
+                    </nav>
+                    <div class="navbar-search">
+                        <form action="">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search in Forum" name="search">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
+                    <div class="btn-group">
+                        <a href="#" class="btn-notification btn btn-primary">
+                            <i class="fa fa-bell"></i>
+                            <span class="badge">3</span>
+                        </a>
+                        <a class="btn btn-primary" href="#" role="button"><i class="fa fa-user-circle"
+                                aria-hidden="true"></i>
+                            Login</a>
+                        <a class="btn btn-primary" href="#" role="button"><i class="fa fa-sign-in"
+                                aria-hidden="true"></i>
+                            Singup</a>
+                    </div>
                 </div>
-                <div class="btn-group">
-                    <a href="#" class="btn-notification btn btn-primary">
-                        <i class="fa fa-bell"></i>
-                        <span class="badge">3</span>
-                    </a>
-                    <a class="btn btn-primary" href="#" role="button"><i class="fa fa-user-circle"
-                            aria-hidden="true"></i>
-                        Login</a>
-                    <a class="btn btn-primary" href="#" role="button"><i class="fa fa-sign-in" aria-hidden="true"></i>
-                        Singup</a>
-                </div>
-            </div>
-        </nav>
+            </nav>
+        </div>
+
     </header>
 
 
@@ -70,7 +74,7 @@
     <!-- Chia content -->
 
 
-    <div class="container-fluid container-content">
+    <div class="container-content">
         <div class="row row-content ">
             <!-- Side bar ben phai -->
             <div class=" col-sm-2 align-items-center left-sidebar-main">
@@ -93,10 +97,7 @@
             </div>
 
             <!-- sub navbar -->
-            <div class="col-sm-7 row-content">
-
-
-
+            <div class="col-sm-8 row-content">
                 <div class="row">
                     <nav class="navbar navbar-light  bg-light navbar-expand-lg container-fluid ">
                         <!-- subnav -->
@@ -128,13 +129,10 @@
                                         data-toggle="tab"><strong>Others</strong></a>
                                 </li>
                             </ul>
-
-
-
                         </div>
                     </nav>
                 </div>
-
+<!-- create post -->
                 <div class="row justify-content-center d-grid createpost align-items-center">
                     <div class="col-md-2"><img src="./assets/images/tải xuống.jpeg"
                             class="rounded-circle img-avatar-small" alt="Cinque Terre"></div>
@@ -208,9 +206,9 @@
 
                 </div>
                 <div class="row justify-content-end">
-                    <div class="btn-group dropleft">
-                        <button type="button" class="btn btn-secondary " data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">
+                    <div class="btn-group btn-filter dropleft">
+                        <button type="button" class="btn btn-secondary rounded" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
                             <i class="fa fa-filter"></i>
                         </button>
                         <div class="dropdown-menu">
@@ -315,15 +313,19 @@
                     </div>
                 </div>
 
-                <div class="pagination">
-                    <span class="page" data-page="1">1</span>
-                    <span class="page" data-page="2">2</span>
-                    <span class="page" data-page="3">3</span>
-                    <span class="page" data-page="4">4</span>
-                    <span class="page" data-page="5">5</span>
-                    <span class="page" data-page="6">6</span>
-                    <span class="page" data-page="7">7</span>
-                </div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">Previous</a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
 
             </div>
 
@@ -348,30 +350,41 @@
     <!-- Entertaiment content -->
 
 <!-- footer -->
-<footer class="footer">
-    <div class="footer-content">
-        <div class="footer-logo ">
-            <img src="assets/images/logoDoca.png" alt="Logo">
-        </div>
-        <div class="footer-links">
-            <ul>
-                <li><a href="#">Trang chủ</a></li>
-                <li><a href="#">Giới thiệu</a></li>
-                <li><a href="#">Dịch vụ</a></li>
-                <li><a href="#">Liên hệ</a></li>
-            </ul>
-        </div>
-        <div class="footer-social">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-        </div>
+<footer class="bg-dark text-center text-white">
+    <!-- Grid container -->
+    <div class="container p-4 pb-0">
+        <!-- Section: Social media -->
+        <section class="mb-4">
+            <!-- Facebook -->
+            <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                    class="fa fa-facebook-f"></i></a>
+
+            <!-- Twitter -->
+            <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                    class="fa fa-twitter"></i></a>
+
+            <!-- Google -->
+            <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                    class="fa fa-google"></i></a>
+
+            <!-- Instagram -->
+            <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                    class="fa fa-instagram"></i></a>
+
+            <!-- Github -->
+            <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                    class="fa fa-github"></i></a>
+        </section>
+        <!-- Section: Social media -->
     </div>
-    <div class="footer-info">
-        <p>&copy; 2023 Tên Công Ty. Bản quyền được bảo lưu.</p>
-        <p>Địa chỉ: Số nhà, Đường phố, Thành phố</p>
-        <p>Email: example@example.com</p>
+    <!-- Grid container -->
+
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        © 2023 Copyright:
+        <a class="text-white" href="https://mdbootstrap.com/">Doca.com</a>
     </div>
+    <!-- Copyright -->
 </footer>
 
 
