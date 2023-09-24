@@ -148,7 +148,7 @@
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="exampleModalLabel">Your Post</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
+                                            aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
                                     </div>
                                     <div class="modal-body">
                                         <form>
@@ -195,7 +195,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Close</button>
+                                            data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i>Close</button>
                                         <button type="button" class="btn btn-primary">Post</button>
                                     </div>
                                 </div>
@@ -255,28 +255,22 @@
                     </div>
 
                     <div role="tabpanel" class="tab-pane fade" id="serviceHealth">
-                        <a href="detail-service.html" class="post">
+                        <a href="#" class="post" data-bs-toggle="modal" data-bs-target="#postDetailsModal"
+                        onclick="displayPostDetails('Hệ thống thú y 2Vet', 'Địa chỉ: 335 Kim Ngưu, Hai Bà Trưng, Hà Nội \n'+ 'Giờ hoạt động: 10:00 - 22:30\n',  'assets/images/health.jpg')">
                             <img class="image" src="assets/images/health.jpg" alt="Hình ảnh">
                             <div>
                                 <h5>Hệ thống thú y 2Vet</h5> <br>
-                                <h6>Địa chỉ:
-
-                                    335 Kim Ngưu, Hai Bà Trưng, Hà Nội - 0983 358 126 & 024 3826 3366
-                                    Số 236 Kim Mã, Ba Đình, Hà Nội - 024 3206 8585 & 0986 168 126 <br>
-                                    Website: https://2vet.vn/ <br>
+                                <h6> <br>
                                 </h6>
                                 <p>Hà Nội</p>
                             </div>
                         </a>
-                        <a href="detail-service.html" class="post">
+                        <a href="#" class="post" data-bs-toggle="modal" data-bs-target="#postDetailsModal"
+                        onclick="displayPostDetails('Bệnh Viện Thú Y Pet Share ', 'Địa chỉ: Số 8, ngõ 100 Trần Đại Nghĩa, Hai Bà Trưng, Hà Nội \n'+ 'Giờ hoạt động: 10:00 - 22:30\n',  'assets/images/petvy.jpg')">
                             <img class="image" src="assets/images/petvy.jpg" alt="Hình ảnh">
                             <div>
                                 <h5>Bệnh Viện Thú Y Pet Share </h5> <br>
-                                <h6>Địa chỉ:
-
-                                    Cs1: Số 8, ngõ 100 Trần Đại Nghĩa, Hai Bà Trưng, Hà Nội <br>
-                                    Cs2: 593 Kim Ngưu, Vĩnh Tuy, Hai Bà Trưng, Hà Nội <br>
-                                    Website: https://petsharevn.com/ <br>
+                                <h6> <br>
                                 </h6>
                                 <p>Hà Nội </p>
                             </div>
@@ -285,12 +279,12 @@
 
                     </div>
                     <div role="tabpanel" class="tab-pane fade" id="serviceHotel">
-                        <a href="detail-service.html" class="post">
-                            <img class="image" src="assets/images/letrungpet.jpg" alt="Hình ảnh">
+                        <a href="#" class="post" data-bs-toggle="modal" data-bs-target="#postDetailsModal"
+                        onclick="displayPostDetails('Letrungpet.com ', 'Địa chỉ: 164/1 Trương Thị Hoa, Phường Tân Thới Hiệp, Quận 12, TP. HCM  \n'+ 'Giờ hoạt động: 10:00 - 22:30\n',  'assets/images/letrungpet.jpg')">
+                        <img class="image" src="assets/images/letrungpet.jpg">
                             <div>
                                 <h5>Letrungpet.com </h5>
-                                <h6>Địa chỉ: 164/1 Trương Thị Hoa, Phường Tân Thới Hiệp, Quận 12, TP. HCM <br>
-                                    Website: Letrungpet.com 
+                                <h6>
                                 </h6>
                                 <p>Thành phố Hồ chí Minh</p>
                             </div>
@@ -390,7 +384,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="postDetailsModalLabel">Thông tin chi tiết:</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div class="modal-body">
                 <!-- Content of the post details will be displayed here -->
