@@ -232,29 +232,22 @@
 
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane fade show active" id="serviceSpa">
-                        <a href="detail-service.html" class="post">
+                        <a href="#" class="post" data-bs-toggle="modal" data-bs-target="#postDetailsModal"
+                            onclick="displayPostDetails('DORIS Grooming', 'Địa chỉ: 217/18A Thích Quảng Đức, P.4, Q. Phú Nhuận, TP. HCM \n'+ 'Giờ hoạt động: 10:00 - 22:30\n', 'assets/images/spa.jpg')">
                             <img class="image" src="assets/images/spa.jpg" alt="Hình ảnh">
                             <div class="font">
                                 <h5>DORIS Grooming</h5>
-                                <h6>THÔNG TIN LIÊN HỆ: <br>
-
-                                    Địa chỉ: 217/18A Thích Quảng Đức, P.4, Q. Phú Nhuận, TP. HCM <br>
-                                    Fanpage: http://www.facebook.com/dorisgroomingvn <br>
-
-                                    Giờ hoạt động: 10:00 - 22:30</h6>
+                                <h6></h6>
                                 <p>Thành phố Hồ chí Minh</p>
                             </div>
                         </a>
-                        <a href="detail-service.html" class="post">
+                        <a href="#" class="post" data-bs-toggle="modal" data-bs-target="#postDetailsModal"
+                            onclick="displayPostDetails('VPets - Pet không chỉ là bạn', 'Địa chỉ: 329 Nguyễn Tiểu La, phường 8, Quận 10, TPHCM  \n'+ 'Giờ hoạt động: 10:00 - 22:30\n',  'assets/images/vpets-pet-khong-chi-la-ban-1076997.jpg')">
                             <img class="image" src="assets/images/vpets-pet-khong-chi-la-ban-1076997.jpg"
                                 alt="Hình ảnh">
                             <div class="font">
                                 <h5>VPet's - Pet không chỉ là bạn</h5>
-                                <h6>Địa chỉ:
-
-                                    Chi nhánh 1: 329 Nguyễn Tiểu La, phường 8, Quận 10, TPHCM <br>
-                                    Chi nhánh 2: Lầu 5-6, 19-21-23 Phạm Viết Chánh, phường Nguyễn Cư Trinh, Quận 1,
-                                    TP.HCM</h6>
+                                <h6></h6>
                                 <p>Thành phố Hồ chí Minh</p>
                             </div>
                         </a>
@@ -314,7 +307,12 @@
 
                     </div>
                 </div>
+                <!-- <div role="tabpanel" class="tab-pane fade" id="serviceTraining">
 
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="serviceOthers">
+
+                </div> -->
                 <div class="pagination">
                     <span class="page" data-page="1">1</span>
                     <span class="page" data-page="2">2</span>
@@ -374,8 +372,43 @@
     </div>
 </footer>
 
+<!-- Post Details Modal -->
+<div class="modal fade" id="postDetailsModal" tabindex="-1" aria-labelledby="postDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="postDetailsModalLabel">Thông tin chi tiết:</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Content of the post details will be displayed here -->
+                <h4 id="postTitle"></h4>
+                <div id="postImageContainer">
+                    <img id="postImage" src="" alt="Post Image">
+                </div>
+                <p id="postContent"></p>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function displayPostDetails(title, content, imageUrl) {
+        // Set the modal content
+        document.getElementById('postTitle').innerText = title;
+        document.getElementById('postContent').innerText = content;
 
+        // Set the image source
+        const postImage = document.getElementById('postImage');
+        const postImageContainer = document.getElementById('postImageContainer');
 
+        if (imageUrl) {
+            postImage.src = imageUrl;
+            postImageContainer.style.display = 'block';  // Display the image container
+        } else {
+            postImageContainer.style.display = 'none';  // Hide the image container if no image
+        }
+    }
+</script>
 </body>
 
 </html>
