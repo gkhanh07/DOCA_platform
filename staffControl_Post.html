@@ -26,6 +26,7 @@
 
     <!-- Link CSS -->
     <link rel="stylesheet" href="assets/css/forum-style.css">
+    <link rel="stylesheet" href="assets/css/market-detail-style.css">
 </head>
 
 <body>
@@ -42,16 +43,7 @@
                         </a>
                         <span class="navbar-brand mb-0 h1">DOCA</span>
                     </nav>
-                    <div class="navbar-search">
-                        <form action="">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search in Forum" name="search">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+
                     <div class="btn-group">
                         <a href="#" class="btn-notification btn btn-primary">
                             <i class="fa fa-bell"></i>
@@ -110,13 +102,13 @@
 
                             <ul class="nav nav-tabs">
                                 <li class="nav-item">
-                                    <a class="nav-link active " href="#story" role="tab" data-toggle="tab">Forum</a>
+                                    <a class="nav-link active " href="#Forum" role="tab" data-toggle="tab">Forum</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#training" role="tab" data-toggle="tab">Market</a>
+                                    <a class="nav-link" href="#Market" role="tab" data-toggle="tab">Market</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#Care" role="tab" data-toggle="tab">Service</a>
+                                    <a class="nav-link" href="#Service" role="tab" data-toggle="tab">Service</a>
                                 </li>
 
                             </ul>
@@ -125,7 +117,19 @@
                     </nav>
                 </div>
 
-
+                <div class="row d-flex justify-content-end">
+                    <div class="navbar-search">
+                        <form action="">
+                            <div class="input-group">
+                                <input type="text" class="form-control me-2" placeholder="Search the post" name="search"
+                                    aria-label="Search">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
 
 
 
@@ -136,91 +140,166 @@
                 <div class=" row content-area justify-content-center">
 
                     <div class="tab-content">
-
-                        <!-- put list content  -->
-
-
-                        <div class=" row container mt-5 mb-5">
-                            <div class="row d-flex align-items-center justify-content-center ">
-                                <div class="col-md-6">
-                                    <div class="card">
-                                        <div class="d-flex justify-content-between p-2 px-3">
-                                            <div class="d-flex flex-row align-items-center"> <img
-                                                    src="assets/images/logoDoca.png" width="50"
-                                                    class="rounded-circle img-avatar">
-                                                <div class="d-flex flex-column ml-2"> <span
-                                                        class="font-weight-bold">Jeanette
-                                                        Sun</span> <small class="text-primary">Collegues</small>
+                        <div role="tabpanel" class="tab-pane fade show active " id="Forum" d>
+                            <!-- put list content  -->
+                            <div class=" row container mt-5 mb-5">
+                                <div class="row d-flex align-items-center justify-content-center ">
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="d-flex justify-content-between p-2 px-3">
+                                                <div class="d-flex flex-row align-items-center"> <img
+                                                        src="assets/images/logoDoca.png" width="50"
+                                                        class="rounded-circle img-avatar">
+                                                    <div class="d-flex flex-column ml-2"> <span
+                                                            class="font-weight-bold">Jeanette
+                                                            Sun</span> <small class="text-primary">Collegues</small>
+                                                    </div>
                                                 </div>
+                                                <div class="d-flex flex-row mt-1 ellipsis"> <small class="mr-2">20
+                                                        mins</small> </div>
                                             </div>
-                                            <div class="d-flex flex-row mt-1 ellipsis"> <small class="mr-2">20
-                                                    mins</small> </div>
-                                        </div> <img src="assets/images/tải xuống.jpeg" class="img-fluid">
-                                        <div class="p-2 ">
-                                            <p class="text-justify">I love DOG I love DOG I love DOG I love DOG I
-                                                love DOG I
-                                                love DOG I love DOG I love DOG I love DOG
-                                                I love DOG I love DOG I love DOG I love DOG
-                                            </p>
-                                            <hr>
+                                            <img src="assets/images/tải xuống.jpeg" class="img-fluid">
+                                            <div class="p-2 ">
+                                                <p class="text-justify">I love DOG I love DOG I love DOG I love DOG I
+                                                    love DOG I
+                                                    love DOG I love DOG I love DOG I love DOG
+                                                    I love DOG I love DOG I love DOG I love DOG
+                                                </p>
+                                                <hr>
+                                            </div>
+                                            <div class="row mr-0 justify-content-between">
+                                                <button type="button" class="btn bg-info ml-3">
+                                                    <i class="fa fa-check"></i> ACCEPT</button>
+                                                <button type="button" class="btn bg-danger">
+                                                    <i class="fa fa-xmark"></i> REJECT</button>
+                                            </div>
                                         </div>
-                                        <div class="row mr-0 justify-content-between">
-                                            <button type="button" class="btn bg-info ml-3">
-                                                <i class="fa fa-check"></i> ACCEPT</button>
-                                            <button type="button" class="btn bg-danger">
-                                                <i class="fa fa-xmark"></i> REJECT</button>
-                                        </div>
-                                    </div>
 
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
+                        <div role="tabpanel" class="tab-pane fade " id="Market">
+
+                            <div class="container-content mt-5">
+                                <!-- Product 1 -->
+                                <div class="container mt-3">
+                                    <div class="row product-container">
+                                        <!-- Product Image -->
+                                        <img src="assets/images/cho.jpg" alt="Product 1" class="product-image">
+                                        <!-- Product Details -->
+                                        <div class="product-details">
+                                            <h2 class="card-title">choancutbaongu</h2>
+                                            <p class="price">Price: 2.500.000 đ</p>
+                                            <p class="desc">Description: Lorem ipsum dolor, sit amet consectetur
+                                                adipisicing
+                                                elit. Quod
+                                                quas, ea accusantium at vel natus, delectus ad maiores veritatis placeat
+                                                libero repellendus
+                                                porro distinctio ex nisi earum in ab accusamus?</p>
+                                        </div>
+                                        <!-- Seller Info -->
+                                        <div class="seller-info">
+                                            <img src="assets/images/logoDoca.png" alt="Seller 1" class="seller-avatar">
+                                            <div>
+                                                <p>Seller: Luan</p>
+                                                <p>Address: Thành phố Hồ chí Minh</p>
+                                                <p>Phone: 123-456-7890</p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row mr-0 justify-content-around">
+                                        <button type="button" class="btn bg-info ml-3">
+                                            <i class="fas fa-check"></i> ACCEPT</button>
+                                        <button type="button" class="btn bg-danger">
+                                            <i class="fas fa-times"></i> REJECT</button>
+                                    </div>
+                                </div>
+
+
+                                <div class="container mt-3">
+                                    <div class="row product-container">
+                                        <!-- Product Image -->
+                                        <img src="assets/images/cho.jpg" alt="Product 1" class="product-image">
+                                        <!-- Product Details -->
+                                        <div class="product-details">
+                                            <h2 class="card-title">choancutbaongu</h2>
+                                            <p class="price">Price: 2.500.000 đ</p>
+                                            <p class="desc">Description: Lorem ipsum dolor, sit amet consectetur
+                                                adipisicing
+                                                elit. Quod
+                                                quas, ea accusantium at vel natus, delectus ad maiores veritatis placeat
+                                                libero repellendus
+                                                porro distinctio ex nisi earum in ab accusamus?</p>
+                                        </div>
+                                        <!-- Seller Info -->
+                                        <div class="seller-info">
+                                            <img src="assets/images/logoDoca.png" alt="Seller 1" class="seller-avatar">
+                                            <div>
+                                                <p>Seller: Luan</p>
+                                                <p>Address: Thành phố Hồ chí Minh</p>
+                                                <p>Phone: 123-456-7890</p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row mr-0 justify-content-around">
+                                        <button type="button" class="btn bg-info ml-3">
+                                            <i class="fas fa-check"></i> ACCEPT</button>
+                                        <button type="button" class="btn bg-danger">
+                                            <i class="fas fa-times"></i> REJECT</button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
                     </div>
+                    <!-- Entertaiment content -->
 
                 </div>
-                <!-- Entertaiment content -->
-
             </div>
         </div>
-    </div>
 
-    <footer class="bg-dark text-center text-white ">
-        <!-- Grid container -->
-        <div class="container p-4 pb-0">
-            <!-- Section: Social media -->
-            <section class="mb-4">
-                <!-- Facebook -->
-                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
-                        class="fa fa-facebook-f"></i></a>
+        <footer class="bg-dark text-center text-white ">
+            <!-- Grid container -->
+            <div class="container p-4 pb-0">
+                <!-- Section: Social media -->
+                <section class="mb-4">
+                    <!-- Facebook -->
+                    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                            class="fa fa-facebook-f"></i></a>
 
-                <!-- Twitter -->
-                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
-                        class="fa fa-twitter"></i></a>
+                    <!-- Twitter -->
+                    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                            class="fa fa-twitter"></i></a>
 
-                <!-- Google -->
-                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
-                        class="fa fa-google"></i></a>
+                    <!-- Google -->
+                    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                            class="fa fa-google"></i></a>
 
-                <!-- Instagram -->
-                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
-                        class="fa fa-instagram"></i></a>
+                    <!-- Instagram -->
+                    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                            class="fa fa-instagram"></i></a>
 
-                <!-- Github -->
-                <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
-                        class="fa fa-github"></i></a>
-            </section>
-            <!-- Section: Social media -->
-        </div>
-        <!-- Grid container -->
+                    <!-- Github -->
+                    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i
+                            class="fa fa-github"></i></a>
+                </section>
+                <!-- Section: Social media -->
+            </div>
+            <!-- Grid container -->
 
-        <!-- Copyright -->
-        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-            © 2023 Copyright:
-            <a class="text-white" href="https://mdbootstrap.com/">Doca.com</a>
-        </div>
-        <!-- Copyright -->
-    </footer>
+            <!-- Copyright -->
+            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+                © 2023 Copyright:
+                <a class="text-white" href="https://mdbootstrap.com/">Doca.com</a>
+            </div>
+            <!-- Copyright -->
+        </footer>
 
 </body>
 
