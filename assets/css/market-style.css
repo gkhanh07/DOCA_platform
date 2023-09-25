@@ -72,11 +72,7 @@ div#navbarNav {
     margin-top: -20px;
 }
 
-.image {
-    width: 50%;
-    height: auto; 
-    margin-right: 20px; 
-}
+
 .row.row-content {
     position: relative;
 }
@@ -194,7 +190,7 @@ footer {
  }
  .createpost {
     margin-top: 20px;
-    background-color: rgb(230, 114, 98);
+st    background-color: rgb(230, 114, 98);
     border-radius: 30px;
 
 }
@@ -233,6 +229,11 @@ body {
     min-height: 100%;
     background-color: #ffffff;
 
+}
+.image {
+    width: 50%;
+    height: auto; 
+    margin-right: 20px; 
 }
 
 .navbar-color {
