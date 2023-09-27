@@ -81,16 +81,89 @@
     <section>
         <!-- Noi dung -->
         <div class="main-content">
-            <div class="row row-content">
+            <div class="row row-content justify-content-center">
                 <div class="col-sm-2"></div>
-                <div class="col-sm-8 post-container"> 
+                <div class="col-sm-6 post-container"> 
+                     <!-- Create post -->
+
+                <div class="row justify-content-center d-grid createpost align-items-center">
+                    <div class="col-md-2"><img src="assets/images/spa.jpg" alt="Profile Image" class="rounded-circle profile-image"></div>
+                    <div class="col-md-10 ">
+                        <div class="d-flex align-items-center"></div>
+                        <button type="button" class="btn btn-primary btn-createpost btn-block " data-bs-toggle="modal"
+                            data-bs-target="#exampleModal" data-bs-whatever="@mdo"><i class="fa fa-edit"></i> Create a
+                            post</button>
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Your Post</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+                                            <div class="mb-3">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
+                                                        value="option1">
+                                                    <label class="form-check-label" for="inlineCheckbox1">Story</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
+                                                        value="option2">
+                                                    <label class="form-check-label" for="inlineCheckbox2">Training
+                                                        Tips</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
+                                                        value="option3">
+                                                    <label class="form-check-label" for="inlineCheckbox2">Care
+                                                        Tips</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
+                                                        value="option4">
+                                                    <label class="form-check-label" for="inlineCheckbox2">Events</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
+                                                        value="option5">
+                                                    <label class="form-check-label" for="inlineCheckbox2">Lost</label>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="message-text" class="col-form-label">Content:
+                                                </label>
+                                                <textarea class="form-control" id="message-text" rows="7"></textarea>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="formFile" class="form-label"><i class="fa fa-picture-o"></i>
+                                                    Choose images: </label>
+                                                <input class="form-control" type="file" id="formFile">
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Post</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
                     <div class="post my-4 border rounded position-relative">
                         <div class="post-header ">
                             <img src="assets/images/spa.jpg" alt="Profile Image" class="rounded-circle profile-image">
                            <span class="username ml-2"><a href="#">Ben mặt xệ</a> <div class="post-time text-muted">Posted on: September 23, 2077</div></span> 
                            <div class="options-button" style="position: absolute; top: 10px; right: 10px;">
                             <button class="btn btn-secondary" onclick="toggleOptions(this)">
-                                ...
+                                
                             </button>
                             <div class="options" style="display: none;">
                                 <a class="dropdown-item" href="#">Ẩn bài viết</a>

@@ -178,14 +178,14 @@
                                                     <label class="form-check-label" for="inlineCheckbox2">Lost</label>
                                                 </div> -->
                                             </div>
-                                            <div class="mb-3">
-                                                <label for="message-text" class="col-form-label">Content:
+                                            <div class="mb-3 rounded-circle">
+                                                <label for="message-text" class="col-form-label">Nội dung:
                                                 </label>
                                                 <textarea class="form-control" id="message-text" rows="7"></textarea>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="formFile" class="form-label"><i class="fa fa-picture-o"></i>
-                                                    Choose images: </label>
+                                                    Chọn tệp: </label>
                                                 <input class="form-control" type="file" id="formFile">
                                             </div>
                                             <div class="mb-3">
@@ -227,14 +227,7 @@
                             <a class="dropdown-item" href="#">Nổi Bật</a>
                             <a class="dropdown-item" href="#">Địa Điểm
                                 
-                                <select id="tagDropdown" multiple="multiple" style="display: none;">
-                                    <option value="Hà Nội">Hà Nội</option>
-                                    <option value="Hồ Chí Minh">Hồ Chí Minh</option>
-                                    <option value="Đà Nẵng">Đà Nẵng</option>
-                                    <option value="Bắc Ninh">Bắc Ninh</option>
-                                    <!-- Thêm các tags khác vào đây -->
-                                    <option value="Vũng Tàu">Vũng Tàu</option>
-                                  </select>
+                              
                             </a>
                         </div>
                     </div>
@@ -247,7 +240,7 @@
 
 
 
-                <div class="tab-content">
+                <div class="tab-content rounded-circle">
                     <div role="tabpanel" class="tab-pane fade show active" id="serviceSpa">
                         <a href="#" class="post" data-bs-toggle="modal" data-bs-target="#postDetailsModal"
                             onclick="displayPostDetails('DORIS Grooming', 'Địa chỉ: 217/18A Thích Quảng Đức, P.4, Q. Phú Nhuận, TP. HCM \n'+ 'Giờ hoạt động: 10:00 - 22:30\n', 'assets/images/spa.jpg')">
@@ -318,14 +311,7 @@
 
                     </div>
                 </div>
-                <div role="tabpanel" class="tab-pane fade" id="serviceTraining">
-
-                </div>
-                <div role="tabpanel" class="tab-pane fade" id="serviceOthers">
-
-                   
-
-            </div>
+                
 
             <!-- <div class="col-sm-3 row-content object-fit-cover">
                 <div class="position-fixed">
@@ -434,17 +420,8 @@
         }
     }
 </script>
-<script>
-    // Sử dụng Select2 cho dropdown
-    $(document).ready(function() {
-      $('#tagDropdown').select2();
-    });
-  
-    // Hàm để mở/đóng dropdown khi nhấn nút
-    function toggleDropdown() {
-      $('#tagDropdown').select2('toggleDropdown');
-    }
-  </script>
+
+
 </body>
 
 </html>

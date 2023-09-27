@@ -102,7 +102,8 @@ header {
 .createpost {
     margin-top: 20px;
     background-color: rgb(230, 114, 98);
-    border-radius: 30px;
+    border-radius: 100px;
+    margin-left: 30px;
 
 }
 
@@ -187,4 +188,7 @@ header {
 }
 .username{
     font-size: 20px;
+}
+.createpost{
+    
 }
