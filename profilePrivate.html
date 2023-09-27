@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags always come first -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <title>Forum</title>
+    <!-- Link Iconn  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="node_modules/bootstrap-social/bootstrap-social.css">
+    <!-- jQuery first, then Popper.js, then Bootstrap JS. -->
+
+    <script src="node_modules/jquery/dist/jquery.slim.min.js"></script>
+
+    <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
+
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!--  -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Link CSS -->
+
+    <link rel="stylesheet" href="assets/css/profilePrivate.css">
+    <!-- script -->
+
+
+</head>
+
+<body>
+    <header>
+        <div>
+            <nav class="navbar navbar-dark navbar-expand-sm fixed-top navbar-color">
+                <div class="container-fluid d-flex justify-content-center">
+                    <nav class="navbar navbar-light">
+                        <a class="navbar-brand" href="#">
+                            <img src="assets/images/logoDoca.png" class="rounded-circle" width="100px" height="100px"
+                                alt="">
+                        </a>
+                    </nav>
+                    <div class="container-fluid d-flex justify-content-between navbar-contain">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-bars" aria-hidden="true"></i> Danh mục
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">Bảng tin</a>
+                                <a class="dropdown-item" href="#">Chợ</a>
+                            </div>
+                        </div>
+                        <div class="navbar-search">
+                            <form action="">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search" name="search">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-default" type="submit"><i
+                                                class="fa fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <a href="#" class="btn-notification btn btn-primary">
+                            <i class="fa fa-bell"></i>
+                            <span class="badge">3</span>
+                        </a>
+                        <a class="btn btn-primary" href="#" role="button"><i class="fa-solid fa-message"></i></a>
+                        <a class="btn btn-primary" href="#" role="button"><i class="fa fa-user-circle"
+                                aria-hidden="true"></i> Ben</a>
+                        <a class="btn btn-primary" href="#" role="button"><i class="fa-solid fa-pen-to-square"></i>
+                            Tạo bài post</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!--Edit profile  -->
+    <div class="container px-4 mt-4 edit-profile">
+        <hr class="mt-0 mb-4">
+        <div class="row">
+            <div class="col-sm-4">
+                <!-- Profile picture card-->
+                <div class="card mb-4 mb-xl-0">
+                    <div class="card-header">Ảnh đại diện</div>
+                    <div class="card-body text-center">
+                        <!-- Profile picture image-->
+                        <img class="img-account-profile rounded-circle" src="assets/images/toc-ro-beo-.jpg" alt="">
+                        <hr />
+                        <!-- Profile picture upload button-->
+                        <div class="input-group">
+                            <label class="input-group-text" for="inputGroupFile01">Tải lên</label>
+                            <input type="file" class="form-control" id="inputGroupFile01">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <!-- Account details card-->
+                <div class="card mb-4">
+                    <div class="card-header">Thông tin tài khoản</div>
+                    <div class="card-body">
+                        <form>
+                            <!-- Form Group (username)-->
+                            <div class="mb-3">
+                                <label class="small mb-1" for="inputUsername">Họ và Tên *</label>
+                                <input class="form-control" id="inputUsername" type="text" placeholder="Họ và Tên"
+                                    value="Nhật">
+                            </div>
+                            <!-- Form Address    -->
+                            <div class="mb-3">
+                                <label class="small mb-1" for="inputAddress">Địa chỉ *</label>
+                                <input class="form-control" id="inputAddress" type="text" placeholder="Địa chỉ"
+                                    value="Tp Hồ Chí Minh, Q2, Vin">
+                            </div>
+                            <!-- Form Group (Phone)-->
+                            <div class="mb-3">
+                                <label class="small mb-1" for="inputPhone">Số điện thoại *</label>
+                                <input class="form-control" id="inputPhone" type="tel"
+                                    placeholder="Enter your phone number" value="0343243454">
+                            </div>
+                            <!-- Form Row-->
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (phone number)-->
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="inputEmailAddress">Địa chỉ email</label>
+                                    <input class="form-control" id="inputEmailAddress" type="email"
+                                        placeholder="Enter your email address" value="nhat27@gmail.com ">
+                                </div>
+                                <!-- Form Group (birthday)-->
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="inputBirthday">Birthday</label>
+                                    <input class="form-control" id="inputBirthday" type="text" name="birthday"
+                                        placeholder="Enter your birthday" value="06/10/1988">
+                                </div>
+                            </div>
+                            <!-- Save changes button-->
+                            <button class="btn btn-primary" type="button">Lưu thay đổi</button>
+                        </form>
+
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-header">Mật khẩu</div>
+                    <div class="card-body">
+                        <form>
+                            <div class="form-change-password">
+                                <div class="row">
+                                    <div class="col-12 col-sm-6 mb-3">
+                                        <div class="mb-2"><b>Thay đổi mật khẩu</b></div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label>Mật khẩu hiện tại*</label>
+                                                    <input class="form-control" type="password" placeholder="••••••">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label>Mật khẩu mới*</label>
+                                                    <input class="form-control" type="password" placeholder="••••••">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label>Xác nhận mật khẩu* </label>
+                                                    <input class="form-control" type="password" placeholder="••••••">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <button class="btn btn-primary" type="button">Lưu thay đổi</button>
+                        </form>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
