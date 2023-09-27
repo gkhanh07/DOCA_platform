@@ -135,14 +135,17 @@ header {
 .card {
     margin: 20px;
 }
-.btn-filter{
-    margin-top: 20px;
-    margin-bottom: 0px;
-}
+
 .navbar-contain {
     margin-top: 90px;
     margin-left: 30px;
 }
+<<<<<<< HEAD
+.font{
+    color: black;
+}
+
+=======
 /* forum moi */
 .profile-image {
     width: 70px;
@@ -188,7 +191,4 @@ header {
 }
 .username{
     font-size: 20px;
-}
-.createpost{
-    
 }
