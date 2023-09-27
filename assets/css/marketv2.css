@@ -5,9 +5,46 @@
 .product {
     background-color: rgb(242, 240, 240);
 }
-.product img{
-    padding: 12px;
-}
+
 .font{
     font-size: 20px;
+}
+
+.post{
+    display: flex;
+    
+}
+.font{
+    color: black;
+    margin-left: 12px;
+    text-decoration: none;
+}
+.product{
+    height: 1000px;
+    width: 100%;
+}
+.btn-success{
+    background-color: white;
+    color: black;
+    border-color: black;
+}
+.btn-success:hover{
+    cursor: pointer;
+    background-color: gray;
+}
+.sell{
+    margin: 0; 
+    padding: 30px;
+    
+    border-color: rgb(253, 71, 5);
+}
+.black-button {
+    background-color: rgb(71, 60, 60);
+    color: white;
+    
+}
+
+.changed-color-button {
+    background-color: red; /* Màu nền mới khi nút được bấm */
+    color: white;
 }
