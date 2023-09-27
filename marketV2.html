@@ -17,6 +17,8 @@
 
     <script src="node_modules/jquery/dist/jquery.slim.min.js"></script>
 
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+
     <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
 
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -27,174 +29,136 @@
     <!-- Link CSS -->
     <link rel="stylesheet" href="assets/css/forum-style.css">
     <link rel="stylesheet" href="assets/css/marketv2.css">
+    <script>
+        $(function () {
+            $("#header").load("header.html");
+
+        });
+    </script>
 </head>
 
 <body>
-    <header>
-        <div>
-            <nav class="navbar navbar-dark navbar-expand-sm fixed-top navbar-color">
-                <div class="container-fluid d-flex justify-content-center">
-                    <nav class="navbar navbar-light">
-                        <a class="navbar-brand" href="#">
-                            <img src="assets/images/logoDoca.png" class="rounded-circle" width="100px" height="100px"
-                                alt="">
-                        </a>
-                    </nav>
-                    <div class="container-fluid d-flex justify-content-between navbar-contain">
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-bars" aria-hidden="true"></i> Danh mục
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">Bảng tin</a>
-                                <a class="dropdown-item" href="#">Chợ</a>
-                            </div>
-                        </div>
-                        <div class="navbar-search">
-                            <form action="">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search" name="search">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-default" type="submit"><i
-                                                class="fa fa-search"></i></button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <a href="#" class="btn-notification btn btn-primary">
-                            <i class="fa fa-bell"></i>
-                            <span class="badge">3</span>
-                        </a>
-                        <a class="btn btn-primary" href="#" role="button"><i class="fa-solid fa-message"></i></a>
-                        <a class="btn btn-primary" href="#" role="button"><i class="fa fa-user-circle"
-                                aria-hidden="true"></i> Ben</a>
-                        <a class="btn btn-primary" href="#" role="button"><i class="fa-solid fa-pen-to-square"></i>
-                            Tạo bài post</a>
-                    </div>
-                </div>
-            </nav>
-        </div>  
 
-        
-    </header>
-
+    <div id="header"></div>
 
 
     <div class="menu d-flex justify-content-center " style="margin: 90px 0 0 50px;">
-        
-              
-            
-            <div class="product" style="width: 600px;" >
-              
-                <div class="btn1 d-flex ">
-                
-                    <div class="btn-group" style="width: 200px;" >
 
-                    
-                    
-                    <div class="btn btn-success dropdown-toggle-split" style="width: 100%;"
-                     data-toggle="dropdown"><i class="fa fa-location-dot"></i> Toàn Quốc</div>
-                
-                    <div class="dropdown-menu" >
+
+
+        <div class="product" style="width: 600px;">
+
+            <div class="btn1 d-flex ">
+
+                <div class="btn-group" style="width: 200px;">
+
+
+
+                    <div class="btn btn-success dropdown-toggle-split" style="width: 100%;" data-toggle="dropdown"><i
+                            class="fa fa-location-dot"></i> Toàn Quốc</div>
+
+                    <div class="dropdown-menu">
                         <a class="dropdown-item" href="#">TP.HCM</a>
                         <a class="dropdown-item" href="#">Hà Nội</a>
                     </div>
                 </div>
 
                 <div class="btn-group" style="width: 200px;">
-    
-                    
-                    
-                    <div class="btn btn-success  dropdown-toggle-split" style="width: 100% ;"
-                     data-toggle="dropdown"><i class="fa fa-coins"></i> Giá</div>
-                
-                    <div class="dropdown-menu" >
+
+
+
+                    <div class="btn btn-success  dropdown-toggle-split" style="width: 100% ;" data-toggle="dropdown"><i
+                            class="fa fa-coins"></i> Giá</div>
+
+                    <div class="dropdown-menu">
                         <a class="dropdown-item" href="#">1tr-2tr</a>
                         <a class="dropdown-item" href="#">2tr-3tr</a>
                     </div>
                 </div>
 
-               
-              
-                    <div class="btn-group" style="width: 200px;"> 
-                        <div class="btn btn-success dropdown-toggle-split" style="width: 100%;"
-                         data-toggle="dropdown"><i class="fa fa-caret-down"></i> Chuồng thú cưng</div>
-                    
-                        <div class="dropdown-menu" >
-                            <a class="dropdown-item" href="#">Thức Ăn</a>
-                            <a class="dropdown-item" href="#">Vật Dụng</a>
-                            <a class="dropdown-item" href="#">Phụ Kiện</a>
-                            <a class="dropdown-item" href="#">Khác</a>
 
-                            
-                        </div>
+
+                <div class="btn-group" style="width: 200px;">
+                    <div class="btn btn-success dropdown-toggle-split" style="width: 100%;" data-toggle="dropdown"><i
+                            class="fa fa-caret-down"></i> Chuồng thú cưng</div>
+
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Thức Ăn</a>
+                        <a class="dropdown-item" href="#">Vật Dụng</a>
+                        <a class="dropdown-item" href="#">Phụ Kiện</a>
+                        <a class="dropdown-item" href="#">Khác</a>
+
+
                     </div>
-                
                 </div>
-            
-                
-              <div class="tab-content">
-                
+
+            </div>
+
+
+            <div class="tab-content">
+
                 <div style="position: relative; border-bottom: 1px solid rgb(224, 224, 224);">
-                    <a href="maker_detal.html" class="sell d-flex" style="width: 100%;">
-                        
+                    <a href="product-detail.html" class="sell d-flex" style="width: 100%;">
+
                         <img class="image" src="assets/images/download (1).jpg" alt="Hình ảnh">
                         <div class="font">
                             <h5><strong>Chuồng chó</strong></h5>
                             <h6 style="color:rgb(242, 106, 106);">2.500.000 đ</h6>
                             <h6 style="font-size: 15px; opacity: 0.5;">TP.HCM</h6>
                         </div>
-                        
+
                     </a>
-                    <i class="icon fa-regular fa-heart" style="position: absolute; bottom: 30px; right: 40px; color: red;"></i>
-                    
+                    <i class="icon fa-regular fa-heart"
+                        style="position: absolute; bottom: 30px; right: 40px; color: red;"></i>
+
 
                 </div>
-                
+
                 <div style="position: relative; border-bottom: 1px solid rgb(224, 224, 224);">
                     <a href="maker_detal.html" class="sell d-flex" style="width: 100%;">
-                        
+
                         <img class="image" src="assets/images/chuồng.webp" alt="Hình ảnh">
                         <div class="font">
                             <h5><strong>Chuồng mèo</strong></h5>
                             <h6 style="color:rgb(242, 106, 106);">2.500.000 đ</h6>
                             <h6 style="font-size: 15px; opacity: 0.5;">TP.HCM</h6>
                         </div>
-                        
+
                     </a>
-                    <i class="icon fa-regular fa-heart" style="position: absolute; bottom: 30px; right: 40px; color: red;"></i>
-                    
+                    <i class="icon fa-regular fa-heart"
+                        style="position: absolute; bottom: 30px; right: 40px; color: red;"></i>
+
 
                 </div>
 
-                
+
 
                 <div style="position: relative; border-bottom: 1px solid rgb(224, 224, 224);">
                     <a href="maker_detal.html" class="sell d-flex" style="width: 100%;">
-                        
+
                         <img class="image" src="assets/images/chuonghong.jpeg" alt="Hình ảnh">
                         <div class="font">
                             <h5><strong>Chuồng cỡ nhỏ</strong></h5>
                             <h6 style="color:rgb(242, 106, 106);">2.500.000 đ</h6>
                             <h6 style="font-size: 15px; opacity: 0.5;">TP.HCM</h6>
                         </div>
-                        
+
                     </a>
-                    <i class="icon fa-regular fa-heart" style="position: absolute; bottom: 30px; right: 40px; color: red;"></i>
-                    
+                    <i class="icon fa-regular fa-heart"
+                        style="position: absolute; bottom: 30px; right: 40px; color: red;"></i>
+
 
                 </div>
-                    
-                
 
-                
-                
+
+
+
+
 
             </div>
         </div>
     </div>
-           
+
 
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
@@ -215,16 +179,16 @@
         <!-- Noi dung -->
         <div class="main-content">
             <div class="row row-content">
-            <div class="left-content col-sm-2"></div>    
-            <div class="mid-content col-sm-7"></div>
-            <div class="right-content col-sm-2"></div>
+                <div class="left-content col-sm-2"></div>
+                <div class="mid-content col-sm-7"></div>
+                <div class="right-content col-sm-2"></div>
             </div>
         </div>
     </section>
 
-   <footer>
-           
-   </footer>
+    <footer>
+
+    </footer>
 </body>
 
 </html>

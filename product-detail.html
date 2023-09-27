@@ -17,6 +17,8 @@
 
     <script src="node_modules/jquery/dist/jquery.slim.min.js"></script>
 
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+
     <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
 
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -26,58 +28,19 @@
 
     <!-- Link CSS -->
     <link rel="stylesheet" href="assets/css/forum-style.css">
+    <script>
+        $(function () {
+            $("#header").load("header.html");
+
+        });
+    </script>
 
 </head>
 
 <body>
+    <div id="header"></div>
 
 
-    <header>
-        <div>
-            <nav class="navbar navbar-dark navbar-expand-sm fixed-top navbar-color">
-                <div class="container-fluid d-flex justify-content-center">
-                    <nav class="navbar navbar-light">
-                        <a class="navbar-brand" href="#">
-                            <img src="assets/images/logoDoca.png" class="rounded-circle" width="100px" height="100px"
-                                alt="">
-                        </a>
-                    </nav>
-                    <div class="container-fluid d-flex justify-content-between navbar-contain">
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-bars" aria-hidden="true"></i> Danh mục
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">Bảng tin</a>
-                                <a class="dropdown-item" href="#">Chợ</a>
-                            </div>
-                        </div>
-                        <div class="navbar-search">
-                            <form action="">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search" name="search">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-default" type="submit"><i
-                                                class="fa fa-search"></i></button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <a href="#" class="btn-notification btn btn-primary">
-                            <i class="fa fa-bell"></i>
-                            <span class="badge">3</span>
-                        </a>
-                        <a class="btn btn-primary" href="#" role="button"><i class="fa-solid fa-message"></i></a>
-                        <a class="btn btn-primary" href="#" role="button"><i class="fa fa-user-circle"
-                                aria-hidden="true"></i> Ben</a>
-                        <a class="btn btn-primary" href="#" role="button"><i class="fa-solid fa-pen-to-square"></i>
-                            Tạo bài post</a>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </header>
     <section class="mt-5">
         <!-- Noi dung -->
         <div class=" main-content">
@@ -86,10 +49,10 @@
                 <div class="mid-content col-sm-7 container">
                     <div class="row">
                         <div class="col">
-                            <img class="" src="assets/images/petMart.jpg" alt="">
+                            <img class="" src="assets/images/download (1).jpg" alt="">
                             <div class="product_info">
                                 <h2 class="title">chuồng chó thuận phát</h2>
-                                <h4 class="price text-danger">700.000đ</h4>
+                                <h4 class="price text-danger">2.500.000đ</h4>
                                 <p class="product_des">Chuyên sản xuất chuồng chó inox tốt hàng dày có nhiều kích
                                     thước<br>
                                     Rộng 32cm x Dài 50cm x cao 50cm 700k chuồng nhỏ nuôi mèo<br>
@@ -118,9 +81,10 @@
                         </div>
                         <div class="col">
                             <div class="row">
-                                <img src="https://scontent.fsgn2-8.fna.fbcdn.net/v/t39.30808-6/375284097_1520885682016355_2974464900812675825_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=a2f6c7&_nc_ohc=s71Dxc3UxIIAX9uGVNo&_nc_ht=scontent.fsgn2-8.fna&oh=00_AfDxKODXezn39zco-1UIc4uV-Rf4eheeKYI1aRiAV_Js6A&oe=65189ED4"
-                                    class="avatar rounded-circle" style="width: 80px;" alt="Avatar" />
-                                <h6 class="userName mt-2">ben sờ kai</h6>
+                                <a href="profile.html"><img src="assets/images/doge2.webp" class="avatar rounded-circle"
+                                        style="width: 80px;" alt="Avatar" />
+                                    <h6 class="userName mt-2">Ben mặt xệ</h6>
+                                </a>
                             </div>
                             <div class="row mt-5">
                                 <button class="btn btn-outline-secondary bg-light btn-block text-success"

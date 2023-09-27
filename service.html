@@ -114,19 +114,19 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#serviceHealth" role="tab"
-                                        data-toggle="tab"><strong>Health</strong></a>
+                                        data-toggle="tab"><strong>Sức Khỏe</strong></a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#serviceHotel" role="tab"
-                                        data-toggle="tab"><strong>Hotel</strong></a>
+                                        data-toggle="tab"><strong>"Nhà Trẻ Thú Cưng"</strong></a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#serviceTraining" role="tab"
-                                        data-toggle="tab"><strong>Training</strong></a>
+                                        data-toggle="tab"><strong>Huấn Luyện</strong></a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#serviceOthers" role="tab"
-                                        data-toggle="tab"><strong>Others</strong></a>
+                                        data-toggle="tab"><strong>Khác</strong></a>
                                 </li>
                             </ul>
                         </div>
@@ -139,14 +139,13 @@
                     <div class="col-md-10 ">
                         <div class="d-flex align-items-center"></div>
                         <button type="button" class="btn btn-primary btn-createpost btn-block " data-bs-toggle="modal"
-                            data-bs-target="#exampleModal" data-bs-whatever="@mdo"><i class="fa fa-edit"></i> Create a
-                            post</button>
+                            data-bs-target="#exampleModal" data-bs-whatever="@mdo"><i class="fa fa-edit"></i> Tạo bài viết</button>
                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                             aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Your Post</h5>
+                                        <h5 class="modal-title" id="exampleModalLabel">Bài viết của bạn</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
                                     </div>
@@ -156,47 +155,57 @@
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
                                                         value="option1">
-                                                    <label class="form-check-label" for="inlineCheckbox1">Story</label>
+                                                    <label class="form-check-label" for="inlineCheckbox1">Tin</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
                                                         value="option2">
-                                                    <label class="form-check-label" for="inlineCheckbox2">Training
-                                                        Tips</label>
+                                                    <label class="form-check-label" for="inlineCheckbox2">Bí Kíp Huấn Luyện</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
                                                         value="option3">
-                                                    <label class="form-check-label" for="inlineCheckbox2">Care
-                                                        Tips</label>
+                                                    <label class="form-check-label" for="inlineCheckbox2">Mẹo Vặt</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
                                                         value="option4">
-                                                    <label class="form-check-label" for="inlineCheckbox2">Events</label>
+                                                    <label class="form-check-label" for="inlineCheckbox2">Sự Kiện</label>
                                                 </div>
-                                                <div class="form-check form-check-inline">
+                                                <!-- <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
                                                         value="option5">
                                                     <label class="form-check-label" for="inlineCheckbox2">Lost</label>
-                                                </div>
+                                                </div> -->
                                             </div>
-                                            <div class="mb-3">
-                                                <label for="message-text" class="col-form-label">Content:
+                                            <div class="mb-3 rounded-circle">
+                                                <label for="message-text" class="col-form-label">Nội dung:
                                                 </label>
                                                 <textarea class="form-control" id="message-text" rows="7"></textarea>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="formFile" class="form-label"><i class="fa fa-picture-o"></i>
-                                                    Choose images: </label>
+                                                    Chọn tệp: </label>
                                                 <input class="form-control" type="file" id="formFile">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="tinhthanh">Chọn tỉnh/thành phố:</label>
+                                                <select id="tinhthanh" name="tinhthanh">
+                                                  <option value="Hà Nội">Hà Nội</option>
+                                                  <option value="Hồ Chí Minh">Hồ Chí Minh</option>
+                                                  <option value="Đà Nẵng">Đà Nẵng</option>
+                                                  <!-- Thêm các tỉnh thành khác vào đây -->
+                                                  <option value="Bắc Ninh">Bắc Ninh</option>
+                                                  <!-- ... -->
+                                                  <option value="Vũng Tàu">Vũng Tàu</option>
+                                                </select>
                                             </div>
                                         </form>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i>Close</button>
-                                        <button type="button" class="btn btn-primary">Post</button>
+                                            data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i>Đóng</button>
+                                        <button type="button" class="btn btn-primary">Đăng</button>
                                     </div>
                                 </div>
                             </div>
@@ -213,10 +222,13 @@
                         </button>
                         <div class="dropdown-menu">
                             <!-- Dropdown menu links -->
-                            <a class="dropdown-item" href="#">NEW FIRST</a>
-                            <a class="dropdown-item" href="#">OLD FIRST</a>
-                            <a class="dropdown-item" href="#">TREND FIST</a>
-                            <a class="dropdown-item" href="#">TREND LAST</a>
+                            <a class="dropdown-item" href="#">Mới Nhất</a>
+                            <a class="dropdown-item" href="#">Cũ Nhất</a>
+                            <a class="dropdown-item" href="#">Nổi Bật</a>
+                            <a class="dropdown-item" href="#">Địa Điểm
+                                
+                              
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -228,7 +240,7 @@
 
 
 
-                <div class="tab-content">
+                <div class="tab-content rounded-circle">
                     <div role="tabpanel" class="tab-pane fade show active" id="serviceSpa">
                         <a href="#" class="post" data-bs-toggle="modal" data-bs-target="#postDetailsModal"
                             onclick="displayPostDetails('DORIS Grooming', 'Địa chỉ: 217/18A Thích Quảng Đức, P.4, Q. Phú Nhuận, TP. HCM \n'+ 'Giờ hoạt động: 10:00 - 22:30\n', 'assets/images/spa.jpg')">
@@ -299,14 +311,7 @@
 
                     </div>
                 </div>
-                <div role="tabpanel" class="tab-pane fade" id="serviceTraining">
-
-                </div>
-                <div role="tabpanel" class="tab-pane fade" id="serviceOthers">
-
-                   
-
-            </div>
+                
 
             <!-- <div class="col-sm-3 row-content object-fit-cover">
                 <div class="position-fixed">
@@ -316,13 +321,13 @@
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
                     <li class="page-item disabled">
-                        <a class="page-link" href="#" tabindex="-1">Previous</a>
+                        <a class="page-link" href="#" tabindex="-1">Quay lại</a>
                     </li>
                     <li class="page-item"><a class="page-link" href="#">1</a></li>
                     <li class="page-item"><a class="page-link" href="#">2</a></li>
                     <li class="page-item"><a class="page-link" href="#">3</a></li>
                     <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
+                        <a class="page-link" href="#">Trang tiếp</a>
                     </li>
                 </ul>
             </nav>
@@ -415,6 +420,8 @@
         }
     }
 </script>
+
+
 </body>
 
 </html>
