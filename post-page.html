@@ -37,27 +37,36 @@
 
 <body>
     <div id="header"></div>
-
     <!-- content -->
     <div class="content">
 
         <div class="container mt-5 col-6">
-            <h1>Bài Bán Của Bạn</h1>
+
+            <h1>Bài đăng của bạn</h1>
+
+
             <form method="post">
-                <div class="dropdown">
-                    <button class="modal-post btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                <div class="dropdown mt-3">
+                    <!-- <button class="modal-post btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Danh mục đăng tin
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="#">Phụ kiện</a>
                         <a class="dropdown-item" href="#">Thức ăn</a>
-                        <a class="dropdown-item" href="#">Chuồng</a>
+                        <a class="dropdown-item" href="#">Chuồng động vật</a>
                         <a class="dropdown-item" href="#">Khác</a>
-                    </div>
+                    </div> -->
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Danh mục đăng tin</option>
+                        <option value="1">Phụ kiện</option>
+                        <option value="2">Thức ăn</option>
+                        <option value="3">Chuồng động vật</option>
+                        <option value="3">Khác</option>
+                    </select>
                 </div>
                 <div class="mt-3 mb-3">
-                    <label for="img" class="form-label">Tiêu đề</label>
+                    <label for="img" class="form-label">Hình Ảnh</label>
                     <input type="file" class="form-control" id="img" name="img" multiple required>
                 </div>
                 <div class="mt-3 mb-3">
@@ -123,7 +132,7 @@
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="submit mt-5 mb-5 btn btn-primary form-control">Post</button>
+                <button type="submit" class="submit mt-5 mb-5 btn btn-primary form-control">Đăng bài</button>
             </form>
         </div>
     </div>
