@@ -1,0 +1,84 @@
+<header>
+    <nav class="navbar navbar-dark navbar-expand-sm fixed-top navbar-color p-0">
+        <div class="container-fluid d-flex justify-content-center">
+            <nav class="navbar navbar-light">
+                <a class="navbar-brand" href="#">
+                    <img src="assets/images/logoDoca.png" class="rounded-circle" width="100px" height="100px" alt="">
+                </a>
+            </nav>
+            <div class="container-fluid d-flex justify-content-between navbar-contain mt-5">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-bars" aria-hidden="true"></i><span id="currentPageName">Danh mục</span>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="forumV2.html">Bảng tin</a>
+                        <a class="dropdown-item" href="marketV2.html">Chợ</a>
+                    </div>
+                </div>
+                <div class="navbar-search">
+                    <form action="">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search" name="search">
+                            <div class="input-group-btn">
+                                <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div>
+                    <a href="#" class="btn-notification btn btn-primary rounded-pill">
+                        <i class="fa fa-bell"></i>
+                        <span class="badge p-0">3</span>
+                    </a>
+                    <a class="btn btn-primary rounded-pill" href="#" role="button"><i
+                            class="fa-solid fa-message"></i></a>
+
+                    <a class="btn btn-primary rounded-pill" href="post-page.html" role="button"><i
+                            class="fa-solid fa-pen-to-square"></i>
+                        Tạo Bài Bán</a>
+
+                    <a class="btn btn-primary rounded-pill" href="#" role="button" onclick="toggleMenuForm()"><i
+                            class="fa fa-user-circle" aria-hidden="true"></i> Ben</a>
+                </div>
+            </div>
+        </div>
+
+    </nav>
+    <div class="setting position-absolute shadow-lg bg-body rounded " id="settingForm"
+        style="display: none; right: 3%;">
+        <div class="card">
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"> <a href="">quản lý tài khoản</a></li>
+                    <li class="list-group-item"><a href="">quản lý tin </a></li>
+                    <li class="list-group-item"><a href="">quản lý sản phẩm</a></li>
+                    <li class="list-group-item"><a href="">tin đã lưun</a></li>
+                    <li class="list-group-item"> <a href="">logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+
+<script>
+    function toggleMenuForm() {
+        const commentForm = document.getElementById('settingForm');
+        commentForm.style.display = commentForm.style.display === 'none' ? 'block' : 'none';
+    }
+</script>
+<script>
+    // Lấy URL hiện tại
+    var currentURL = window.location.href;
+
+    // Lấy phần tử có id là "currentPageName"
+    var currentPageName = document.getElementById("currentPageName");
+
+    // Kiểm tra URL và đặt nội dung cho phần tử <span>
+    if (currentURL.includes("forumV2.html")) {
+        currentPageName.textContent = "Bảng tin";
+    } else if (currentURL.includes("marketV2.html")) {
+        currentPageName.textContent = "Chợ";
+    }
+</script>

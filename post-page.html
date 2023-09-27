@@ -17,6 +17,8 @@
 
     <script src="node_modules/jquery/dist/jquery.slim.min.js"></script>
 
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+
     <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
 
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -25,62 +27,22 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Link CSS -->
+    <script>
+        $(function () {
+            $("#header").load("header.html");
 
+        });
+    </script>
 </head>
 
 <body>
+    <div id="header"></div>
 
-    <header class="header">
-        <div>
-            <nav class="navbar navbar-dark navbar-expand-sm fixed-top navbar-color">
-                <div class="container-fluid d-flex justify-content-center">
-                    <nav class="navbar navbar-light">
-                        <a class="navbar-brand" href="#">
-                            <img src="assets/images/logoDoca.png" class="rounded-circle" width="100px" height="100px"
-                                alt="">
-                        </a>
-                    </nav>
-                    <div class="container-fluid d-flex justify-content-between navbar-contain">
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-bars" aria-hidden="true"></i> Danh mục
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">Bảng tin</a>
-                                <a class="dropdown-item" href="#">Chợ</a>
-                            </div>
-                        </div>
-                        <div class="navbar-search">
-                            <form action="">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search" name="search">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-default" type="submit"><i
-                                                class="fa fa-search"></i></button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <a href="#" class="btn-notification btn btn-primary">
-                            <i class="fa fa-bell"></i>
-                            <span class="badge">3</span>
-                        </a>
-                        <a class="btn btn-primary" href="#" role="button"><i class="fa-solid fa-message"></i></a>
-                        <a class="btn btn-primary" href="#" role="button"><i class="fa fa-user-circle"
-                                aria-hidden="true"></i> Ben</a>
-                        <a class="btn btn-primary" href="#" role="button"><i class="fa-solid fa-pen-to-square"></i>
-                            Tạo bài post</a>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </header>
     <!-- content -->
     <div class="content">
 
         <div class="container mt-5 col-6">
-            <h1>Bài đăng của bạn</h1>
+            <h1>Bài Bán Của Bạn</h1>
             <form method="post">
                 <div class="dropdown">
                     <button class="modal-post btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
@@ -128,7 +90,7 @@
                                 </div>
 
                                 <!-- Modal body -->
-                                
+
                                 <div class="modal-body">
                                     <!-- Danh sách các mục -->
                                     <ul id="categoryList" class="hidden-list">
@@ -156,7 +118,7 @@
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                                     <button type="submit" class="btn btn-secondary" data-dismiss="modal">Xong</button>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
