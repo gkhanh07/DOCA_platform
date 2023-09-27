@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags always come first -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <title>Post</title>
+    <!-- Link Iconn  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="node_modules/bootstrap-social/bootstrap-social.css">
+    <!-- jQuery first, then Popper.js, then Bootstrap JS. -->
+
+    <script src="node_modules/jquery/dist/jquery.slim.min.js"></script>
+
+    <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
+
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!--  -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Link CSS -->
+    <link rel="stylesheet" href="assets/css/personal-post-style.css">
+</head>
+
+<body>
+
+    <header class="header">
+        <div>
+            <nav class="navbar navbar-dark navbar-expand-sm fixed-top navbar-color">
+                <div class="container-fluid d-flex justify-content-center">
+                    <nav class="navbar navbar-light">
+                        <a class="navbar-brand" href="#">
+                            <img src="assets/images/logoDoca.png" class="rounded-circle image-logo" width="100px"
+                                height="100px" alt="">
+                        </a>
+                    </nav>
+                    <div class="container-fluid d-flex justify-content-between navbar-contain">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-bars" aria-hidden="true"></i> Danh mục
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">Bảng tin</a>
+                                <a class="dropdown-item" href="#">Chợ</a>
+                            </div>
+                        </div>
+                        <div class="navbar-search">
+                            <form action="">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search" name="search">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-default" type="submit"><i
+                                                class="fa fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <a href="#" class="btn-notification btn btn-primary">
+                            <i class="fa fa-bell"></i>
+                            <span class="badge">3</span>
+                        </a>
+                        <a class="btn btn-primary" href="#" role="button"><i class="fa-solid fa-message"></i></a>
+                        <a class="btn btn-primary" href="#" role="button"><i class="fa fa-user-circle"
+                                aria-hidden="true"></i> Ben</a>
+                        <a class="btn btn-primary" href="post-page.html" role="button"><i
+                                class="fa-solid fa-pen-to-square"></i>
+                            Tạo bài post</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <body>
+        <div class="content">
+            <div class="container mt-5 col-6">
+                <h1>Quản lý sản phẩm của bạn</h1>
+
+                <div class="row-content">
+                    <div class="row">
+                        <nav class="navbar navbar-light  bg-light navbar-expand-lg container-fluid ">
+
+                            <div class="container justify-content-center">
+
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="#display" role="tab"
+                                            data-toggle="tab"><strong>Đang hiển thị</strong></a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#denied" role="tab" data-toggle="tab"><strong>Bị từ
+                                                chối</strong></a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#waiting" role="tab" data-toggle="tab"><strong>Chờ
+                                                duyệt</strong></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+                <!-- content -->
+                <div class="tab-content mt-5 pb-5">
+
+                    <div role="tabpanel" class="tab-pane fade show active" id="display">
+                        <form action="">
+
+                            <img class="col-sm-6 image-content img-fluid" src="assets/images/chuongcho1.jpg"
+                                alt="Hình ảnh">
+                            <div class="font">
+                                <h5>Tên:Chó alaska</h5>
+                                <h6>Giá tiền: 3000000</h6>
+                                <p>Địa điểm:Thành phố Hồ chí Minh</p>
+
+
+                            </div>
+
+
+                            <input type="submit" value="sửa tin">
+                            <input type="submit" value="xoá tin">
+                        </form>
+                        <form action="">
+
+                            <img class="col-sm-6 image-content mt-5 img-fluid" src="assets/images/chuongcho2.jpeg"
+                                alt="Hình ảnh">
+                            <div class="font">
+                                <h5>VPet's - Pet không chỉ là bạn</h5>
+                                <h6>giá tiền: 6000000</h6>
+                                <p>Thành phố Hồ chí Minh</p>
+
+                            </div>
+
+
+                            <input type="submit" value="sửa tin">
+                            <input type="submit" value="xoá tin">
+                        </form>
+
+
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane fade " id="denied">
+                        <form action="">
+                            <!-- <div class="post" data-bs-toggle="modal" data-bs-target="#postDetailsModal"> -->
+                            <img class="col-sm-6 image-content img-fluid" src="assets/images/thitcho1.jpg"
+                                alt="Hình ảnh">
+                            <div class="font">
+                                <h5>Tên:thịt chó</h5>
+                                <h6>Giá tiền: 200000</h6>
+                                <p>Địa điểm:Thành phố Hồ chí Minh</p>
+
+
+                            </div>
+                            <!-- </div> -->
+
+                            <input type="submit" value="sửa tin">
+                            <input type="submit" value="xoá tin">
+                        </form>
+                        <form action="">
+
+                            <img class="col-sm-6 image-content img-fluid" src="assets/images/thitcho2.jpeg"
+                                alt="Hình ảnh">
+                            <div class="font">
+                                <h5>Tên:thịt chó</h5>
+                                <h6>Giá tiền: 150000</h6>
+                                <p>Địa điểm:Thành phố Hồ chí Minh</p>
+
+
+                            </div>
+
+
+                            <input type="submit" value="sửa tin">
+                            <input type="submit" value="xoá tin">
+                        </form>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade " id="waiting"></div>
+                </div>
+
+            </div>
+    </body>
+
+
+</html>
