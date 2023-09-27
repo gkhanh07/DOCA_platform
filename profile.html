@@ -41,25 +41,14 @@
 
     <!-- Nội dung chính -->
     <section style="background-color: #eee;">
-        <div class="container py-5">
-            <div class="row">
-                <div class="col">
-                    <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
-                        <ol class="breadcrumb mb-0">
-                            <li class="breadcrumb-item"><a href="#">Doca</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Trang cá nhân của Nhật</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
-
+        <div class="container py-5 ">
             <div class="row">
                 <div class="col-lg-4">
                     <div class="card mb-4">
                         <div class="card-body text-center">
-                            <img src="./assets/images/toc-ro-beo-.jpg" alt="avatar" class="rounded-circle img-fluid"
+                            <img src="assets/images/doge2.webp" alt="avatar" class="rounded-circle img-fluid"
                                 style="width: 150px;">
-                            <h5 class="my-3">Nhật</h5>
+                            <h5 class="my-3">Ben mặt xệ</h5>
 
                         </div>
                     </div>
@@ -84,8 +73,7 @@
                         <ul class="nav nav-tabs" id="myTabs">
                             <li class="nav-item ">
                                 <a class="nav-link text-dark active" id="product-tab" data-toggle="tab"
-                                    href="#product">Bài rao
-                                    bán</a>
+                                    href="#product">Bài rao bán</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark " id="post-tab" data-toggle="tab" href="#post">
@@ -97,30 +85,42 @@
                         <div id="product" class="tab-pane fade show active">
                             <div class="card-group justify-content-center">
                                 <div class="card col-7 justify-content-center">
-                                    <img src="./assets/images/cho.jpg" class="card-img-top" alt="...">
+                                    <img class="image" src="assets/images/download (1).jpg" alt="Hình ảnh">
                                     <div class="card-body">
-                                        <h5 class="card-title">Chó Cỏ Việt Nam</h5>
-                                        <p class="card-text">200.000 Vnđ</p>
+                                        <div class="font">
+                                            <h5><strong>Chuồng chó</strong></h5>
+                                            <h6 style="color:rgb(242, 106, 106);">2.500.000 đ</h6>
+                                            <h6 style="font-size: 15px; opacity: 0.5;">TP.HCM</h6>
+                                        </div>
+
                                     </div>
                                     <div class="card-footer">
                                         <small class="text-muted">3 Ngày trước</small>
                                     </div>
                                 </div>
                                 <div class="card col-7 justify-content-center">
-                                    <img src="./assets/images/cho.jpg" class="card-img-top" alt="...">
+                                    <img class="image" src="assets/images/chuồng.webp" alt="Hình ảnh">
                                     <div class="card-body">
-                                        <h5 class="card-title">Chó Cỏ Việt Nam</h5>
-                                        <p class="card-text">200.000 Vnđ</p>
+
+                                        <div class="font">
+                                            <h5><strong>Chuồng mèo</strong></h5>
+                                            <h6 style="color:rgb(242, 106, 106);">2.500.000 đ</h6>
+                                            <h6 style="font-size: 15px; opacity: 0.5;">TP.HCM</h6>
+                                        </div>
                                     </div>
                                     <div class="card-footer">
                                         <small class="text-muted">3 Ngày trước</small>
                                     </div>
                                 </div>
                                 <div class="card col-7 justify-content-center">
-                                    <img src="./assets/images/cho.jpg" class="card-img-top" alt="...">
+                                    <img class="image" src="assets/images/chuonghong.jpeg" alt="Hình ảnh">
                                     <div class="card-body">
-                                        <h5 class="card-title">Chó Cỏ Việt Nam</h5>
-                                        <p class="card-text">200.000 Vnđ</p>
+                                        <div class="font">
+                                            <h5><strong>Chuồng cỡ nhỏ</strong></h5>
+                                            <h6 style="color:rgb(242, 106, 106);">2.500.000 đ</h6>
+                                            <h6 style="font-size: 15px; opacity: 0.5;">TP.HCM</h6>
+                                        </div>
+
                                     </div>
                                     <div class="card-footer">
                                         <small class="text-muted">3 Ngày trước</small>
@@ -130,7 +130,46 @@
                         </div>
                         <div id="post" class="tab-pane fade">
                             <div class="card-group justify-content-center">
+                                <div class="post my-4 border rounded position-relative">
+                                    <div class="post-header">
+                                        <div class="profile-info">
+                                            <img src="assets/images/doge2.webp" alt="Profile Image"
+                                                class="rounded-circle profile-image">
+                                            <div class="profile-details">
+                                                <a href="#" class="username">Ben mặt xệ</a>
+                                                <div class="post-time text-muted">Posted on: September 23, 2077</div>
+                                            </div>
+                                        </div>
+                                        <div class="options-button" style="position: absolute; top: 10px; right: 10px;">
+                                            <button class="btn btn-secondary" onclick="toggleOptions(this)">
+                                                <i class="fa-solid fa-ellipsis"></i>
+                                            </button>
+                                            <div class="options" style="display: none;">
+                                                <a class="dropdown-item" href="#">Lưu bài viết</a>
+                                                <a class="dropdown-item" href="#">Tố cáo bài viết</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="post-body">
+                                        <p class="post-text">Hehe hôm nay tui đi nghỉ mát.</p>
+                                        <img src="assets/images/doge2.webp" alt="Post Image">
+                                    </div>
+                                    <div class="post-footer">
+                                        <button class="btn btn-primary flex-grow-1"><i class="fas fa-thumbs-up"></i>
+                                            Thích</button>
+                                        <button class="btn btn-primary flex-grow-1" onclick="toggleCommentForm()"><i
+                                                class="fas fa-comment"></i> Bình luận</button>
+                                        <a href="#"> <button class="btn btn-primary flex-grow-1"><i
+                                                    class="fas fa-share"></i> Chia sẻ</button></a>
 
+
+                                    </div>
+                                    <div id="commentForm" class="comment-form" style="display: none;">
+                                        <textarea class="form-control" placeholder="Write a comment..."></textarea>
+                                        <button class="btn btn-primary mt-2" onclick="submitComment()"><i
+                                                class="fa-solid fa-circle-up fa-rotate-90"></i></button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -143,7 +182,24 @@
 
     <!--  -->
 
+    <script>
+        function toggleCommentForm() {
+            const commentForm = document.getElementById('commentForm');
+            commentForm.style.display = commentForm.style.display === 'none' ? 'block' : 'none';
+        }
+        function submitComment() {
+            const commentText = document.querySelector('#commentForm textarea').value;
+            // Do something with the comment, e.g., send it to the server
+            console.log('Comment submitted:', commentText);
+        }
+    </script>
 
+    <script>
+        function toggleOptions(button) {
+            const options = button.nextElementSibling;
+            options.style.display = options.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
 
 </body>
 
