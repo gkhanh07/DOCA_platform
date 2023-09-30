@@ -23,6 +23,8 @@
 
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+
     <!--  -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -46,21 +48,93 @@
 
 
 
-        <div class="product" style="width: 600px;">
+        <div class="product col-sm-7">
 
             <div class="btn1 d-flex ">
 
                 <div class="btn-group" style="width: 200px;">
 
+                    <!-- <div>
+                        <select class="form-select form-select-sm mb-3" id="city" aria-label=".form-select-sm">
+                            <option value="" selected>Chọn tỉnh thành</option>
+                        </select>
+
+                        <select class="form-select form-select-sm mb-3" id="district" aria-label=".form-select-sm">
+                            <option value="" selected>Chọn quận huyện</option>
+                        </select>
+
+                        <select class="form-select form-select-sm" id="ward" aria-label=".form-select-sm">
+                            <option value="" selected>Chọn phường xã</option>
+                        </select>
+                    </div> -->
+
+                    <!-- <div class="btn btn-success dropdown-toggle-split" style="width: 100%;" data-toggle="dropdown"
+                        id="city">
+                        <i class=" fa fa-location-dot"></i>
+                        <option value="" selected>
+                            Chọn tỉnh thành
+                        </option>
+                    </div> -->
 
 
-                    <div class="btn btn-success dropdown-toggle-split" style="width: 100%;" data-toggle="dropdown"><i
-                            class="fa fa-location-dot"></i> Toàn Quốc</div>
 
-                    <div class="dropdown-menu">
+                    <i class=" fa fa-location-dot"></i>
+                    <select class="form-select form-select-sm " style="width: 100%;" id="city"
+                        aria-label=".form-select-sm">
+
+                        <option value="" selected>
+                            Chọn tỉnh thành
+                        </option>
+                    </select>
+
+                    <script>
+                        var citis = document.getElementById("city");
+                        var districts = document.getElementById("district");
+                        var wards = document.getElementById("ward");
+                        var Parameter = {
+                            url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+                            method: "GET",
+                            responseType: "application/json",
+                        };
+                        var promise = axios(Parameter);
+                        promise.then(function (result) {
+                            renderCity(result.data);
+                        });
+
+                        function renderCity(data) {
+                            for (const x of data) {
+                                citis.options[citis.options.length] = new Option(x.Name, x.Id);
+                            }
+                            citis.onchange = function () {
+                                district.length = 1;
+                                ward.length = 1;
+                                if (this.value != "") {
+                                    const result = data.filter(n => n.Id === this.value);
+
+                                    for (const k of result[0].Districts) {
+                                        district.options[district.options.length] = new Option(k.Name, k.Id);
+                                    }
+                                }
+                            };
+                            district.onchange = function () {
+                                ward.length = 1;
+                                const dataCity = data.filter((n) => n.Id === citis.value);
+                                if (this.value != "") {
+                                    const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
+
+                                    for (const w of dataWards) {
+                                        wards.options[wards.options.length] = new Option(w.Name, w.Id);
+                                    }
+                                }
+                            };
+                        }
+                    </script>
+
+
+                    <!-- <div class="dropdown-menu">
                         <a class="dropdown-item" href="#">TP.HCM</a>
                         <a class="dropdown-item" href="#">Hà Nội</a>
-                    </div>
+                    </div> -->
                 </div>
 
                 <div class="btn-group" style="width: 200px;">
@@ -91,6 +165,7 @@
 
                     </div>
                 </div>
+
 
             </div>
 
@@ -152,7 +227,22 @@
 
 
 
+                <div style="position: relative; border-bottom: 1px solid rgb(224, 224, 224);">
+                    <a href="product-detail.html" class="sell d-flex" style="width: 100%;">
 
+                        <img class="image" src="assets/images/download (1).jpg" alt="Hình ảnh">
+                        <div class="font">
+                            <h5><strong>Chuồng chó</strong></h5>
+                            <h6 style="color:rgb(242, 106, 106);">2.500.000 đ</h6>
+                            <h6 style="font-size: 15px; opacity: 0.5;">TP.HCM</h6>
+                        </div>
+
+                    </a>
+                    <i class="icon fa-regular fa-heart"
+                        style="position: absolute; bottom: 30px; right: 40px; color: red;"></i>
+
+
+                </div>
 
 
             </div>
