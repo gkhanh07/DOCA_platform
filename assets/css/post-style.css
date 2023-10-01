@@ -60,6 +60,7 @@ button.btn.btn-primary.form-control {
     float: left;
 }
 /* css cho nút post */
+
 button.submit.mt-5.mb-5.btn.btn-primary.form-control {
     background-color: rgb(230, 114, 98);
     color: white;

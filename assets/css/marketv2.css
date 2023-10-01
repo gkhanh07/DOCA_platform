@@ -2,8 +2,9 @@
     width: 150px;
     
 }
-.product {
+#product {
     background-color: rgb(242, 240, 240);
+    width: 100%;
 }
 
 .font{
@@ -19,10 +20,7 @@
     margin-left: 12px;
     text-decoration: none;
 }
-.product{
-    height: 1000px;
-    width: 100%;
-}
+
 .btn-success{
     background-color: white;
     color: black;
@@ -44,7 +42,4 @@
     
 }
 
-.changed-color-button {
-    background-color: red; /* Màu nền mới khi nút được bấm */
-    color: white;
-}
+
