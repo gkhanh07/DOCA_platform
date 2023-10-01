@@ -15,8 +15,14 @@ body{
 }
 .main-content{
     margin-top: 126px;
-
 }
+/* body {
+    padding: 120px 0px 0px 0px;
+    z-index: 0;
+    min-height: 100%;
+    background-color: #ffffff;
+
+} */
 
 
 
