@@ -13,8 +13,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="node_modules/bootstrap-social/bootstrap-social.css">
+    
     <!-- jQuery first, then Popper.js, then Bootstrap JS. -->
-
     <script src="node_modules/jquery/dist/jquery.slim.min.js"></script>
 
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
@@ -23,14 +23,18 @@
 
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-
     <!--  -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    
 
     <!-- Link CSS -->
-    <link rel="stylesheet" href="assets/css/forum-style.css">
+    
     <link rel="stylesheet" href="assets/css/marketv2.css">
+    <link rel="stylesheet" href="assets/css/standar-style.css">
+    <link rel="stylesheet" href="assets/css/forum-style-V3.css">
+    <!-- Link JS -->
+   
+
     <script>
         $(function () {
             $("#header").load("header.html");
@@ -48,7 +52,11 @@
 
 
 
-        <div class="product col-sm-7">
+
+        <div class="product col-sm-7" >
+
+        <div class="product-post col-sm-12">
+
 
             <div class="btn1 d-flex ">
 
@@ -78,12 +86,13 @@
 
 
 
-                    <i class=" fa fa-location-dot"></i>
+                    
                     <select class="form-select form-select-sm " style="width: 100%;" id="city"
+                    
                         aria-label=".form-select-sm">
-
+                          
                         <option value="" selected>
-                            Chọn tỉnh thành
+                            Chọn tỉnh thành 
                         </option>
                     </select>
 
@@ -128,6 +137,9 @@
                                 }
                             };
                         }
+
+
+                        
                     </script>
 
 
@@ -183,44 +195,35 @@
                         </div>
 
                     </a>
-                    <i class="icon fa-regular fa-heart"
-                        style="position: absolute; bottom: 30px; right: 40px; color: red;"></i>
+                    <span class="like-icon">
+                        <a href="javascript:void(0);" class="like-button">
+                            <i class="fa fa-heart-o" style="color: red; cursor: pointer; position: absolute; bottom: 30px; right: 40px;"></i>
+                        </a>
+                    </span>
+
+
 
 
                 </div>
 
                 <div style="position: relative; border-bottom: 1px solid rgb(224, 224, 224);">
-                    <a href="maker_detal.html" class="sell d-flex" style="width: 100%;">
+                    <a href="product-detail.html" class="sell d-flex" style="width: 100%;">
 
-                        <img class="image" src="assets/images/chuồng.webp" alt="Hình ảnh">
+                        <img class="image" src="assets/images/download (1).jpg" alt="Hình ảnh">
                         <div class="font">
-                            <h5><strong>Chuồng mèo</strong></h5>
+                            <h5><strong>Chuồng chó</strong></h5>
                             <h6 style="color:rgb(242, 106, 106);">2.500.000 đ</h6>
                             <h6 style="font-size: 15px; opacity: 0.5;">TP.HCM</h6>
                         </div>
 
                     </a>
-                    <i class="icon fa-regular fa-heart"
-                        style="position: absolute; bottom: 30px; right: 40px; color: red;"></i>
+                    <span class="like-icon">
+                        <a href="javascript:void(0);" class="like-button">
+                            <i class="fa fa-heart-o" style="color: red; cursor: pointer; position: absolute; bottom: 30px; right: 40px;"></i>
+                        </a>
+                    </span>
 
 
-                </div>
-
-
-
-                <div style="position: relative; border-bottom: 1px solid rgb(224, 224, 224);">
-                    <a href="maker_detal.html" class="sell d-flex" style="width: 100%;">
-
-                        <img class="image" src="assets/images/chuonghong.jpeg" alt="Hình ảnh">
-                        <div class="font">
-                            <h5><strong>Chuồng cỡ nhỏ</strong></h5>
-                            <h6 style="color:rgb(242, 106, 106);">2.500.000 đ</h6>
-                            <h6 style="font-size: 15px; opacity: 0.5;">TP.HCM</h6>
-                        </div>
-
-                    </a>
-                    <i class="icon fa-regular fa-heart"
-                        style="position: absolute; bottom: 30px; right: 40px; color: red;"></i>
 
 
                 </div>
@@ -238,31 +241,59 @@
                         </div>
 
                     </a>
-                    <i class="icon fa-regular fa-heart"
-                        style="position: absolute; bottom: 30px; right: 40px; color: red;"></i>
+                    <span class="like-icon">
+                        <a href="javascript:void(0);" class="like-button">
+                            <i class="fa fa-heart-o" style="color: red; cursor: pointer; position: absolute; bottom: 30px; right: 40px;"></i>
+                        </a>
+                    </span>
+
+
 
 
                 </div>
 
 
-            </div>
+
+                <div style="position: relative; border-bottom: 1px solid rgb(224, 224, 224);">
+                    <a href="product-detail.html" class="sell d-flex" style="width: 100%;">
+
+                        <img class="image" src="assets/images/download (1).jpg" alt="Hình ảnh">
+                        <div class="font">
+                            <h5><strong>Chuồng chó</strong></h5>
+                            <h6 style="color:rgb(242, 106, 106);">2.500.000 đ</h6>
+                            <h6 style="font-size: 15px; opacity: 0.5;">TP.HCM</h6>
+                        </div>
+
+                    </a>
+                    <span class="like-icon">
+                        <a href="javascript:void(0);" class="like-button">
+                            <i class="fa fa-heart-o" style="color: red; cursor: pointer; position: absolute; bottom: 30px; right: 40px;"></i>
+                        </a>
+                    </span>
+
+
+                </div>
+
+
+            </div>  
         </div>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            </ul>
+        </nav>
     </div>
 
 
-    <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-            <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1">Previous</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-            </li>
-        </ul>
-    </nav>
+    
 
 
     <section>
@@ -280,5 +311,22 @@
 
     </footer>
 </body>
+<script>
+    var likeButtons = document.querySelectorAll(".like-button");
+    var isLiked = false;
+
+    likeButtons.forEach(function (likeButton) {
+        var heartIcon = likeButton.querySelector('i');
+
+        likeButton.addEventListener("click", function () {
+            if (isLiked) {
+                heartIcon.className = "fa fa-heart-o";
+            } else {
+                heartIcon.className = "fa fa-heart";
+            }
+            isLiked = !isLiked;
+        });
+    });
+</script>
 
 </html>

@@ -163,6 +163,13 @@
 .create-post-card .btn-primary:focus {
     box-shadow: none;
 }
+<<<<<<< HEAD
+.button-search{
+    background-color: gray;
+}
+
+=======
 .post-body img {
     width: 100%;
 }
+>>>>>>> 2cc4e13c1de37e65a5a53798cf17c9d8366fa38b
