@@ -1,3 +1,4 @@
+
 .profile-image {
     width: 50px;
     height: 50px;
@@ -32,8 +33,11 @@
 .post{
     margin: 0; 
     padding: 30px;
+    background-color:#f8f5e8 ;
     
-    border-color: rgb(253, 71, 5);
+}
+.btn_in_post{
+    background-color:#f8f5e8 ;
 }
 .post-footer {
     display: flex;
@@ -67,12 +71,12 @@
     align-items: center;
 }
 
-.profile-info img {
+/* .profile-info img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     margin-right: 10px;
-}
+} */
 
 .profile-details {
     display: flex;
@@ -81,6 +85,8 @@
 
 .profile-details .username {
     font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #000;
 }
 
 .options-button button {
@@ -142,7 +148,8 @@
     object-fit: cover; /* Hiển thị hình ảnh tỉ lệ đúng và không bị méo */
 }
 
-.create-post-card .btn-primary {
+.create-post-card .btn-light {
+    color: #000;
     background-color: #84a98c;
     border: none;
     padding: 10px 20px;
@@ -156,7 +163,13 @@
 .create-post-card .btn-primary:focus {
     box-shadow: none;
 }
+<<<<<<< HEAD
 .button-search{
     background-color: gray;
 }
 
+=======
+.post-body img {
+    width: 100%;
+}
+>>>>>>> 2cc4e13c1de37e65a5a53798cf17c9d8366fa38b

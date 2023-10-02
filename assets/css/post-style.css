@@ -1,64 +1,17 @@
-
-/* reset css */
-html {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
-}
-/* cái này không để làm gì hết thì bỏ đi */
-body {
-    padding: 120px 0px 0px 0px;
-    z-index: 0;
-    min-height: 100%;
-    background-color: #ffffff;
-
-}
-/* header */
-.navbar-color {
-    background-color: rgb(230, 114, 98);
-}
-
-.btn {
-    background-color: #e04949;
-}
-
-.btn-primary {
-    border-color: red;
-}
-
-.navbar-search {
-    /* padding: 10px;
-    background-color: brown; */
-    width: 50%;
-}
-
-.btn-notification {
-    background-color: rgba(255, 0, 0, 0.5);
-}
-
-img {
-    width: 100%;
-}
-.navbar-contain {
-    margin-top: 90px;
-    margin-left: 30px;
-}
 /* content */
 
 .modal-post {
     background-color: white;
     color: black;
 }
+
 /* css cho cái địa chỉ */
 button.btn.btn-primary.form-control {
-    background-color: white;
     color: black;
-    margin-left: -15px;
-    border: 1px solid #ced4da;
-    float: left;
+    background-color: white;
+    border: 1px solid rgb(206, 212, 218);
 }
+
 /* css cho nút post */
 
 button.submit.mt-5.mb-5.btn.btn-primary.form-control {
