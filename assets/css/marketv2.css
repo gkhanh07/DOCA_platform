@@ -41,5 +41,15 @@
     color: white;
     
 }
+.product-post{
+    background-color: rgba(235, 233, 233, 0.289);
+}
 
 
+body {
+    padding: 120px 0px 0px 0px;
+    z-index: 0;
+    min-height: 100%;
+    background-color: #ffffff;
+
+}
