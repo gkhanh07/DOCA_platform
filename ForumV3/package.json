@@ -1,0 +1,25 @@
+{
+  "name": "doca_platform",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm run lite",
+    "lite": "lite-server"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jquery": "^3.3.1",
+    "lite-server": "^2.6.1"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free-solid": "^5.0.13",
+    "axios": "^1.5.1",
+    "bootstrap": "^4.0.0",
+    "bootstrap-social": "^5.1.1",
+    "font-awesome": "^4.7.0",
+    "popper.js": "^1.12.9"
+  }
+}

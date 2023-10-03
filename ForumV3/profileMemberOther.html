@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags always come first -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <title>Forum</title>
+    <!-- Link Iconn  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="node_modules/bootstrap-social/bootstrap-social.css">
+    <!-- jQuery first, then Popper.js, then Bootstrap JS. -->
+
+    <script src="node_modules/jquery/dist/jquery.slim.min.js"></script>
+
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+
+    <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
+
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!--  -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Link CSS -->
+    <link rel="stylesheet" href="assets/css/forum-style.css">
+    <script>
+        $(function () {
+            $("#header").load("header.html");
+
+        });
+    </script>
+</head>
+
+<body>
+    <div id="header"></div>
+
+    <!-- Nội dung chính -->
+    <section style="background-color: #eee;">
+        <div class="container py-5 ">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="card mb-4">
+                        <div class="card-body text-center">
+                            <img src="assets/images/doge2.webp" alt="avatar" class="rounded-circle img-fluid"
+                                style="width: 150px;">
+                            <h5 class="my-3">Ben mặt xệ</h5>
+
+                        </div>
+                    </div>
+                    <div class="card mb-4 mb-lg-0">
+                        <div class="card-body p-0">
+                            <ul class="list-group list-group-flush rounded-3">
+                                <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                    <i class="fa fa-calendar"></i>
+                                    <p class="mb-0">Đã tham gia: 2 Tháng 11 Ngày</p>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                    <i class="fa fa-map-marker" style="color: #333333;"></i>
+                                    <p class="mb-0">Địa chỉ: <i>Hồ Chí Minh, Thủ Đức</i> </p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+
+                    <div class="row m-0">
+                        <ul class="nav nav-tabs" id="myTabs">
+                            <li class="nav-item ">
+                                <a class="nav-link text-dark active" id="product-tab" data-toggle="tab"
+                                    href="#product">Bài rao bán</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark " id="post-tab" data-toggle="tab" href="#post">
+                                    Bài đăng thông tin</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-content" class="row">
+                        <div id="product" class="tab-pane fade show active">
+                            <div class="card-group justify-content-center">
+                                <div class="card col-7 justify-content-center">
+                                    <img class="image" src="assets/images/download (1).jpg" alt="Hình ảnh">
+                                    <div class="card-body">
+                                        <div class="font">
+                                            <h5><strong>Chuồng chó</strong></h5>
+                                            <h6 style="color:rgb(242, 106, 106);">2.500.000 đ</h6>
+                                            <h6 style="font-size: 15px; opacity: 0.5;">TP.HCM</h6>
+                                        </div>
+
+                                    </div>
+                                    <div class="card-footer">
+                                        <small class="text-muted">3 Ngày trước</small>
+                                    </div>
+                                </div>
+                                <div class="card col-7 justify-content-center">
+                                    <img class="image" src="assets/images/chuồng.webp" alt="Hình ảnh">
+                                    <div class="card-body">
+
+                                        <div class="font">
+                                            <h5><strong>Chuồng mèo</strong></h5>
+                                            <h6 style="color:rgb(242, 106, 106);">2.500.000 đ</h6>
+                                            <h6 style="font-size: 15px; opacity: 0.5;">TP.HCM</h6>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <small class="text-muted">3 Ngày trước</small>
+                                    </div>
+                                </div>
+                                <div class="card col-7 justify-content-center">
+                                    <img class="image" src="assets/images/chuonghong.jpeg" alt="Hình ảnh">
+                                    <div class="card-body">
+                                        <div class="font">
+                                            <h5><strong>Chuồng cỡ nhỏ</strong></h5>
+                                            <h6 style="color:rgb(242, 106, 106);">2.500.000 đ</h6>
+                                            <h6 style="font-size: 15px; opacity: 0.5;">TP.HCM</h6>
+                                        </div>
+
+                                    </div>
+                                    <div class="card-footer">
+                                        <small class="text-muted">3 Ngày trước</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="post" class="tab-pane fade">
+                            <div class="card-group justify-content-center">
+                                <div class="post my-4 border rounded position-relative">
+                                    <div class="post-header">
+                                        <div class="profile-info">
+                                            <img src="assets/images/doge2.webp" alt="Profile Image"
+                                                class="rounded-circle profile-image">
+                                            <div class="profile-details">
+                                                <a href="#" class="username">Ben mặt xệ</a>
+                                                <div class="post-time text-muted">Posted on: September 23, 2077</div>
+                                            </div>
+                                        </div>
+                                        <div class="options-button" style="position: absolute; top: 10px; right: 10px;">
+                                            <button class="btn btn-secondary" onclick="toggleOptions(this)">
+                                                <i class="fa-solid fa-ellipsis"></i>
+                                            </button>
+                                            <div class="options" style="display: none;">
+                                                <a class="dropdown-item" href="#">Lưu bài viết</a>
+                                                <a class="dropdown-item" href="#">Tố cáo bài viết</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="post-body">
+                                        <p class="post-text">Hehe hôm nay tui đi nghỉ mát.</p>
+                                        <img src="assets/images/doge2.webp" alt="Post Image">
+                                    </div>
+                                    <div class="post-footer">
+                                        <button class="btn btn-primary flex-grow-1"><i class="fas fa-thumbs-up"></i>
+                                            Thích</button>
+                                        <button class="btn btn-primary flex-grow-1" onclick="toggleCommentForm()"><i
+                                                class="fas fa-comment"></i> Bình luận</button>
+                                        <a href="#"> <button class="btn btn-primary flex-grow-1"><i
+                                                    class="fas fa-share"></i> Chia sẻ</button></a>
+
+
+                                    </div>
+                                    <div id="commentForm" class="comment-form" style="display: none;">
+                                        <textarea class="form-control" placeholder="Write a comment..."></textarea>
+                                        <button class="btn btn-primary mt-2" onclick="submitComment()"><i
+                                                class="fa-solid fa-circle-up fa-rotate-90"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--  -->
+
+    <script>
+        function toggleCommentForm() {
+            const commentForm = document.getElementById('commentForm');
+            commentForm.style.display = commentForm.style.display === 'none' ? 'block' : 'none';
+        }
+        function submitComment() {
+            const commentText = document.querySelector('#commentForm textarea').value;
+            // Do something with the comment, e.g., send it to the server
+            console.log('Comment submitted:', commentText);
+        }
+    </script>
+
+    <script>
+        function toggleOptions(button) {
+            const options = button.nextElementSibling;
+            options.style.display = options.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+
+</body>
+
+</html>
