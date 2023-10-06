@@ -4,10 +4,16 @@
 }
 .button_in_header {
     background-color: #588157;
+   
 } 
+
+.rounded-pill{
+    border-radius: 20px
+}
 
 .button-search {
     background-color: #dad7cd;
+   
 }
 body{
     font-family: Arial, Helvetica, sans-serif !important;

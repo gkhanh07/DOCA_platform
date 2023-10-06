@@ -6,7 +6,7 @@
             </a>
         </nav>
         <div class="container-fluid d-flex justify-content-between navbar-contain mt-5   ">
-            <div class="dropdown ">
+            <div class="dropdown  ">
                 <button class="btn dropdown-toggle rounded-pill button_in_header  btn-light border-0" type="button"
                     id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-bars" aria-hidden="true"></i><span id="currentPageName"> Danh mục</span>
@@ -60,25 +60,25 @@
 
         </div>
     </div>
-</header>
+    </header>
 
-<script>
-    function toggleMenuForm() {
-        const commentForm = document.getElementById('settingForm');
-        commentForm.style.display = commentForm.style.display === 'none' ? 'block' : 'none';
-    }
-</script>
-<script>
-    // Lấy URL hiện tại
-    var currentURL = window.location.href;
+    <script>
+        function toggleMenuForm() {
+            const commentForm = document.getElementById('settingForm');
+            commentForm.style.display = commentForm.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+    <script>
+        // Lấy URL hiện tại
+        var currentURL = window.location.href;
 
-    // Lấy phần tử có id là "currentPageName"
-    var currentPageName = document.getElementById("currentPageName");
+        // Lấy phần tử có id là "currentPageName"
+        var currentPageName = document.getElementById("currentPageName");
 
-    // Kiểm tra URL và đặt nội dung cho phần tử <span>
-    if (currentURL.includes("forumV2.html")) {
-        currentPageName.textContent = "Bảng tin";
-    } else if (currentURL.includes("marketV2.html")) {
-        currentPageName.textContent = "Chợ";
-    }
-</script>
+        // Kiểm tra URL và đặt nội dung cho phần tử <span>
+        if (currentURL.includes("forumV2.html")) {
+            currentPageName.textContent = "Bảng tin";
+        } else if (currentURL.includes("marketV2.html")) {
+            currentPageName.textContent = "Chợ";
+        }
+    </script>
