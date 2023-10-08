@@ -7,7 +7,7 @@ CREATE TABLE [users] (
   [mobile_num] nvarchar(10) NOT NULL,
   [status] bit NOT NULL,
   [role_id] bit NOT NULL,
-  [avatar] varchar(100) NOT NULL
+  [avatar] varchar(Max) NOT NULL
 )
 GO
 
