@@ -1,0 +1,6 @@
+com\mycompany\doca_java\DAO\ProductDAO.class
+com\mycompany\doca_java\util\DBconnect.class
+com\mycompany\doca_java\Controller\marketServlet.class
+com\mycompany\doca_java\Controller\DispatchServlet.class
+com\mycompany\doca_java\DTO\ProductDTO.class
+com\mycompany\doca_java\Controller\PostProductServlet.class
