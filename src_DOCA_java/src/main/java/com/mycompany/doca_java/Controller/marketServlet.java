@@ -5,7 +5,9 @@
 package com.mycompany.doca_java.Controller;
 
 import com.mycompany.doca_java.DAO.ProductDAO;
+import com.mycompany.doca_java.DAO.saveProductDAO;
 import com.mycompany.doca_java.DTO.ProductDTO;
+import com.mycompany.doca_java.DTO.saveProductDTO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -39,15 +41,24 @@ public class marketServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        //        User user = (User) session.getAttribute("user");
         String url="";
         try {
+            HttpSession session = request.getSession(true);
             ProductDAO dao = new ProductDAO();
             dao.getAllTheProduct();
             List<ProductDTO> listOfProduct = dao.getListOfProduct();
             if (listOfProduct != null) {
-                HttpSession session = request.getSession(true);
-                session.setAttribute("listOfProduct", listOfProduct);
+                
+                request.setAttribute("listOfProduct", listOfProduct);
                 url = MARKET_PAGE;
+            }
+            
+            saveProductDAO saveProductDao= new saveProductDAO();
+            saveProductDao.getSaveProductByuserID(userID);
+            List<saveProductDTO> listOfSaveProduct= saveProductDao.getListOfSaveProduct();
+            if(listOfSaveProduct != null){
+            session.setAttribute("listOfSaveProduct", listOfSaveProduct);
             }
             
         } catch (ClassNotFoundException ex) {
@@ -57,9 +68,9 @@ public class marketServlet extends HttpServlet {
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
-//            RequestDispatcher rd= request.getRequestDispatcher(url);
-//            rd.forward(request, response);
-            response.sendRedirect(url);
+            RequestDispatcher rd= request.getRequestDispatcher(url);
+            rd.forward(request, response);
+//            response.sendRedirect(url);
         }
     }
 

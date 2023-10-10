@@ -18,7 +18,7 @@ CREATE TABLE [post] (
   [post_image] nvarchar(Max),
   [isPublic] bit NOT NULL,
   [timePosted] datetime NOT NULL,
-  [status] bit NOT NULL,
+  [status] nvarchar(10) NOT NULL,
   [reason] nvarchar(100)
 )
 GO

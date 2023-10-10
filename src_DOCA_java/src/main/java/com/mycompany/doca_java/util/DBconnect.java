@@ -18,10 +18,8 @@ public class DBconnect {
 
         
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        
         String url = "jdbc:sqlserver://localhost:1433;databaseName=DOCA_platform"; 
         Connection con = DriverManager.getConnection(url, "sa", "12345");
-        
         return con;
     }
 }

@@ -36,9 +36,10 @@ public class ProductDTO implements Serializable{
     private Date timePosted;
     private boolean isPublic;
     private String status;
-    private String reason;
+    private String reason; 
 
   
+    
     
     
 }

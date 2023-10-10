@@ -17,7 +17,10 @@ import jakarta.servlet.http.HttpServletResponse;
  * @author Admin
  */
 public class DispatchServlet extends HttpServlet {
-    private final String Market_Controller="marketServlet";
+
+    private final String Market_Controller = "marketServlet";
+    private final String Fitler_Product = "filterProduct";
+    private final String Save_Product = "updateSaveProductServlet";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,14 +35,19 @@ public class DispatchServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String button = request.getParameter("btAction");
-        String url="";
+        String url = "";
         try {
-         if(button.equals("goTomarket")){
-             url=Market_Controller;
-         }
-        }
-        finally{
-            RequestDispatcher rd= request.getRequestDispatcher(url);
+            if (button.equals("goTomarket")) {
+                url = Market_Controller;
+            }
+            if (button.equals("Loc")) {
+                url = Fitler_Product;
+            }
+            if (button.equals("saveProduct")) {
+                url = Save_Product;
+            }
+        } finally {
+            RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }
     }
