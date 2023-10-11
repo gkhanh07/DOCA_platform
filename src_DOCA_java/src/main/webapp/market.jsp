@@ -55,9 +55,7 @@
     </head>
 
     <body>
-        
-<!--        c:set for use r-->
-
+        <c:set var="User" value="${sessionScope.USER_NAME}"/>
         <c:set var="Products" value="${requestScope.listOfProduct}"/>
         <c:set var="SaveProducts" value="${sessionScope.listOfSaveProduct}"/>
         <div id="header"></div>
@@ -141,14 +139,17 @@
                                             <c:forEach items="${SaveProducts}" var="saveproduct">
                                                 <c:when  test="${saveproduct.productId eq product.productId}">
                                                     <c:set var="color" value="red" />
+                                                    <c:set var="isSaved" value="true" />
                                                 </c:when >
                                                 <c:otherwise>
-                                                     <c:set var="color" value="gray" />
+                                                    <c:set var="color" value="gray" />
+                                                    <c:set var="isSaved" value="false"/>
                                                 </c:otherwise>
                                             </c:forEach>
                                         </c:if>
                                         <button type="submit" name="btAction" value="saveProduct" class="fa fa-heart border-0 p-0" 
                                                 style="color: ${color}; cursor: pointer; position: absolute; bottom: 30px; right: 40px;">
+                                            <input type="hidden" name="isSaved" value="${isSaved}" />
                                             <input type="hidden" name="productID" value="${product.productId}" />
                                         </button>
                                     </span>

@@ -18,6 +18,7 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 public class DispatchServlet extends HttpServlet {
 
+    private final String Login_Servlet = "LoginServlet";
     private final String Market_Controller = "marketServlet";
     private final String Fitler_Product = "filterProduct";
     private final String Save_Product = "updateSaveProductServlet";
@@ -45,6 +46,9 @@ public class DispatchServlet extends HttpServlet {
             }
             if (button.equals("saveProduct")) {
                 url = Save_Product;
+            }
+            if (button.equals("Log In")) {
+                url = Login_Servlet;
             }
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);

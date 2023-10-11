@@ -6,10 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-
-
-
-
+ <header>
     <nav class="navbar navbar-dark navbar-expand-sm fixed-top navbar-color p-0 header">
         <div class="container-fluid d-flex justify-content-center">
             <nav class="navbar navbar-light">

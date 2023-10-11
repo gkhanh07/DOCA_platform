@@ -8,6 +8,7 @@ import com.mycompany.doca_java.DAO.ProductDAO;
 import com.mycompany.doca_java.DAO.saveProductDAO;
 import com.mycompany.doca_java.DTO.ProductDTO;
 import com.mycompany.doca_java.DTO.saveProductDTO;
+import com.mycompany.doca_java.DTO.userDTO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -41,26 +42,26 @@ public class marketServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        //        User user = (User) session.getAttribute("user");
-        String url="";
+        HttpSession session = request.getSession(true);
+        userDTO user = (userDTO) session.getAttribute("USER_NAME");
+        String url = "";
         try {
-            HttpSession session = request.getSession(true);
             ProductDAO dao = new ProductDAO();
             dao.getAllTheProduct();
             List<ProductDTO> listOfProduct = dao.getListOfProduct();
             if (listOfProduct != null) {
-                
                 request.setAttribute("listOfProduct", listOfProduct);
                 url = MARKET_PAGE;
             }
-            
-            saveProductDAO saveProductDao= new saveProductDAO();
-            saveProductDao.getSaveProductByuserID(userID);
-            List<saveProductDTO> listOfSaveProduct= saveProductDao.getListOfSaveProduct();
-            if(listOfSaveProduct != null){
-            session.setAttribute("listOfSaveProduct", listOfSaveProduct);
+            if (user != null) {
+                saveProductDAO saveProductDao = new saveProductDAO();
+                saveProductDao.getSaveProductByuserID(user.getUser_ID());
+                List<saveProductDTO> listOfSaveProduct = saveProductDao.getListOfSaveProduct();
+                if (listOfSaveProduct != null) {
+                    session.setAttribute("listOfSaveProduct", listOfSaveProduct);
+                }
             }
-            
+
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         } catch (NamingException ex) {
@@ -68,7 +69,7 @@ public class marketServlet extends HttpServlet {
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
-            RequestDispatcher rd= request.getRequestDispatcher(url);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
 //            response.sendRedirect(url);
         }

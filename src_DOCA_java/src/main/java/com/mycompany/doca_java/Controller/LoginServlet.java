@@ -1,30 +1,35 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package com.mycompany.doca_java.Controller;
 
-import com.mycompany.doca_java.DAO.saveProductDAO;
+import com.mycompany.doca_java.DAO.userDAO;
 import com.mycompany.doca_java.DTO.userDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.NamingException;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.sql.SQLException;
-import javax.naming.NamingException;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "updateSaveProductServlet", urlPatterns = {"/updateSaveProductServlet"})
-public class updateSaveProductServlet extends HttpServlet {
+@WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
+public class LoginServlet extends HttpServlet {
 
-    private final String LOGIN_PAGE = "login.jsp";
+    private final String MARKET_PAGE = "/marketServlet";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,38 +43,19 @@ public class updateSaveProductServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String local = request.getParameter("city");
-        float lowerPrice = Float.parseFloat(request.getParameter("lowerPrice"));
-        int category = Integer.parseInt(request.getParameter("category"));
-        int productID = Integer.parseInt(request.getParameter("productID"));
-        HttpSession session = request.getSession(true);
-        userDTO user = (userDTO) session.getAttribute("USER_NAME");
-        boolean isSaved = Boolean.parseBoolean(request.getParameter("isSaved"));
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
         String url = "";
         try {
-            if (user != null) {
-                 saveProductDAO dao = new saveProductDAO();
-                if (!isSaved) {
-                    boolean result = dao.createSaveProduct(user.getUser_ID(),productID);//get userID form sessionScope
-                    if (result) {
-                        url = "DispatchServlet"
-                                + "?btAction=Loc"
-                                + "&city=" + local
-                                + "&lowerPrice=" + lowerPrice
-                                + "&category=" + category;
-                    }
-                }else{
-                   boolean result = dao.deleteSaveProduct(user.getUser_ID(),productID);//get userID form sessionScope
-                    if (result) {
-                        url = "DispatchServlet"
-                                + "?btAction=Loc"
-                                + "&city=" + local
-                                + "&lowerPrice=" + lowerPrice
-                                + "&category=" + category;
-                    }
-                }
-            } else {
-                url = LOGIN_PAGE;
+            userDAO dao = new userDAO();
+            userDTO result = dao.checkLogin(username, password);
+            if (result != null) {
+                url = MARKET_PAGE;
+                HttpSession session = request.getSession(true);
+                session.setAttribute("USER_NAME", result);
+//                Cookie cookies = new Cookie(username, password);
+//                cookies.setMaxAge(60*10);
+//                response.addCookie(cookies);
             }
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
@@ -78,9 +64,10 @@ public class updateSaveProductServlet extends HttpServlet {
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
-            response.sendRedirect(url);
-        }
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
 
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
