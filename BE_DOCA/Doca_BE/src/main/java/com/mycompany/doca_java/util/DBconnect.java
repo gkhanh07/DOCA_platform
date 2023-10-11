@@ -14,14 +14,20 @@ import javax.naming.NamingException;
  * @author Admin
  */
 public class DBconnect {
-     public static Connection makeConnection() throws SQLException, ClassNotFoundException, NamingException {
-
-        
+    public static Connection makeConnection() throws SQLException, ClassNotFoundException, NamingException {
+//        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+//        String url = "jdbc:sqlserver://localhost:1433;databaseName=DOCA_platform";
+//        Connection con = DriverManager.getConnection(url, "sa", "12345");
+//        return con;
+        //1. load driver
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        
-        String url = "jdbc:sqlserver://localhost:1433;databaseName=DOCA_platform"; 
+        //2. create connect string
+        String url = "jdbc:sqlserver://"
+                + "localhost:1433; "
+                + "databaseName=DOCA_platform";
+        //3. open connect
         Connection con = DriverManager.getConnection(url, "sa", "12345");
-        
+        //4. return connect to call
         return con;
     }
 }

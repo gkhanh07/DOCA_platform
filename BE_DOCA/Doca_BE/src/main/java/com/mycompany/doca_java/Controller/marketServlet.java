@@ -39,7 +39,7 @@ public class marketServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url="";
+        String url = MARKET_PAGE;
         try {
             ProductDAO dao = new ProductDAO();
             dao.getAllTheProduct();
@@ -49,8 +49,7 @@ public class marketServlet extends HttpServlet {
                 session.setAttribute("listOfProduct", listOfProduct);
                 url = MARKET_PAGE;
             }
-            
-            
+
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         } catch (NamingException ex) {
@@ -58,7 +57,7 @@ public class marketServlet extends HttpServlet {
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
-//            RequestDispatcher rd= request.getRequestDispatcher(url);
+//            RequestDispatcher rd = request.getRequestDispatcher(url);
 //            rd.forward(request, response);
             response.sendRedirect(url);
         }

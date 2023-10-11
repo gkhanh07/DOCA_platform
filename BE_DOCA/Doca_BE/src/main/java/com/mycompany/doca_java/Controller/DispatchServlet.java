@@ -43,7 +43,7 @@ public class DispatchServlet extends HttpServlet {
                 url = PostProduct_Controller;
             }
             if (button.equals("test")){
-                url = "index.html";
+                url = "error.html";
             }
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
