@@ -1,0 +1,5 @@
+com\mycompany\doca_java\DAO\PostDAO.class
+com\mycompany\doca_java\util\DBconnect.class
+com\mycompany\doca_java\Controller\DispatchServlet.class
+com\mycompany\doca_java\DTO\PostDTO.class
+com\mycompany\doca_java\Controller\forumServlet.class
