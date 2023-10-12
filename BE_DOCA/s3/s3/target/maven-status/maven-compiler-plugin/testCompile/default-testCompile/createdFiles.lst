@@ -1,0 +1,7 @@
+S3TestWatcher.class
+AmazonS3Test$SecretValues.class
+com\example\s3\async\AsyncTests.class
+com\example\s3\BasicOpsWithChecksumsTests.class
+TransferManagerTest.class
+AmazonS3Test.class
+com\example\s3\PerformMultiPartUploadTests.class

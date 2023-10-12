@@ -1,0 +1,10 @@
+-------------------------------------------------------------------------------
+Test set: com.example.s3.async.AsyncTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 6.827 s <<< FAILURE! - in com.example.s3.async.AsyncTests
+putObjectFromStream  Time elapsed: 6.827 s  <<< ERROR!
+java.lang.ExceptionInInitializerError
+	at com.example.s3.async.AsyncTests.setUp(AsyncTests.java:24)
+Caused by: software.amazon.awssdk.core.exception.SdkClientException: Unable to load region from any of the providers in the chain software.amazon.awssdk.regions.providers.DefaultAwsRegionProviderChain@6535117e: [software.amazon.awssdk.regions.providers.SystemSettingsRegionProvider@7412ed6b: Unable to load region from system settings. Region must be specified either via environment variable (AWS_REGION) or  system property (aws.region)., software.amazon.awssdk.regions.providers.AwsProfileRegionProvider@26d41711: No region provided in profile: default, software.amazon.awssdk.regions.providers.InstanceProfileRegionProvider@12e5da86: Unable to contact EC2 metadata service.]
+	at com.example.s3.async.AsyncTests.setUp(AsyncTests.java:24)
+

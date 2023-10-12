@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="9.3">
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\AbortMultipartUpload.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\async\CreateBucketAsync.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\async\GetObjectDataAsync.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\async\PutObjectFromStreamAsync.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\async\S3AsyncOps.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\async\S3AsyncStreamOps.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\BasicOpsWithChecksums.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\CheckObjectIntegrity.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\CopyObject.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\CopyObjectStorage.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\CreateAccessPoint.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\CreateBucket.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\CreateJob.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\DeleteBucketPolicy.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\DeleteMultiObjects.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\DeleteObjects.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\DeleteWebsiteConfiguration.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\GeneratePresignedUrlAndUploadObject.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\GeneratePresignedUrlMetadata.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\GeneratePresignedUrlUploadImage.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\GetAcl.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\GetBucketPolicy.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\GetDataResponseTransformer.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\GetObjectContentType.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\GetObjectData.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\GetObjectPresignedUrl.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\GetObjectRestoreStatus.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\GetObjectTags.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\GetObjectUrl.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\KMSEncryptionExample.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\LifecycleConfiguration.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\ListMultipartUploads.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\ListObjects.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\ListObjectsPaginated.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\ManagingObjectTags.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\ParseUri.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\PerformMultiPartUpload.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\PresignedSwing.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\PutBucketLogging.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\PutObject.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\PutObjectMetadata.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\PutObjectRetention.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\RestoreObject.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\S3BucketDeletion.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\S3BucketOps.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\S3Cors.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\S3Log.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\S3ObjectOperations.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\S3Scenario.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\S3ZipExample.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\SetAcl.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\SetBucketEventBridgeNotification.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\SetBucketPolicy.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\SetWebsiteConfiguration.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\transfermanager\DownloadFile.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\transfermanager\DownloadToDirectory.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\transfermanager\ObjectCopy.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\transfermanager\S3ClientFactory.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\transfermanager\UploadADirectory.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\transfermanager\UploadFile.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\transfermanager\UploadStream.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\util\AsyncExampleUtils.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\util\MemoryLog4jAppender.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\VPCCreateJob.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\java\com\example\s3\VPCS3Example.java">
+</file>
+<file name="C:\Users\Admin\Desktop\AWS\aws-doc-sdk-examples\javav2\example_code\s3\src\main\resources\config.properties">
+</file>
+</checkstyle>

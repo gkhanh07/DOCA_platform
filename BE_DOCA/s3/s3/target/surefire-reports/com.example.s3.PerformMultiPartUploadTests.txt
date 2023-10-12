@@ -1,0 +1,16 @@
+-------------------------------------------------------------------------------
+Test set: com.example.s3.PerformMultiPartUploadTests
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 6.817 s <<< FAILURE! - in com.example.s3.PerformMultiPartUploadTests
+multipartUploadWithS3ClientTest  Time elapsed: 0.001 s  <<< ERROR!
+java.lang.ExceptionInInitializerError
+	at com.example.s3.PerformMultiPartUploadTests.<init>(PerformMultiPartUploadTests.java:12)
+Caused by: software.amazon.awssdk.core.exception.SdkClientException: Unable to load region from any of the providers in the chain software.amazon.awssdk.regions.providers.DefaultAwsRegionProviderChain@71c17a57: [software.amazon.awssdk.regions.providers.SystemSettingsRegionProvider@37045b48: Unable to load region from system settings. Region must be specified either via environment variable (AWS_REGION) or  system property (aws.region)., software.amazon.awssdk.regions.providers.AwsProfileRegionProvider@60b34931: No region provided in profile: default, software.amazon.awssdk.regions.providers.InstanceProfileRegionProvider@4aa21f9d: Unable to contact EC2 metadata service.]
+	at com.example.s3.PerformMultiPartUploadTests.<init>(PerformMultiPartUploadTests.java:12)
+
+multipartUploadWithTransferManagerTest  Time elapsed: 0 s  <<< ERROR!
+java.lang.NoClassDefFoundError: Could not initialize class com.example.s3.PerformMultiPartUpload
+	at com.example.s3.PerformMultiPartUploadTests.<init>(PerformMultiPartUploadTests.java:12)
+Caused by: java.lang.ExceptionInInitializerError: Exception software.amazon.awssdk.core.exception.SdkClientException: Unable to load region from any of the providers in the chain software.amazon.awssdk.regions.providers.DefaultAwsRegionProviderChain@71c17a57: [software.amazon.awssdk.regions.providers.SystemSettingsRegionProvider@37045b48: Unable to load region from system settings. Region must be specified either via environment variable (AWS_REGION) or  system property (aws.region)., software.amazon.awssdk.regions.providers.AwsProfileRegionProvider@60b34931: No region provided in profile: default, software.amazon.awssdk.regions.providers.InstanceProfileRegionProvider@4aa21f9d: Unable to contact EC2 metadata service.] [in thread "main"]
+	at com.example.s3.PerformMultiPartUploadTests.<init>(PerformMultiPartUploadTests.java:12)
+

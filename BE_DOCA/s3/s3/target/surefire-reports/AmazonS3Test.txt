@@ -1,0 +1,9 @@
+-------------------------------------------------------------------------------
+Test set: AmazonS3Test
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.829 s <<< FAILURE! - in AmazonS3Test
+AmazonS3Test  Time elapsed: 0.828 s  <<< ERROR!
+software.amazon.awssdk.core.exception.SdkClientException: Unable to load credentials from system settings. Access key must be specified either via environment variable (AWS_ACCESS_KEY_ID) or system property (aws.accessKeyId).
+	at AmazonS3Test.getSecretValues(AmazonS3Test.java:401)
+	at AmazonS3Test.setUp(AmazonS3Test.java:116)
+
