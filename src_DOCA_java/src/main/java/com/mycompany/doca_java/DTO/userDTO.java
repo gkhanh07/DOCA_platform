@@ -22,13 +22,13 @@ import lombok.ToString;
 @Setter
 @ToString
 public class userDTO implements Serializable {
-    int user_ID;
-    String userName;
-    String password;
-    String gender;
-    String email;
-    String mobileNum;
-    boolean status;
-    boolean roleID;
-    String avatar;
+    private int user_ID;
+    private String userName;
+    private String password;
+    private String gender;
+    private String email;
+    private String mobileNum;
+    private boolean status;
+    private boolean roleID;
+    private String avatar;
 }

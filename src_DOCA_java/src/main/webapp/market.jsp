@@ -148,11 +148,13 @@
                 </form>
 
 
-                <nav aria-label="Page navigation example">
+                <nav aria-label="Page navigation ">
                     <c:set var="numberPage" value="${requestScope.numberPage}"/>
                     <ul class="pagination justify-content-center">
                         <c:forEach begin="1" end="${numberPage}" var="i">
-                            <li class="page-item rounded-pill ${indexPage==i?"active":""}" ><a class="page-link rounded-pill" href="marketServlet?index=${i}">${i}</a></li>
+                            <li class="page-item rounded-pill ${indexPage==i?"active":""}" >
+                                <a class="page-link rounded-pill" href="marketServlet?index=${i}">${i}</a>
+                            </li>
                             </c:forEach> 
 
 

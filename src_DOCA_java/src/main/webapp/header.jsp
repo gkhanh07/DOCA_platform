@@ -25,9 +25,9 @@
                             <i class="fa fa-bars" aria-hidden="true"></i><span id="currentPageName"> Danh mục</span>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="forum.jsp">Bảng tin</a>
+                            <a class="dropdown-item" href="forumServlet">Bảng tin</a>
 
-                            <input type="submit" name="btAction" value="goTomarket" class="dropdown-item"/>
+                             <a class="dropdown-item" href="marketServlet">Chợ</a>
 
                         </div>
                     </div>

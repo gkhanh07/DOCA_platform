@@ -5,6 +5,7 @@
 package com.mycompany.doca_java.DTO;
 
 import java.io.Serializable;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,14 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class saveProductDTO implements Serializable {
-    private int productId;   
+public class PostDTO implements Serializable {
+
+    private int postId;
+    private int userId;
+    private String postContent;
+    private String postImage;
+    private boolean isPublic;
+    private Date timePosted;
+    private String status;
+    private String reason;
 }

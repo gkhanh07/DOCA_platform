@@ -31,7 +31,6 @@ public class categoryDAO {
                 String sql = "SELECT [category_id], [category_name]\n"
                         + "FROM [DOCA_platform].[dbo].[category]\n"
                         + "WHERE [category_id] = ?";
-
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, categoryID);
                 rs = stm.executeQuery();
@@ -55,4 +54,6 @@ public class categoryDAO {
 
         return category;
     }
+    
+    
 }
