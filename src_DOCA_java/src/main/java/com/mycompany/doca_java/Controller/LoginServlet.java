@@ -29,7 +29,7 @@ import jakarta.servlet.http.HttpSession;
 @WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
 public class LoginServlet extends HttpServlet {
 
-    private final String MARKET_PAGE = "/marketServlet";
+    private final String Market_Controller = "marketServlet";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -50,7 +50,7 @@ public class LoginServlet extends HttpServlet {
             userDAO dao = new userDAO();
             userDTO result = dao.checkLogin(username, password);
             if (result != null) {
-                url = MARKET_PAGE;
+                url = Market_Controller;
                 HttpSession session = request.getSession(true);
                 session.setAttribute("USER_NAME", result);
 //                Cookie cookies = new Cookie(username, password);
@@ -64,9 +64,7 @@ public class LoginServlet extends HttpServlet {
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
-
+           response.sendRedirect(url);
         }
     }
 

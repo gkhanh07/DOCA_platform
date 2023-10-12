@@ -84,4 +84,27 @@ public class ProductDAO {
         }
     }
 
+    
+    public int getNumberPage(List<ProductDTO> ListOfProduct){
+        int totalProduct= ListOfProduct.size();
+        if(totalProduct>0){
+            int countPage=totalProduct/5;
+            if(totalProduct % 5 !=0){
+                countPage++;
+            }
+            return countPage;
+        }
+        return 0;
+    }
+    public List<ProductDTO> getPaging(int index, List<ProductDTO> ListOfProduct){
+        int start= (index-1)*5;
+         int end = Math.min(start + 5, ListOfProduct.size());
+         List<ProductDTO> listInPage= new ArrayList<>();
+        for (int i = start; i < end; i++) {
+           listInPage.add(ListOfProduct.get(i));
+        }
+        return listInPage;    
+    }
+    
+    
 }

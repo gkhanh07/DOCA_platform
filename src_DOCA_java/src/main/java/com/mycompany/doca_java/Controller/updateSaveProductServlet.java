@@ -41,7 +41,7 @@ public class updateSaveProductServlet extends HttpServlet {
         String local = request.getParameter("city");
         float lowerPrice = Float.parseFloat(request.getParameter("lowerPrice"));
         int category = Integer.parseInt(request.getParameter("category"));
-        int productID = Integer.parseInt(request.getParameter("productID"));
+        int productID = Integer.parseInt(request.getParameter("productIDChangeSave"));
         HttpSession session = request.getSession(true);
         userDTO user = (userDTO) session.getAttribute("USER_NAME");
         boolean isSaved = Boolean.parseBoolean(request.getParameter("isSaved"));

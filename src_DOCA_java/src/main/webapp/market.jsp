@@ -47,36 +47,31 @@
         <!-- Link JS -->
 
 
-        <script>
-            $(function () {
-                $("#header").load("header.jsp");
-            });
-        </script>
+        <!--        <script>
+                    $(function () {
+                        $("#header").load("header.jsp");
+                    });
+                </script>-->
     </head>
 
     <body>
-        <c:set var="User" value="${sessionScope.USER_NAME}"/>
-        <c:set var="Products" value="${requestScope.listOfProduct}"/>
-        <c:set var="SaveProducts" value="${sessionScope.listOfSaveProduct}"/>
-        <div id="header"></div>
+
+
+
+        <c:set var="Products" value="${requestScope.listInPage}"/>
+        <c:set var="SaveProducts" value="${requestScope.listOfSaveProduct}"/>
+
+        <jsp:include page="header.jsp" />
 
 
         <div class="menu d-flex justify-content-center " style="margin: 90px 0 0 50px;">
 
-
-
-
             <div class="product col-sm-7" >
-                <form action="DispatchServlet"> <!--this is for DispatchServlet-->
-
+                <form action="DispatchServlet" method="post"> <!--this is for DispatchServlet-->
                     <div class="product-post col-sm-12">
-
-
                         <div class="btn1 d-flex ">
-
                             <div class="btn-group" style="width: 200px;">
-                                <select name="city" class="form-select form-select-sm " style="width: 100%;" id="city"
-
+                                <select name="city" class="form-select form-select-sm rounded-pill" style="width: 100%;" id="city"
                                         aria-label=".form-select-sm">
 
                                     <option value="" >
@@ -86,7 +81,7 @@
                             </div>
 
                             <div  class="btn-group" style="width: 200px;">
-                                <select name="lowerPrice" class="form-control" style="width: 200px;">
+                                <select name="lowerPrice" class="form-control rounded-pill" style="width: 200px;" >
                                     <option value="0" ${selectedLowerPrice == 0 ? 'selected' : ''} >Chọn theo giá</option>
                                     <option value="1000000" ${selectedLowerPrice == 1000000 ? 'selected' : ''}> giá bé hon 1tr</option>
                                     <option value="700000" ${selectedLowerPrice == 700000 ? 'selected' : ''}> giá bé hon 700.000</option>
@@ -94,14 +89,13 @@
                                     <option value="300000" ${selectedLowerPrice == 300000 ? 'selected' : ''}> giá bé hon 300.000</option>
                                     <option value="200000" ${selectedLowerPrice == 200000 ? 'selected' : ''}> giá bé hon 200.000</option>
                                     <option value="100000" ${selectedLowerPrice == 100000 ? 'selected' : ''}> giá bé hon 100.000</option>
-
                                 </select>
                             </div>
 
 
 
                             <div class="dropdown" style="width: 200px;">
-                                <select name="category" class="form-control" style="width: 200px;">
+                                <select name="category" class="form-control  rounded-pill" style="width: 200px;">
                                     <option value="0" ${selectedCategory == 0 ? 'selected' : ''}>Danh mục</option>
                                     <option value="1" ${selectedCategory == 1 ? 'selected' : ''}>Phụ Kiện</option>
                                     <option value="2" ${selectedCategory == 2 ? 'selected' : ''}>Thức Ăn</option>
@@ -109,18 +103,18 @@
                                     <option value="4" ${selectedCategory == 4 ? 'selected' : ''}>Khác</option>
                                 </select>
                             </div>
-                            <div>
+                            <div style="width: 200px;">
                                 <input type="hidden" name="listOfProduct" value="${Products}" />
-                                <input type="submit" name="btAction" value="Loc" />
+                                <input class=" rounded-pill"  style="width: 100px; height: 38px" type="submit" name="btAction" value="Loc" />
                             </div>
                         </div>
 
                         <div class="tab-content">
                             <c:forEach items="${Products}" var="product">
-                                <div style="position: relative; border-bottom: 1px solid rgb(224, 224, 224);">
-                                    <a href="product-detail.html" class="sell d-flex" style="width: 100%;">
+                                <div  style="position: relative; border-bottom: 1px solid rgb(224, 224, 224);">
+                                    <a href="productDetailServlet?productId=${product.productId}" class="sell d-flex" style="width: 100%;">
                                         <c:set var="img" value="${product.productImage}"/>
-                                        <img class="image" src=${img} alt="Hình ảnh">
+                                        <img class="image" src=${img} alt="${product.title}">
                                         <div class="font">
                                             <c:set var="title" value="${product.title}"/>
                                             <h5><strong>${title}</strong></h5>
@@ -130,27 +124,21 @@
                                             <h6 style="font-size: 15px; opacity: 0.5;">${address}</h6>
                                         </div>
                                     </a>
-
+                                    <c:set var="productID" value="${product.productId}"/>
                                     <span class="like-icon">
-                                        <c:if test="${empty SaveProducts}">
-                                            <c:set var="color" value="gray" />
-                                        </c:if>
-                                        <c:if test="${not empty SaveProducts}">
-                                            <c:forEach items="${SaveProducts}" var="saveproduct">
-                                                <c:when  test="${saveproduct.productId eq product.productId}">
-                                                    <c:set var="color" value="red" />
-                                                    <c:set var="isSaved" value="true" />
-                                                </c:when >
-                                                <c:otherwise>
-                                                    <c:set var="color" value="gray" />
-                                                    <c:set var="isSaved" value="false"/>
-                                                </c:otherwise>
-                                            </c:forEach>
-                                        </c:if>
+                                        <c:set var="color" value="gray" />
+                                        <c:set var="isSaved" value="false" />
+
+                                        <c:forEach items="${SaveProducts}" var="saveproduct">
+                                            <c:if test="${saveproduct.productId eq productID}">
+                                                <c:set var="color" value="red" />
+                                                <c:set var="isSaved" value="true" />
+                                            </c:if>
+                                        </c:forEach>
                                         <button type="submit" name="btAction" value="saveProduct" class="fa fa-heart border-0 p-0" 
                                                 style="color: ${color}; cursor: pointer; position: absolute; bottom: 30px; right: 40px;">
                                             <input type="hidden" name="isSaved" value="${isSaved}" />
-                                            <input type="hidden" name="productID" value="${product.productId}" />
+                                            <input type="hidden" name="productIDChangeSave" value="${productID}" />
                                         </button>
                                     </span>
                                 </div>
@@ -161,34 +149,17 @@
 
 
                 <nav aria-label="Page navigation example">
+                    <c:set var="numberPage" value="${requestScope.numberPage}"/>
                     <ul class="pagination justify-content-center">
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" tabindex="-1">Previous</a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">Next</a>
-                        </li>
+                        <c:forEach begin="1" end="${numberPage}" var="i">
+                            <li class="page-item rounded-pill ${indexPage==i?"active":""}" ><a class="page-link rounded-pill" href="marketServlet?index=${i}">${i}</a></li>
+                            </c:forEach> 
+
+
                     </ul>
                 </nav>
             </div>
 
-
-
-
-
-            <section>
-                <!-- Noi dung -->
-                <div class="main-content">
-                    <div class="row row-content">
-                        <div class="left-content col-sm-2"></div>
-                        <div class="mid-content col-sm-7"></div>
-                        <div class="right-content col-sm-2"></div>
-                    </div>
-                </div>
-            </section>
         </div>
 
         <footer>
@@ -198,47 +169,47 @@
     </body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
     <script>
-            var citis = document.getElementById("city");
-            var districts = document.getElementById("district");
-            var wards = document.getElementById("ward");
-            var Parameter = {
-                url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
-                method: "GET",
-                responseType: "application/json",
-            };
-            var promise = axios(Parameter);
-            promise.then(function (result) {
-                renderCity(result.data);
-            });
-            var selectedLocal = "${selectedLocal}";
-            function renderCity(data) {
-                for (const x of data) {
-                    let selected = selectedLocal == x.Name ? true : false;
-                    citis.options[citis.options.length] = new Option(x.Name, x.Name, true, selected);
-                }
-                citis.onchange = function () {
-                    district.length = 1;
-                    ward.length = 1;
-                    if (this.value != "") {
-                        const result = data.filter(n => n.Id === this.value);
-
-                        for (const k of result[0].Districts) {
-                            district.options[district.options.length] = new Option(k.Name, k.Id);
-                        }
-                    }
-                };
-                district.onchange = function () {
-                    ward.length = 1;
-                    const dataCity = data.filter((n) => n.Id === citis.value);
-                    if (this.value != "") {
-                        const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
-
-                        for (const w of dataWards) {
-                            wards.options[wards.options.length] = new Option(w.Name, w.Id);
-                        }
-                    }
-                };
+        var citis = document.getElementById("city");
+        var districts = document.getElementById("district");
+        var wards = document.getElementById("ward");
+        var Parameter = {
+            url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+            method: "GET",
+            responseType: "application/json",
+        };
+        var promise = axios(Parameter);
+        promise.then(function (result) {
+            renderCity(result.data);
+        });
+        var selectedLocal = "${selectedLocal}";
+        function renderCity(data) {
+            for (const x of data) {
+                let selected = selectedLocal == x.Name ? true : false;
+                citis.options[citis.options.length] = new Option(x.Name, x.Name, true, selected);
             }
+            citis.onchange = function () {
+                district.length = 1;
+                ward.length = 1;
+                if (this.value != "") {
+                    const result = data.filter(n => n.Id === this.value);
+
+                    for (const k of result[0].Districts) {
+                        district.options[district.options.length] = new Option(k.Name, k.Id);
+                    }
+                }
+            };
+            district.onchange = function () {
+                ward.length = 1;
+                const dataCity = data.filter((n) => n.Id === citis.value);
+                if (this.value != "") {
+                    const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
+
+                    for (const w of dataWards) {
+                        wards.options[wards.options.length] = new Option(w.Name, w.Id);
+                    }
+                }
+            };
+        }
 
 
 

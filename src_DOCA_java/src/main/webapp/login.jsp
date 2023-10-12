@@ -50,7 +50,7 @@
                             <p class="mb-4">Platform for dog and cat lovers.</p>
                             <h3>Login to <strong>Doca</strong></h3>
 
-                            <form action="DispatchServlet" method="post">
+                            <form action="DispatchServlet">
                                 <div class="form-group first">
                                     <label for="username">Username</label>
                                     <input type="text"  name="username" id="username" class="form-control" placeholder="Enter your username" id="username">
@@ -61,17 +61,15 @@
                                 </div>
 
                                 <div class="d-flex mb-5 align-items-center">
-                                    <label class="control control--checkbox mb-0"><span class="caption">Remember me</span>
+<!--                                    <label class="control control--checkbox mb-0"><span class="caption">Remember me</span>
                                         <input type="checkbox" checked="checked" />
                                         <div class="control__indicator"></div>
-                                    </label>
+                                    </label>-->
                                     <span class="ml-auto"><a href="#" class="forgot-pass">Forgot Password</a></span>
                                 </div>
 
                                 <input type="submit" value="Log In" name="btAction" class="btn btn-block btn-primary">
                                 <p class="footer">Chưa có tài khoản ? đăng kí<a href="CreateNewAccount.jsp"> tại đây </a></p>
-
-
                             </form>
                         </div>
                     </div>

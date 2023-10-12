@@ -18,6 +18,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
+import java.util.AbstractList;
 import java.util.List;
 import javax.naming.NamingException;
 
@@ -42,24 +43,39 @@ public class marketServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession(true);
+        HttpSession session = request.getSession();
         userDTO user = (userDTO) session.getAttribute("USER_NAME");
+        String index = request.getParameter("index");
+        if (index == null) {
+            index = "1";
+        }
+        int indexPage = Integer.parseInt(index);
         String url = "";
         try {
-            ProductDAO dao = new ProductDAO();
-            dao.getAllTheProduct();
-            List<ProductDTO> listOfProduct = dao.getListOfProduct();
-            if (listOfProduct != null) {
-                request.setAttribute("listOfProduct", listOfProduct);
-                url = MARKET_PAGE;
-            }
             if (user != null) {
                 saveProductDAO saveProductDao = new saveProductDAO();
-                saveProductDao.getSaveProductByuserID(user.getUser_ID());
+                int userID = user.getUser_ID();
+                saveProductDao.getSaveProductByuserID(userID);
                 List<saveProductDTO> listOfSaveProduct = saveProductDao.getListOfSaveProduct();
                 if (listOfSaveProduct != null) {
-                    session.setAttribute("listOfSaveProduct", listOfSaveProduct);
+                    request.setAttribute("listOfSaveProduct", listOfSaveProduct);
                 }
+            }
+
+            ProductDAO dao = new ProductDAO();
+            dao.getAllTheProduct();
+            List<ProductDTO> listOfProduct = (AbstractList<ProductDTO>) session.getAttribute("listOfProduct");
+            if (listOfProduct == null) {
+                listOfProduct = dao.getListOfProduct();
+            }
+            if (listOfProduct != null) {
+                int numberPage = dao.getNumberPage(listOfProduct);
+                List<ProductDTO> listInPage = dao.getPaging(indexPage, listOfProduct);
+                request.setAttribute("listOfProduct", listOfProduct);
+                request.setAttribute("numberPage", numberPage);
+                request.setAttribute("listInPage", listInPage);
+                request.setAttribute("indexPage", indexPage);
+                url = MARKET_PAGE;
             }
 
         } catch (ClassNotFoundException ex) {
@@ -110,7 +126,7 @@ public class marketServlet extends HttpServlet {
      * @return a String containing servlet description
      */
     @Override
-    public String getServletInfo() {
+    public String getServletInfo() { 
         return "Short description";
     }// </editor-fold>
 

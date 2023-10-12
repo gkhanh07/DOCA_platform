@@ -17,8 +17,8 @@ Khách hàng cần tư vấn inbox hoặc kết bạn zaalo
 Giao miễn phí Sài Gòn', N'https://tangbahai.com/upload/ckfider/images/lam-chuong-cho-bang-sat-v-lo.jpg', 0, 200, N'Phường Bình Hưng Hòa, Quận Bình Tân, Tp Hồ Chí Minh', GETDATE(), 1, N'Active', NULL);
 
 INSERT INTO [product] ([user_id], [category_id], [title], [description], [product_image], [is_free], [price], [address], [timePosted], [isPublic], [status], [reason])
-VALUES (2, 1, N'Phụ kiện cho chó', N'Nhiều phụ kiện thời trang và tiện ích cho chó cưng của bạn! Hãy làm cho thú cưng của bạn nổi bật với những sản phẩm thú vị như áo choàng, dây xích, hoặc mũ bảo hiểm dễ thương.', N'Image URL', 0, 150, N'Address', GETDATE(), 1, N'Active', NULL);
+VALUES (4, 1, N'aaaaa', N'Nhiều phụ kiện thời trang và tiện ích cho chó cưng của bạn! Hãy làm cho thú cưng của bạn nổi bật với những sản phẩm thú vị như áo choàng, dây xích, hoặc mũ bảo hiểm dễ thương.', N'Image URL', 0, 150, N'Address', GETDATE(), 1, N'Active', NULL);
 
 -- Insert product for user_id 3 and category_id 2
 INSERT INTO [product] ([user_id], [category_id], [title], [description], [product_image], [is_free], [price], [address], [timePosted], [isPublic], [status], [reason])
-VALUES (3, 2, N'Thức ăn cho chó', N'Chăm sóc dinh dưỡng cho chó của bạn với những sản phẩm thức ăn chất lượng cao. Chúng tôi cung cấp các loại thức ăn khô và ẩm ngon miệng, phù hợp với mọi lứa tuổi và kích thước của chó.', N'Image URL', 0, 50, N'Address', GETDATE(), 1, N'Active', NULL);
+VALUES (5, 2, N'Thức ăn cho chó', N'Chăm sóc dinh dưỡng cho chó của bạn với những sản phẩm thức ăn chất lượng cao. Chúng tôi cung cấp các loại thức ăn khô và ẩm ngon miệng, phù hợp với mọi lứa tuổi và kích thước của chó.', N'Image URL', 0, 50, N'Address', GETDATE(), 1, N'Active', NULL);

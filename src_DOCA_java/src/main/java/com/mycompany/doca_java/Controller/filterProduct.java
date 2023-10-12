@@ -59,11 +59,11 @@ public class filterProduct extends HttpServlet {
             }
 
             HttpSession session = request.getSession(true);
-            request.setAttribute("listOfProduct", newListOfProduct);
-            request.setAttribute("selectedLocal", local);
-            request.setAttribute("selectedLowerPrice", lowerPrice);
-            request.setAttribute("selectedCategory", category);
-            url = MARKET_PAGE;
+            session.setAttribute("listOfProduct", newListOfProduct);
+            session.setAttribute("selectedLocal", local);
+            session.setAttribute("selectedLowerPrice", lowerPrice);
+            session.setAttribute("selectedCategory", category);
+            url = "marketServlet?index=1";
 
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
