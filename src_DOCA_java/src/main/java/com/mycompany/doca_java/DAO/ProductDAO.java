@@ -83,6 +83,58 @@ public class ProductDAO {
             }
         }
     }
+    
+    public ProductDTO getProductById(int productId) 
+            throws SQLException, ClassNotFoundException, NamingException {
+    Connection con = null;
+    PreparedStatement stm = null;
+    ResultSet rs = null;
+    ProductDTO product = null;
+
+    try {
+        con = DBconnect.makeConnection();
+        if (con != null) {
+            
+            String sql = "SELECT product_id, user_id, category_id, title, description, product_image, is_free, price, address, timePosted, isPublic, status, reason "
+                    + "FROM product WHERE product_id = ?";
+           
+            stm = con.prepareStatement(sql);
+            stm.setInt(1, productId);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                int userId = rs.getInt("user_id");
+                int categoryId = rs.getInt("category_id");
+                String title = rs.getString("title");
+                String description = rs.getString("description");
+                String productImage = rs.getString("product_image");
+                boolean isFree = rs.getBoolean("is_free");
+                float price = rs.getFloat("price");
+                String address = rs.getString("address");
+                Date timePosted = rs.getDate("timePosted");
+                boolean isPublic = rs.getBoolean("isPublic");
+                String status = rs.getString("status");
+                String reason = rs.getString("reason");
+                product = new ProductDTO(productId, userId, categoryId, title, description, productImage, isFree, price, address, timePosted, isPublic, status, reason);
+            }
+        }
+    } finally {
+        if (rs != null) {
+            rs.close();
+        }
+
+        if (stm != null) {
+            stm.close();
+        }
+        if (con != null) {
+            con.close();
+        }
+    }
+
+    return product;
+}
+    
+    
+    
 
     
     public int getNumberPage(List<ProductDTO> ListOfProduct){
