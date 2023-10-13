@@ -59,7 +59,7 @@
 
 
         <c:set var="Products" value="${requestScope.listInPage}"/>
-        <c:set var="SaveProducts" value="${requestScope.listOfSaveProduct}"/>
+        <c:set var="SaveProductsList" value="${sessionScope.listOfSaveProduct}"/>
 
         <jsp:include page="header.jsp" />
 
@@ -73,11 +73,11 @@
                             <div class="btn-group" style="width: 200px;">
                                 <select name="city" class="form-select form-select-sm rounded-pill" style="width: 100%;" id="city"
                                         aria-label=".form-select-sm">
-
                                     <option value="" >
                                         Toàn quốc
                                     </option>
                                 </select> 
+
                             </div>
 
                             <div  class="btn-group" style="width: 200px;">
@@ -102,7 +102,11 @@
                                     <option value="3" ${selectedCategory == 3 ? 'selected' : ''}>Chuồng thú cưng</option>
                                     <option value="4" ${selectedCategory == 4 ? 'selected' : ''}>Khác</option>
                                 </select>
+
                             </div>
+
+
+
                             <div style="width: 200px;">
                                 <input type="hidden" name="listOfProduct" value="${Products}" />
                                 <input class=" rounded-pill"  style="width: 100px; height: 38px" type="submit" name="btAction" value="Loc" />
@@ -124,42 +128,46 @@
                                             <h6 style="font-size: 15px; opacity: 0.5;">${address}</h6>
                                         </div>
                                     </a>
-                                    <c:set var="productID" value="${product.productId}"/>
+                                    <c:set var="isSaved" value="false"/>
+                                    <c:set var="productIDChangeSave" value="${product.productId}"/>
+                                    <p>${productIDChangeSave}</p>
+                                    <c:forEach items="${SaveProductsList}" var="saveProduct" >
+                                        <c:if test="${saveProduct.productId == product.productId }">
+                                            <c:set var="isSaved" value="true"/>
+                                        </c:if>
+                                    </c:forEach>
+                                    <c:url var="saveProductLink" value="DispatchServlet" >
+                                        <c:param name="btAction" value="saveProduct"></c:param>
+                                        <c:param name="isSaved" value="${isSaved}"></c:param>
+                                        <c:param name="productIDChangeSave" value="${productIDChangeSave}"></c:param>
+                                    </c:url>
                                     <span class="like-icon">
-                                        <c:set var="color" value="gray" />
-                                        <c:set var="isSaved" value="false" />
+                                        <a class="fa fa-heart border-0 p-0" 
+                                           href="${saveProductLink}"
+                                           style="color: ${isSaved=="true"? "red":"gray"}; cursor: pointer; position: absolute; bottom: 30px; right: 40px;">
 
-                                        <c:forEach items="${SaveProducts}" var="saveproduct">
-                                            <c:if test="${saveproduct.productId eq productID}">
-                                                <c:set var="color" value="red" />
-                                                <c:set var="isSaved" value="true" />
-                                            </c:if>
-                                        </c:forEach>
-                                        <button type="submit" name="btAction" value="saveProduct" class="fa fa-heart border-0 p-0" 
-                                                style="color: ${color}; cursor: pointer; position: absolute; bottom: 30px; right: 40px;">
-                                            <input type="hidden" name="isSaved" value="${isSaved}" />
-                                            <input type="hidden" name="productIDChangeSave" value="${productID}" />
-                                        </button>
+                                        </a>
                                     </span>
                                 </div>
                             </c:forEach>
                         </div>  
                     </div>
-                </form>
 
 
-                <nav aria-label="Page navigation ">
-                    <c:set var="numberPage" value="${requestScope.numberPage}"/>
-                    <ul class="pagination justify-content-center">
-                        <c:forEach begin="1" end="${numberPage}" var="i">
-                            <li class="page-item rounded-pill ${indexPage==i?"active":""}" >
-                                <a class="page-link rounded-pill" href="marketServlet?index=${i}">${i}</a>
-                            </li>
+
+                    <nav aria-label="Page navigation ">
+                        <c:set var="numberPage" value="${requestScope.numberPage}"/>
+                        <ul class="pagination justify-content-center">
+                            <c:forEach begin="1" end="${numberPage}" var="i">
+                                <li class="page-item rounded-pill ${indexPage==i?"active":""}" >
+                                    <a class="page-link rounded-pill" href="marketServlet?index=${i}">${i}</a>
+                                </li>
                             </c:forEach> 
 
 
-                    </ul>
-                </nav>
+                        </ul>
+                    </nav>
+                </form>
             </div>
 
         </div>

@@ -38,34 +38,42 @@ public class updateSaveProductServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String local = request.getParameter("city");
-        float lowerPrice = Float.parseFloat(request.getParameter("lowerPrice"));
-        int category = Integer.parseInt(request.getParameter("category"));
-        int productID = Integer.parseInt(request.getParameter("productIDChangeSave"));
         HttpSession session = request.getSession(true);
-        userDTO user = (userDTO) session.getAttribute("USER_NAME");
+
+        String local = session.getAttribute("selectedLocal") != null ? 
+                (String) session.getAttribute("selectedLocal") : "";
+        float lowerPrice = session.getAttribute("selectedLowerPrice") != null ? 
+                (float) session.getAttribute("selectedLowerPrice") : 0.0f;
+        int category = session.getAttribute("selectedCategory") != null ? 
+                (int) session.getAttribute("selectedCategory") : 0;
+        int productID = Integer.parseInt(request.getParameter("productIDChangeSave"));
+        userDTO account = (userDTO) session.getAttribute("USER_NAME");
         boolean isSaved = Boolean.parseBoolean(request.getParameter("isSaved"));
+
+       int indexPage = session.getAttribute("indexPage") != null ? 
+                (int) session.getAttribute("indexPage") : 1;
+
         String url = "";
         try {
-            if (user != null) {
-                 saveProductDAO dao = new saveProductDAO();
+            if (account != null) {
+                saveProductDAO dao = new saveProductDAO();
                 if (!isSaved) {
-                    boolean result = dao.createSaveProduct(user.getUser_ID(),productID);//get userID form sessionScope
+                    boolean result = dao.createSaveProduct(account.getUser_ID(), productID);//get userID form sessionScope
                     if (result) {
-                        url = "DispatchServlet"
-                                + "?btAction=Loc"
-                                + "&city=" + local
+                        url = "filterProduct"
+                                + "?city=" + local
                                 + "&lowerPrice=" + lowerPrice
-                                + "&category=" + category;
+                                + "&category=" + category
+                                + "&indexFromSaveProduct=" + indexPage;
                     }
-                }else{
-                   boolean result = dao.deleteSaveProduct(user.getUser_ID(),productID);//get userID form sessionScope
+                } else {
+                    boolean result = dao.deleteSaveProduct(account.getUser_ID(), productID);//get userID form sessionScope
                     if (result) {
-                        url = "DispatchServlet"
-                                + "?btAction=Loc"
-                                + "&city=" + local
+                        url = "filterProduct"
+                                + "?city=" + local
                                 + "&lowerPrice=" + lowerPrice
-                                + "&category=" + category;
+                                + "&category=" + category
+                                + "&indexFromSaveProduct=" + indexPage;
                     }
                 }
             } else {
