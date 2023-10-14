@@ -249,12 +249,6 @@
 
 
 
-
-
-
-
-
-
         <script>
             function toggleCommentForm() {
                 const commentForm = document.getElementById('commentForm');

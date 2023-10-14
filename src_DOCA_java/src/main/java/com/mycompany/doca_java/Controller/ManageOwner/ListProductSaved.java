@@ -2,13 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package com.mycompany.doca_java.Controller;
+package com.mycompany.doca_java.Controller.ManageOwner;
 
 import com.mycompany.doca_java.DAO.ProductDAO;
-import com.mycompany.doca_java.DAO.categoryDAO;
-import com.mycompany.doca_java.DAO.userDAO;
 import com.mycompany.doca_java.DTO.ProductDTO;
-import com.mycompany.doca_java.DTO.categoryDTO;
 import com.mycompany.doca_java.DTO.userDTO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -20,15 +17,19 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
+import java.util.List;
 import javax.naming.NamingException;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "productDetailServlet", urlPatterns = {"/productDetailServlet"})
-public class productDetailServlet extends HttpServlet {
-private final String productdetail_Page = "productDetail.jsp";
+@WebServlet(name = "ListProductSaved", urlPatterns = {"/ListProductSaved"})
+public class ListProductSaved extends HttpServlet {
+
+    private final String LOGIN_PAGE = "login.jsp";
+    private final String  PRODUCTSAVED= "Product_Saved.jsp";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -41,25 +42,21 @@ private final String productdetail_Page = "productDetail.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        int productID = Integer.parseInt(request.getParameter("productId"));
+        HttpSession session = request.getSession(true);
+        userDTO account = (userDTO) session.getAttribute("USER_NAME");
         String url = "";
         try {
-            ProductDAO dao = new ProductDAO();
-            ProductDTO productDetail = dao.getProductById(productID);
-            userDAO ownerDao= new userDAO();
-            if (productDetail != null) {
-                HttpSession session = request.getSession(true);
-                request.setAttribute("productDetail", productDetail);
-                int categoryID = productDetail.getCategoryId();
-                categoryDAO daoCate = new categoryDAO();
-                categoryDTO category = daoCate.getCategoryById(categoryID);
-                request.setAttribute("category", category);
-                userDTO owner=ownerDao.getUserbyProductID(productID);
-                request.setAttribute("owner", owner);
-                url=productdetail_Page;
+            if (account != null) {
+                ProductDAO dao = new ProductDAO();
+                dao.getProductSavedbyUserID(account.getUser_ID());
+                List<ProductDTO> listOfProduct = dao.getListOfProduct();
+                if (listOfProduct != null) {
+                    request.setAttribute("listOfSaved", listOfProduct);
+                    url = PRODUCTSAVED;
+                }
+            } else {
+                url = LOGIN_PAGE;
             }
-            
-
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         } catch (NamingException ex) {
