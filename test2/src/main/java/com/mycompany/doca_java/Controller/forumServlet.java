@@ -5,11 +5,14 @@
 package com.mycompany.doca_java.Controller;
 
 import com.mycompany.doca_java.DAO.PostDAO;
-
+import com.mycompany.doca_java.DAO.categoryDAO;
+import com.mycompany.doca_java.DAO.userDAO;
 import com.mycompany.doca_java.DTO.PostDTO;
-
+import com.mycompany.doca_java.DTO.categoryDTO;
+import com.mycompany.doca_java.DTO.userDTO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -17,6 +20,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.naming.NamingException;
 
@@ -26,42 +30,64 @@ import javax.naming.NamingException;
  */
 @WebServlet(name = "forumServlet", urlPatterns = {"/forumServlet"})
 public class forumServlet extends HttpServlet {
-
     private final String FORUM_PAGE = "forum.jsp";
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String idcate= request.getParameter("categoryID");
+        if(idcate == null){
+            idcate="5";
+        }
+        int indexcategoryID =Integer.parseInt(idcate);
+         String index = request.getParameter("index");
+        if (index == null) {
+            index = "1";
+        }
+        int indexPage = Integer.parseInt(index);
         String url = "";
         try {
             PostDAO dao = new PostDAO();
-            dao.getAllThePost();
-            List <PostDTO> listOfPost = dao.getListOfPost();
-            if (listOfPost != null) {
+            dao.getPostByCategoryID(indexcategoryID);
+            List<PostDTO> listOfPost = dao.getListOfPost();
+            int numberPage = dao.getNumberPage(listOfPost);
+            List<PostDTO> listInPage = dao.getPaging(indexPage, listOfPost);
+            if (listInPage != null) {
                 HttpSession session = request.getSession(true);
-                session.setAttribute("listOfPost", listOfPost);
-                url = FORUM_PAGE;
+                request.setAttribute("listOfPost", listOfPost);
+                request.setAttribute("indexcategoryID", indexcategoryID);
+                request.setAttribute("listInPage", listInPage);
+                request.setAttribute("numberPage", numberPage);
+                request.setAttribute("indexPage", indexPage);
+                
             }
-
-        } catch (ClassNotFoundException ex) {
+            categoryDAO cataDao= new categoryDAO();
+            List<categoryDTO> listCategory= new ArrayList<>();
+            for(int i=5; i<=9; i++){
+                listCategory.add(cataDao.getCategoryById(i));
+            }
+            if(listCategory != null){
+                request.setAttribute("listCategory", listCategory);
+            }
+            
+            userDAO uDao= new userDAO();
+            uDao.getAllTheUser();
+            List<userDTO> ListOfUser=uDao.getListOfUser();
+            if(ListOfUser!=null){
+                request.setAttribute("ListOfUser", ListOfUser);
+            }
+            url = FORUM_PAGE;
+            
+        }  catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         } catch (NamingException ex) {
             ex.printStackTrace();
         } catch (SQLException ex) {
             ex.printStackTrace();
-        } finally {
-//            RequestDispatcher rd= request.getRequestDispatcher(url);
-//            rd.forward(request, response);
-            response.sendRedirect(url);
+        }finally {
+            RequestDispatcher rd= request.getRequestDispatcher(url);
+            rd.forward(request, response);
+//            response.sendRedirect(url);
         }
     }
 

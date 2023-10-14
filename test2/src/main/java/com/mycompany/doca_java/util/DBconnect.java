@@ -16,11 +16,10 @@ import javax.naming.NamingException;
 public class DBconnect {
 
     public static Connection makeConnection() throws SQLException, ClassNotFoundException, NamingException {
-//        try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            String url = "jdbc:sqlserver://localhost:1433;databaseName=DOCA_platform;encrypt=true;trustServerCertificate=true;";
-            Connection con = DriverManager.getConnection(url, "sa", "12345");
-            return con;
+
+        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        String url = "jdbc:sqlserver://localhost:1433;databaseName=DOCA_platform;encrypt=true;trustServerCertificate=true;";
+        Connection con = DriverManager.getConnection(url, "sa", "12345");
+        return con;
     }
 }
-
