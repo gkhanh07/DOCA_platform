@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package com.mycompany.doca_java.Controller;
+package com.mycompany.doca_java.Controller.commentPost;
 
-import com.mycompany.doca_java.DAO.saveProductDAO;
+import com.mycompany.doca_java.DAO.commentDAO;
 import com.mycompany.doca_java.DTO.userDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -21,8 +21,8 @@ import javax.naming.NamingException;
  *
  * @author Admin
  */
-@WebServlet(name = "updateSaveProductServlet", urlPatterns = {"/updateSaveProductServlet"})
-public class updateSaveProductServlet extends HttpServlet {
+@WebServlet(name = "createCommentServlet", urlPatterns = {"/createCommentServlet"})
+public class createCommentServlet extends HttpServlet {
 
     private final String LOGIN_PAGE = "login.jsp";
 
@@ -39,42 +39,26 @@ public class updateSaveProductServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession(true);
-
-        String local = session.getAttribute("selectedLocal") != null ? 
-                (String) session.getAttribute("selectedLocal") : "";
-        float lowerPrice = session.getAttribute("selectedLowerPrice") != null ? 
-                (float) session.getAttribute("selectedLowerPrice") : 0.0f;
-        int category = session.getAttribute("selectedCategory") != null ? 
-                (int) session.getAttribute("selectedCategory") : 0;
-        int productID = Integer.parseInt(request.getParameter("productIDChangeSave"));
         userDTO account = (userDTO) session.getAttribute("USER_NAME");
-        boolean isSaved = Boolean.parseBoolean(request.getParameter("isSaved"));
-
-       int indexPage = session.getAttribute("indexPageMarket") != null ? 
-                (int) session.getAttribute("indexPageMarket") : 1;
+        int postID = Integer.parseInt(request.getParameter("postID"));
+        String commetDes = request.getParameter("commentDes");
+        int category = Integer.parseInt(request.getParameter("slectedCategoryID"));
+        int indexPage = session.getAttribute("indexPageForum") != null
+                ? (int) session.getAttribute("indexPageForum") : 1;
 
         String url = "";
+
         try {
+
             if (account != null) {
-                saveProductDAO dao = new saveProductDAO();
-                if (!isSaved) {
-                    boolean result = dao.createSaveProduct(account.getUser_ID(), productID);//get userID form sessionScope
-                    if (result) {
-                        url = "filterProduct"
-                                + "?city=" + local
-                                + "&lowerPrice=" + lowerPrice
-                                + "&category=" + category
-                                + "&indexFromSaveProduct=" + indexPage;
-                    }
-                } else {
-                    boolean result = dao.deleteSaveProduct(account.getUser_ID(), productID);//get userID form sessionScope
-                    if (result) {
-                        url = "filterProduct"
-                                + "?city=" + local
-                                + "&lowerPrice=" + lowerPrice
-                                + "&category=" + category
-                                + "&indexFromSaveProduct=" + indexPage;
-                    }
+                int userID = account.getUser_ID();
+                commentDAO dao = new commentDAO();
+                boolean result = dao.insertComment(userID, postID, commetDes);
+                if (result) {
+                    url = "forumServlet"
+                            + "?categoryID=" + category
+                            + "&index=" + indexPage;
+
                 }
             } else {
                 url = LOGIN_PAGE;
@@ -88,7 +72,6 @@ public class updateSaveProductServlet extends HttpServlet {
         } finally {
             response.sendRedirect(url);
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

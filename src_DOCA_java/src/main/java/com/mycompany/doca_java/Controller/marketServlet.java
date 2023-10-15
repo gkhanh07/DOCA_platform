@@ -64,7 +64,7 @@ public class marketServlet extends HttpServlet {
                 request.setAttribute("listOfProduct", listOfProduct);
                 request.setAttribute("numberPage", numberPage);
                 request.setAttribute("listInPage", listInPage);
-                session.setAttribute("indexPage", indexPage);
+                session.setAttribute("indexPageMarket", indexPage);
                 url = MARKET_PAGE;
             }
             if (user != null) {
