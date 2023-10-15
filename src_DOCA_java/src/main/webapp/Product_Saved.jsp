@@ -47,7 +47,7 @@
     <body>
         <jsp:include page="header.jsp" />
         <c:set var="listOfSaved" value="${requestScope.listOfSaved}"/>
-
+        <c:set var="message" value="${requestScope.Message}"/>
         <div class="main-content">
             <div class="row row-content justify-content-center">
 
@@ -63,7 +63,10 @@
                     </div>
                     <div class="tab-content  ">
                         <div id="product" class="tab-pane fade show active ">
+                            <div class="row justify-content-center" >
+                                <label>${message}</label>
 
+                            </div>
                             <div class="row justify-content-start" >
 
                                 <c:forEach items="${listOfSaved}" var="porduct">
@@ -78,7 +81,7 @@
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <h6 style="font-size: 15px; opacity: 0.5;">${porduct.address}</h6>
                                                     <span class="like-icon">
-                                                        <a href="javascript:void(0);" class="like-button">
+                                                        <a href="DeleteSaveProduct_InSavePage?productID=${porduct.productId}" class="like-button">
                                                             <i class="fa fa-heart" style="color: red;"></i>
                                                         </a>
                                                     </span>

@@ -53,6 +53,9 @@ public class ListProductSaved extends HttpServlet {
                 if (listOfProduct != null) {
                     request.setAttribute("listOfSaved", listOfProduct);
                     url = PRODUCTSAVED;
+                }else{
+                    request.setAttribute("Message", "không có sản phẩm nào được lưu");
+                    url = PRODUCTSAVED;
                 }
             } else {
                 url = LOGIN_PAGE;

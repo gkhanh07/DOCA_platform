@@ -47,7 +47,7 @@
     <body>
         <c:set var="product" value="${requestScope.productDetail}" />
         <c:set var="category" value="${requestScope.category}" />
-
+     
         <jsp:include page="header.jsp" />
         <div class="main-content">
             <div class="row row-content justify-content-center">
@@ -55,6 +55,7 @@
                     <div class="container pt-5">
                         <div class="row">
                             <div class="col">
+                                
                                 <c:set var="img" value="${product.productImage}"/>
                                 <img class="" src=${img} alt="">
                                 <div class="product_info">
@@ -86,7 +87,7 @@
                                 </div>
                                 <div class="row mt-5">
                                     <button class="btn btn-outline-secondary bg-light btn-block text-success"
-                                            id="sellerPhone">${owner.mobileNum}</button>
+                                            id="sellerPhone">hiện số người bán</button>
 
                                     <br><button class="btn btn-outline-secondary bg-light btn-block text-success mt-2">
                                         <i class="fa fa-comments"></i> chat với người bán</button>
@@ -112,9 +113,11 @@
 
         <script>
             var button = document.getElementById("sellerPhone");
-
+             var owner = {
+        mobileNum: ${owner.mobileNum}
+    };
             button.addEventListener("click", function () {
-                button.textContent = "012345678"; // Change the text when clicked
+                button.textContent = owner.mobileNum; // Change the text when clicked
             });
         </script>
     </body>

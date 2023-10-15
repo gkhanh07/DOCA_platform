@@ -36,7 +36,8 @@ public class ProductDAO {
             if (con != null) {
                 //2.create sql string
                 String sql = "SELECT product_id, user_id, category_id, title, description, product_image, is_free, price, address, timePosted, isPublic, status, reason "
-                        + "FROM product";
+                        + "FROM product "
+                        + "ORDER BY timePosted DESC"; // Sắp xếp giảm dần timePosted
                 //3.create stm obj
                 stm = con.prepareStatement(sql);
                 //4.execute
@@ -61,13 +62,68 @@ public class ProductDAO {
                     ProductDTO product = new ProductDTO(productId, userId, categoryId, title, description, productImage, isFree, price, address, timePosted, isPublic, status, reason);
 
                     //5.2 add data to list
-                    if (this.ListOfProduct
-                            == null) {
+                    if (this.ListOfProduct == null) {
                         this.ListOfProduct = new ArrayList<>();
-
                     }//end account list has not existed
 
                     this.ListOfProduct.add(product);
+                }//end map DB to DTO
+            }//end connect is available
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+
+            if (stm != null) {
+                con.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
+
+    public void getProductavailable() throws SQLException, ClassNotFoundException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBconnect.makeConnection();
+            if (con != null) {
+                //2.create sql string
+                String sql = "SELECT product_id, user_id, category_id, title, description, product_image, is_free, price, address, timePosted, isPublic, status, reason "
+                        + "FROM product "
+                        + "ORDER BY timePosted DESC"; // Sắp xếp giảm dần timePosted
+                //3.create stm obj
+                stm = con.prepareStatement(sql);
+                //4.execute
+                rs = stm.executeQuery();
+                //5.process (Note: Luu y Khi SU DUNG IF/WHILE)
+                while (rs.next()) {
+                    int productId = rs.getInt("product_id");
+                    int userId = rs.getInt("user_id");
+                    int categoryId = rs.getInt("category_id");
+                    String title = rs.getString("title");
+                    String description = rs.getString("description");
+                    String productImage = rs.getString("product_image");
+                    boolean isFree = rs.getBoolean("is_free");
+                    float price = rs.getFloat("price");
+                    String address = rs.getString("address");
+                    Date timePosted = rs.getDate("timePosted");
+                    boolean isPublic = rs.getBoolean("isPublic");
+                    String status = rs.getString("status");
+                    String reason = rs.getString("reason");
+
+                    //5.1.2 set properties of pro
+                    ProductDTO product = new ProductDTO(productId, userId, categoryId, title, description, productImage, isFree, price, address, timePosted, isPublic, status, reason);
+
+                    //5.2 add data to list
+                    if (this.ListOfProduct == null) {
+                        this.ListOfProduct = new ArrayList<>();
+                    }//end account list has not existed
+                    if (product.isPublic() && (product.getStatus().equals("accpeted"))) {
+                        this.ListOfProduct.add(product);
+                    }
                 }//end map DB to DTO
             }//end connect is available
         } finally {

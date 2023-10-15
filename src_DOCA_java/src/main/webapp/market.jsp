@@ -115,6 +115,7 @@
 
                         <div class="tab-content">
                             <c:forEach items="${Products}" var="product">
+                                
                                 <div  style="position: relative; border-bottom: 1px solid rgb(224, 224, 224);">
                                     <a href="productDetailServlet?productId=${product.productId}" class="sell d-flex" style="width: 100%;">
                                         <c:set var="img" value="${product.productImage}"/>
@@ -130,7 +131,7 @@
                                     </a>
                                     <c:set var="isSaved" value="false"/>
                                     <c:set var="productIDChangeSave" value="${product.productId}"/>
-                                    <p>${productIDChangeSave}</p>
+
                                     <c:forEach items="${SaveProductsList}" var="saveProduct" >
                                         <c:if test="${saveProduct.productId == product.productId }">
                                             <c:set var="isSaved" value="true"/>

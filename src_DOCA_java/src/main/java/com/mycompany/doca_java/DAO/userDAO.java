@@ -63,7 +63,7 @@ public class userDAO {
                     boolean status = rs.getBoolean("status");
                     boolean roleID = rs.getBoolean("role_id");
                     String avatar = rs.getString("avatar");
-                    result = new userDTO(user_ID, username, password, Gender, email, email, status, roleID, avatar);
+                    result = new userDTO(user_ID, username, password, Gender, email, phone, status, roleID, avatar);
                 }
             }
         } finally {
@@ -110,7 +110,7 @@ public class userDAO {
                     String avatar = rs.getString("avatar");
                     //5.1.2 set properties of pro
                     userDTO user
-                            = new userDTO(user_ID, userName, password, Gender, email, email, status, roleID, avatar);
+                            = new userDTO(user_ID, userName, password, Gender, email, phone, status, roleID, avatar);
 
                     //5.2 add data to list
                     if (this.ListOfUser
@@ -171,7 +171,7 @@ public class userDAO {
                     String avatar = rs.getString("avatar");
                     //5.1.2 set properties of pro
                     user
-                            = new userDTO(user_ID, userName, password, Gender, email, email, status, roleID, avatar);
+                            = new userDTO(user_ID, userName, password, Gender, email, phone, status, roleID, avatar);
 
                 }//end map DB to DTO
             }//end connect is available
