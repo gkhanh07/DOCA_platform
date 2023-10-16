@@ -96,7 +96,8 @@ public class CreateNewAccountServlet extends HttpServlet {
         boolean status = true;  // Assuming the user is initially active
         boolean roleID = false; // Adjust as needed
         String avatar = "default.jpg"; // Default avatar image
-
+        String fullname = request.getParameter("txtFullname");
+        
         userDTO user = new userDTO();
         user.setUserName(username);
         user.setPassword(password);
@@ -106,7 +107,8 @@ public class CreateNewAccountServlet extends HttpServlet {
         user.setStatus(status);
         user.setRoleID(roleID);
         user.setAvatar(avatar);
-
+        user.setFullname(fullname);
+        
         userDAO userDAO = new userDAO();
        
         if (userDAO.isUsernameAvailable(username) && userDAO.isEmailAvailable(email)) {
@@ -144,4 +146,3 @@ public class CreateNewAccountServlet extends HttpServlet {
     }// </editor-fold>
 
 }
-

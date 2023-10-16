@@ -40,6 +40,14 @@
                 <form id="registrationForm" action="DispatchServlet" method="POST">
                     <h3 class="mb-4 text-center">Đăng ký tài khoản</h3>
                    
+                    
+                    <div class="form-group">
+                        <label for="fullname">Họ Và Tên</label>
+                        <input type="text" id="fullname" class="form-control" placeholder="Họ Và Tên" name="txtFullname" required>
+                        <i class="zmdi zmdi-fullname"></i>
+                    </div>
+                    
+                    
                     <div class="form-group">
                         <label for="username">Tên đăng nhập</label>
                         <input type="text" id="username" class="form-control" placeholder="Tên đăng nhập" name="txtUsername" required>

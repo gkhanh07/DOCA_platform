@@ -36,6 +36,7 @@ public class userDAO {
                         + "      ,[status]\n"
                         + "      ,[role_id]\n"
                         + "      ,[avatar]\n"
+                        + "      ,[fullname]\n"
                         + "FROM [dbo].[users]\n"
                         + "WHERE [username] = ? AND [password] = ?;";
                 //3.create stm obj
@@ -55,7 +56,8 @@ public class userDAO {
                     boolean status=rs.getBoolean("status");
                     boolean roleID = rs.getBoolean("role_id");
                     String avatar= rs.getString("avatar");
-                    result = new userDTO(user_ID, username, password, Gender, email, email, status, roleID, avatar);
+                    String fullname = rs.getString("fullname");
+                    result = new userDTO(user_ID, username, password, Gender, email, email, status, roleID, avatar, fullname);
                 }
             }
         } finally {
@@ -80,7 +82,15 @@ public boolean createUser(userDTO user) {
         try {
             con = DBconnect.makeConnection();
             if (con != null) {
-                String sql = "INSERT INTO users ([username], [password], [Gender], [email], [mobile_num], [status], [role_id], [avatar]) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                String sql = "INSERT INTO users ([username], "
+                        + "[password], "
+                        + "[Gender], "
+                        + "[email], "
+                        + "[mobile_num], "
+                        + "[status], "
+                        + "[role_id], "
+                        + "[avatar], "
+                        + "[fullname]) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 PreparedStatement ps = con.prepareStatement(sql);
                 ps.setString(1, user.getUserName());
                 ps.setString(2, user.getPassword());
@@ -90,7 +100,7 @@ public boolean createUser(userDTO user) {
                 ps.setBoolean(6, user.isStatus());
                 ps.setBoolean(7, true);
                 ps.setString(8, user.getAvatar());
-                
+                ps.setString(9, user.getFullname());
                 int rowsAffected = ps.executeUpdate();
                 return rowsAffected > 0;
             }
@@ -147,4 +157,3 @@ public boolean isUsernameAvailable(String username) {
     }
     
 }
-

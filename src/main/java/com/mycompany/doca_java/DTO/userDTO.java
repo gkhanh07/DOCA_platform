@@ -31,4 +31,5 @@ public class userDTO implements Serializable {
     boolean status;
     boolean roleID;
     String avatar;
+    String fullname;
 }
