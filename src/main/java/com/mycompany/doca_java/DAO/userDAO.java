@@ -88,7 +88,7 @@ public boolean createUser(userDTO user) {
                 ps.setString(4, user.getEmail());
                 ps.setString(5, user.getMobileNum());
                 ps.setBoolean(6, user.isStatus());
-                ps.setBoolean(7, user.isRoleID());
+                ps.setBoolean(7, true);
                 ps.setString(8, user.getAvatar());
                 
                 int rowsAffected = ps.executeUpdate();
