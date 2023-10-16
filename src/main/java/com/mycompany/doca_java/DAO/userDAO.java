@@ -99,5 +99,52 @@ public boolean createUser(userDTO user) {
         }
         return false;
     }
+
+public boolean isUsernameAvailable(String username) {
+    Connection con = null;
+    try {
+        con = DBconnect.makeConnection();
+        if (con != null) {
+            String sql = "SELECT COUNT(*) FROM users WHERE username = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                return count == 0; // If count is 0, the username is available
+            }
+        }
+    } catch (SQLException | ClassNotFoundException | NamingException e) {
+        e.printStackTrace();
+    }
+    return false;
+}
+    public boolean isEmailAvailable(String email) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            con = DBconnect.makeConnection();
+            if (con != null) {
+                String sql = "SELECT COUNT(*) FROM users WHERE email = ?";
+                ps = con.prepareStatement(sql);
+                ps.setString(1, email);
+                rs = ps.executeQuery();
+
+                if (rs.next()) {
+                    int count = rs.getInt(1);
+                    return count == 0; // If count is 0, the email is available; otherwise, it's taken.
+                }
+            }
+        } catch (SQLException | ClassNotFoundException | NamingException e) {
+            e.printStackTrace();
+        } finally {
+            // Close resources (rs, ps, con)
+        }
+
+        return false; // Return false in case of an error
+    }
     
 }
+

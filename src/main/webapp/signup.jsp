@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -37,31 +37,38 @@
     <div class="container mt-5" style="background-color: #f9f9f9" >
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <form action="DispatchServlet" method="POST">
+                <form id="registrationForm" action="DispatchServlet" method="POST">
                     <h3 class="mb-4 text-center">Đăng ký tài khoản</h3>
-                    
+                   
                     <div class="form-group">
                         <label for="username">Tên đăng nhập</label>
-                        <input type="text" id="username" class="form-control" placeholder="Tên đăng nhập" name="txtUsername">
+                        <input type="text" id="username" class="form-control" placeholder="Tên đăng nhập" name="txtUsername" required>
                         <i class="zmdi zmdi-account"></i>
                     </div>
-                    
-                    
+                     <c:set var="usernameTaken" value="${param.usernameTaken}" />
+                     <c:if test="${param.usernameTaken eq 'true'}">
+                         <div class="alert alert-danger">Tên đăng nhập đã tồn tại. Vui lòng chọn tên khác.</div>
+                     </c:if>
+
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="text" id="email" class="form-control" placeholder="Email" name="txtEmail">
+                        <input type="email" id="email" class="form-control" placeholder="Email" name="txtEmail" required>
+                        <i class="zmdi zmdi-email"></i>
                     </div>
+                         <c:if test="${not empty param.emailTaken}">
+                             <div class="alert alert-danger">Email đã được sử dụng. Vui lòng sử dụng địa chỉ email khác.</div>
+                         </c:if>
                     
                     
                     <div class="form-group">
                         <label for="phone">Số điện thoại</label>
-                        <input type="number" id="phone" class="form-control" placeholder="Số điện thoại" name="txtPhone"> 
+                        <input type="text" id="phone" class="form-control" placeholder="Số điện thoại" name="txtPhone" required> 
                     </div>
                     
                     
                     <div class="form-group">
                         <label for="gender">Giới tính</label>
-                        <select id="gender" class="form-control" name="txtGender">
+                        <select id="gender" class="form-control" name="txtGender" required>
                             <option value="" disabled selected>Chọn giới tính</option>
                             <option value="male">Nam</option>
                             <option value="female">Nữ</option>
@@ -72,13 +79,14 @@
                     
                     <div class="form-group">
                         <label for="password">Mật khẩu</label>
-                        <input type="password" id="password" class="form-control" placeholder="Mật khẩu" name="txtPassword">                 
+                        <input type="password" id="password" class="form-control" placeholder="Mật khẩu" name="txtPassword" required>                 
                     </div>
                     
                     
                     <div class="form-group">
                         <label for="confirmPassword">Xác nhận mật khẩu</label>
-                        <input type="password" id="confirmPassword" class="form-control" placeholder="Xác nhận mật khẩu" name="txtConfirm">
+                        <input type="password" id="confirmPassword" class="form-control" placeholder="Xác nhận mật khẩu" name="txtConfirm" required>
+                        <span class="error-text" id="confirmPasswordError"></span>
                     </div>
                     
                     
@@ -87,12 +95,50 @@
                        <input type="file" id="avatar" class="form-control" name="avatarFile">
                     </div>
                     
-                    <button class="btn btn-primary" value="Create New Account" name="btAction">Đăng ký tài khoản <i class="zmdi zmdi-arrow-right"></i></button>
-                    <p class="footer mt-3 text-center">Đã có tài khoản? <a href="login.html">Đăng nhập</a></p>
+                   <button class="btn btn-primary" value="Create New Account" name="btAction" onclick="return validateForm()">
+                       Đăng ký tài khoản <i class="zmdi zmdi-arrow-right">
+                            </i></button>
+                   <p class="footer mt-3 text-center">Đã có tài khoản? <a href="login.jsp">Đăng nhập</a></p>
                 </form>
             </div>
         </div>
     </div>
+<script>
+    document.querySelector('form').addEventListener('submit', function(event) {
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        const confirmPasswordError = document.getElementById('confirmPasswordError');
+        
+        if (password !== confirmPassword) {
+            confirmPasswordError.textContent = 'Mật khẩu xác nhận không khớp.';
+            event.preventDefault(); // Ngăn chặn việc gửi biểu mẫu nếu có lỗi
+        } else {
+            confirmPasswordError.textContent = ''; // Xóa thông báo lỗi nếu mật khẩu khớp
+        }
+    });
+    
+    function validateForm() {
+    var form = document.getElementById("registrationForm");
+    var requiredFields = form.querySelectorAll('[required]');
+
+    for (var i = 0; i < requiredFields.length; i++) {
+        if (requiredFields[i].value.trim() === '') {
+            alert("Vui lòng điền tất cả thông tin.");
+            return false; // Prevent the form from being submitted
+        }
+    }
+
+    return true; // Allow the form to be submitted if all required fields are filled
+}
+</script>
+
+
+
+
+
+
+
+
 
     <!-- Bootstrap và jQuery Scripts -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

@@ -6,6 +6,7 @@ package com.mycompany.doca_java.Controller;
 
 import com.mycompany.doca_java.DAO.userDAO;
 import com.mycompany.doca_java.DTO.userDTO;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -88,6 +89,7 @@ public class CreateNewAccountServlet extends HttpServlet {
      
         String username = request.getParameter("txtUsername");
         String password = request.getParameter("txtPassword");
+        String confirm = request.getParameter("txtConfirm");
         String gender = request.getParameter("txtGender");
         String email = request.getParameter("txtEmail");
         String mobileNum = request.getParameter("txtPhone");
@@ -106,21 +108,29 @@ public class CreateNewAccountServlet extends HttpServlet {
         user.setAvatar(avatar);
 
         userDAO userDAO = new userDAO();
-        boolean registrationSuccessful = userDAO.createUser(user);
-
-        if (registrationSuccessful) {
-            // Registration was successful, you can redirect the user to a success page
-            response.sendRedirect("login.jsp");
+       
+        if (userDAO.isUsernameAvailable(username) && userDAO.isEmailAvailable(email)) {
+            boolean registrationSuccessful = userDAO.createUser(user);
+            if (registrationSuccessful) {
+                // Registration was successful, you can redirect the user to a success page
+                response.sendRedirect("login.jsp");
+            } else {
+                // Registration failed, you can redirect the user to an error page
+                response.sendRedirect("signup.jsp");
+            }
         } else {
-            // Registration failed, you can redirect the user to an error page
-            response.sendRedirect("signup.jsp");
-        }
+            if (!userDAO.isUsernameAvailable(username)) {
+                response.sendRedirect("signup.jsp?usernameTaken=true");
+            } else {
+                // Email is not available, provide feedback to the user
+                response.sendRedirect("signup.jsp?emailTaken=true");
+            }
         
         
-        
+
     }
 
-    
+    }
     
 
     /**
@@ -134,3 +144,4 @@ public class CreateNewAccountServlet extends HttpServlet {
     }// </editor-fold>
 
 }
+
