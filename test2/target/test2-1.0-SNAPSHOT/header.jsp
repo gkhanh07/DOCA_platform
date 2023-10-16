@@ -8,7 +8,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <header>
-
+    <c:set var="Owner" value="${sessionScope.USER_NAME}"/>
     <form action="DispatchServlet">
 
         <nav class="navbar navbar-dark navbar-expand-sm fixed-top navbar-color p-0 header">
@@ -69,7 +69,7 @@
                         <li class="list-group-item"><a href="" style="color: black;">quản lý tin </a></li>
                         <li class="list-group-item"><a href="personal-product.html" style="color: black;">quản lý sản phẩm</a>
                         </li>
-                        <li class="list-group-item"><a href="" style="color: black;">tin đã lưu</a></li>
+                        <li class="list-group-item"><a href="ListProductSaved" style="color: black;">tin đã lưu</a></li>
                         <li class="list-group-item"> <a href="" style="color: black;">logout</a></li>
                     </ul>
 

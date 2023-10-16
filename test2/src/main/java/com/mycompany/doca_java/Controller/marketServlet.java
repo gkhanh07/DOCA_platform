@@ -52,18 +52,8 @@ public class marketServlet extends HttpServlet {
         int indexPage = Integer.parseInt(index);
         String url = "";
         try {
-            if (user != null) {
-                saveProductDAO saveProductDao = new saveProductDAO();
-                int userID = user.getUser_ID();
-                saveProductDao.getSaveProductByuserID(userID);
-                List<saveProductDTO> listOfSaveProduct = saveProductDao.getListOfSaveProduct();
-                if (listOfSaveProduct != null) {
-                    request.setAttribute("listOfSaveProduct", listOfSaveProduct);
-                }
-            }
-
             ProductDAO dao = new ProductDAO();
-            dao.getAllTheProduct();
+            dao.getProductavailable();
             List<ProductDTO> listOfProduct = (AbstractList<ProductDTO>) session.getAttribute("listOfProduct");
             if (listOfProduct == null) {
                 listOfProduct = dao.getListOfProduct();
@@ -74,8 +64,17 @@ public class marketServlet extends HttpServlet {
                 request.setAttribute("listOfProduct", listOfProduct);
                 request.setAttribute("numberPage", numberPage);
                 request.setAttribute("listInPage", listInPage);
-                request.setAttribute("indexPage", indexPage);
+                session.setAttribute("indexPageMarket", indexPage);
                 url = MARKET_PAGE;
+            }
+            if (user != null) {
+                saveProductDAO saveProductDao = new saveProductDAO();
+                int userID = user.getUser_ID();
+                saveProductDao.getSaveProductByuserID(userID);
+                List<saveProductDTO> listOfSaveProduct = saveProductDao.getListOfSaveProduct();
+                if (listOfSaveProduct != null) {
+                    session.setAttribute("listOfSaveProduct", listOfSaveProduct);
+                }
             }
 
         } catch (ClassNotFoundException ex) {

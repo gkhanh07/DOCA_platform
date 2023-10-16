@@ -63,7 +63,7 @@ public class userDAO {
                     boolean status = rs.getBoolean("status");
                     boolean roleID = rs.getBoolean("role_id");
                     String avatar = rs.getString("avatar");
-                    result = new userDTO(user_ID, username, password, Gender, email, email, status, roleID, avatar);
+                    result = new userDTO(user_ID, username, password, Gender, email, phone, status, roleID, avatar);
                 }
             }
         } finally {
@@ -98,10 +98,10 @@ public class userDAO {
                 rs = stm.executeQuery();
                 //5.process (Note: Luu y Khi SU DUNG IF/WHILE)
                 while (rs.next()) {
-                   
+
                     int user_ID = rs.getInt("user_id");
                     String userName = rs.getString("username");
-                    String password =  rs.getString("password");      
+                    String password = rs.getString("password");
                     String Gender = rs.getString("Gender");
                     String email = rs.getString("email");
                     String phone = rs.getString("mobile_num");
@@ -109,8 +109,8 @@ public class userDAO {
                     boolean roleID = rs.getBoolean("role_id");
                     String avatar = rs.getString("avatar");
                     //5.1.2 set properties of pro
-                    userDTO user = 
-                            new userDTO(user_ID, userName, password, Gender, email, email, status, roleID, avatar);
+                    userDTO user
+                            = new userDTO(user_ID, userName, password, Gender, email, phone, status, roleID, avatar);
 
                     //5.2 add data to list
                     if (this.ListOfUser
@@ -118,8 +118,8 @@ public class userDAO {
                         this.ListOfUser = new ArrayList<>();
 
                     }//end account list has not existed
-                    if(user.isRoleID()){
-                    this.ListOfUser.add(user);
+                    if (user.isRoleID()) {
+                        this.ListOfUser.add(user);
                     }
                 }//end map DB to DTO
             }//end connect is available
@@ -135,6 +135,59 @@ public class userDAO {
                 con.close();
             }
         }
+    }
+    
+
+    public userDTO getUserbyProductID(int productID)
+            throws SQLException, ClassNotFoundException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        userDTO user=null;
+        try {
+            con = DBconnect.makeConnection();
+            if (con != null) {
+                //2.create sql string
+                String sql = "SELECT u.[user_id], u.[username], u.[password], u.[Gender], u.[email], u.[mobile_num], u.[status], u.[role_id], u.[avatar]\n"
+                        + "FROM [DOCA_platform].[dbo].[users] u\n"
+                        + "INNER JOIN [DOCA_platform].[dbo].[product] p ON u.[user_id] = p.[user_id]\n"
+                        + "WHERE p.[product_id] = ?";
+                //3.create stm obj
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, productID);
+                //4.execute
+                rs = stm.executeQuery();
+                //5.process (Note: Luu y Khi SU DUNG IF/WHILE)
+                while (rs.next()) {
+
+                    int user_ID = rs.getInt("user_id");
+                    String userName = rs.getString("username");
+                    String password = rs.getString("password");
+                    String Gender = rs.getString("Gender");
+                    String email = rs.getString("email");
+                    String phone = rs.getString("mobile_num");
+                    boolean status = rs.getBoolean("status");
+                    boolean roleID = rs.getBoolean("role_id");
+                    String avatar = rs.getString("avatar");
+                    //5.1.2 set properties of pro
+                    user
+                            = new userDTO(user_ID, userName, password, Gender, email, phone, status, roleID, avatar);
+
+                }//end map DB to DTO
+            }//end connect is available
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+
+            if (stm != null) {
+                con.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return user;
     }
 
 }

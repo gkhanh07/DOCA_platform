@@ -45,6 +45,13 @@ public class filterProduct extends HttpServlet {
         String local = request.getParameter("city");
         float lowerPrice = Float.parseFloat(request.getParameter("lowerPrice"));
         int category = Integer.parseInt(request.getParameter("category"));
+        
+        String index = request.getParameter("indexFromSaveProduct");
+        if (index == null) {
+            index = "1";
+        }
+        int indexPage = Integer.parseInt(index);
+        
         try {
             ProductDAO dao = new ProductDAO();
             dao.getAllTheProduct();
@@ -57,13 +64,12 @@ public class filterProduct extends HttpServlet {
                     newListOfProduct.add(product);
                 }
             }
-
             HttpSession session = request.getSession(true);
             session.setAttribute("listOfProduct", newListOfProduct);
             session.setAttribute("selectedLocal", local);
             session.setAttribute("selectedLowerPrice", lowerPrice);
             session.setAttribute("selectedCategory", category);
-            url = "marketServlet?index=1";
+            url = "marketServlet?index="+indexPage;
 
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();

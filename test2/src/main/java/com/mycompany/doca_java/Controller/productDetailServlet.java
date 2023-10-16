@@ -6,8 +6,10 @@ package com.mycompany.doca_java.Controller;
 
 import com.mycompany.doca_java.DAO.ProductDAO;
 import com.mycompany.doca_java.DAO.categoryDAO;
+import com.mycompany.doca_java.DAO.userDAO;
 import com.mycompany.doca_java.DTO.ProductDTO;
 import com.mycompany.doca_java.DTO.categoryDTO;
+import com.mycompany.doca_java.DTO.userDTO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -44,6 +46,7 @@ private final String productdetail_Page = "productDetail.jsp";
         try {
             ProductDAO dao = new ProductDAO();
             ProductDTO productDetail = dao.getProductById(productID);
+            userDAO ownerDao= new userDAO();
             if (productDetail != null) {
                 HttpSession session = request.getSession(true);
                 request.setAttribute("productDetail", productDetail);
@@ -51,6 +54,8 @@ private final String productdetail_Page = "productDetail.jsp";
                 categoryDAO daoCate = new categoryDAO();
                 categoryDTO category = daoCate.getCategoryById(categoryID);
                 request.setAttribute("category", category);
+                userDTO owner=ownerDao.getUserbyProductID(productID);
+                request.setAttribute("owner", owner);
                 url=productdetail_Page;
             }
             

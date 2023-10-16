@@ -10,7 +10,7 @@
 <html>
     <head>
         <!-- Required meta tags always come first -->
-         <!-- Required meta tags always come first -->
+        <!-- Required meta tags always come first -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -37,16 +37,17 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
-        
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
         <!-- <link rel="stylesheet" href="assets/css/forum-style.css"> -->
         <link rel="stylesheet" href="assets/css/standar-style.css">
+        <link rel="stylesheet" href="assets/css/productDetail.css">
     </head>
 
     <body>
         <c:set var="product" value="${requestScope.productDetail}" />
         <c:set var="category" value="${requestScope.category}" />
-        
+     
         <jsp:include page="header.jsp" />
         <div class="main-content">
             <div class="row row-content justify-content-center">
@@ -54,6 +55,7 @@
                     <div class="container pt-5">
                         <div class="row">
                             <div class="col">
+                                
                                 <c:set var="img" value="${product.productImage}"/>
                                 <img class="" src=${img} alt="">
                                 <div class="product_info">
@@ -61,12 +63,12 @@
                                     <h2 class="title">${title}</h2>
                                     <c:set var="price" value="${product.price}"/>
                                     <h4 class="price text-danger">${price}</h4>
-                                    
+
                                     <p class="product_des">${product.description}</p>
                                     <h4 class="text-secondary">Local</h4>
                                     <p class="product_address">
                                         <i class="fa fa-location-dot"></i>
-                                       ${product.address}
+                                        ${product.address}
                                     </p>
                                     <h5 class="text-secondary">Product Type</h5>
                                     <p>${category.categoryName}</p>
@@ -75,15 +77,17 @@
                             </div>
                             <div class="col">
                                 <div class="row">
-                                    <a href="profileMemberOther.html"><img src="assets/images/doge2.webp" class="avatar rounded-circle"
-                                                                           style="width: 80px;" alt="Avatar" />
-                                        <h6 class="userName mt-2">Ben mặt xệ</h6>
+                                    <a href="profileMemberOther.html">
+                                        <div class="profile-image-container">
+                                            <img src="${owner.avatar}" alt="Profile Image" class="rounded-circle profile-image">
+                                        </div>
+                                        
+                                        <h6 class="userName mt-2">${owner.userName}</h6>
                                     </a>
                                 </div>
                                 <div class="row mt-5">
                                     <button class="btn btn-outline-secondary bg-light btn-block text-success"
-                                            id="sellerPhone">hiện số điện thoại người
-                                        bán</button>
+                                            id="sellerPhone">hiện số người bán</button>
 
                                     <br><button class="btn btn-outline-secondary bg-light btn-block text-success mt-2">
                                         <i class="fa fa-comments"></i> chat với người bán</button>
@@ -109,9 +113,11 @@
 
         <script>
             var button = document.getElementById("sellerPhone");
-
+             var owner = {
+        mobileNum: ${owner.mobileNum}
+    };
             button.addEventListener("click", function () {
-                button.textContent = "012345678"; // Change the text when clicked
+                button.textContent = owner.mobileNum; // Change the text when clicked
             });
         </script>
     </body>

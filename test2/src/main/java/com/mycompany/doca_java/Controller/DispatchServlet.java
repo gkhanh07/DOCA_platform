@@ -22,6 +22,7 @@ public class DispatchServlet extends HttpServlet {
     private final String Market_Controller = "marketServlet";
     private final String Fitler_Product = "filterProduct";
     private final String Save_Product = "updateSaveProductServlet";
+    private final String CREATE_COMMENT = "createCommentServlet";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -49,6 +50,9 @@ public class DispatchServlet extends HttpServlet {
             }
             if (button.equals("Log In")) {
                 url = Login_Servlet;
+            }
+            if (button.equals("send")) {
+                url = CREATE_COMMENT;
             }
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);

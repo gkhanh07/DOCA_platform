@@ -14,9 +14,9 @@ import javax.naming.NamingException;
  * @author Admin
  */
 public class DBconnect {
+     public static Connection makeConnection() throws SQLException, ClassNotFoundException, NamingException {
 
-    public static Connection makeConnection() throws SQLException, ClassNotFoundException, NamingException {
-
+        
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         String url = "jdbc:sqlserver://localhost:1433;databaseName=DOCA_platform;encrypt=true;trustServerCertificate=true;";
         Connection con = DriverManager.getConnection(url, "sa", "12345");

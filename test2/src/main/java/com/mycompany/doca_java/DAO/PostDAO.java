@@ -52,6 +52,7 @@ public class PostDAO {
                 while (rs.next()) {
                     int postId = rs.getInt("post_id");
                     int userId = rs.getInt("user_id");
+
                     String postContent = rs.getString("post_content");
                     String postImage = rs.getString("post_image");
                     boolean isPublic = rs.getBoolean("isPublic");
@@ -155,4 +156,6 @@ public class PostDAO {
         }
         return listInPage;
     }
+    
+    
 }

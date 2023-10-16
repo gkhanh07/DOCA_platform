@@ -30,7 +30,7 @@ import javax.naming.NamingException;
  */
 @WebServlet(name = "forumServlet", urlPatterns = {"/forumServlet"})
 public class forumServlet extends HttpServlet {
-    private final String FORUM_PAGE = "forum.jsp";
+    private final String GET_COMMENT_SERVLET = "getAllCommentServlet";
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -40,7 +40,7 @@ public class forumServlet extends HttpServlet {
             idcate="5";
         }
         int indexcategoryID =Integer.parseInt(idcate);
-         String index = request.getParameter("index");
+        String index = request.getParameter("index");
         if (index == null) {
             index = "1";
         }
@@ -58,7 +58,7 @@ public class forumServlet extends HttpServlet {
                 request.setAttribute("indexcategoryID", indexcategoryID);
                 request.setAttribute("listInPage", listInPage);
                 request.setAttribute("numberPage", numberPage);
-                request.setAttribute("indexPage", indexPage);
+                session.setAttribute("indexPageForum,", indexPage);
                 
             }
             categoryDAO cataDao= new categoryDAO();
@@ -67,7 +67,7 @@ public class forumServlet extends HttpServlet {
                 listCategory.add(cataDao.getCategoryById(i));
             }
             if(listCategory != null){
-                request.setAttribute("listCategory", listCategory);
+                    request.setAttribute("listCategory", listCategory);
             }
             
             userDAO uDao= new userDAO();
@@ -76,7 +76,10 @@ public class forumServlet extends HttpServlet {
             if(ListOfUser!=null){
                 request.setAttribute("ListOfUser", ListOfUser);
             }
-            url = FORUM_PAGE;
+            
+            
+            
+            url = GET_COMMENT_SERVLET;
             
         }  catch (ClassNotFoundException ex) {
             ex.printStackTrace();

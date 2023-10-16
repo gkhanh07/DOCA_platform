@@ -30,7 +30,6 @@ import jakarta.servlet.http.HttpSession;
 public class LoginServlet extends HttpServlet {
 
     private final String Market_Controller = "marketServlet";
-    private final String Error_Page= "error.html";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -57,8 +56,6 @@ public class LoginServlet extends HttpServlet {
 //                Cookie cookies = new Cookie(username, password);
 //                cookies.setMaxAge(60*10);
 //                response.addCookie(cookies);
-            }else{
-                url = Error_Page;
             }
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();

@@ -173,24 +173,3 @@
     width: 100%;
 }
 
-
-
-
-.comment {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 10px;
-}
-
-.comment-details {
-    flex: 1; /* Để phần bình luận chiếm toàn bộ phần còn lại của comment */
-}
-
-.comment-username {
-    font-weight: bold;
-    margin: 0;
-}
-
-.comment-content {
-    margin: 0;
-}

@@ -48,19 +48,22 @@
     <body>
         <c:set var="Posts" value="${requestScope.listInPage}"/>
         <c:set var="listCategory" value="${requestScope.listCategory}"/>
-
+        <c:set var="listOfComment" value="${requestScope.listOfComment}"/>
+        <c:set var="Owner" value="${sessionScope.USER_NAME}"/>
         <jsp:include page="header.jsp" />
 
         <div class="main-content">
+
+
             <div class="row row-content justify-content-center">
 
                 <div class="col-sm-8 ">
-                    <div class="card create-post-card">
+                    <div class="card create-post-card mt-5">
                         <div class="card-body d-flex align-items-center">
                             <div class="profile-image-container">
                                 <img src="assets/images/spa.jpg" alt="Profile Image" class="rounded-circle profile-image">
                             </div>
-                            <button type="button" class="btn btn-light btn-createpost btn-block p-0 ml-2 rounded-pill "
+                            <button type="button" class="btn btn-light btn-createpost btn-block p-0 ml-2 rounded-pill  "
                                     data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 <div class="d-flex justify-content-start">
                                     <i class="fa fa-edit ml-3 mt-1"></i>
@@ -78,47 +81,46 @@
                                                     aria-label="Close">&times;</button>
                                         </div>
                                         <div class="modal-body">
-                                            <form>
-                                                <div class="mb-3">
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
-                                                               value="option1">
-                                                        <label class="form-check-label" for="inlineCheckbox1">Story</label>
-                                                    </div>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
-                                                               value="option2">
-                                                        <label class="form-check-label" for="inlineCheckbox2">Training
-                                                            Tips</label>
-                                                    </div>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
-                                                               value="option3">
-                                                        <label class="form-check-label" for="inlineCheckbox2">Care
-                                                            Tips</label>
-                                                    </div>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
-                                                               value="option4">
-                                                        <label class="form-check-label" for="inlineCheckbox2">Events</label>
-                                                    </div>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
-                                                               value="option5">
-                                                        <label class="form-check-label" for="inlineCheckbox2">Lost</label>
-                                                    </div>
+                                            <div class="mb-3">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
+                                                           value="option1">
+                                                    <label class="form-check-label" for="inlineCheckbox1">Story</label>
                                                 </div>
-                                                <div class="mb-3">
-                                                    <label for="message-text" class="col-form-label">Content:
-                                                    </label>
-                                                    <textarea class="form-control" id="message-text" rows="7"></textarea>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
+                                                           value="option2">
+                                                    <label class="form-check-label" for="inlineCheckbox2">Training
+                                                        Tips</label>
                                                 </div>
-                                                <div class="mb-3">
-                                                    <label for="formFile" class="form-label"><i class="fa fa-picture-o"></i>
-                                                        Choose images: </label>
-                                                    <input class="form-control" type="file" id="formFile">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
+                                                           value="option3">
+                                                    <label class="form-check-label" for="inlineCheckbox2">Care
+                                                        Tips</label>
                                                 </div>
-                                            </form>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
+                                                           value="option4">
+                                                    <label class="form-check-label" for="inlineCheckbox2">Events</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
+                                                           value="option5">
+                                                    <label class="form-check-label" for="inlineCheckbox2">Lost</label>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="message-text" class="col-form-label">Content:
+                                                </label>
+                                                <textarea class="form-control" id="message-text" rows="7"></textarea>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="formFile" class="form-label"><i class="fa fa-picture-o"></i>
+                                                    Choose images: </label>
+                                                <input class="form-control" type="file" id="formFile">
+                                            </div>
+
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
@@ -195,15 +197,18 @@
 
                                         </div>
                                         <div class="post-body">
-                                            <p class="post-text" data-toggle="modal" data-target="#myModal">${post.postContent}</p>
-                                            <img class="img-content"data-toggle="modal" data-target="#myModal" src="${post.postImage}" alt="Post Image">
+                                            <p class="post-text" data-toggle="modal" data-target="#modalID${post.postId}">${post.postContent}</p>
+                                            <img class="img-content"data-toggle="modal" data-target="#modalID${post.postId}" src="${post.postImage}" alt="Post Image">
                                         </div>
                                         <div class="post-footer">
                                             <button class="btn btn-light flex-grow-1 btn_in_post"><i
                                                     class="fas fa-thumbs-up"></i>
                                                 Thích</button>
+
                                             <button class="btn  flex-grow-1 btn-light btn_in_post"
-                                                    onclick="toggleCommentForm()"><i class="fas fa-comment"></i> Bình luận</button>
+                                                    onclick="toggleCommentForm()">
+                                                <i class="fas fa-comment"></i> Bình luận
+                                            </button>
                                             <a href="#"> <button class="btn btn-light flex-grow-1 btn_in_post"><i
                                                         class="fas fa-share"></i>
                                                     Chia
@@ -211,28 +216,106 @@
 
 
                                         </div>
-                                        <div id="commentForm" class="comment-form2" style="display: none;">
-                                            <textarea class="form-control" placeholder="Write a comment..."></textarea>
-                                            <button class="btn btn-primary mt-2" onclick="submitComment()"><i
-                                                    class="fa-solid fa-circle-up fa-rotate-90"></i></button>
 
+
+                                        <div id="commentForm" class="comment-form2" style="display: none;">
+                                            <form action="DispatchServlet" method="post">
+                                                <input type="text" name="commentDes" value="" placeholder="Write a comment..."/>
+                                                <input type="submit" name="btAction" value="send" />
+                                                <input type="hidden" name="postID" value="${post.postId}" />
+                                                <input type="hidden" name="slectedCategoryID" value="${indexcategoryID}" />
+                                            </form>
                                         </div>
-                                        <div class="comment mt-5">
-                                            <img src="https://bedental.vn/wp-content/uploads/2022/11/1e8063154fdf3dcbb07edf0ad2df326a.jpg" alt="Avatar" class="profile-image">
-                                            <div class="comment-details">
-                                                <p class="comment-username">John Doe</p>
-                                                <p class="comment-content">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                                            </div>
-                                        </div>
-                                        <div class="comment mt-5">
-                                            <img src="https://bedental.vn/wp-content/uploads/2022/11/1e8063154fdf3dcbb07edf0ad2df326a.jpg" alt="Avatar" class="profile-image">
-                                            <div class="comment-details">
-                                                <p class="comment-username">John Doe</p>
-                                                <p class="comment-content">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                                            </div>
-                                        </div>
+
+
+
                                     </div>
                                 </div>
+
+                                <!-- Modal begin-->
+                                <div class="modal fade" id="modalID${post.postId}" role="dialog">
+                                    <div class="modal-dialog">
+                                        <!-- Modal content-->
+                                        <div class="modal-content">                               
+                                            <div class="modal-body">
+                                                <div class="tab-content col-md-10">
+                                                    <div role="tabpanel" class="tab-pane fade show active " id="${indexcategoryID}">
+                                                        <div class="post my-4 border rounded position-relative">
+                                                            <div class="post-header">
+                                                                <div class="profile-info">
+                                                                    <img src="${userAvatar}"
+                                                                         alt="Profile Image"
+                                                                         class="rounded-circle profile-image">
+                                                                    <div class="profile-details">
+
+                                                                        <a href="#" class="username">${userName}</a>
+                                                                        <div class="post-time text-muted">${post.timePosted}</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="options-button" style="position: absolute; top: 10px; right: 10px;">
+                                                                    <button class="btn btn-secondary" onclick="toggleOptions(this)">
+                                                                        <i class="fa-solid fa-ellipsis"></i>
+                                                                    </button>
+                                                                    <div class="options" style="display: none;">
+
+                                                                        <a class="dropdown-item" href="#">Lưu bài viết</a>
+                                                                        <a class="dropdown-item" href="#">Tố cáo bài viết</a>
+                                                                    </div>
+                                                                </div>
+
+
+                                                            </div>
+                                                            <div class="post-body">
+                                                                <p class="post-text">${post.postContent}</p>
+                                                                <img class="img-content" src="${post.postImage}" alt="Post Image">
+                                                            </div>
+                                                            <div class="post-footer">
+                                                                <button class="btn btn-light flex-grow-1 btn_in_post"><i
+                                                                        class="fas fa-thumbs-up"></i>
+                                                                    Thích</button>
+
+                                                                <a href="#"> <button class="btn btn-light flex-grow-1 btn_in_post"><i
+                                                                            class="fas fa-share"></i>
+                                                                        Chia
+                                                                        sẻ</button></a>
+
+                                                            </div>
+                                                            <c:forEach items="${listOfComment}" var="comment">
+                                                                <c:if test="${comment.postId==post.postId}">
+                                                                    <div class="comment mt-5">
+                                                                        <c:forEach items="${ListOfUser}" var="user">
+                                                                            <c:if test="${user.user_ID==comment.userId}">
+                                                                                <c:set var="userName" value="${user.userName}"/>
+                                                                                <c:set var="userAvatar" value="${user.avatar}"/>
+                                                                            </c:if>
+                                                                        </c:forEach>
+                                                                        <img src=${userAvatar} alt="Avatar" class="profile-image">
+                                                                        <div class="comment-details">
+                                                                            <p class="comment-username">${userName}</p>
+                                                                            <p class="comment-content">${comment.commentDes}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </c:if>
+                                                                <!--xoá comment-->
+                                                                <c:if test="${Owner.user_ID==comment.userId}">
+                                                                    <a href="deleteCommentServlet?commentId=${comment.commentId}&slectedCategoryID=${indexcategoryID}">Xoá comment</a>
+                                                                </c:if>
+                                                            </c:forEach>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+
+
+
                             </c:forEach>
 
 
@@ -242,96 +325,7 @@
 
                     </div>
 
-                    <!--modal-->
-                    <div class="modal fade" id="myModal" role="dialog">
-                        <div class="modal-dialog">
 
-                            <!-- Modal content-->
-                            <div class="modal-content">                               
-                                <div class="modal-body">
-                                    <div class="tab-content col-md-10">
-                                        <c:forEach items="${Posts}" var="post">
-                                            <div role="tabpanel" class="tab-pane fade show active " id="${indexcategoryID}">
-                                                <div class="post my-4 border rounded position-relative">
-                                                    <div class="post-header">
-                                                        <div class="profile-info">
-                                                            <c:forEach items="${ListOfUser}" var="user">
-                                                                <c:if test="${user.user_ID==post.userId}">
-                                                                    <c:set var="userName" value="${user.userName}"/>
-                                                                    <c:set var="userAvatar" value="${user.avatar}"/>
-                                                                </c:if>
-                                                            </c:forEach>
-                                                            <img src="${userAvatar}"
-                                                                 alt="Profile Image"
-                                                                 class="rounded-circle profile-image">
-                                                            <div class="profile-details">
-
-                                                                <a href="#" class="username">${userName}</a>
-                                                                <div class="post-time text-muted">${post.timePosted}</div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="options-button" style="position: absolute; top: 10px; right: 10px;">
-                                                            <button class="btn btn-secondary" onclick="toggleOptions(this)">
-                                                                <i class="fa-solid fa-ellipsis"></i>
-                                                            </button>
-                                                            <div class="options" style="display: none;">
-
-                                                                <a class="dropdown-item" href="#">Lưu bài viết</a>
-                                                                <a class="dropdown-item" href="#">Tố cáo bài viết</a>
-                                                            </div>
-                                                        </div>
-
-
-                                                    </div>
-                                                    <div class="post-body">
-                                                        <p class="post-text">${post.postContent}</p>
-                                                        <img class="img-content" src="${post.postImage}" alt="Post Image">
-                                                    </div>
-                                                    <div class="post-footer">
-                                                        <button class="btn btn-light flex-grow-1 btn_in_post"><i
-                                                                class="fas fa-thumbs-up"></i>
-                                                            Thích</button>
-                                                        <button class="btn  flex-grow-1 btn-light btn_in_post"
-                                                                onclick="toggleCommentForm()"><i class="fas fa-comment"></i> Bình luận</button>
-                                                        <a href="#"> <button class="btn btn-light flex-grow-1 btn_in_post"><i
-                                                                    class="fas fa-share"></i>
-                                                                Chia
-                                                                sẻ</button></a>
-
-
-                                                    </div>
-                                                    <div id="commentForm" class="comment-form2" style="display: none;">
-                                                        <textarea class="form-control" placeholder="Write a comment..."></textarea>
-                                                        <button class="btn btn-primary mt-2" onclick="submitComment()"><i
-                                                                class="fa-solid fa-circle-up fa-rotate-90"></i></button>
-
-                                                    </div>
-                                                    <div class="comment mt-5">
-                                                        <img src="https://bedental.vn/wp-content/uploads/2022/11/1e8063154fdf3dcbb07edf0ad2df326a.jpg" alt="Avatar" class="profile-image">
-                                                        <div class="comment-details">
-                                                            <p class="comment-username">John Doe</p>
-                                                            <p class="comment-content">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="comment mt-5">
-                                                        <img src="https://bedental.vn/wp-content/uploads/2022/11/1e8063154fdf3dcbb07edf0ad2df326a.jpg" alt="Avatar" class="profile-image">
-                                                        <div class="comment-details">
-                                                            <p class="comment-username">John Doe</p>
-                                                            <p class="comment-content">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </c:forEach>
-
-
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
 
                     <nav aria-label="Page navigation ">
                         <c:set var="numberPage" value="${requestScope.numberPage}"/>
@@ -351,13 +345,8 @@
 
 
             </div>
+
         </div>
-
-
-
-
-
-
 
 
 
@@ -367,12 +356,9 @@
                 const commentForm = document.getElementById('commentForm');
                 commentForm.style.display = commentForm.style.display === 'none' ? 'block' : 'none';
             }
-            function submitComment() {
-                const commentText = document.querySelector('#commentForm textarea').value;
-                // Do something with the comment, e.g., send it to the server
-                console.log('Comment submitted:', commentText);
-            }
+
         </script>
+
 
         <script>
             function toggleOptions(button) {
@@ -380,7 +366,5 @@
                 options.style.display = options.style.display === 'none' ? 'block' : 'none';
             }
         </script>
-
-
     </body>
 </html>
