@@ -2,29 +2,32 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package com.mycompany.doca_java.Controller;
+package com.mycompany.doca_java.Controller.ManageOwner.personal_Post;
 
+import com.mycompany.doca_java.DAO.PostDAO;
+import com.mycompany.doca_java.DTO.PostDTO;
+import com.mycompany.doca_java.DTO.userDTO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.sql.SQLException;
+import java.util.List;
+import javax.naming.NamingException;
 
 /**
  *
  * @author Admin
  */
-public class DispatchServlet extends HttpServlet {
-
-    private final String Login_Servlet = "LoginServlet";
-    private final String CREATE_ACCOUNT = "CreateNewAccountServlet";
-    private final String Market_Controller = "marketServlet";
-    private final String Fitler_Product = "filterProduct";
-    private final String Save_Product = "updateSaveProductServlet";
-    private final String CREATE_COMMENT = "createCommentServlet";
-
+@WebServlet(name = "getPersonalPost", urlPatterns = {"/getPersonalPost"})
+public class getPersonalPost extends HttpServlet {
+ private final String LOGIN_PAGE = "login.jsp";
+    private final String  PERSONAL_POST_PAGE= "Personal_Post.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,29 +40,34 @@ public class DispatchServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String button = request.getParameter("btAction");
-        String url = "";
-        try {
-            if (button.equals("goTomarket")) {
-                url = Market_Controller;
+        HttpSession session = request.getSession(true);
+        userDTO account = (userDTO) session.getAttribute("USER_NAME");
+        String url="";
+        try  {
+             if (account != null) {
+                 PostDAO dao = new PostDAO();
+                List<PostDTO> listOfPost = dao.getPostsByUserID(account.getUser_ID());
+                if (listOfPost != null) {
+                    request.setAttribute("listPostOfPersonal", listOfPost);
+                     request.setAttribute("Message", "không có bài viết nào");
+                    url = PERSONAL_POST_PAGE;
+                }else{
+                    request.setAttribute("Message", "không có bài viết nào");
+                    url = PERSONAL_POST_PAGE;
+                }
+            } else {
+                url = LOGIN_PAGE;
             }
-            if (button.equals("Loc")) {
-                url = Fitler_Product;
-            }
-            if (button.equals("saveProduct")) {
-                url = Save_Product;
-            }
-            if (button.equals("Log In")) {
-                url = Login_Servlet;
-            }
-            if (button.equals("send")) {
-                url = CREATE_COMMENT;
-            }
-            if (button.equals("Create New Account")) {
-                url = CREATE_ACCOUNT;
-            }
-        } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
+        }
+        catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (NamingException ex) {
+            ex.printStackTrace();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } 
+        finally{
+              RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }
     }

@@ -68,8 +68,8 @@ public class commentDAO {
             }
         }
     }
-    
-     public void getAllComment() throws SQLException, ClassNotFoundException, NamingException {
+
+    public void getAllComment() throws SQLException, ClassNotFoundException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -111,43 +111,70 @@ public class commentDAO {
             }
         }
     }
-        public boolean insertComment(int userId, int postId, String commentDes) 
-             throws SQLException, ClassNotFoundException, NamingException {
-    Connection con = null;
-    PreparedStatement stm = null;
-    boolean result=false;
-    try {
-        con = DBconnect.makeConnection();
-        if (con != null) {
-            // Create SQL string
-            String sql = "INSERT INTO comment (user_id, post_id, commentDes ,status) VALUES (?, ?, ?, ?)";
-            // Create stm obj
-            stm = con.prepareStatement(sql);
-            // Set parameter values
-            stm.setInt(1, userId);
-            stm.setInt(2, postId);
-            stm.setString(3, commentDes);
-            stm.setBoolean(4, true);
-            // Execute query
-           int effectRows = stm.executeUpdate();
+
+    public boolean insertComment(int userId, int postId, String commentDes)
+            throws SQLException, ClassNotFoundException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        boolean result = false;
+        try {
+            con = DBconnect.makeConnection();
+            if (con != null) {
+                // Create SQL string
+                String sql = "INSERT INTO comment (user_id, post_id, commentDes ,status) VALUES (?, ?, ?, ?)";
+                // Create stm obj
+                stm = con.prepareStatement(sql);
+                // Set parameter values
+                stm.setInt(1, userId);
+                stm.setInt(2, postId);
+                stm.setString(3, commentDes);
+                stm.setBoolean(4, true);
+                // Execute query
+                int effectRows = stm.executeUpdate();
                 //5.process (Note: Luu y Khi SU DUNG IF/WHILE)
                 if (effectRows > 0) {
                     result = true;
                 }
+            }
+        } finally {
+            // Close resources
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
         }
-    } finally {
-        // Close resources
-        if (stm != null) {
-            stm.close();
-        }
-        if (con != null) {
-            con.close();
-        }
+        return result;
     }
-    return result;
-}
-     
-    
-    
-    
+
+    public boolean deleteComment(int commentId) throws SQLException, ClassNotFoundException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        boolean result = false;
+        try {
+            con = DBconnect.makeConnection();
+            if (con != null) {
+//sql query
+                String sql = "delete comment where comment_id = ?";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, commentId);
+                int effectRows = stm.executeUpdate();
+                if (effectRows > 0) {
+                    result = true;
+                }
+            }
+        } finally {
+            // Close resources
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return result;
+
+    }
+
 }

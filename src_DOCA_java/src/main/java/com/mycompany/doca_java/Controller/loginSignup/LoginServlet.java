@@ -1,29 +1,37 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
-package com.mycompany.doca_java.Controller;
+package com.mycompany.doca_java.Controller.loginSignup;
 
-import jakarta.servlet.RequestDispatcher;
+import com.mycompany.doca_java.DAO.userDAO;
+import com.mycompany.doca_java.DTO.userDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.NamingException;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
  * @author Admin
  */
-public class DispatchServlet extends HttpServlet {
+@WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
+public class LoginServlet extends HttpServlet {
 
-    private final String Login_Servlet = "LoginServlet";
-    private final String CREATE_ACCOUNT = "CreateNewAccountServlet";
     private final String Market_Controller = "marketServlet";
-    private final String Fitler_Product = "filterProduct";
-    private final String Save_Product = "updateSaveProductServlet";
-    private final String CREATE_COMMENT = "createCommentServlet";
+    private final String Admin_page = "";
+   
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,30 +45,35 @@ public class DispatchServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String button = request.getParameter("btAction");
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
         String url = "";
         try {
-            if (button.equals("goTomarket")) {
-                url = Market_Controller;
+            userDAO dao = new userDAO();
+            userDTO account = dao.checkLogin(username, password);
+            if (account != null) {
+                if (account.isRoleID()) {
+                    url = Market_Controller;
+                    HttpSession session = request.getSession(true);
+                    session.setAttribute("USER_NAME", account);
+//                Cookie cookies = new Cookie(username, password);
+//                cookies.setMaxAge(60*10);
+//                response.addCookie(cookies);
+                }
+                if(!account.isRoleID()){
+                    url = Admin_page;
+                    HttpSession session = request.getSession(true);
+                    session.setAttribute("USER_NAME", account);
+                }
             }
-            if (button.equals("Loc")) {
-                url = Fitler_Product;
-            }
-            if (button.equals("saveProduct")) {
-                url = Save_Product;
-            }
-            if (button.equals("Log In")) {
-                url = Login_Servlet;
-            }
-            if (button.equals("send")) {
-                url = CREATE_COMMENT;
-            }
-            if (button.equals("Create New Account")) {
-                url = CREATE_ACCOUNT;
-            }
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (NamingException ex) {
+            ex.printStackTrace();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            response.sendRedirect(url);
         }
     }
 

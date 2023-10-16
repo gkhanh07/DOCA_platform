@@ -69,7 +69,7 @@
                                 </div>
 
                                 <input type="submit" value="Log In" name="btAction" class="btn btn-block btn-primary">
-                                <p class="footer">Chưa có tài khoản ? đăng kí<a href="CreateNewAccount.jsp"> tại đây </a></p>
+                                <p class="footer">Chưa có tài khoản ? đăng kí<a href="signup.jsp"> tại đây </a></p>
                             </form>
                         </div>
                     </div>

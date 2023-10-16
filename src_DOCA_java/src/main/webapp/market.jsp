@@ -115,7 +115,7 @@
 
                         <div class="tab-content">
                             <c:forEach items="${Products}" var="product">
-                                
+
                                 <div  style="position: relative; border-bottom: 1px solid rgb(224, 224, 224);">
                                     <a href="productDetailServlet?productId=${product.productId}" class="sell d-flex" style="width: 100%;">
                                         <c:set var="img" value="${product.productImage}"/>
@@ -123,6 +123,9 @@
                                         <div class="font">
                                             <c:set var="title" value="${product.title}"/>
                                             <h5><strong>${title}</strong></h5>
+
+                                          
+
                                             <c:set var="price" value="${product.price}"/>
                                             <h6 style="color:rgb(242, 106, 106);">${price} đ</h6>
                                             <c:set var="address" value="${product.address}"/>

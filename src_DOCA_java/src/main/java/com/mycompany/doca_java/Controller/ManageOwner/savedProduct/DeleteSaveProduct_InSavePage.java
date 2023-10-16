@@ -2,28 +2,27 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package com.mycompany.doca_java.Controller;
+package com.mycompany.doca_java.Controller.ManageOwner.savedProduct;
 
-import jakarta.servlet.RequestDispatcher;
+import com.mycompany.doca_java.DAO.saveProductDAO;
+import com.mycompany.doca_java.DTO.userDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.sql.SQLException;
+import javax.naming.NamingException;
 
 /**
  *
  * @author Admin
  */
-public class DispatchServlet extends HttpServlet {
-
-    private final String Login_Servlet = "LoginServlet";
-    private final String CREATE_ACCOUNT = "CreateNewAccountServlet";
-    private final String Market_Controller = "marketServlet";
-    private final String Fitler_Product = "filterProduct";
-    private final String Save_Product = "updateSaveProductServlet";
-    private final String CREATE_COMMENT = "createCommentServlet";
+@WebServlet(name = "DeleteSaveProduct_InSavePage", urlPatterns = {"/DeleteSaveProduct_InSavePage"})
+public class DeleteSaveProduct_InSavePage extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,30 +36,28 @@ public class DispatchServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String button = request.getParameter("btAction");
+        HttpSession session = request.getSession(true);
+        int productID = Integer.parseInt(request.getParameter("productID"));
+        userDTO account = (userDTO) session.getAttribute("USER_NAME");
+
         String url = "";
         try {
-            if (button.equals("goTomarket")) {
-                url = Market_Controller;
+            if (account != null) {
+                saveProductDAO dao = new saveProductDAO();
+                boolean result = dao.deleteSaveProduct(account.getUser_ID(), productID);//get userID form sessionScope
+                if (result) {
+                    url = "ListProductSaved";
+                }
             }
-            if (button.equals("Loc")) {
-                url = Fitler_Product;
-            }
-            if (button.equals("saveProduct")) {
-                url = Save_Product;
-            }
-            if (button.equals("Log In")) {
-                url = Login_Servlet;
-            }
-            if (button.equals("send")) {
-                url = CREATE_COMMENT;
-            }
-            if (button.equals("Create New Account")) {
-                url = CREATE_ACCOUNT;
-            }
+
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (NamingException ex) {
+            ex.printStackTrace();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            response.sendRedirect(url);
         }
     }
 

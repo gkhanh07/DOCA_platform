@@ -136,14 +136,13 @@ public class userDAO {
             }
         }
     }
-    
 
     public userDTO getUserbyProductID(int productID)
             throws SQLException, ClassNotFoundException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
-        userDTO user=null;
+        userDTO user = null;
         try {
             con = DBconnect.makeConnection();
             if (con != null) {
@@ -188,6 +187,101 @@ public class userDAO {
             }
         }
         return user;
+    }
+
+    public boolean createUser(userDTO user) throws SQLException, ClassNotFoundException, NamingException {
+        Connection con = null;
+        PreparedStatement ps = null;
+        try {
+            con = DBconnect.makeConnection();
+            if (con != null) {
+                String sql = "INSERT INTO users ([username], "
+                        + "[password], "
+                        + "[Gender], "
+                        + "[email], "
+                        + "[mobile_num], "
+                        + "[status], "
+                        + "[role_id], "
+                        + "[avatar]) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                ps = con.prepareStatement(sql);
+                ps.setString(1, user.getUserName());
+                ps.setString(2, user.getPassword());
+                ps.setString(3, user.getGender());
+                ps.setString(4, user.getEmail());
+                ps.setString(5, user.getMobileNum());
+                ps.setBoolean(6, user.isStatus());
+                ps.setBoolean(7, user.isRoleID());
+                ps.setString(8, user.getAvatar());
+                int rowsAffected = ps.executeUpdate();
+                if (rowsAffected > 0) {
+                    return true;
+                }
+            }
+        } finally {
+            if (ps != null) {
+                con.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return false;
+    }
+
+    public boolean isUsernameAvailable(String username) {
+        Connection con = null;
+        try {
+            con = DBconnect.makeConnection();
+            if (con != null) {
+                String sql = "SELECT COUNT(*) FROM users WHERE username = ?";
+                PreparedStatement ps = con.prepareStatement(sql);
+                ps.setString(1, username);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    int count = rs.getInt(1);
+                    return count == 0; // If count is 0, the username is available
+                }
+            }
+        } catch (SQLException | ClassNotFoundException | NamingException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean isEmailAvailable(String email) throws SQLException {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            con = DBconnect.makeConnection();
+            if (con != null) {
+                String sql = "SELECT COUNT(*) FROM users WHERE email = ?";
+                ps = con.prepareStatement(sql);
+                ps.setString(1, email);
+                rs = ps.executeQuery();
+
+                if (rs.next()) {
+                    int count = rs.getInt(1);
+                    return count == 0; // If count is 0, the email is available; otherwise, it's taken.
+                }
+            }
+        } catch (SQLException | ClassNotFoundException | NamingException e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+
+            if (ps != null) {
+                con.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+
+        return false; // Return false in case of an error
     }
 
 }

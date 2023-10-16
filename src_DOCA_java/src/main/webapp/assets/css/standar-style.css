@@ -16,6 +16,12 @@ body{
 .main-content{
     margin-top: 126px;
 }
+.header .profile-image {
+    width: 25px;
+    height: 25px;
+    object-fit: cover; /* This ensures the image is fully contained within the defined dimensions */
+    border-radius: 50%; /* This will make the image a circle */
+}
 /* body {
     padding: 120px 0px 0px 0px;
     z-index: 0;

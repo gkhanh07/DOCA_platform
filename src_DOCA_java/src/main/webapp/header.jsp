@@ -27,7 +27,7 @@
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item" href="forumServlet">Bảng tin</a>
 
-                             <a class="dropdown-item" href="marketServlet">Chợ</a>
+                            <a class="dropdown-item" href="marketServlet">Chợ</a>
 
                         </div>
                     </div>
@@ -53,8 +53,28 @@
                            role="button"><i class="fa-solid fa-pen-to-square"></i>
                             Tạo Bài Bán</a>
 
-                        <a class="btn  btn-light border-0 rounded-pill button_in_header" href="#" role="button"
-                           onclick="toggleMenuForm()"><i class="fa fa-user-circle" aria-hidden="true"></i> Ben</a>
+                        <c:choose>
+                            <c:when test="${Owner eq null}">
+                                <a class="btn btn-light border-0 rounded-pill button_in_header" href="login.jsp" role="button">
+                                    <i class="fa fa-arrow-right-to-bracket"></i>Login
+                                </a>
+                                <a class="btn btn-light border-0 rounded-pill button_in_header" href="signup.jsp" role="button">
+                                    <i class=" fa fa-user-plus"></i> SignUp
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <a class="btn btn-light border-0 rounded-pill button_in_header" href="#" role="button" onclick="toggleMenuForm()">
+                                     <img src="${Owner.avatar}"
+                                                     alt="Profile Image"
+                                                     class="rounded-circle profile-image" 
+                                                     style="width: 30px; height: 30px;">
+                                     ${Owner.userName}
+                                </a>
+                            </c:otherwise>
+                        </c:choose>
+
+
+
                     </div>
                 </div>
             </div>
@@ -66,8 +86,8 @@
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item"> <a href="" style="color: black;">quản lý tài khoản</a></li>
-                        <li class="list-group-item"><a href="" style="color: black;">quản lý tin </a></li>
-                        <li class="list-group-item"><a href="personal-product.html" style="color: black;">quản lý sản phẩm</a>
+                        <li class="list-group-item"><a href="getPersonalPost" style="color: black;">quản lý tin </a></li>
+                        <li class="list-group-item"><a href="getPersonalProduct" style="color: black;">quản lý sản phẩm</a>
                         </li>
                         <li class="list-group-item"><a href="ListProductSaved" style="color: black;">tin đã lưu</a></li>
                         <li class="list-group-item"> <a href="" style="color: black;">logout</a></li>

@@ -135,6 +135,56 @@ public class PostDAO {
         }
     }
 
+    
+    public List<PostDTO> getPostsByUserID(int userID) 
+            throws SQLException, ClassNotFoundException, NamingException {
+    Connection con = null;
+    PreparedStatement stm = null;
+    ResultSet rs = null;
+    List<PostDTO> listOfPosts = new ArrayList<>();
+
+    try {
+        con = DBconnect.makeConnection();
+        if (con != null) {
+            // Create SQL query
+            String sql = "SELECT post_id, user_id, post_content, post_image, isPublic, timePosted, status, reason "
+                    + "FROM post "
+                    + "WHERE user_id = ?";
+            // Create prepared statement
+            stm = con.prepareStatement(sql);
+            stm.setInt(1, userID);
+            // Execute query
+            rs = stm.executeQuery();
+            // Process the result set
+            while (rs.next()) {
+                int postId = rs.getInt("post_id");
+                int userId = rs.getInt("user_id");
+                String postContent = rs.getString("post_content");
+                String postImage = rs.getString("post_image");
+                boolean isPublic = rs.getBoolean("isPublic");
+                Date timePosted = rs.getDate("timePosted");
+                String status = rs.getString("status");
+                String reason = rs.getString("reason");
+                PostDTO post = new PostDTO(postId, userId, postContent, postImage, isPublic, timePosted, status, reason);
+                listOfPosts.add(post);
+            }
+        }
+    } finally {
+        // Close resources in the finally block
+        if (rs != null) {
+            rs.close();
+        }
+        if (stm != null) {
+            stm.close();
+        }
+        if (con != null) {
+            con.close();
+        }
+    }
+
+    return listOfPosts;
+}
+    
     public int getNumberPage(List<PostDTO> ListOfProduct) {
         int totalProduct = ListOfProduct.size();
         if (totalProduct > 0) {
