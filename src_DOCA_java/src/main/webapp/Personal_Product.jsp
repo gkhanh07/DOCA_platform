@@ -95,7 +95,7 @@
                                 <div role="tabpanel" class="tab-pane fade show active" id="display"> 
                                     <c:set var="countDisplay" value="0" />
                                     <c:forEach items="${listProductOfPersonal}" var="product">
-                                        <c:if test="${product.status eq 'accpeted'}">
+                                        <c:if test="${product.status eq 'accepted'}">
                                             <c:set var="countDisplay" value="${count + 1}" />
                                             <img class="col-sm-6 image-content mt-5 img-fluid"
                                                  src="${product.productImage}" alt="Hình ảnh">

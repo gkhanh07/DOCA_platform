@@ -55,9 +55,6 @@
     </head>
 
     <body>
-
-
-
         <c:set var="Products" value="${requestScope.listInPage}"/>
         <c:set var="SaveProductsList" value="${sessionScope.listOfSaveProduct}"/>
 
@@ -114,8 +111,9 @@
                         </div>
 
                         <div class="tab-content">
+                            <c:set var="countDisplay" value="0" />
                             <c:forEach items="${Products}" var="product">
-
+                                <c:set var="countDisplay" value="${count + 1}" />
                                 <div  style="position: relative; border-bottom: 1px solid rgb(224, 224, 224);">
                                     <a href="productDetailServlet?productId=${product.productId}" class="sell d-flex" style="width: 100%;">
                                         <c:set var="img" value="${product.productImage}"/>
@@ -124,7 +122,7 @@
                                             <c:set var="title" value="${product.title}"/>
                                             <h5><strong>${title}</strong></h5>
 
-                                          
+
 
                                             <c:set var="price" value="${product.price}"/>
                                             <h6 style="color:rgb(242, 106, 106);">${price} đ</h6>
@@ -154,6 +152,9 @@
                                     </span>
                                 </div>
                             </c:forEach>
+                            <c:if test="${countDisplay eq 0}">
+                                <p>Không có sản phẩm nào</p>
+                            </c:if>
                         </div>  
                     </div>
 
@@ -163,7 +164,7 @@
                         <c:set var="numberPage" value="${requestScope.numberPage}"/>
                         <ul class="pagination justify-content-center">
                             <c:forEach begin="1" end="${numberPage}" var="i">
-                                <li class="page-item rounded-pill ${indexPage==i?"active":""}" >
+                                <li class="page-item rounded-pill ${indexPageMarket==i?"active":""}" >
                                     <a class="page-link rounded-pill" href="marketServlet?index=${i}">${i}</a>
                                 </li>
                             </c:forEach> 

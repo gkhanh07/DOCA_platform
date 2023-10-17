@@ -2,12 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package com.mycompany.doca_java.Controller;
+package com.mycompany.doca_java.Controller.MarketControll;
 
-import com.mycompany.doca_java.DAO.PostDAO;
+import com.mycompany.doca_java.DAO.ProductDAO;
 import com.mycompany.doca_java.DAO.categoryDAO;
 import com.mycompany.doca_java.DAO.userDAO;
-import com.mycompany.doca_java.DTO.PostDTO;
+import com.mycompany.doca_java.DTO.ProductDTO;
 import com.mycompany.doca_java.DTO.categoryDTO;
 import com.mycompany.doca_java.DTO.userDTO;
 import jakarta.servlet.RequestDispatcher;
@@ -20,82 +20,55 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.naming.NamingException;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "forumServlet", urlPatterns = {"/forumServlet"})
-public class forumServlet extends HttpServlet {
-    private final String GET_COMMENT_SERVLET = "getAllCommentServlet";
-    
+@WebServlet(name = "productDetailServlet", urlPatterns = {"/productDetailServlet"})
+public class productDetailServlet extends HttpServlet {
+private final String productdetail_Page = "productDetail.jsp";
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String idcate= request.getParameter("categoryID");
-        if(idcate == null){
-            idcate="10";
-        }
-        int indexcategoryID =Integer.parseInt(idcate);
-        String index = request.getParameter("index");
-        if (index == null) {
-            index = "1";
-        }
-        int indexPage = Integer.parseInt(index);
+        int productID = Integer.parseInt(request.getParameter("productId"));
         String url = "";
         try {
-            PostDAO dao = new PostDAO();
-              List<PostDTO> listOfPost= new ArrayList<>();
-            if(indexcategoryID != 10){
-            dao.getPostByCategoryID(indexcategoryID);
-             listOfPost = dao.getListOfPost();
-            }else{
-                dao.getPostAvailable();
-                listOfPost = dao.getListOfPost();
-            }
-            int numberPage = dao.getNumberPage(listOfPost);
-            List<PostDTO> listInPage = dao.getPaging(indexPage, listOfPost);
-            if (listInPage != null) {
+            ProductDAO dao = new ProductDAO();
+            ProductDTO productDetail = dao.getProductById(productID);
+            userDAO ownerDao= new userDAO();
+            if (productDetail != null) {
                 HttpSession session = request.getSession(true);
-                request.setAttribute("listOfPost", listOfPost);
-                request.setAttribute("indexcategoryID", indexcategoryID);
-                request.setAttribute("listInPage", listInPage);
-                request.setAttribute("numberPage", numberPage);
-                session.setAttribute("indexPageForum", indexPage);
-                
-            }
-            categoryDAO cataDao= new categoryDAO();
-            List<categoryDTO> listCategory= new ArrayList<>();
-            categoryDTO defailtCate=new categoryDTO(10, "Tất cả");
-            listCategory.add(defailtCate);
-            for(int i=5; i<=9; i++){
-                listCategory.add(cataDao.getCategoryById(i));
-            }
-            if(listCategory != null){
-                    request.setAttribute("listCategory", listCategory);
+                request.setAttribute("productDetail", productDetail);
+                int categoryID = productDetail.getCategoryId();
+                categoryDAO daoCate = new categoryDAO();
+                categoryDTO category = daoCate.getCategoryById(categoryID);
+                request.setAttribute("category", category);
+                userDTO owner=ownerDao.getUserbyProductID(productID);
+                request.setAttribute("owner", owner);
+                url=productdetail_Page;
             }
             
-            userDAO uDao= new userDAO();
-            uDao.getAllTheUser();
-            List<userDTO> ListOfUser=uDao.getListOfUser();
-            if(ListOfUser!=null){
-                request.setAttribute("ListOfUser", ListOfUser);
-            }
-            url = GET_COMMENT_SERVLET;
-            
-        }  catch (ClassNotFoundException ex) {
+
+        } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         } catch (NamingException ex) {
             ex.printStackTrace();
         } catch (SQLException ex) {
             ex.printStackTrace();
-        }finally {
-            RequestDispatcher rd= request.getRequestDispatcher(url);
+        } finally {
+            RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
-//            response.sendRedirect(url);
         }
     }
 

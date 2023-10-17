@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <header>
     <c:set var="Owner" value="${sessionScope.USER_NAME}"/>
-    <form action="DispatchServlet">
+    <form action="DispatchServlet" method="post">
 
         <nav class="navbar navbar-dark navbar-expand-sm fixed-top navbar-color p-0 header">
             <div class="container-fluid d-flex justify-content-center">
@@ -26,17 +26,22 @@
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item" href="forumServlet">Bảng tin</a>
-
-                            <a class="dropdown-item" href="marketServlet">Chợ</a>
+                            <a class="dropdown-item" href="DispatchServlet?btAction=goTomarket">Chợ</a>
 
                         </div>
                     </div>
                     <div class="navbar-search " style="width: 50%;">
                         <form action="">
                             <div class="input-group bg-light">
-                                <input type="text" class="form-control" placeholder="Tìm kiếm" name="search">
+                                <input type="text" class="form-control" placeholder=""
+                                       value="${LastSearch}"
+                                       name="search"  id="searchInput">
                                 <div class="input-group-btn button-search">
-                                    <button class="btn btn-default " type="submit"><i class="fa fa-search"></i></button>
+                                    <a class="btn btn-default" type="submit" id="searchButton"
+                                       href=""
+                                       >
+                                        <i class="fa fa-search"></i>
+                                    </a>
                                 </div>
                             </div>
                         </form>
@@ -64,11 +69,11 @@
                             </c:when>
                             <c:otherwise>
                                 <a class="btn btn-light border-0 rounded-pill button_in_header" href="#" role="button" onclick="toggleMenuForm()">
-                                     <img src="${Owner.avatar}"
-                                                     alt="Profile Image"
-                                                     class="rounded-circle profile-image" 
-                                                     style="width: 30px; height: 30px;">
-                                     ${Owner.userName}
+                                    <img src="${Owner.avatar}"
+                                         alt="Profile Image"
+                                         class="rounded-circle profile-image" 
+                                         style="width: 30px; height: 30px;">
+                                    ${Owner.userName}
                                 </a>
                             </c:otherwise>
                         </c:choose>
@@ -120,3 +125,28 @@
         currentPageName.textContent = "Chợ";
     }
 </script>
+<script>
+    var currentPage = "<%= request.getRequestURI() %>";
+    var searchInput = document.querySelector('input[name="search"]');
+    var searchButton = document.getElementById("searchButton");
+
+    if (currentPage.includes("forum.jsp")) {
+        searchInput.placeholder = "Tìm kiếm bài viết";
+        searchButton.setAttribute("href", "DispatchServlet?btAction=searchForum");
+    } else if (currentPage.includes("market.jsp")) {
+        searchInput.placeholder = "Tìm kiếm sản phẩm";
+        searchButton.setAttribute("href", "DispatchServlet?btAction=searchMarket");
+    }
+
+    searchButton.addEventListener("click", function() {
+        var searchValue = searchInput.value;
+        var href = searchButton.getAttribute("href");
+
+        if (searchValue) {
+            var encodedSearchValue = encodeURIComponent(searchValue);
+            var searchUrl = href + "&searchValue=" + encodedSearchValue;
+            searchButton.setAttribute("href", searchUrl);
+        }
+    });
+</script>
+

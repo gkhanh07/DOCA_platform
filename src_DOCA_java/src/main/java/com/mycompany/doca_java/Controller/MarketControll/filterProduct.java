@@ -2,30 +2,33 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package com.mycompany.doca_java.Controller;
+package com.mycompany.doca_java.Controller.MarketControll;
 
+import com.mycompany.doca_java.DAO.ProductDAO;
+import com.mycompany.doca_java.DTO.ProductDTO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.sql.SQLException;
+import java.util.AbstractList;
+import java.util.ArrayList;
+import java.util.List;
+import javax.naming.NamingException;
 
 /**
  *
  * @author Admin
  */
-public class DispatchServlet extends HttpServlet {
+@WebServlet(name = "filterProduct", urlPatterns = {"/filterProduct"})
+public class filterProduct extends HttpServlet {
 
-    private final String Login_Servlet = "LoginServlet";
-    private final String CREATE_ACCOUNT = "CreateNewAccountServlet";
-    private final String Market_Controller = "marketServlet";
-    private final String Fitler_Product = "filterProduct";
-    private final String Save_Product = "updateSaveProductServlet";
-    private final String CREATE_COMMENT = "createCommentServlet";
-    private final String SEARCH_IN_MARKET = "searchInMarketServlet";
+    private final String MARKET_PAGE = "market.jsp";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,47 +42,46 @@ public class DispatchServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-         HttpSession session = request.getSession();
-        String button = request.getParameter("btAction");
+        HttpSession session = request.getSession();
         String url = "";
+        String local = request.getParameter("city") != null ? request.getParameter("city") : "";
+        float lowerPrice = request.getParameter("lowerPrice") != null ? Float.parseFloat(request.getParameter("lowerPrice")) : 0.0f;
+        int category = request.getParameter("category") != null ? Integer.parseInt(request.getParameter("category")) : 0;
+
+        String index = request.getParameter("indexFromSaveProduct");
+        if (index == null) {
+            index = "1";
+        }
+        int indexPage = Integer.parseInt(index);
+
         try {
-            if (button.equals("goTomarket")) {
-                session.removeAttribute("listOfProduct");
-                request.removeAttribute("numberPage");
-                request.removeAttribute("listInPage");
-                session.removeAttribute("indexPageMarket");
-                session.removeAttribute("selectedLocal");
-                session.removeAttribute("selectedLowerPrice");
-                session.removeAttribute("selectedCategory");
-                url = Market_Controller;
+            List<ProductDTO> listOfProduct = new ArrayList<>();
+            listOfProduct=(AbstractList<ProductDTO>) session.getAttribute("listOfProductSearch");
+            if(listOfProduct==null){
+            ProductDAO dao = new ProductDAO();
+            dao.getAllTheProduct();
+            listOfProduct = dao.getListOfProduct();
+             }
+            List<ProductDTO> newListOfProduct = new ArrayList<>();
+            for (ProductDTO product : listOfProduct) {
+                if ((local.isEmpty() || product.getAddress().contains(local))
+                        && (lowerPrice == 0 || product.getPrice() <= lowerPrice)
+                        && (category == 0 || product.getCategoryId() == category)) {
+                    newListOfProduct.add(product);
+                }
             }
-            if (button.equals("Loc")) {
-                url = Fitler_Product;
-            }
-            if (button.equals("saveProduct")) {
-                url = Save_Product;
-            }
-            if (button.equals("Log In")) {
-                url = Login_Servlet;
-            }
-            if (button.equals("send")) {
-                url = CREATE_COMMENT;
-            }
-            if (button.equals("Create New Account")) {
-                url = CREATE_ACCOUNT;
-            }
-            if (button.equals("searchMarket")) {
-                session.removeAttribute("listOfProduct");
-                request.removeAttribute("numberPage");
-                request.removeAttribute("listInPage");
-                session.removeAttribute("indexPageMarket");
-                session.removeAttribute("selectedLocal");
-                session.removeAttribute("selectedLowerPrice");
-                session.removeAttribute("selectedCategory");
-                session.removeAttribute("listOfProductSearch");
-                session.removeAttribute("LastSearch");
-                url = SEARCH_IN_MARKET;
-            }
+            session.setAttribute("listOfProduct", newListOfProduct);
+            session.setAttribute("selectedLocal", local);
+            session.setAttribute("selectedLowerPrice", lowerPrice);
+            session.setAttribute("selectedCategory", category);
+            url = "marketServlet?index=" + indexPage;
+
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (NamingException ex) {
+            ex.printStackTrace();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
