@@ -22,10 +22,12 @@ public class DispatchServlet extends HttpServlet {
     private final String Login_Servlet = "LoginServlet";
     private final String CREATE_ACCOUNT = "CreateNewAccountServlet";
     private final String Market_Controller = "marketServlet";
+    private final String FORUM_Controller = "forumServlet";
     private final String Fitler_Product = "filterProduct";
     private final String Save_Product = "updateSaveProductServlet";
     private final String CREATE_COMMENT = "createCommentServlet";
     private final String SEARCH_IN_MARKET = "searchInMarketServlet";
+    private final String SEARCH_IN_FORUM = "SearchInForumServlet";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,7 +41,7 @@ public class DispatchServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-         HttpSession session = request.getSession();
+        HttpSession session = request.getSession();
         String button = request.getParameter("btAction");
         String url = "";
         try {
@@ -53,6 +55,17 @@ public class DispatchServlet extends HttpServlet {
                 session.removeAttribute("selectedCategory");
                 url = Market_Controller;
             }
+            if (button.equals("goToForum")) {
+                request.removeAttribute("listOfPost");
+                request.removeAttribute("indexcategoryID");
+                request.removeAttribute("listInPage");
+                request.removeAttribute("numberPage");
+                session.removeAttribute("indexPageForum");
+                session.removeAttribute("listOfPostSearch");
+                session.removeAttribute("LastSearch");
+                url = FORUM_Controller;
+            }
+
             if (button.equals("Loc")) {
                 url = Fitler_Product;
             }
@@ -79,6 +92,17 @@ public class DispatchServlet extends HttpServlet {
                 session.removeAttribute("listOfProductSearch");
                 session.removeAttribute("LastSearch");
                 url = SEARCH_IN_MARKET;
+            }
+            if (button.equals("searchForum")) {
+                 request.removeAttribute("listOfPost");
+                request.removeAttribute("indexcategoryID");
+                request.removeAttribute("listInPage");
+                request.removeAttribute("numberPage");
+                session.removeAttribute("indexPageForum");
+                session.removeAttribute("listOfPostSearch");
+                session.removeAttribute("listOfPostSearch");
+                session.removeAttribute("LastSearch");
+                url = SEARCH_IN_FORUM;
             }
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);

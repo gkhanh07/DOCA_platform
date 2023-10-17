@@ -25,7 +25,7 @@
                             <i class="fa fa-bars" aria-hidden="true"></i><span id="currentPageName"> Danh mục</span>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="forumServlet">Bảng tin</a>
+                            <a class="dropdown-item" href="DispatchServlet?btAction=goToForum">Bảng tin</a>
                             <a class="dropdown-item" href="DispatchServlet?btAction=goTomarket">Chợ</a>
 
                         </div>
