@@ -63,11 +63,12 @@ public class forumServlet extends HttpServlet {
                     listOfPost = dao.getListOfPost();
                 }
 
-            } 
-            else {
+            } else {
                 if (indexcategoryID != 10) {
                     dao.getPostByCategoryID(indexcategoryID);
                     List<PostDTO> listOfAllPost = dao.getListOfPost();
+                    List<PostDTO> postsToRemove = new ArrayList<>();
+
                     for (PostDTO postSearch : listOfPost) {
                         int count = 0;
                         for (PostDTO postcate : listOfAllPost) {
@@ -76,12 +77,14 @@ public class forumServlet extends HttpServlet {
                             }
                         }
                         if (count == 0) {
-                            listOfPost.remove(postSearch);
+                            postsToRemove.add(postSearch);
                         }
+                    }
+                    for (PostDTO postToRemove : postsToRemove) {
+                        listOfPost.remove(postToRemove);
                     }
                     //nếu phần tử trong list thu được từ search, không nằm trong list thu được
                     //từ lọc Category thì loại ra giữ lại những element thuộc đúng category
-
                 }
             }
 

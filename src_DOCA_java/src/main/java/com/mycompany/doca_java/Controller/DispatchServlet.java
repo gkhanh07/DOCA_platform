@@ -100,7 +100,6 @@ public class DispatchServlet extends HttpServlet {
                 request.removeAttribute("numberPage");
                 session.removeAttribute("indexPageForum");
                 session.removeAttribute("listOfPostSearch");
-                session.removeAttribute("listOfPostSearch");
                 session.removeAttribute("LastSearch");
                 url = SEARCH_IN_FORUM;
             }

@@ -18,6 +18,7 @@ import javax.naming.NamingException;
  *
  * @author minhluan
  */
+
 public class commentDAO {
 
     private List<commentDTO> listOfComment = new ArrayList<>();
