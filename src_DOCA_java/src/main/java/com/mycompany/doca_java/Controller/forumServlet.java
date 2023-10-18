@@ -51,13 +51,13 @@ public class forumServlet extends HttpServlet {
         String url = "";
         try {
             PostDAO dao = new PostDAO();
+            List<PostDTO> listOfPostSearch = new ArrayList<>();
             List<PostDTO> listOfPost = new ArrayList<>();
-            listOfPost = (AbstractList<PostDTO>) session.getAttribute("listOfPostSearch");
-            if (listOfPost == null) {
+            listOfPostSearch = (AbstractList<PostDTO>) session.getAttribute("listOfPostSearch");
+            if (listOfPostSearch == null) {
                 if (indexcategoryID != 10) {
                     dao.getPostByCategoryID(indexcategoryID);
                     listOfPost = dao.getListOfPost();
-
                 } else {
                     dao.getPostAvailable();
                     listOfPost = dao.getListOfPost();
@@ -67,25 +67,26 @@ public class forumServlet extends HttpServlet {
                 if (indexcategoryID != 10) {
                     dao.getPostByCategoryID(indexcategoryID);
                     List<PostDTO> listOfAllPost = dao.getListOfPost();
-                    List<PostDTO> postsToRemove = new ArrayList<>();
-
-                    for (PostDTO postSearch : listOfPost) {
+                    for (PostDTO postSearch : listOfPostSearch) {
                         int count = 0;
                         for (PostDTO postcate : listOfAllPost) {
                             if (postSearch.getPostId() == postcate.getPostId()) {
                                 count++;
                             }
                         }
-                        if (count == 0) {
-                            postsToRemove.add(postSearch);
+                        if (count != 0) {
+                            listOfPost.add(postSearch);
                         }
-                    }
-                    for (PostDTO postToRemove : postsToRemove) {
-                        listOfPost.remove(postToRemove);
                     }
                     //nếu phần tử trong list thu được từ search, không nằm trong list thu được
                     //từ lọc Category thì loại ra giữ lại những element thuộc đúng category
                 }
+                else{
+                    for (PostDTO postSearch : listOfPostSearch) {
+                        listOfPost.add(postSearch);
+                    }
+                }
+                    
             }
 
             int numberPage = dao.getNumberPage(listOfPost);

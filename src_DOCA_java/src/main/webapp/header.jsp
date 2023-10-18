@@ -53,10 +53,18 @@
                         </a>
                         <a class="btn btn-light border-0 rounded-pill button_in_header" href="#" role="button"><i
                                 class="fa-solid fa-message"></i></a>
-
-                        <a class="btn  btn-light border-0 rounded-pill button_in_header" href="post-product.html"
-                           role="button"><i class="fa-solid fa-pen-to-square"></i>
-                            Tạo Bài Bán</a>
+                            <c:choose>
+                                <c:when test="${Owner eq null}">
+                                <a class="btn btn-light border-0 rounded-pill button_in_header" href="login.jsp" role="button">
+                                    <i class="fa-solid fa-pen-to-square"></i> Tạo Bài Bán
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <a class="btn btn-light border-0 rounded-pill button_in_header" href="postProduct.jsp" role="button">
+                                    <i class="fa-solid fa-pen-to-square"></i> Tạo Bài Bán
+                                </a>
+                            </c:otherwise>
+                        </c:choose>
 
                         <c:choose>
                             <c:when test="${Owner eq null}">
@@ -138,7 +146,7 @@
         searchButton.setAttribute("href", "DispatchServlet?btAction=searchMarket");
     }
 
-    searchButton.addEventListener("click", function() {
+    searchButton.addEventListener("click", function () {
         var searchValue = searchInput.value;
         var href = searchButton.getAttribute("href");
 

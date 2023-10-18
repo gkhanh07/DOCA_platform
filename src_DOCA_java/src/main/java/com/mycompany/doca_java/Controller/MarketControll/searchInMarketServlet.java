@@ -50,7 +50,8 @@ public class searchInMarketServlet extends HttpServlet {
             ListOfProduct = dao.searchByProductTitle(searchValue);
             session.setAttribute("listOfProductSearch", ListOfProduct);
             session.setAttribute("LastSearch", searchValue);
-            }url = "filterProduct";
+            }
+            url = "filterProduct";
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         } catch (NamingException ex) {

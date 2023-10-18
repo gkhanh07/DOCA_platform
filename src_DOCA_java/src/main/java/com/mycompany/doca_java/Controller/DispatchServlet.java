@@ -41,6 +41,7 @@ public class DispatchServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
         String button = request.getParameter("btAction");
         String url = "";
@@ -53,6 +54,8 @@ public class DispatchServlet extends HttpServlet {
                 session.removeAttribute("selectedLocal");
                 session.removeAttribute("selectedLowerPrice");
                 session.removeAttribute("selectedCategory");
+                session.removeAttribute("listOfProductSearch");
+                session.removeAttribute("LastSearch");
                 url = Market_Controller;
             }
             if (button.equals("goToForum")) {
@@ -103,6 +106,7 @@ public class DispatchServlet extends HttpServlet {
                 session.removeAttribute("LastSearch");
                 url = SEARCH_IN_FORUM;
             }
+            
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

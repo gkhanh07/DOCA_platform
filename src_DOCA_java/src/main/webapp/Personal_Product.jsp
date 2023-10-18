@@ -104,8 +104,8 @@
                                                 <h6>giá tiền: <fmt:formatNumber value="${product.price}" type="currency" currencyCode="VND" /></h6>
                                                 <p>${product.address}</p>
                                             </div>
-                                            <input type="submit" value="sửa bài bán">
-                                            <input type="submit" value="xoá bài bán">
+                                            <a class="btn btn-primary" href="goUpdateProduct?ProductID=${product.productId}" >sửa bài bán</a>
+                                            <a class="btn btn-danger" >xoá bài bán</a>
                                             <hr>
                                         </c:if>
                                     </c:forEach>
@@ -128,8 +128,8 @@
                                                 <p>lí do từ chối: ${product.reason}</p>
 
                                             </div>
-                                            <input type="submit" value="sửa bài bán">
-                                            <input type="submit" value="xoá bài bán">
+                                            <a class="btn btn-primary" href="goUpdateProduct?ProductID=${product.productId}" >sửa bài bán</a>
+                                            <a class="btn btn-danger" >xoá bài bán</a>
                                             <hr>
                                         </c:if>
                                     </c:forEach>
@@ -140,7 +140,7 @@
                                 <div role="tabpanel" class="tab-pane fade " id="waiting">
                                     <c:set var="countWaiting" value="0" />
                                     <c:forEach items="${listProductOfPersonal}" var="product">
-                                        <c:if test="${product.status eq 'wating'}">
+                                        <c:if test="${product.status eq 'pending'}">
                                             <c:set var="countWaiting" value="${count + 1}" />
                                             <img class="col-sm-6 image-content mt-5 img-fluid"
                                                  src="${product.productImage}" alt="Hình ảnh">
@@ -149,9 +149,9 @@
                                                 <h6>giá tiền: <fmt:formatNumber value="${product.price}" type="currency" currencyCode="VND" /></h6>
                                                 <p>${product.address}</p>
                                                 <p>đang chờ </p>     
-                                            </div>s
-                                            <input type="submit" value="sửa bài bán">
-                                            <input type="submit" value="xoá bài bán">
+                                            </div>
+                                            <a class="btn btn-primary" href="goUpdateProduct?ProductID=${product.productId}" >sửa bài bán</a>
+                                            <a class="btn btn-danger" >xoá bài bán</a>
                                             <hr> 
                                         </c:if>
                                     </c:forEach>

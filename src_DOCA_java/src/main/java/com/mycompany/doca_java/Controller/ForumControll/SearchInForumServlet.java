@@ -46,11 +46,12 @@ public class SearchInForumServlet extends HttpServlet {
         try {
             if(!searchValue.trim().isEmpty()){
                 PostDAO dao = new PostDAO();
-            List<PostDTO> ListOfPost = new ArrayList<>();
-            ListOfPost = dao.searchPostsByDescription(searchValue);
-            session.setAttribute("listOfPostSearch", ListOfPost);
+            List<PostDTO> ListOfPostSearch = new ArrayList<>();
+            ListOfPostSearch = dao.searchPostsByDescription(searchValue);
+            session.setAttribute("listOfPostSearch", ListOfPostSearch);
             session.setAttribute("LastSearch", searchValue);
-            }url = "forumServlet";
+            }
+            url = "forumServlet";
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         } catch (NamingException ex) {

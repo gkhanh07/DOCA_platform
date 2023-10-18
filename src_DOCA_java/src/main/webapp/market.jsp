@@ -121,11 +121,13 @@
                                         <div class="font">
                                             <c:set var="title" value="${product.title}"/>
                                             <h5><strong>${title}</strong></h5>
-
-
-
                                             <c:set var="price" value="${product.price}"/>
-                                            <h6 style="color:rgb(242, 106, 106);">${price} đ</h6>
+                                            <c:if test="${!product.isFree()}">
+                                                <h6 style="color:rgb(242, 106, 106);">${price} đ</h6>
+                                            </c:if>
+                                            <c:if test="${product.isFree()}">
+                                                <h6 style="color:rgb(242, 106, 106);">miễn phí</h6>
+                                            </c:if>
                                             <c:set var="address" value="${product.address}"/>
                                             <h6 style="font-size: 15px; opacity: 0.5;">${address}</h6>
                                         </div>

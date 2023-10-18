@@ -10,8 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.naming.NamingException;
 
@@ -53,7 +53,7 @@ public class ProductDAO {
                     boolean isFree = rs.getBoolean("is_free");
                     float price = rs.getFloat("price");
                     String address = rs.getString("address");
-                    Date timePosted = rs.getDate("timePosted");
+                    Timestamp timePosted = rs.getTimestamp("timePosted");
                     boolean isPublic = rs.getBoolean("isPublic");
                     String status = rs.getString("status");
                     String reason = rs.getString("reason");
@@ -109,7 +109,7 @@ public class ProductDAO {
                     boolean isFree = rs.getBoolean("is_free");
                     float price = rs.getFloat("price");
                     String address = rs.getString("address");
-                    Date timePosted = rs.getDate("timePosted");
+                    Timestamp timePosted = rs.getTimestamp("timePosted");
                     boolean isPublic = rs.getBoolean("isPublic");
                     String status = rs.getString("status");
                     String reason = rs.getString("reason");
@@ -166,7 +166,7 @@ public class ProductDAO {
                     boolean isFree = rs.getBoolean("is_free");
                     float price = rs.getFloat("price");
                     String address = rs.getString("address");
-                    Date timePosted = rs.getDate("timePosted");
+                    Timestamp timePosted = rs.getTimestamp("timePosted");
                     boolean isPublic = rs.getBoolean("isPublic");
                     String status = rs.getString("status");
                     String reason = rs.getString("reason");
@@ -217,7 +217,7 @@ public class ProductDAO {
                     boolean isFree = rs.getBoolean("is_free");
                     float price = rs.getFloat("price");
                     String address = rs.getString("address");
-                    Date timePosted = rs.getDate("timePosted");
+                    Timestamp timePosted = rs.getTimestamp("timePosted");
                     boolean isPublic = rs.getBoolean("isPublic");
                     String status = rs.getString("status");
                     String reason = rs.getString("reason");
@@ -274,7 +274,7 @@ public class ProductDAO {
                 boolean isFree = rs.getBoolean("is_free");
                 float price = rs.getFloat("price");
                 String address = rs.getString("address");
-                Date timePosted = rs.getDate("timePosted");
+                Timestamp timePosted = rs.getTimestamp("timePosted");
                 boolean isPublic = rs.getBoolean("isPublic");
                 String status = rs.getString("status");
                 String reason = rs.getString("reason");
@@ -323,7 +323,7 @@ public class ProductDAO {
                 boolean isFree = rs.getBoolean("is_free");
                 float price = rs.getFloat("price");
                 String address = rs.getString("address");
-                Date timePosted = rs.getDate("timePosted");
+                Timestamp timePosted = rs.getTimestamp("timePosted");
                 boolean isPublic = rs.getBoolean("isPublic");
                 String status = rs.getString("status");
                 String reason = rs.getString("reason");
@@ -367,6 +367,50 @@ public class ProductDAO {
             listInPage.add(ListOfProduct.get(i));
         }
         return listInPage;
+    }
+    
+    
+    
+     public boolean createPostProduct(ProductDTO product) throws SQLException, ClassNotFoundException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        boolean result = false;
+        try {
+            con = DBconnect.makeConnection();
+            if (con != null) {
+                String sql = "INSERT INTO product (user_id, category_id, title, description, product_image, is_free, price, address, timePosted, isPublic, status, reason) "
+                        + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, product.getUserId());
+                stm.setInt(2, product.getCategoryId());
+                stm.setString(3, product.getTitle());
+                stm.setString(4, product.getDescription());
+                stm.setString(5, product.getProductImage());
+                stm.setBoolean(6, product.isFree());
+                stm.setDouble(7, product.getPrice());
+                stm.setString(8, product.getAddress());
+                stm.setTimestamp(9, product.getTimePosted());
+                stm.setBoolean(10, product.isPublic());
+                stm.setString(11, product.getStatus());
+                stm.setString(12, product.getReason());
+
+                // Execute the query
+                int rowsAffected = stm.executeUpdate();
+                if (rowsAffected > 0) {
+                    result = true;
+                }
+            }
+
+        } finally {
+
+            if (stm != null) {
+                con.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return result;
     }
 
 }

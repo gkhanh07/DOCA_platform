@@ -2,14 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package com.mycompany.doca_java.Controller.MarketControll;
+package com.mycompany.doca_java.Controller.ManageOwner.personal_Product;
 
 import com.mycompany.doca_java.DAO.ProductDAO;
 import com.mycompany.doca_java.DAO.categoryDAO;
-import com.mycompany.doca_java.DAO.userDAO;
 import com.mycompany.doca_java.DTO.ProductDTO;
 import com.mycompany.doca_java.DTO.categoryDTO;
-import com.mycompany.doca_java.DTO.userDTO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -26,9 +24,11 @@ import javax.naming.NamingException;
  *
  * @author Admin
  */
-@WebServlet(name = "productDetailServlet", urlPatterns = {"/productDetailServlet"})
-public class productDetailServlet extends HttpServlet {
-private final String productdetail_Page = "productDetail.jsp";
+@WebServlet(name = "goUpdateProduct", urlPatterns = {"/goUpdateProduct"})
+public class goUpdateProduct extends HttpServlet {
+
+    private final String UPDATE_PRODUCT_PAGE = "UpdateProduct.jsp";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -41,22 +41,15 @@ private final String productdetail_Page = "productDetail.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        int productID = Integer.parseInt(request.getParameter("productId"));
+        int ProductID = Integer.parseInt(request.getParameter("ProductID"));
         String url = "";
         try {
             ProductDAO dao = new ProductDAO();
-            ProductDTO productDetail = dao.getProductById(productID);
-            userDAO ownerDao= new userDAO();
+            ProductDTO productDetail = dao.getProductById(ProductID);
             if (productDetail != null) {
-                HttpSession session = request.getSession(true);
                 request.setAttribute("productDetail", productDetail);
                 int categoryID = productDetail.getCategoryId();
-                categoryDAO daoCate = new categoryDAO();
-                categoryDTO category = daoCate.getCategoryById(categoryID);
-                request.setAttribute("category", category);
-                userDTO owner=ownerDao.getUserbyProductID(productID);
-                request.setAttribute("owner", owner);
-                url=productdetail_Page;
+                url = UPDATE_PRODUCT_PAGE;
             }
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
