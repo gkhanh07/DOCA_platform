@@ -45,26 +45,14 @@
             });
         </script>
         <script>
-            $(document).ready(function () {
-                var isFree = ${Product.isFree};
-                var price = ${Product.price};
-
-                if (isFree) {
-                    $('#radio-free').prop('checked', true);
-                    $('#input-container').hide();
-                } else {
-                    $('#radio-fee').prop('checked', true);
-                    $('#input-container').show();
-                    $('#input-fee').val(price);
-                }
-            });
-
             function showInput() {
-                $('#input-container').show();
+                var inputContainer = document.getElementById("input-container");
+                inputContainer.style.display = "block";
             }
 
             function hideInput() {
-                $('#input-container').hide();
+                var inputContainer = document.getElementById("input-container");
+                inputContainer.style.display = "none";
             }
         </script>
     </head>
@@ -80,44 +68,47 @@
 
                     <!-- viết code vào đây -->
 
-
                     <h1>Bài đăng bán của bạn</h1>
 
-                    <form action="PostPorductV2" method="post" enctype="multipart/form-data"   >
+                    <form action="UpDate_Product" method="post"  enctype="multipart/form-data">
+                        <input type="hidden" name="Productid" value="${Product.productId}" />
                         <h5>Danh mục đăng tin</h5>
                         <div class="dropdown mt-3 mb-3">
                             <select class="form-select" aria-label="Default select example" name="category_Product">
-                                <option value="1">Phụ kiện</option>
-                                <option value="2">Thức ăn</option>
-                                <option value="3">Chuồng động vật</option>
-                                <option value="4">Khác</option>
+                                <option value="1" ${Product.categoryId == 1 ? 'selected' : ''}>Phụ kiện</option>
+                                <option value="2" ${Product.categoryId == 2 ? 'selected' : ''}>Thức ăn</option>
+                                <option value="3" ${Product.categoryId == 3 ? 'selected' : ''}>Chuồng động vật</option>
+                                <option value="4" ${Product.categoryId == 4 ? 'selected' : ''}>Khác</option>
                             </select>
                         </div>
                         <div class="mt-3 mb-3">
                             <label for="img" class="form-label">Hình Ảnh</label>
-                            <input type="file" class="form-control" id="img" name="file" multiple required>
-                            <img id="preview-img" src="${Product.productImage}" alt="Preview Image" style="max-width: 100%; max-height: 200px;">
+                            <input type="file" class="form-control" id="img" name="file" multiple >
+                            <img id="preview-img"  src="${Product.productImage}" alt="Preview Image" style="max-width: 100%; max-height: 200px;">
+                            <input type="hidden" name="OldImg" value="${Product.productImage}" />
                         </div>
                         <div class="mt-3 mb-3">
                             <label for="title" class="form-label">Tiêu đề</label>
-                            <input type="text" class="form-control" id="title" name="title" value="${Product.title}" required>
+                            <input type="text" class="form-control" id="title" name="title" value="${Product.title}" >
                         </div>
                         <div class="mb-3">
                             <label for="radio-fee">Tính phí:</label>
-                            <input type="radio" name="fee" value="fee" id="radio-fee" onclick="showInput()">
+                            <input type="radio" name="fee" value="fee" id="radio-fee" onclick="showInput()" ${Product.isFree()?"" :"checked"}>
                             <br>
                             <div id="input-container" style="display: none;">
                                 <label for="input-fee">Giá:</label>
-                                <input type="text" name="input-fee" id="input-fee" class="form-control" value="0">
+                                <input type="text" name="input-fee" id="input-fee" class="form-control" value="${Product.price}">
                                 <br>
                             </div>
                             <br>
+
                             <label for="radio-free">Miễn phí:</label>
-                            <input type="radio" name="fee" value="free" id="radio-free" onclick="hideInput()">
+                            <input type="radio" name="fee" value="free" id="radio-free" onclick="hideInput()" ${Product.isFree()?"checked":""}>
                         </div>
                         <div class="mb-3">
                             <label for="content" class="form-label">Nội dung</label>
-                            <textarea class="form-control" id="content" name="content" rows="5" value="${Product.description}" required></textarea>
+                            <textarea class="form-control" id="content" name="content" rows="5" 
+                                      >${Product.description}</textarea>
                         </div>
                         <!-- bat dau modal -->
                         <div class="container mt-3">
@@ -127,6 +118,8 @@
                                 Địa chỉ
                             </button>
                             <div id="addressResult">${Product.address}</div>
+                            <input type="hidden" id="hiddenAddress" name="NewAddress">
+                            <input type="hidden" name="OldAddress" value="${Product.address}">
                             <!--Modal--> 
                             <div class="modal" id="myModal">
                                 <div class="modal-dialog">
@@ -136,9 +129,7 @@
                                         <div class="modal-header" data-toggle="collapse" data-target="#categoryList">
                                             <h4 class="modal-title">Địa chỉ</h4>
                                         </div>
-
                                         <!--Modal body--> 
-
                                         <div class="col-6">
 
                                             <select class="form-select form-select-sm mb-3" id="city" aria-label=".form-select-sm" name="city">
@@ -166,7 +157,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button  type="submit" class="submit mt-5 mb-5 btn btn-primary form-control" value="postProduct">Đăng bài</button>
+                        <button  type="submit" class="submit mt-5 mb-5 btn btn-primary form-control" value="UpdateProduct">xác nhận sửa nội dung bài bán</button>
 
                     </form>
                 </div>
@@ -217,24 +208,26 @@
                                                             };
                                                         }
 
-                                                        function displayAddress() {
-                                                            var selectedCity = cities.value;
-                                                            var selectedDistrict = districts.value;
-                                                            var selectedWard = wards.value;
-                                                            
-                                                            var address =  selectedCity + " - " + selectedDistrict + " - " +selectedWard ;
-                                                            document.getElementById("addressResult").textContent = address;
-                                                        }
+                                                            function displayAddress() {
+                                                                var selectedCity = cities.value;
+                                                                var selectedDistrict = districts.value;
+                                                                var selectedWard = wards.value;
+
+                                                                var address = selectedCity + " - " + selectedDistrict + " - " + selectedWard;
+                                                                document.getElementById("addressResult").textContent = address;
+                                                                document.getElementById("hiddenAddress").value = address;
+                                                            }
     </script>
     <script>
         $(document).ready(function () {
-            $('#imgNewProduct').change(function () {
+            $('#img').change(function () {
                 var input = this;
 
                 if (input.files && input.files[0]) {
                     var reader = new FileReader();
 
                     reader.onload = function (e) {
+                        $('#preview-img').attr('src', '');
                         $('#preview-img').attr('src', e.target.result);
                     };
 

@@ -105,7 +105,7 @@
                                                 <p>${product.address}</p>
                                             </div>
                                             <a class="btn btn-primary" href="goUpdateProduct?ProductID=${product.productId}" >sửa bài bán</a>
-                                            <a class="btn btn-danger" >xoá bài bán</a>
+                                            <a class="btn btn-danger" href="DeleteProduct?ProductID=${product.productId}">xoá bài bán</a>
                                             <hr>
                                         </c:if>
                                     </c:forEach>
@@ -129,7 +129,7 @@
 
                                             </div>
                                             <a class="btn btn-primary" href="goUpdateProduct?ProductID=${product.productId}" >sửa bài bán</a>
-                                            <a class="btn btn-danger" >xoá bài bán</a>
+                                            <a class="btn btn-danger" href="DeleteProduct?ProductID=${product.productId}">xoá bài bán</a>
                                             <hr>
                                         </c:if>
                                     </c:forEach>
@@ -151,7 +151,7 @@
                                                 <p>đang chờ </p>     
                                             </div>
                                             <a class="btn btn-primary" href="goUpdateProduct?ProductID=${product.productId}" >sửa bài bán</a>
-                                            <a class="btn btn-danger" >xoá bài bán</a>
+                                            <a class="btn btn-danger" href="DeleteProduct?ProductID=${product.productId}">xoá bài bán</a>
                                             <hr> 
                                         </c:if>
                                     </c:forEach>

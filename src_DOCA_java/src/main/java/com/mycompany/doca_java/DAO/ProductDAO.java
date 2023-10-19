@@ -248,104 +248,100 @@ public class ProductDAO {
             }
         }
     }
-    
-    
-    public List<ProductDTO> getProductsByUserId(int userId) throws SQLException, ClassNotFoundException, NamingException {
-    Connection con = null;
-    PreparedStatement stm = null;
-    ResultSet rs = null;
-    List<ProductDTO> productList = new ArrayList<>();
-    try {
-        con = DBconnect.makeConnection();
-        if (con != null) {
-            String sql = "SELECT product_id, user_id, category_id, title, description, product_image, is_free, price, address, timePosted, isPublic, status, reason "
-                    + "FROM product "
-                    + "WHERE user_id = ? "
-                    + "ORDER BY timePosted DESC";
-            stm = con.prepareStatement(sql);
-            stm.setInt(1, userId);
-            rs = stm.executeQuery();
-            while (rs.next()) {
-                int productId = rs.getInt("product_id");
-                int categoryId = rs.getInt("category_id");
-                String title = rs.getString("title");
-                String description = rs.getString("description");
-                String productImage = rs.getString("product_image");
-                boolean isFree = rs.getBoolean("is_free");
-                float price = rs.getFloat("price");
-                String address = rs.getString("address");
-                Timestamp timePosted = rs.getTimestamp("timePosted");
-                boolean isPublic = rs.getBoolean("isPublic");
-                String status = rs.getString("status");
-                String reason = rs.getString("reason");
 
-                ProductDTO product = new ProductDTO(productId, userId, categoryId, title, description, productImage, isFree, price, address, timePosted, isPublic, status, reason);
-                productList.add(product);
+    public List<ProductDTO> getProductsByUserId(int userId) throws SQLException, ClassNotFoundException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<ProductDTO> productList = new ArrayList<>();
+        try {
+            con = DBconnect.makeConnection();
+            if (con != null) {
+                String sql = "SELECT product_id, user_id, category_id, title, description, product_image, is_free, price, address, timePosted, isPublic, status, reason "
+                        + "FROM product "
+                        + "WHERE user_id = ? "
+                        + "ORDER BY timePosted DESC";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, userId);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    int productId = rs.getInt("product_id");
+                    int categoryId = rs.getInt("category_id");
+                    String title = rs.getString("title");
+                    String description = rs.getString("description");
+                    String productImage = rs.getString("product_image");
+                    boolean isFree = rs.getBoolean("is_free");
+                    float price = rs.getFloat("price");
+                    String address = rs.getString("address");
+                    Timestamp timePosted = rs.getTimestamp("timePosted");
+                    boolean isPublic = rs.getBoolean("isPublic");
+                    String status = rs.getString("status");
+                    String reason = rs.getString("reason");
+
+                    ProductDTO product = new ProductDTO(productId, userId, categoryId, title, description, productImage, isFree, price, address, timePosted, isPublic, status, reason);
+                    productList.add(product);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
             }
         }
-    } finally {
-        if (rs != null) {
-            rs.close();
-        }
-        if (stm != null) {
-            stm.close();
-        }
-        if (con != null) {
-            con.close();
-        }
+        return productList;
     }
-    return productList;
-}
-    
-    
+
     public List<ProductDTO> searchByProductTitle(String title) throws SQLException, ClassNotFoundException, NamingException {
-    Connection con = null;
-    PreparedStatement stm = null;
-    ResultSet rs = null;
-    List<ProductDTO> productList = new ArrayList<>();
-    try {
-        con = DBconnect.makeConnection();
-        if (con != null) {
-            String sql = "SELECT product_id, user_id, category_id, title, description, product_image, is_free, price, address, timePosted, isPublic, status, reason "
-                    + "FROM product "
-                    + "WHERE title LIKE ? "
-                    + "ORDER BY timePosted DESC";
-            stm = con.prepareStatement(sql);
-            stm.setString(1, "%" + title + "%");
-            rs = stm.executeQuery();
-            while (rs.next()) {
-                int productId = rs.getInt("product_id");
-                int userId = rs.getInt("user_id");
-                int categoryId = rs.getInt("category_id");
-                String productTitle = rs.getString("title");
-                String description = rs.getString("description");
-                String productImage = rs.getString("product_image");
-                boolean isFree = rs.getBoolean("is_free");
-                float price = rs.getFloat("price");
-                String address = rs.getString("address");
-                Timestamp timePosted = rs.getTimestamp("timePosted");
-                boolean isPublic = rs.getBoolean("isPublic");
-                String status = rs.getString("status");
-                String reason = rs.getString("reason");
-                ProductDTO product = new ProductDTO(productId, userId, categoryId, productTitle, description, productImage, isFree, price, address, timePosted, isPublic, status, reason);
-                productList.add(product);
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<ProductDTO> productList = new ArrayList<>();
+        try {
+            con = DBconnect.makeConnection();
+            if (con != null) {
+                String sql = "SELECT product_id, user_id, category_id, title, description, product_image, is_free, price, address, timePosted, isPublic, status, reason "
+                        + "FROM product "
+                        + "WHERE title LIKE ? "
+                        + "ORDER BY timePosted DESC";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, "%" + title + "%");
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    int productId = rs.getInt("product_id");
+                    int userId = rs.getInt("user_id");
+                    int categoryId = rs.getInt("category_id");
+                    String productTitle = rs.getString("title");
+                    String description = rs.getString("description");
+                    String productImage = rs.getString("product_image");
+                    boolean isFree = rs.getBoolean("is_free");
+                    float price = rs.getFloat("price");
+                    String address = rs.getString("address");
+                    Timestamp timePosted = rs.getTimestamp("timePosted");
+                    boolean isPublic = rs.getBoolean("isPublic");
+                    String status = rs.getString("status");
+                    String reason = rs.getString("reason");
+                    ProductDTO product = new ProductDTO(productId, userId, categoryId, productTitle, description, productImage, isFree, price, address, timePosted, isPublic, status, reason);
+                    productList.add(product);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
             }
         }
-    } finally {
-        if (rs != null) {
-            rs.close();
-        }
-        if (stm != null) {
-            stm.close();
-        }
-        if (con != null) {
-            con.close();
-        }
+        return productList;
     }
-    return productList;
-}
-    
-    
 
     public int getNumberPage(List<ProductDTO> ListOfProduct) {
         int totalProduct = ListOfProduct.size();
@@ -368,10 +364,8 @@ public class ProductDAO {
         }
         return listInPage;
     }
-    
-    
-    
-     public boolean createPostProduct(ProductDTO product) throws SQLException, ClassNotFoundException, NamingException {
+
+    public boolean createPostProduct(ProductDTO product) throws SQLException, ClassNotFoundException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
         boolean result = false;
@@ -402,9 +396,8 @@ public class ProductDAO {
             }
 
         } finally {
-
             if (stm != null) {
-                con.close();
+                stm.close();
             }
             if (con != null) {
                 con.close();
@@ -413,4 +406,71 @@ public class ProductDAO {
         return result;
     }
 
+    public boolean updateProduct(ProductDTO product) throws SQLException, ClassNotFoundException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        boolean result = false;
+        try {
+            con = DBconnect.makeConnection();
+            if (con != null) {
+                String sql = "UPDATE product SET category_id = ?, title = ?, description = ?, product_image = ?, is_free = ?, price = ?, address = ?, timePosted = ?, isPublic = ?, status = ?, reason = ? WHERE product_id = ?";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, product.getCategoryId());
+                stm.setString(2, product.getTitle());
+                stm.setString(3, product.getDescription());
+                stm.setString(4, product.getProductImage());
+                stm.setBoolean(5, product.isFree());
+                stm.setDouble(6, product.getPrice());
+                stm.setString(7, product.getAddress());
+                stm.setTimestamp(8, product.getTimePosted());
+                stm.setBoolean(9, product.isPublic());
+                stm.setString(10, product.getStatus());
+                stm.setString(11, product.getReason());
+                stm.setInt(12, product.getProductId());
+
+                // Execute the query
+                int rowsAffected = stm.executeUpdate();
+                if (rowsAffected > 0) {
+                    result = true;
+                }
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return result;
+    }
+    
+    
+    public boolean deleteProduct(int productId) throws SQLException, ClassNotFoundException, NamingException {
+    Connection con = null;
+    PreparedStatement stm = null;
+    boolean result = false;
+    try {
+        con = DBconnect.makeConnection();
+        if (con != null) {
+            String sql = "DELETE FROM product WHERE product_id = ?";
+            stm = con.prepareStatement(sql);
+            stm.setInt(1, productId);
+
+            // Execute the query
+            int rowsAffected = stm.executeUpdate();
+            if (rowsAffected > 0) {
+                result = true;
+            }
+        }
+    } finally {
+        if (stm != null) {
+            stm.close();
+        }
+        if (con != null) {
+            con.close();
+        }
+    }
+    return result;
+}
 }

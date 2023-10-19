@@ -55,7 +55,6 @@
     </head>
     <body>
         <c:set var="productPost" value="${requestScope.product}"/>
-        <c:set var="ProductIMG" value="${requestScope.ProductIMG}"/>
          <c:set var="Owner" value="${sessionScope.USER_NAME}"/>
 
         <div id="header"></div>
@@ -66,10 +65,10 @@
                     <div class="container pt-5">
                         <div class="row">
                             <div class="col">
-                                <c:if test="${ProductIMG != null}">
+                              
                                   <img class="col-sm-6 image-content mt-5 img-fluid" 
-                                       src="${ProductIMG}" alt="Hình ảnh">
-                                  </c:if>
+                                       src="${productPost.productImage}"alt="Hình ảnh">
+                                
                                   <!--<img style="width: 100px" src="" src="C:/Users/Admin/Desktop/V3DocaProject/Doca_javaV2/Doca_java/Doca_java/src/main/webapp/ImgUploadByUser/2023-10-16_10-49-39.jpg" alt="">-->
                                   
                                 <div class="product_info">
