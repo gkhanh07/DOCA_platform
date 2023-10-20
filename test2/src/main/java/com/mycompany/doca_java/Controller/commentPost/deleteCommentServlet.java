@@ -38,16 +38,16 @@ public class deleteCommentServlet extends HttpServlet {
         int commentID = Integer.parseInt(request.getParameter("commentId"));
         String url = "";
         HttpSession session = request.getSession(true);
-        int category = Integer.parseInt(request.getParameter("slectedCategoryID"));
-        int indexPage = session.getAttribute("indexPageForum") != null
-                ? (int) session.getAttribute("indexPageForum") : 1;
+//        int category = Integer.parseInt(request.getParameter("slectedCategoryID"));
+//        int indexPage = session.getAttribute("indexPageForum") != null
+//                ? (int) session.getAttribute("indexPageForum") : 1;
         try {
             commentDAO dao = new commentDAO();
             boolean result = dao.deleteComment(commentID);
             if (result) {
-                url = "forumServlet"
-                        + "?categoryID=" + category
-                        + "&index=" + indexPage;
+                url = "postDetailServlet";
+//                        + "?categoryID=" + category
+//                        + "&index=" + indexPage;
             }
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
@@ -55,6 +55,9 @@ public class deleteCommentServlet extends HttpServlet {
             ex.printStackTrace();
         } catch (SQLException ex) {
             ex.printStackTrace();
+//        } catch (NumberFormatException ex) {
+//            ex.printStackTrace();
+            
         } finally {
             response.sendRedirect(url);
         }

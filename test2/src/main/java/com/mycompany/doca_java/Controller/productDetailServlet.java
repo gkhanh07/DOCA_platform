@@ -50,10 +50,12 @@ private final String productdetail_Page = "productDetail.jsp";
             if (productDetail != null) {
                 HttpSession session = request.getSession(true);
                 request.setAttribute("productDetail", productDetail);
+                
                 int categoryID = productDetail.getCategoryId();
                 categoryDAO daoCate = new categoryDAO();
                 categoryDTO category = daoCate.getCategoryById(categoryID);
                 request.setAttribute("category", category);
+                
                 userDTO owner=ownerDao.getUserbyProductID(productID);
                 request.setAttribute("owner", owner);
                 url=productdetail_Page;

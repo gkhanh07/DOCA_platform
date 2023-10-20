@@ -60,6 +60,7 @@
                 <div class="col-sm-8 ">
                     <div class="card create-post-card mt-5">
                         <div class="card-body d-flex align-items-center">
+                            <!--chứa ảnh profile của người dùng-->
                             <div class="profile-image-container">
                                 <img src="assets/images/spa.jpg" alt="Profile Image" class="rounded-circle profile-image">
                             </div>
@@ -196,20 +197,27 @@
 
 
                                         </div>
+
                                         <div class="post-body">
                                             <p class="post-text" data-toggle="modal" data-target="#modalID${post.postId}">${post.postContent}</p>
-                                            <img class="img-content"data-toggle="modal" data-target="#modalID${post.postId}" src="${post.postImage}" alt="Post Image">
-                                        </div>
-                                        <div class="post-footer">
-                                            <button class="btn btn-light flex-grow-1 btn_in_post"><i
-                                                    class="fas fa-thumbs-up"></i>
-                                                Thích</button>
+                                            <a href="postDetailServlet?postId=${post.postId}" class="sell d-flex" style="width: 100%;">
+                                                <img class="img-content col-sm-7" data-toggle="modal" style="margin-left: 145px;" data-target="#modalID${post.postId}" src="${post.postImage}" alt="Post Image">
 
-                                            <button class="btn  flex-grow-1 btn-light btn_in_post"
+                                            </a>
+                                        </div>
+                                        <!--                                        <span class="like" id="likeCount" style="color: blue"></span>-->
+                                        <div class="post-footer">
+                                            <!--hiện số like-->
+
+                                            <button id="likeButton" class="btn btn-light flex-grow-1 btn_in_post" style="border: 2px solid #4CAF50;">
+                                                <i class="fas fa-thumbs-up"></i> <span id="likeCount" style="color: blue"></span> Thích
+                                            </button>
+
+                                            <button class="btn  flex-grow-1 btn-light btn_in_post" style="border: 2px solid #4CAF50;"
                                                     onclick="toggleCommentForm()">
                                                 <i class="fas fa-comment"></i> Bình luận
                                             </button>
-                                            <a href="#"> <button class="btn btn-light flex-grow-1 btn_in_post"><i
+                                            <a href="#"> <button class="btn btn-light flex-grow-1 btn_in_post" style="border: 2px solid #4CAF50;"><i
                                                         class="fas fa-share"></i>
                                                     Chia
                                                     sẻ</button></a>
@@ -232,87 +240,7 @@
                                     </div>
                                 </div>
 
-                                <!-- Modal begin-->
-                                <div class="modal fade" id="modalID${post.postId}" role="dialog">
-                                    <div class="modal-dialog">
-                                        <!-- Modal content-->
-                                        <div class="modal-content">                               
-                                            <div class="modal-body">
-                                                <div class="tab-content col-md-10">
-                                                    <div role="tabpanel" class="tab-pane fade show active " id="${indexcategoryID}">
-                                                        <div class="post my-4 border rounded position-relative">
-                                                            <div class="post-header">
-                                                                <div class="profile-info">
-                                                                    <img src="${userAvatar}"
-                                                                         alt="Profile Image"
-                                                                         class="rounded-circle profile-image">
-                                                                    <div class="profile-details">
-
-                                                                        <a href="#" class="username">${userName}</a>
-                                                                        <div class="post-time text-muted">${post.timePosted}</div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="options-button" style="position: absolute; top: 10px; right: 10px;">
-                                                                    <button class="btn btn-secondary" onclick="toggleOptions(this)">
-                                                                        <i class="fa-solid fa-ellipsis"></i>
-                                                                    </button>
-                                                                    <div class="options" style="display: none;">
-
-                                                                        <a class="dropdown-item" href="#">Lưu bài viết</a>
-                                                                        <a class="dropdown-item" href="#">Tố cáo bài viết</a>
-                                                                    </div>
-                                                                </div>
-
-
-                                                            </div>
-                                                            <div class="post-body">
-                                                                <p class="post-text">${post.postContent}</p>
-                                                                <img class="img-content" src="${post.postImage}" alt="Post Image">
-                                                            </div>
-                                                            <div class="post-footer">
-                                                                <button class="btn btn-light flex-grow-1 btn_in_post"><i
-                                                                        class="fas fa-thumbs-up"></i>
-                                                                    Thích</button>
-
-                                                                <a href="#"> <button class="btn btn-light flex-grow-1 btn_in_post"><i
-                                                                            class="fas fa-share"></i>
-                                                                        Chia
-                                                                        sẻ</button></a>
-
-                                                            </div>
-                                                            <c:forEach items="${listOfComment}" var="comment">
-                                                                <c:if test="${comment.postId==post.postId}">
-                                                                    <div class="comment mt-5">
-                                                                        <c:forEach items="${ListOfUser}" var="user">
-                                                                            <c:if test="${user.user_ID==comment.userId}">
-                                                                                <c:set var="userName" value="${user.userName}"/>
-                                                                                <c:set var="userAvatar" value="${user.avatar}"/>
-                                                                            </c:if>
-                                                                        </c:forEach>
-                                                                        <img src=${userAvatar} alt="Avatar" class="profile-image">
-                                                                        <div class="comment-details">
-                                                                            <p class="comment-username">${userName}</p>
-                                                                            <p class="comment-content">${comment.commentDes}</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </c:if>
-                                                                <!--xoá comment-->
-                                                                <c:if test="${Owner.user_ID==comment.userId}">
-                                                                    <a href="deleteCommentServlet?commentId=${comment.commentId}&slectedCategoryID=${indexcategoryID}">Xoá comment</a>
-                                                                </c:if>
-                                                            </c:forEach>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-
-
+                                <!-- Modal begin-->                            
 
 
 
@@ -365,6 +293,35 @@
                 const options = button.nextElementSibling;
                 options.style.display = options.style.display === 'none' ? 'block' : 'none';
             }
+        </script>
+
+        <script>
+            // Lấy tham chiếu đến nút và phần hiển thị số lượt thích
+            const likeButton = document.getElementById("likeButton");
+            const likeCount = document.getElementById("likeCount");
+
+            // Khởi tạo biến đếm lượt thích
+            let count = 0;
+
+            // Thêm sự kiện click cho nút
+            likeButton.addEventListener("click", function () {
+                // Tăng hoặc giảm giá trị đếm tùy thuộc vào trạng thái hiện tại
+                if (likeButton.classList.contains("liked")) {
+                    count--;
+                    likeButton.classList.remove("liked");
+                } else {
+                    count++;
+                    likeButton.classList.add("liked");
+                }
+
+                // Cập nhật số lượt thích và hiển thị nó
+                likeCount.innerText = count;
+                if (likeButton.classList.contains("liked")) {
+                    likeButton.style.color = "blue";
+                } else {
+                    likeButton.style.color = "";
+                }
+            });
         </script>
     </body>
 </html>

@@ -25,6 +25,7 @@ import javax.naming.NamingException;
 @WebServlet(name = "getAllCommentServlet", urlPatterns = {"/getAllCommentServlet"})
 public class getAllCommentServlet extends HttpServlet {
   private final String FORUM_PAGE = "forum.jsp";
+  
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
