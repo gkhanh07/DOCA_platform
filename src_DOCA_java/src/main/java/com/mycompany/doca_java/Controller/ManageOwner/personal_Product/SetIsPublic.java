@@ -2,13 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package  com.mycompany.doca_java.Controller.ManageOwner.savedProduct;
-
+package com.mycompany.doca_java.Controller.ManageOwner.personal_Product;
 
 import com.mycompany.doca_java.DAO.ProductDAO;
-import com.mycompany.doca_java.DTO.ProductDTO;
 import com.mycompany.doca_java.DTO.userDTO;
-import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -18,19 +15,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
-import java.util.List;
 import javax.naming.NamingException;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "ListProductSaved", urlPatterns = {"/ListProductSaved"})
-public class ListProductSaved extends HttpServlet {
-
-    private final String LOGIN_PAGE = "login.jsp";
-    private final String  PRODUCTSAVED= "Product_Saved.jsp";
-
+@WebServlet(name = "SetIsPublic", urlPatterns = {"/SetIsPublic"})
+public class SetIsPublic extends HttpServlet {
+ public static final String PERSONAL_PRODUCT_PAGE = "getPersonalProduct";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -43,23 +36,21 @@ public class ListProductSaved extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession(true);
+          int ProductID = Integer.parseInt(request.getParameter("ProductID"));
+          boolean isPublic= Boolean.parseBoolean(request.getParameter("isPublic"));
+        HttpSession session = request.getSession();
         userDTO account = (userDTO) session.getAttribute("USER_NAME");
-        String url = "";
-        try {
-            if (account != null) {
-                ProductDAO dao = new ProductDAO();
-                dao.getProductSavedbyUserID(account.getUser_ID());
-                List<ProductDTO> listOfProduct = dao.getListOfProduct();
-                if (listOfProduct != null) {
-                    request.setAttribute("listOfSaved", listOfProduct);
-                    url = PRODUCTSAVED;
-                }else{
-                    request.setAttribute("Message", "Không có sản phẩm nào được lưu, hoặc sản phẩm đã bị ẩn");
-                    url = PRODUCTSAVED;
-                }
-            } else {
-                url = LOGIN_PAGE;
+         String url = "";
+        try  {
+           if(isPublic==true){
+               isPublic=false;
+           }else{
+               isPublic=true;
+           }
+            ProductDAO dao= new ProductDAO();
+            boolean result=dao.updateIsPublic(ProductID, isPublic);
+            if(result){
+                url = PERSONAL_PRODUCT_PAGE;
             }
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
@@ -67,9 +58,9 @@ public class ListProductSaved extends HttpServlet {
             ex.printStackTrace();
         } catch (SQLException ex) {
             ex.printStackTrace();
-        } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+        } 
+            finally{
+            response.sendRedirect(url);
         }
     }
 

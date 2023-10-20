@@ -137,4 +137,77 @@ public class saveProductDAO {
     }
     return result;
 }
+    
+    public boolean deleteSaveProductByProductID(int productId)
+            throws SQLException, ClassNotFoundException, NamingException {
+    Connection con = null;
+    PreparedStatement stm = null;
+    boolean result = false;
+    try {
+        con = DBconnect.makeConnection();
+        if (con != null) {
+            // Create SQL statement
+            String sql = "DELETE FROM saveProduct WHERE product_id = ?";
+            // Create prepared statement
+            stm = con.prepareStatement(sql);
+            stm.setInt(1, productId);
+            // Execute the deletion
+            int effectRows = stm.executeUpdate();
+            // Process the result
+            if (effectRows > 0) {
+                result = true;
+            }
+        }
+    } finally {
+        // Close the statement and connection
+        if (stm != null) {
+            stm.close();
+        }
+        if (con != null) {
+            con.close();
+        }
+    }
+    return result;
+}
+    
+    
+    public List<saveProductDTO> getAllSaveProduct() throws SQLException, ClassNotFoundException, NamingException {
+    Connection con = null;
+    PreparedStatement stm = null;
+    ResultSet rs = null;
+    List<saveProductDTO> listOfSaveProduct = new ArrayList<>();
+    try {
+        con = DBconnect.makeConnection();
+        if (con != null) {
+            // Create SQL statement
+            String sql = "SELECT product_id FROM saveProduct";
+            // Create prepared statement
+            stm = con.prepareStatement(sql);
+            // Execute the query
+            rs = stm.executeQuery();
+            // Process the result
+            while (rs.next()) {
+                int productId = rs.getInt("product_id");
+                // Create saveProductDTO object
+                saveProductDTO savedProduct = new saveProductDTO(productId);
+                // Add data to list
+                listOfSaveProduct.add(savedProduct);
+            }
+        }
+    } finally {
+        // Close the result set, statement, and connection
+        if (rs != null) {
+            rs.close();
+        }
+        if (stm != null) {
+            stm.close();
+        }
+        if (con != null) {
+            con.close();
+        }
+    }
+    return listOfSaveProduct;
+}
+    
+    
 }

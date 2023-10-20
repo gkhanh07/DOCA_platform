@@ -223,7 +223,8 @@ public class ProductDAO {
                     String reason = rs.getString("reason");
 
                     //5.1.2 set properties of pro
-                    ProductDTO product = new ProductDTO(productId, userId, categoryId, title, description, productImage, isFree, price, address, timePosted, isPublic, status, reason);
+                    ProductDTO product = new ProductDTO(productId, userId, categoryId, title, description,
+                            productImage, isFree, price, address, timePosted, isPublic, status, reason);
 
                     //5.2 add data to list
                     if (this.ListOfProduct
@@ -231,8 +232,9 @@ public class ProductDAO {
                         this.ListOfProduct = new ArrayList<>();
 
                     }//end account list has not existed
-
-                    this.ListOfProduct.add(product);
+                    if (product.isPublic()) {
+                        this.ListOfProduct.add(product);
+                    }
                 }//end map DB to DTO
             }//end connect is available
         } finally {
@@ -444,18 +446,45 @@ public class ProductDAO {
         }
         return result;
     }
-    
-    
+
     public boolean deleteProduct(int productId) throws SQLException, ClassNotFoundException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        boolean result = false;
+        try {
+            con = DBconnect.makeConnection();
+            if (con != null) {
+                String sql = "DELETE FROM product WHERE product_id = ?";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, productId);
+
+                // Execute the query
+                int rowsAffected = stm.executeUpdate();
+                if (rowsAffected > 0) {
+                    result = true;
+                }
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return result;
+    }
+    public boolean updateIsPublic(int productId, boolean isPublic) throws SQLException, ClassNotFoundException, NamingException {
     Connection con = null;
     PreparedStatement stm = null;
     boolean result = false;
     try {
         con = DBconnect.makeConnection();
         if (con != null) {
-            String sql = "DELETE FROM product WHERE product_id = ?";
+            String sql = "UPDATE product SET isPublic = ? WHERE product_id = ?";
             stm = con.prepareStatement(sql);
-            stm.setInt(1, productId);
+            stm.setBoolean(1, isPublic);
+            stm.setInt(2, productId);
 
             // Execute the query
             int rowsAffected = stm.executeUpdate();

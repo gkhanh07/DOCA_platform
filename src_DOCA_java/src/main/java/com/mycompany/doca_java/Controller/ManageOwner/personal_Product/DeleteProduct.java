@@ -47,15 +47,14 @@ public class DeleteProduct extends HttpServlet {
         String url = "";
         try {
             saveProductDAO saveDAO = new saveProductDAO();
-            saveDAO.getSaveProductByuserID(account.getUser_ID());
-            List<saveProductDTO> listOfSaveProduct = saveDAO.getListOfSaveProduct();
+            List<saveProductDTO> listOfSaveProduct = saveDAO.getAllSaveProduct();
             for (saveProductDTO save : listOfSaveProduct) {
                 if (save.getProductId() == ProductID) {
-                    saveDAO.deleteSaveProduct(account.getUser_ID(), ProductID);
+                    saveDAO.deleteSaveProductByProductID(ProductID);
                     break;
                 }
-            }
-           
+            }//if product have saved by someOne it can't be delete so 
+            // we need delete saveProduct first
                 ProductDAO dao = new ProductDAO();
                 boolean result = dao.deleteProduct(ProductID);
                 if (result) {

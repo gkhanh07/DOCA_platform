@@ -91,7 +91,6 @@
                             </div>
                             <!-- content -->
                             <div class="tab-content mt-5 pb-5">
-
                                 <div role="tabpanel" class="tab-pane fade show active" id="display"> 
                                     <c:set var="countDisplay" value="0" />
                                     <c:forEach items="${listProductOfPersonal}" var="product">
@@ -103,9 +102,18 @@
                                                 <h5>${product.title}</h5>
                                                 <h6>giá tiền: <fmt:formatNumber value="${product.price}" type="currency" currencyCode="VND" /></h6>
                                                 <p>${product.address}</p>
+                                                  <p>
+                                                    Sản phẩm đang ở chế độ:
+                                                    <span class="${product.isPublic() ? 'text-success' : 'text-danger'}">
+                                                        ${product.isPublic() ? 'Công khai' : 'Ẩn'}
+                                                    </span>
+                                                </p>
                                             </div>
                                             <a class="btn btn-primary" href="goUpdateProduct?ProductID=${product.productId}" >sửa bài bán</a>
                                             <a class="btn btn-danger" href="DeleteProduct?ProductID=${product.productId}">xoá bài bán</a>
+                                              <a class="btn btn-secondary" href="SetIsPublic?ProductID=${product.productId}&isPublic=${product.isPublic()}">
+                                                ${product.isPublic() ? "Ẩn bài bán" : "Hiện bài bán"}
+                                            </a>
                                             <hr>
                                         </c:if>
                                     </c:forEach>
@@ -148,10 +156,19 @@
                                                 <h5>${product.title}</h5>
                                                 <h6>giá tiền: <fmt:formatNumber value="${product.price}" type="currency" currencyCode="VND" /></h6>
                                                 <p>${product.address}</p>
+                                                <p>
+                                                    Sản phẩm đang ở chế độ:
+                                                    <span class="${product.isPublic() ? 'text-success' : 'text-danger'}">
+                                                        ${product.isPublic() ? 'Công khai' : 'Ẩn'}
+                                                    </span>
+                                                </p>
                                                 <p>đang chờ </p>     
                                             </div>
                                             <a class="btn btn-primary" href="goUpdateProduct?ProductID=${product.productId}" >sửa bài bán</a>
                                             <a class="btn btn-danger" href="DeleteProduct?ProductID=${product.productId}">xoá bài bán</a>
+                                            <a class="btn btn-secondary" href="SetIsPublic?ProductID=${product.productId}&isPublic=${product.isPublic()}">
+                                                ${product.isPublic() ? "Ẩn bài bán" : "Hiện bài bán"}
+                                            </a>
                                             <hr> 
                                         </c:if>
                                     </c:forEach>
