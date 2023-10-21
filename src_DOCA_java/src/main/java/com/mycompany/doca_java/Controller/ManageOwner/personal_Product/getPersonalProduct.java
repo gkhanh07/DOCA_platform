@@ -44,13 +44,14 @@ public class getPersonalProduct extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession(true);
         userDTO account = (userDTO) session.getAttribute("USER_NAME");
-        
+      String  IN= (String) session.getAttribute("IN") !=null?(String) session.getAttribute("IN"):"display";
+      session.setAttribute("IN", IN);
         String url="";
         try  {
              if (account != null) {
                 ProductDAO dao = new ProductDAO();
                 List<ProductDTO> listOfProduct = dao.getProductsByUserId(account.getUser_ID());
-                
+               
                 if (listOfProduct != null) {
                     request.setAttribute("listProductOfPersonal", listOfProduct);
                      request.setAttribute("Message", "không có sản phẩm nào");

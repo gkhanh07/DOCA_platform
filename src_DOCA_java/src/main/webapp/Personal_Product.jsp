@@ -50,7 +50,8 @@
         <jsp:include page="header.jsp" />
         <c:set var="listProductOfPersonal" value="${requestScope.listProductOfPersonal}"/>
         <c:set var="message" value="${requestScope.Message}"/>
-    <body>
+        <c:set var="IN" value="${sessionScope.IN}"/>
+
         <div class="main-content">
 
             <div class="main-content">
@@ -71,18 +72,19 @@
 
                                         <ul class="nav nav-tabs border-0">
                                             <li class="nav-item rounded-pill">
-                                                <a class="nav-link active rounded-pill mt-1" href="#display" role="tab"
-                                                   data-toggle="tab"><strong style="color: black;">Đang hiển thị</strong></a>
+                                                <a class="nav-link ${IN eq 'display' ? 'active' : ''} rounded-pill mt-1" href="#display" role="tab" data-toggle="tab">
+                                                    <strong style="color: black;">Đang hiển thị</strong>
+                                                </a>
                                             </li>
                                             <li class="nav-item rounded-pill">
-                                                <a class="nav-link rounded-pill mt-1" href="#denied" role="tab"
-                                                   data-toggle="tab"><strong style="color: black;">Bị từ
-                                                        chối</strong></a>
+                                                <a class="nav-link ${IN eq 'denied' ? 'active' : ''} rounded-pill mt-1" href="#denied" role="tab" data-toggle="tab">
+                                                    <strong style="color: black;">Bị từ chối</strong>
+                                                </a>
                                             </li>
                                             <li class="nav-item rounded-pill">
-                                                <a class="nav-link rounded-pill mt-1" href="#waiting" role="tab"
-                                                   data-toggle="tab"><strong style="color: black;">Chờ
-                                                        duyệt</strong></a>
+                                                <a class="nav-link ${IN eq 'waiting' ? 'active' : ''} rounded-pill mt-1" href="#waiting" role="tab" data-toggle="tab">
+                                                    <strong style="color: black;">Chờ duyệt</strong>
+                                                </a>
                                             </li>
                                         </ul>
                                     </div>
@@ -91,7 +93,7 @@
                             </div>
                             <!-- content -->
                             <div class="tab-content mt-5 pb-5">
-                                <div role="tabpanel" class="tab-pane fade show active" id="display"> 
+                                <div role="tabpanel" class="tab-pane fade ${IN eq 'display' ? 'show active' : ''}" id="display"> 
                                     <c:set var="countDisplay" value="0" />
                                     <c:forEach items="${listProductOfPersonal}" var="product">
                                         <c:if test="${product.status eq 'accepted'}">
@@ -102,16 +104,16 @@
                                                 <h5>${product.title}</h5>
                                                 <h6>giá tiền: <fmt:formatNumber value="${product.price}" type="currency" currencyCode="VND" /></h6>
                                                 <p>${product.address}</p>
-                                                  <p>
+                                                <p>
                                                     Sản phẩm đang ở chế độ:
                                                     <span class="${product.isPublic() ? 'text-success' : 'text-danger'}">
                                                         ${product.isPublic() ? 'Công khai' : 'Ẩn'}
                                                     </span>
                                                 </p>
                                             </div>
-                                            <a class="btn btn-primary" href="goUpdateProduct?ProductID=${product.productId}" >sửa bài bán</a>
-                                            <a class="btn btn-danger" href="DeleteProduct?ProductID=${product.productId}">xoá bài bán</a>
-                                              <a class="btn btn-secondary" href="SetIsPublic?ProductID=${product.productId}&isPublic=${product.isPublic()}">
+                                            <a class="btn btn-primary" href="goUpdateProduct?ProductID=${product.productId}&IN=display" >sửa bài bán</a>
+                                            <a class="btn btn-danger" href="DeleteProduct?ProductID=${product.productId}&IN=display">xoá bài bán</a>
+                                            <a class="btn btn-secondary" href="SetIsPublic?ProductID=${product.productId}&isPublic=${product.isPublic()}&IN=display">
                                                 ${product.isPublic() ? "Ẩn bài bán" : "Hiện bài bán"}
                                             </a>
                                             <hr>
@@ -122,7 +124,7 @@
                                     </c:if>
                                 </div>
 
-                                <div role="tabpanel" class="tab-pane fade " id="denied">
+                                <div role="tabpanel" class="tab-pane fade ${IN eq 'denied' ? 'show active' : ''} " id="denied">
                                     <c:set var="countDenied" value="0" />
                                     <c:forEach items="${listProductOfPersonal}" var="product">
                                         <c:if test="${product.status eq 'rejected'}">
@@ -136,8 +138,8 @@
                                                 <p>lí do từ chối: ${product.reason}</p>
 
                                             </div>
-                                            <a class="btn btn-primary" href="goUpdateProduct?ProductID=${product.productId}" >sửa bài bán</a>
-                                            <a class="btn btn-danger" href="DeleteProduct?ProductID=${product.productId}">xoá bài bán</a>
+                                            <a class="btn btn-primary" href="goUpdateProduct?ProductID=${product.productId}&IN=denied" >sửa bài bán</a>
+                                            <a class="btn btn-danger" href="DeleteProduct?ProductID=${product.productId}&IN=denied">xoá bài bán</a>
                                             <hr>
                                         </c:if>
                                     </c:forEach>
@@ -145,7 +147,7 @@
                                         <p>${message}</p>
                                     </c:if>
                                 </div>
-                                <div role="tabpanel" class="tab-pane fade " id="waiting">
+                                <div role="tabpanel" class="tab-pane fade  ${IN eq 'waiting' ? 'show active' : ''}  " id="waiting">
                                     <c:set var="countWaiting" value="0" />
                                     <c:forEach items="${listProductOfPersonal}" var="product">
                                         <c:if test="${product.status eq 'pending'}">
@@ -164,9 +166,9 @@
                                                 </p>
                                                 <p>đang chờ </p>     
                                             </div>
-                                            <a class="btn btn-primary" href="goUpdateProduct?ProductID=${product.productId}" >sửa bài bán</a>
-                                            <a class="btn btn-danger" href="DeleteProduct?ProductID=${product.productId}">xoá bài bán</a>
-                                            <a class="btn btn-secondary" href="SetIsPublic?ProductID=${product.productId}&isPublic=${product.isPublic()}">
+                                            <a class="btn btn-primary" href="goUpdateProduct?ProductID=${product.productId}&IN=waiting" >sửa bài bán</a>
+                                            <a class="btn btn-danger" href="DeleteProduct?ProductID=${product.productId}&IN=waiting">xoá bài bán</a>
+                                            <a class="btn btn-secondary" href="SetIsPublic?ProductID=${product.productId}&isPublic=${product.isPublic()}&IN=waiting">
                                                 ${product.isPublic() ? "Ẩn bài bán" : "Hiện bài bán"}
                                             </a>
                                             <hr> 

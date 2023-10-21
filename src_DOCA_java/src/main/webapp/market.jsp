@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -123,7 +124,7 @@
                                             <h5><strong>${title}</strong></h5>
                                             <c:set var="price" value="${product.price}"/>
                                             <c:if test="${!product.isFree()}">
-                                                <h6 style="color:rgb(242, 106, 106);">${price} đ</h6>
+                                                <h6 style="color:rgb(242, 106, 106);"><fmt:formatNumber value="${product.price}" type="currency" currencyCode="VND" /> đ</h6>
                                             </c:if>
                                             <c:if test="${product.isFree()}">
                                                 <h6 style="color:rgb(242, 106, 106);">miễn phí</h6>

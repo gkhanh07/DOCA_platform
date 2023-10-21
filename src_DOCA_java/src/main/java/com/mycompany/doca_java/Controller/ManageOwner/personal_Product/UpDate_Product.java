@@ -9,6 +9,7 @@ import static com.mycompany.doca_java.Controller.PostPorductV2.postSucc;
 import com.mycompany.doca_java.DAO.ProductDAO;
 import com.mycompany.doca_java.DTO.ProductDTO;
 import com.mycompany.doca_java.DTO.userDTO;
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -46,7 +47,7 @@ public class UpDate_Product extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
         userDTO account = (userDTO) session.getAttribute("USER_NAME");
-        
+        String IN=request.getParameter("IN");
         String url = "";
         try {
             int Productid = Integer.parseInt(request.getParameter("Productid"));
@@ -108,7 +109,7 @@ public class UpDate_Product extends HttpServlet {
             result = dao.updateProduct(product);
             if (result == true) {
                 request.setAttribute("product", product);
-               
+                session.setAttribute( "IN", IN);
                 url = PERSONAL_PRODUCT_PAGE;
             }
 
@@ -119,7 +120,8 @@ public class UpDate_Product extends HttpServlet {
         } catch (NamingException ex) {
             Logger.getLogger(PostPorductV2.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            response.sendRedirect(url);
+           RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
 
     }

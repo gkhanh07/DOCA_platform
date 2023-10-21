@@ -42,6 +42,7 @@ public class DeleteProduct extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         int ProductID = Integer.parseInt(request.getParameter("ProductID"));
+        String IN=request.getParameter("IN");
         HttpSession session = request.getSession();
         userDTO account = (userDTO) session.getAttribute("USER_NAME");
         String url = "";
@@ -58,6 +59,7 @@ public class DeleteProduct extends HttpServlet {
                 ProductDAO dao = new ProductDAO();
                 boolean result = dao.deleteProduct(ProductID);
                 if (result) {
+                    session.setAttribute("IN",IN);
                     url = PERSONAL_PRODUCT_PAGE;
                 }
             

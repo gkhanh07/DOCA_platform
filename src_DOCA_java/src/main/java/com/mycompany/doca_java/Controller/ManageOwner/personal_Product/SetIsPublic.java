@@ -40,6 +40,7 @@ public class SetIsPublic extends HttpServlet {
           boolean isPublic= Boolean.parseBoolean(request.getParameter("isPublic"));
         HttpSession session = request.getSession();
         userDTO account = (userDTO) session.getAttribute("USER_NAME");
+        String IN=request.getParameter("IN");
          String url = "";
         try  {
            if(isPublic==true){
@@ -50,6 +51,7 @@ public class SetIsPublic extends HttpServlet {
             ProductDAO dao= new ProductDAO();
             boolean result=dao.updateIsPublic(ProductID, isPublic);
             if(result){
+                session.setAttribute("IN", IN);
                 url = PERSONAL_PRODUCT_PAGE;
             }
         } catch (ClassNotFoundException ex) {
