@@ -53,9 +53,10 @@ public class marketServlet extends HttpServlet {
         String url = "";
         try {
             ProductDAO dao = new ProductDAO();
-            dao.getProductavailable();
+            
             List<ProductDTO> listOfProduct = (AbstractList<ProductDTO>) session.getAttribute("listOfProduct");
             if (listOfProduct == null) {
+                dao.getProductavailable();
                 listOfProduct = dao.getListOfProduct();
             }
             if (listOfProduct != null) {

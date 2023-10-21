@@ -59,7 +59,7 @@ public class filterProduct extends HttpServlet {
             listOfProduct=(AbstractList<ProductDTO>) session.getAttribute("listOfProductSearch");
             if(listOfProduct==null){
             ProductDAO dao = new ProductDAO();
-            dao.getAllTheProduct();
+            dao.getProductavailable();
             listOfProduct = dao.getListOfProduct();
             }
             List<ProductDTO> newListOfProduct = new ArrayList<>();
