@@ -51,7 +51,7 @@
                             <i class="fa fa-bell"></i>
                             <span class="badge p-0">3</span>
                         </a>
-                        <a class="btn btn-light border-0 rounded-pill button_in_header" href="#" role="button"><i
+                        <a class="btn btn-light border-0 rounded-pill button_in_header" href="getConversationServlet" role="button"><i
                                 class="fa-solid fa-message"></i></a>
                             <c:choose>
                                 <c:when test="${Owner eq null}">

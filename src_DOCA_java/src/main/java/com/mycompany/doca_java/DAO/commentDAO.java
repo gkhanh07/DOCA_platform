@@ -4,6 +4,7 @@
  */
 package com.mycompany.doca_java.DAO;
 
+import com.mycompany.doca_java.DTO.PostDTO;
 import com.mycompany.doca_java.DTO.commentDTO;
 import com.mycompany.doca_java.util.DBconnect;
 import java.sql.Connection;
@@ -18,7 +19,6 @@ import javax.naming.NamingException;
  *
  * @author minhluan
  */
-
 public class commentDAO {
 
     private List<commentDTO> listOfComment = new ArrayList<>();

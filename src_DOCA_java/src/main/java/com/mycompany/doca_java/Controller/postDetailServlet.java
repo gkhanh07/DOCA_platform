@@ -2,9 +2,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package com.mycompany.doca_java.Controller.commentPost;
+package com.mycompany.doca_java.Controller;
 
+import com.mycompany.doca_java.DAO.PostDAO;
+import com.mycompany.doca_java.DAO.categoryDAO;
 import com.mycompany.doca_java.DAO.commentDAO;
+import com.mycompany.doca_java.DAO.userDAO;
+import com.mycompany.doca_java.DTO.PostDTO;
+import com.mycompany.doca_java.DTO.categoryDTO;
+import com.mycompany.doca_java.DTO.commentDTO;
+import com.mycompany.doca_java.DTO.userDTO;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -12,16 +20,18 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 import javax.naming.NamingException;
 
 /**
  *
  * @author minhluan
  */
-@WebServlet(name = "deleteCommentServlet", urlPatterns = {"/deleteCommentServlet"})
-public class deleteCommentServlet extends HttpServlet {
+@WebServlet(name = "postDetailServlet", urlPatterns = {"/postDetailServlet"})
+public class postDetailServlet extends HttpServlet {
+
+    private final String postDetail_Page = "postDetail.jsp";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,20 +45,37 @@ public class deleteCommentServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        int commentID = Integer.parseInt(request.getParameter("commentId"));
-        String url = "";
         int postID = Integer.parseInt(request.getParameter("postId"));
-        HttpSession session = request.getSession(true);
-//        int category = Integer.parseInt(request.getParameter("slectedCategoryID"));
-//        int indexPage = session.getAttribute("indexPageForum") != null
-//                ? (int) session.getAttribute("indexPageForum") : 1;
+        
+        String url = "";
         try {
-            commentDAO dao = new commentDAO();
-            boolean result = dao.deleteComment(commentID);
-            if (result) {
-                url = "postDetailServlet"
-                        + "?postId=" + postID;
-//                        + "&index=" + indexPage;
+            PostDAO dao = new PostDAO();
+            PostDTO postDetail = dao.getPostById(postID);
+            userDAO ownerDao = new userDAO();
+//            int commentID = Integer.parseInt(request.getParameter("commentId"));
+            if (postDetail != null) {
+                HttpSession session = request.getSession(true);
+                request.setAttribute("postDetail", postDetail);
+
+                commentDAO cdao = new commentDAO();
+                cdao.getAllComment();
+                List<commentDTO> listOfComment = cdao.getListOfComment();
+                if (listOfComment != null) {
+                    request.setAttribute("listOfComment", listOfComment);
+                }
+//                boolean result = cdao.deleteComment(commentID);
+
+                userDTO owner = ownerDao.getUserbyPostID(postID);
+                request.setAttribute("owner", owner);
+                userDAO uDao = new userDAO();
+                uDao.getAllTheUser();
+                List<userDTO> ListOfUser = uDao.getListOfUser();
+                if (ListOfUser != null) {
+                    request.setAttribute("ListOfUser", ListOfUser);
+                }
+
+                url = postDetail_Page;
+
             }
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
@@ -58,9 +85,9 @@ public class deleteCommentServlet extends HttpServlet {
             ex.printStackTrace();
 //        } catch (NumberFormatException ex) {
 //            ex.printStackTrace();
-            
         } finally {
-            response.sendRedirect(url);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
     }
 

@@ -283,5 +283,56 @@ public class userDAO {
 
         return false; // Return false in case of an error
     }
+     public userDTO getUserbyPostID(int postID)
+            throws SQLException, ClassNotFoundException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        userDTO user=null;
+        try {
+            con = DBconnect.makeConnection();
+            if (con != null) {
+                //2.create sql string
+                String sql = "SELECT u.[user_id], u.[username], u.[password], u.[Gender], u.[email], u.[mobile_num], u.[status], u.[role_id], u.[avatar]\n"
+                        + "FROM [DOCA_platform].[dbo].[users] u\n"
+                        + "INNER JOIN [DOCA_platform].[dbo].[post] po ON u.[user_id] = po.[user_id]\n"
+                        + "WHERE po.[post_id] = ?";
+                //3.create stm obj
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, postID);
+                //4.execute
+                rs = stm.executeQuery();
+                //5.process (Note: Luu y Khi SU DUNG IF/WHILE)
+                while (rs.next()) {
+
+                    int user_ID = rs.getInt("user_id");
+                    String userName = rs.getString("username");
+                    String password = rs.getString("password");
+                    String Gender = rs.getString("Gender");
+                    String email = rs.getString("email");
+                    String phone = rs.getString("mobile_num");
+                    boolean status = rs.getBoolean("status");
+                    boolean roleID = rs.getBoolean("role_id");
+                    String avatar = rs.getString("avatar");
+                    //5.1.2 set properties of pro
+                    user
+                            = new userDTO(user_ID, userName, password, Gender, email, phone, status, roleID, avatar);
+
+                }//end map DB to DTO
+            }//end connect is available
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+
+            if (stm != null) {
+                con.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return user;
+    }
 
 }

@@ -20,7 +20,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 import javax.naming.NamingException;
@@ -31,18 +30,17 @@ import javax.naming.NamingException;
  */
 @WebServlet(name = "forumServlet", urlPatterns = {"/forumServlet"})
 public class forumServlet extends HttpServlet {
-
     private final String GET_COMMENT_SERVLET = "getAllCommentServlet";
-
+    private final String GET_LIKE_SERVLET = "getAllLikeServlet";
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession(true);
-        String idcate = request.getParameter("categoryID");
-        if (idcate == null) {
-            idcate = "10";
+        String idcate= request.getParameter("categoryID");
+        if(idcate == null){
+            idcate="5";
         }
-        int indexcategoryID = Integer.parseInt(idcate);
+        int indexcategoryID =Integer.parseInt(idcate);
         String index = request.getParameter("index");
         if (index == null) {
             index = "1";
@@ -51,82 +49,42 @@ public class forumServlet extends HttpServlet {
         String url = "";
         try {
             PostDAO dao = new PostDAO();
-            List<PostDTO> listOfPostSearch = new ArrayList<>();
-            List<PostDTO> listOfPost = new ArrayList<>();
-            listOfPostSearch = (AbstractList<PostDTO>) session.getAttribute("listOfPostSearch");
-            if (listOfPostSearch == null) {
-                if (indexcategoryID != 10) {
-                    dao.getPostByCategoryID(indexcategoryID);
-                    listOfPost = dao.getListOfPost();
-                } else {
-                    dao.getPostAvailable();
-                    listOfPost = dao.getListOfPost();
-                }
-
-            } else {
-                if (indexcategoryID != 10) {
-                    dao.getPostByCategoryID(indexcategoryID);
-                    List<PostDTO> listOfAllPost = dao.getListOfPost();
-                    for (PostDTO postSearch : listOfPostSearch) {
-                        int count = 0;
-                        for (PostDTO postcate : listOfAllPost) {
-                            if (postSearch.getPostId() == postcate.getPostId()) {
-                                count++;
-                            }
-                        }
-                        if (count != 0) {
-                            listOfPost.add(postSearch);
-                        }
-                    }
-                    //nếu phần tử trong list thu được từ search, không nằm trong list thu được
-                    //từ lọc Category thì loại ra giữ lại những element thuộc đúng category
-                }
-                else{
-                    for (PostDTO postSearch : listOfPostSearch) {
-                        listOfPost.add(postSearch);
-                    }
-                }
-                    
-            }
-
+            dao.getPostByCategoryID(indexcategoryID);
+            List<PostDTO> listOfPost = dao.getListOfPost();
             int numberPage = dao.getNumberPage(listOfPost);
             List<PostDTO> listInPage = dao.getPaging(indexPage, listOfPost);
             if (listInPage != null) {
+                HttpSession session = request.getSession(true);
                 request.setAttribute("listOfPost", listOfPost);
                 request.setAttribute("indexcategoryID", indexcategoryID);
                 request.setAttribute("listInPage", listInPage);
                 request.setAttribute("numberPage", numberPage);
-                session.setAttribute("indexPageForum", indexPage);
-
+                session.setAttribute("indexPageForum,", indexPage);    
             }
-
-            categoryDAO cataDao = new categoryDAO();
-            List<categoryDTO> listCategory = new ArrayList<>();
-            categoryDTO defailtCate = new categoryDTO(10, "Tất cả");
-            listCategory.add(defailtCate);
-            for (int i = 5; i <= 9; i++) {
+            categoryDAO cataDao= new categoryDAO();
+            List<categoryDTO> listCategory= new ArrayList<>();
+            for(int i=5; i<=9; i++){
                 listCategory.add(cataDao.getCategoryById(i));
             }
-            if (listCategory != null) {
-                request.setAttribute("listCategory", listCategory);
+            if(listCategory != null){
+                    request.setAttribute("listCategory", listCategory);
             }
-
-            userDAO uDao = new userDAO();
+            
+            userDAO uDao= new userDAO();
             uDao.getAllTheUser();
-            List<userDTO> ListOfUser = uDao.getListOfUser();
-            if (ListOfUser != null) {
+            List<userDTO> ListOfUser=uDao.getListOfUser();
+            if(ListOfUser!=null){
                 request.setAttribute("ListOfUser", ListOfUser);
             }
-            url = GET_COMMENT_SERVLET;
-
-        } catch (ClassNotFoundException ex) {
+            url =GET_LIKE_SERVLET;    
+        }  catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         } catch (NamingException ex) {
             ex.printStackTrace();
         } catch (SQLException ex) {
             ex.printStackTrace();
-        } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
+        }finally {
+            RequestDispatcher rd= request.getRequestDispatcher(url);
             rd.forward(request, response);
 //            response.sendRedirect(url);
         }

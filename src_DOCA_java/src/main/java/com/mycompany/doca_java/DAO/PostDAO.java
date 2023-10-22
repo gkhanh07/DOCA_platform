@@ -310,4 +310,46 @@ public class PostDAO {
         }
         return listInPage;
     }
+     public PostDTO getPostById(int postId) throws SQLException, ClassNotFoundException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        PostDTO post = null;
+        
+        try {
+            con = DBconnect.makeConnection();
+            if (con != null) {
+                
+                String sql = "select * from post where post_id = ?";
+               
+                stm = con.prepareStatement(sql);
+                
+                stm.setInt(1, postId);
+                rs = stm.executeQuery();
+                
+                while (rs.next()) {
+                    int userId = rs.getInt("user_id");
+                    String postContent = rs.getString("post_content");
+                    String postImage = rs.getString("post_image");
+                    boolean isPublic = rs.getBoolean("isPublic");
+                    Date timePosted = rs.getDate("timePosted");
+                    String status = rs.getString("status");
+                    String reason = rs.getString("reason");
+                    post = new PostDTO(postId, userId, postContent, postImage, isPublic, timePosted, status, reason);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+
+            if (stm != null) {
+                con.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return post;
+    }
 }

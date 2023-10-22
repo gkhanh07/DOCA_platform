@@ -2,9 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package com.mycompany.doca_java.Controller.commentPost;
+package com.mycompany.doca_java.Controller.like;
 
-import com.mycompany.doca_java.DAO.commentDAO;
+import com.mycompany.doca_java.DAO.likeDAO;
+import com.mycompany.doca_java.DTO.likeDTO;
+import com.mycompany.doca_java.DTO.userDTO;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -14,14 +17,17 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 import javax.naming.NamingException;
 
 /**
  *
  * @author minhluan
  */
-@WebServlet(name = "deleteCommentServlet", urlPatterns = {"/deleteCommentServlet"})
-public class deleteCommentServlet extends HttpServlet {
+@WebServlet(name = "getAllLikeServlet", urlPatterns = {"/getAllLikeServlet"})
+public class getAllLikeServlet extends HttpServlet {
+
+    private final String FORUM_PAGE = "forum.jsp";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,32 +41,30 @@ public class deleteCommentServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        int commentID = Integer.parseInt(request.getParameter("commentId"));
+        HttpSession session = request.getSession();
+        userDTO account = (userDTO) session.getAttribute("USER_NAME");
         String url = "";
-        int postID = Integer.parseInt(request.getParameter("postId"));
-        HttpSession session = request.getSession(true);
-//        int category = Integer.parseInt(request.getParameter("slectedCategoryID"));
-//        int indexPage = session.getAttribute("indexPageForum") != null
-//                ? (int) session.getAttribute("indexPageForum") : 1;
         try {
-            commentDAO dao = new commentDAO();
-            boolean result = dao.deleteComment(commentID);
-            if (result) {
-                url = "postDetailServlet"
-                        + "?postId=" + postID;
-//                        + "&index=" + indexPage;
+            likeDAO dao = new likeDAO();
+            dao.getAllLike();
+            List<likeDTO> listOfLike = dao.getListOfLike();
+            if (listOfLike != null) {
+                request.setAttribute("listOfLike", listOfLike);
+                if (account != null) {
+                    List<likeDTO> listOfOwnerLike = dao.getLikesByUserId(account.getUser_ID());
+                    request.setAttribute("listOfOwnerLike", listOfOwnerLike);
+                }
             }
+            url = FORUM_PAGE;
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         } catch (NamingException ex) {
             ex.printStackTrace();
         } catch (SQLException ex) {
             ex.printStackTrace();
-//        } catch (NumberFormatException ex) {
-//            ex.printStackTrace();
-            
         } finally {
-            response.sendRedirect(url);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
     }
 

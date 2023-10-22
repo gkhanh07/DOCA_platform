@@ -49,6 +49,8 @@
         <c:set var="Posts" value="${requestScope.listInPage}"/>
         <c:set var="listCategory" value="${requestScope.listCategory}"/>
         <c:set var="listOfComment" value="${requestScope.listOfComment}"/>
+        <c:set var="listOfOwnerLike" value="${requestScope.listOfOwnerLike}"/>
+        <c:set var="listOfLike" value="${requestScope.listOfLike}"/>
         <c:set var="Owner" value="${sessionScope.USER_NAME}"/>
         <jsp:include page="header.jsp" />
 
@@ -58,12 +60,13 @@
             <div class="row row-content justify-content-center">
 
                 <div class="col-sm-8 ">
-                    <div class="card create-post-card">
+                    <div class="card create-post-card mt-5">
                         <div class="card-body d-flex align-items-center">
+                            <!--chứa ảnh profile của người dùng-->
                             <div class="profile-image-container">
                                 <img src="assets/images/spa.jpg" alt="Profile Image" class="rounded-circle profile-image">
                             </div>
-                            <button type="button" class="btn btn-light btn-createpost btn-block p-0 ml-2 rounded-pill "
+                            <button type="button" class="btn btn-light btn-createpost btn-block p-0 ml-2 rounded-pill  "
                                     data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 <div class="d-flex justify-content-start">
                                     <i class="fa fa-edit ml-3 mt-1"></i>
@@ -196,28 +199,40 @@
 
 
                                         </div>
+
                                         <div class="post-body">
                                             <p class="post-text" data-toggle="modal" data-target="#modalID${post.postId}">${post.postContent}</p>
-                                            <img class="img-content"data-toggle="modal" data-target="#modalID${post.postId}" src="${post.postImage}" alt="Post Image">
+                                            <a href="postDetailServlet?postId=${post.postId}" class="sell d-flex" style="width: 100%;">
+                                               <img class="img-content col-sm-7" data-toggle="modal" 
+                                                    style="margin-left: 145px;" data-target="#modalID${post.postId}" src="${post.postImage}" alt="Post Image">
+                                            </a>
                                         </div>
                                         <div class="post-footer">
-                                            <button class="btn btn-light flex-grow-1 btn_in_post"><i
-                                                    class="fas fa-thumbs-up"></i>
-                                                Thích</button>
+                                            <!--hiện số like-->
+                                            <c:set var="isLiked" value="false"/>
+                                            <c:forEach items="${listOfOwnerLike}" var="like" >
+                                                <c:if test="${like.postId == post.postId }">
+                                                    <c:set var="isLiked" value="true"/>
+                                                </c:if>
+                                            </c:forEach>
+                                            <a href="UpdateLike?postId=${post.postId}&slectedCategoryID=${indexcategoryID}&isLiked=${isLiked}">
+                                                <button id="likeButton" class="btn btn-light flex-grow-1 btn_in_post ${isLiked=="true"? 'active':''}" 
+                                                        style="border: 2px solid #4CAF50;">
+                                                    <i class="fas fa-thumbs-up"></i> <span id="likeCount" style="color: blue"></span> Thích
+                                                </button>
+                                            </a>
 
-                                            <button class="btn  flex-grow-1 btn-light btn_in_post"
+                                            <button class="btn  flex-grow-1 btn-light btn_in_post" style="border: 2px solid #4CAF50;"
                                                     onclick="toggleCommentForm('${post.postId}')">
                                                 <i class="fas fa-comment"></i> Bình luận
                                             </button>
-                                            <a href="#"> <button class="btn btn-light flex-grow-1 btn_in_post"><i
+                                            <a href="#"> <button class="btn btn-light flex-grow-1 btn_in_post" style="border: 2px solid #4CAF50;"><i
                                                         class="fas fa-share"></i>
                                                     Chia
                                                     sẻ</button></a>
 
 
                                         </div>
-
-
                                         <div id="commentForm${post.postId}" class="comment-form2" style="display: none;">
                                             <form action="DispatchServlet" method="post">
                                                 <input type="text" name="commentDes" value="" placeholder="Write a comment..."/>
@@ -226,96 +241,8 @@
                                                 <input type="hidden" name="slectedCategoryID" value="${indexcategoryID}" />
                                             </form>
                                         </div>
-
-
-
                                     </div>
                                 </div>
-
-                                <!-- Modal begin-->
-                                <div class="modal fade" id="modalID${post.postId}" role="dialog">
-                                    <div class="modal-dialog">
-                                        <!-- Modal content-->
-                                        <div class="modal-content">                               
-                                            <div class="modal-body">
-                                                <div class="tab-content col-md-10">
-                                                    <div role="tabpanel" class="tab-pane fade show active " id="${indexcategoryID}">
-                                                        <div class="post my-4 border rounded position-relative">
-                                                            <div class="post-header">
-                                                                <div class="profile-info">
-                                                                    <img src="${userAvatar}"
-                                                                         alt="Profile Image"
-                                                                         class="rounded-circle profile-image">
-                                                                    <div class="profile-details">
-
-                                                                        <a href="#" class="username">${userName}</a>
-                                                                        <div class="post-time text-muted">${post.timePosted}</div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="options-button" style="position: absolute; top: 10px; right: 10px;">
-                                                                    <button class="btn btn-secondary" onclick="toggleOptions(this)">
-                                                                        <i class="fa-solid fa-ellipsis"></i>
-                                                                    </button>
-                                                                    <div class="options" style="display: none;">
-
-                                                                        <a class="dropdown-item" href="#">Lưu bài viết</a>
-                                                                        <a class="dropdown-item" href="#">Tố cáo bài viết</a>
-                                                                    </div>
-                                                                </div>
-
-
-                                                            </div>
-                                                            <div class="post-body">
-                                                                <p class="post-text">${post.postContent}</p>
-                                                                <img class="img-content" src="${post.postImage}" alt="Post Image">
-                                                            </div>
-                                                            <div class="post-footer">
-                                                                <button class="btn btn-light flex-grow-1 btn_in_post"><i
-                                                                        class="fas fa-thumbs-up"></i>
-                                                                    Thích</button>
-
-                                                                <a href="#"> <button class="btn btn-light flex-grow-1 btn_in_post"><i
-                                                                            class="fas fa-share"></i>
-                                                                        Chia
-                                                                        sẻ</button></a>
-
-                                                            </div>
-                                                            <c:forEach items="${listOfComment}" var="comment">
-                                                                <c:if test="${comment.postId==post.postId}">
-                                                                    <div class="comment mt-5">
-                                                                        <c:forEach items="${ListOfUser}" var="user">
-                                                                            <c:if test="${user.user_ID==comment.userId}">
-                                                                                <c:set var="userName" value="${user.userName}"/>
-                                                                                <c:set var="userAvatar" value="${user.avatar}"/>
-                                                                            </c:if>
-                                                                        </c:forEach>
-                                                                        <img src=${userAvatar} alt="Avatar" class="profile-image">
-                                                                        <div class="comment-details">
-                                                                            <p class="comment-username">${userName}</p>
-                                                                            <p class="comment-content">${comment.commentDes}</p>
-                                                                        </div>
-                                                                    </div>
-                                                                        <!--xoá comment-->
-                                                                    <c:if test="${Owner.user_ID == comment.userId}">
-                                                                        <a href="deleteCommentServlet?commentId=${comment.commentId}&slectedCategoryID=${indexcategoryID}">Xoá comment</a>
-                                                                    </c:if>
-                                                                </c:if>
-                                                            </c:forEach>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-
-
-
-
-
                             </c:forEach>
 
 
@@ -331,14 +258,21 @@
                         <c:set var="numberPage" value="${requestScope.numberPage}"/>
                         <ul class="pagination justify-content-center">
                             <c:forEach begin="1" end="${numberPage}" var="i">
-                                <li class="page-item rounded-pill ${indexPageForum==i?"active":""}" >
+                                <li class="page-item rounded-pill ${indexPage==i?"active":""}" >
                                     <a class="page-link rounded-pill" href="forumServlet?index=${i}&categoryID=${indexcategoryID}">${i}</a>
                                 </li>
                             </c:forEach> 
+
+
                         </ul>
                     </nav>
+
+
                 </div>
+
+
             </div>
+
         </div>
 
 
@@ -349,8 +283,8 @@
                 const commentForm = document.getElementById('commentForm' + postid);
                 commentForm.style.display = commentForm.style.display === 'none' ? 'block' : 'none';
             }
-        </script>
 
+        </script>
 
 
         <script>
@@ -359,5 +293,7 @@
                 options.style.display = options.style.display === 'none' ? 'block' : 'none';
             }
         </script>
+
+
     </body>
 </html>
