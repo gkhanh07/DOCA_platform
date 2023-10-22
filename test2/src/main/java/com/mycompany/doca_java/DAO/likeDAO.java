@@ -79,7 +79,7 @@ public class likeDAO {
             con = DBconnect.makeConnection();
             if (con != null) {
                 // Create SQL string
-                String sql = "insert into [like] (user_id,post_id) values (1,1)";
+                String sql = "insert into [like](post_id,user_id) values (?,?)";
                 // Create stm obj
                 stm = con.prepareStatement(sql);
                 // Set parameter values

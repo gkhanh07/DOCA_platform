@@ -16,11 +16,11 @@
 }
 .post-footer{
     margin-top: 20px;
-    
+
 }
 .post-footer button {
     flex-grow: 1;
-    font-size: 14px; 
+    font-size: 14px;
 }
 /* .post-time {
     font-size: 14px;
@@ -28,13 +28,13 @@
 } */
 .post-container {
     width: 50%;
-    margin-top: 20px; 
+    margin-top: 20px;
 }
 .post{
-    margin: 0; 
+    margin: 0;
     padding: 30px;
     background-color:#f8f5e8 ;
-    
+
 }
 .btn_in_post{
     background-color:#f8f5e8 ;
@@ -53,7 +53,7 @@
 
 
 .menu{
-    
+
 }
 
 /*bai viet */

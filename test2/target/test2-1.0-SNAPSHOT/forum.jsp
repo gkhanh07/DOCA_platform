@@ -49,6 +49,7 @@
         <c:set var="Posts" value="${requestScope.listInPage}"/>
         <c:set var="listCategory" value="${requestScope.listCategory}"/>
         <c:set var="listOfComment" value="${requestScope.listOfComment}"/>
+        <c:set var="listOfLike" value="${requestScope.listOfLike}"/>
         <c:set var="Owner" value="${sessionScope.USER_NAME}"/>
         <jsp:include page="header.jsp" />
 
@@ -209,9 +210,11 @@
                                         <div class="post-footer">
                                             <!--hiện số like-->
 
-                                            <button id="likeButton" class="btn btn-light flex-grow-1 btn_in_post" style="border: 2px solid #4CAF50;">
-                                                <i class="fas fa-thumbs-up"></i> <span id="likeCount" style="color: blue"></span> Thích
-                                            </button>
+                                            <a href="createLikeServlet?postId=${post.postId}&slectedCategoryID=${indexcategoryID}">
+                                                <button id="likeButton" class="btn btn-light flex-grow-1 btn_in_post" style="border: 2px solid #4CAF50;">
+                                                    <i class="fas fa-thumbs-up"></i> <span id="likeCount" style="color: blue"></span> Thích
+                                                </button>
+                                            </a>
 
                                             <button class="btn  flex-grow-1 btn-light btn_in_post" style="border: 2px solid #4CAF50;"
                                                     onclick="toggleCommentForm()">

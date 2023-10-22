@@ -4,14 +4,17 @@
  */
 package com.mycompany.doca_java.like;
 
+import com.mycompany.doca_java.DAO.likeDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-
+import java.sql.SQLException;
+import javax.naming.NamingException;
 
 /**
  *
@@ -32,17 +35,30 @@ public class deleteLikeServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet deleteLikeServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet deleteLikeServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        int likeID = Integer.parseInt(request.getParameter("commentId"));
+        String url = "";
+        int postID = Integer.parseInt(request.getParameter("postId"));
+        HttpSession session = request.getSession(true);
+        int category = Integer.parseInt(request.getParameter("slectedCategoryID"));
+        int indexPage = session.getAttribute("indexPageForum") != null
+                ? (int) session.getAttribute("indexPageForum") : 1;
+        try {
+            likeDAO dao = new likeDAO();
+            boolean result = dao.deleteLike(likeID);
+            if (result) {
+                url = "forumServlet"
+                        + "?postId=" + postID
+                        + "?categoryID=" + category
+                        + "&index=" + indexPage;
+            }
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (NamingException ex) {
+            ex.printStackTrace();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            response.sendRedirect(url);
         }
     }
 

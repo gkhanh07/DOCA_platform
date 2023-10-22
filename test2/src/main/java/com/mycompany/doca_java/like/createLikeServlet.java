@@ -40,10 +40,10 @@ public class createLikeServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession(true);
         userDTO account = (userDTO) session.getAttribute("USER_NAME");
-        int postID = Integer.parseInt(request.getParameter("postID"));
+        int postID = Integer.parseInt(request.getParameter("postId"));
         int category = Integer.parseInt(request.getParameter("slectedCategoryID"));
-        int indexPage = session.getAttribute("indexPageForum") != null
-                ? (int) session.getAttribute("indexPageForum") : 1;
+//        int indexPage = session.getAttribute("indexPageForum") != null
+//                ? (int) session.getAttribute("indexPageForum") : 1;
 
         String url = "";
 
@@ -55,8 +55,9 @@ public class createLikeServlet extends HttpServlet {
                 boolean result = dao.insertLike(userID, postID);
                 if (result) {
                     url = "forumServlet"
-                            + "?categoryID=" + category
-                            + "&index=" + indexPage;
+                            + "?categoryID=" + category;
+//                            + "?postId=" + postID
+//                            + "&index=" + indexPage;
 
                 }
             } else {

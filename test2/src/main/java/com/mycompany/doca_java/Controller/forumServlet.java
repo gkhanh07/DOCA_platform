@@ -31,6 +31,7 @@ import javax.naming.NamingException;
 @WebServlet(name = "forumServlet", urlPatterns = {"/forumServlet"})
 public class forumServlet extends HttpServlet {
     private final String GET_COMMENT_SERVLET = "getAllCommentServlet";
+    private final String GET_LIKE_SERVLET = "getAllLikeServlet";
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -78,8 +79,8 @@ public class forumServlet extends HttpServlet {
             }
             
             
-            
-            url = GET_COMMENT_SERVLET;
+            url =GET_LIKE_SERVLET;
+//            url = GET_COMMENT_SERVLET;
             
         }  catch (ClassNotFoundException ex) {
             ex.printStackTrace();

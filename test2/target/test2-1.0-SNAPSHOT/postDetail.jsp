@@ -40,15 +40,47 @@
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
         <!-- <link rel="stylesheet" href="assets/css/forum-style.css"> -->
-        <link rel="stylesheet" href="assets/css/standar-style.css">
-        <link rel="stylesheet" href="assets/css/forum-style-V3.css">
+
+        <style>
+            .user-info-container {
+                display: flex; /* Use Flexbox for horizontal alignment */
+                align-items: center; /* Vertically center the content */
+                gap: 10px; /* Add some spacing between the image and the username */
+            }
+
+            .profile-image {
+                width: 50px; /* Adjust the width of the profile image as needed */
+                height: 50px; /* Adjust the height of the profile image as needed */
+                border-radius: 50%; /* Make it circular if the image is a user's profile picture */
+            }
+
+            .comment-username {
+                font-weight: bold; /* Apply styles to the username as needed */
+                margin: 0; /* Reset margin to ensure there's no extra spacing */
+            }
+            .comment-wrapper {
+                background-color: #696969;  
+                border-radius: 10px;   
+                padding: 10px;   
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  
+            }
+
+            .comment-details {
+                 color: #E4E6Eb
+            }
+
+            .comment-content {
+                
+                margin: 0;  
+            }
+        </style>
     </head>
 
     <body>
         <c:set var="post" value="${requestScope.postDetail}" />
         <c:set var="listOfComment" value="${requestScope.listOfComment}"/>
         <c:set var="OwnerComment" value="${sessionScope.USER_NAME}"/>
-        
+
         <jsp:include page="header.jsp" />
 
 
@@ -62,7 +94,7 @@
                     <div class="profile-details">
 
                         <a href="#" class="username">${owner.userName}</a>
-                        <div class="post-time text-muted">${post.timePosted}</div>
+                        <div class="post-time text-muted">Ngày đăng bài: ${post.timePosted}</div>
                     </div>
                 </div>
                 <div class="options-button" style="position: absolute; top: 10px; right: 10px;">
@@ -92,16 +124,20 @@
                                 <c:set var="userAvatar" value="${user.avatar}"/>
                             </c:if>
                         </c:forEach>
-                        <img src=${userAvatar} alt="Avatar" class="profile-image">
-                        <div class="comment-details">
+                        <div class="user-info-container">
+                            <img src=${userAvatar} alt="Avatar" class="profile-image">
                             <p class="comment-username">${userName}</p>
-                            <p class="comment-content">${comment.commentDes}</p>
+                        </div>
+                        <div class="comment-wrapper mt-3 d-inline-block">
+                            <div class="comment-details mt-3">
+                                <p class="comment-content">${comment.commentDes}</p>
+                            </div>
                         </div>
                     </div>
                 </c:if>
                 <!--xoá comment-->
                 <c:if test="${OwnerComment.user_ID==comment.userId}">
-                    <a href="deleteCommentServlet?commentId=${comment.commentId}">Xoá comment</a>
+                    <a href="deleteCommentServlet?commentId=${comment.commentId}&postId=${post.postId}">Xoá comment</a>
                 </c:if>
             </c:forEach>
 
@@ -111,5 +147,6 @@
         </div>
 
     </body>
-
+    <link rel="stylesheet" href="assets/css/standar-style.css">
+    <link rel="stylesheet" href="assets/css/forum-style-V3.css">
 </html>
