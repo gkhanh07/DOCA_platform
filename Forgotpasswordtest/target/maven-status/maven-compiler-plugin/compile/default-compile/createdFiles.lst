@@ -1,0 +1,3 @@
+com\controller\pass\ValidateOtp.class
+com\controller\pass\ForgotPassword.class
+com\controller\pass\NewPassword.class
