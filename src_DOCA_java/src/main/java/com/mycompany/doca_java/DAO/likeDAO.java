@@ -83,8 +83,8 @@ public class likeDAO {
                 // Create stm obj
                 stm = con.prepareStatement(sql);
                 // Set parameter values
-                stm.setInt(1, userId);
-                stm.setInt(2, postId);
+                stm.setInt(1, postId);
+                stm.setInt(2, userId);
                 // Execute query
                 int effectRows = stm.executeUpdate();
                 //5.process (Note: Luu y Khi SU DUNG IF/WHILE)
@@ -116,7 +116,10 @@ public class likeDAO {
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, post_id);
                 stm.setInt(2, userId);
-                stm.executeUpdate();
+                int effectRows = stm.executeUpdate();
+                if (effectRows > 0) {
+                    result = true;
+                }
             }
         } finally {
             if (stm != null) {

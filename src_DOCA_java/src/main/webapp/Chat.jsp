@@ -45,6 +45,8 @@
         <link rel="stylesheet" href="assets/css/marketv2.css">
         <link rel="stylesheet" href="assets/css/standar-style.css">
         <link rel="stylesheet" href="assets/css/chat-style.css">
+
+
     </head>
 
     <body>
@@ -62,8 +64,10 @@
                             <c:forEach items="${ListOfConversation}" var="conversation">
                                 <c:forEach items="${ListOfProductInConversation}" var="Product">
                                     <c:if test="${Product.productId == conversation.product_id }">
-                                        <li class="list-group-item border-0 m-1 ${stateConvers eq conversation_id?'active':''}" style="background-color: #A3B18A">
-                                            <a class="text-white Conversation-name" href="getMessageInConversation?conversationID=${conversation.conversation_id}">
+                                        <li class="list-group-item border-0 m-1 ${stateConvers eq conversation_id?'active':''}" 
+                                            style="background-color: #A3B18A">
+                                            <a class="text-white Conversation-name"
+                                               onclick="loadMessages(${conversation.conversation_id});">
                                                 ${Product.title}</a>
                                         </li>
                                     </c:if>
@@ -71,60 +75,72 @@
                             </c:forEach>
                         </ul>
                     </div>
-                    <div class="listMessage col-sm-8 pr-0 " style=" height: 500px;background-color: #DAD7CD; " >
-                        <!-- Message list content goes here -->
-                        <c:choose>
-                            <c:when test="${stateConvers eq 0}">
+                    <script>
+                        function loadMessages(conversationID) {
+                            fetch('getMessageInConversation?conversationID=' + conversationID)
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        renderMessages(data);
+                                    })
+                                    .catch(error => {
+                                        console.error('Error:', error);
+                                    });
+                        }
+                        function renderMessages(messages) {
+                            var messageContainer = document.getElementById('messageContainer');
+                            messageContainer.innerHTML = '';
+                            if (messages.length === 0) {
+                                messageContainer.innerHTML = `
                                 <div class="chat-message d-flex justify-content-center align-items-center" style=" height: 400px;">
                                     <p>Chat để kết nối - Cùng nhau làm nên giao dịch tốt nhất!</p>
-                                </div>
-                            </c:when>
-                            <c:otherwise>
-                                <div style="height: 440px; overflow:scroll;">
-                                    <div class="row" >
-                                        <c:set var="count" value="0"/>
-                                        <c:forEach items="${ListOfMessage}" var="message">
-                                            <c:set var="count" value="${count+1}"/>
-                                            <c:choose>
-                                                <c:when test="${message.user_id eq Owner.user_ID}">
-                                                    <div class="col-6 offset-6 pt-2">
-                                                        <div class="my-message bg-info text-white pt-2 pb-2 pl-3 pr-3">
-                                                            ${message.messages_content}
-                                                        </div>
-                                                    </div>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <div class="col-6 pt-2">
-                                                        <div class="their-message bg-secondary text-white pt-2 pb-2 pl-3 pr-3">
-                                                            ${message.messages_content}
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-6 pt-2">
+                                </div>`;
+                            } else {
+                                var messageDivs = messages.map(function (message) {
+                                    if (message.user_id === ${Owner.user_ID}) {
+                                        console.log(message.messages_content)
+                                        messageDiv = `
+                                        <div class="col-6 offset-6 pt-2">
+                                           <div class="my-message bg-info text-white pt-2 pb-2 pl-3 pr-3">
+                                                ${message.messages_content}
+                                           </div>
+                                       </div>`;
+                                    } else {
+                                        messageDiv = `
+                                           <div class="col-6 pt-2">
+                                               <div class="their-message bg-secondary text-white pt-2 pb-2 pl-3 pr-3">
+                        ${message.messages_content}
+                                               </div>
+                                           </div>
+                                           <div class="col-6 pt-2">
+                                           </div>
+                                            `;
+                                    }
+                                    return messageDiv;
+                                });
+                                messageContainer.innerHTML = messageDivs.join('');
+                            }
+                        }
+                    </script>
 
-                                                    </div>
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </c:forEach>
-                                        <c:if test="${count==0}">
-                                            <p>không có tin nhắn nào</p>
-                                        </c:if>
 
-                                    </div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-8">
-                                        <input type="text" class="form-control" placeholder="Type your message">
-                                    </div>
-                                    <div class="col-4">
-                                        <button class="btn btn-primary">Send</button>
-                                    </div>
-                                </div>
-                            </c:otherwise>
-                        </c:choose>
+                    <div class="listMessage col-sm-8 pr-0 " style=" height: 500px;background-color: #DAD7CD; " >
+                        <!-- Message list content goes here -->
+
+                        <div id="messageContainer" style="height: 440px; overflow:scroll;">
+
+
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-8">
+                                <input type="text" class="form-control" placeholder="Type your message">
+                            </div>
+                            <div class="col-4">
+                                <button class="btn btn-primary">Send</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-        </div>
+            </div>
     </body>
 </html>

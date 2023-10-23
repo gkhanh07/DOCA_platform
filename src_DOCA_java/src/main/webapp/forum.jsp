@@ -216,8 +216,8 @@
                                                 </c:if>
                                             </c:forEach>
                                             <a href="UpdateLike?postId=${post.postId}&slectedCategoryID=${indexcategoryID}&isLiked=${isLiked}">
-                                                <button id="likeButton" class="btn btn-light flex-grow-1 btn_in_post ${isLiked=="true"? 'active':''}" 
-                                                        style="border: 2px solid #4CAF50;">
+                                                <button id="likeButton" class="btn flex-grow-1 btn_in_post ${isLiked=="true"? 'active':''}" 
+                                                        style="border: 2px solid #4CAF50;background-color: ${isLiked=="true"? '#4CAF50':''}">   
                                                     <i class="fas fa-thumbs-up"></i> <span id="likeCount" style="color: blue"></span> Thích
                                                 </button>
                                             </a>

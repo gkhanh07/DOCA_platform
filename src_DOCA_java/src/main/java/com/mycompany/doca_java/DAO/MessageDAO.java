@@ -23,7 +23,7 @@ public class MessageDAO {
 
     private List<MessageDTO> ListOfMessage;
 
-    public List<MessageDTO> getListOfConversation() {
+    public List<MessageDTO> getListOfMessage() {
         return ListOfMessage;
     }
 

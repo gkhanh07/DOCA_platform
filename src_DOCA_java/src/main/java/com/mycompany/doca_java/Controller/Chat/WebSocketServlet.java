@@ -4,18 +4,24 @@
  */
 package com.mycompany.doca_java.Controller.Chat;
 
-import com.google.gson.Gson;
+
 import com.mycompany.doca_java.DAO.MessageDAO;
 import com.mycompany.doca_java.DTO.MessageDTO;
 import jakarta.servlet.RequestDispatcher;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.websocket.OnClose;
+import jakarta.websocket.OnMessage;
+import jakarta.websocket.OnOpen;
+import jakarta.websocket.Session;
+import jakarta.websocket.server.ServerEndpoint;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.naming.NamingException;
 
@@ -23,10 +29,26 @@ import javax.naming.NamingException;
  *
  * @author Admin
  */
-@WebServlet(name = "getMessageInConversation", urlPatterns = {"/getMessageInConversation"})
-public class getMessageInConversation extends HttpServlet {
+@ServerEndpoint(value = "/websocket")
+public class WebSocketServlet extends HttpServlet {
 
     public static final String CHAT_PAGE = "Chat.jsp";
+    private static List<MessageDTO> listOfMessage = new ArrayList<>();
+
+    @OnOpen
+    public void onOpen(Session session) {
+        WebSocketSessionManager.addSession(session);
+    }
+
+    @OnMessage
+    public void onMessage(String message, Session session) throws IOException {
+        WebSocketSessionManager.sendMessageToAll(message);
+    }
+
+    @OnClose
+    public void onClose(Session session) {
+        WebSocketSessionManager.removeSession(session);
+    }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -38,10 +60,7 @@ public class getMessageInConversation extends HttpServlet {
             dao.getListMessageByConversationID(conversation_id);
             List<MessageDTO> ListOfMessage = dao.getListOfMessage();
             if (ListOfMessage != null) {
-                String json = new Gson().toJson(ListOfMessage);
-                response.setContentType("application/json");
-                response.setCharacterEncoding("UTF-8");
-                response.getWriter().write(json);
+                request.setAttribute("ListOfMessage", ListOfMessage);
             }
             request.setAttribute("stateConvers", conversation_id);
             url = CHAT_PAGE;
@@ -51,10 +70,13 @@ public class getMessageInConversation extends HttpServlet {
             ex.printStackTrace();
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
