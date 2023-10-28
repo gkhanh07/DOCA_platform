@@ -334,5 +334,50 @@ public class userDAO {
         }
         return user;
     }
+     public userDTO getUserbyUserID(int userID) throws SQLException, ClassNotFoundException, NamingException {
+    Connection con = null;
+    PreparedStatement stm = null;
+    ResultSet rs = null;
+    userDTO user = null;
+
+    try {
+        con = DBconnect.makeConnection();
+        if (con != null) {
+            String sql = "SELECT [user_id], [username], [password], [Gender], [email], [mobile_num], [status], [role_id], [avatar] " +
+                         "FROM [DOCA_platform].[dbo].[users] " +
+                         "WHERE [user_id] = ?";
+            
+            stm = con.prepareStatement(sql);
+            stm.setInt(1, userID);
+            rs = stm.executeQuery();
+
+            while (rs.next()) {
+                int user_ID = rs.getInt("user_id");
+                String userName = rs.getString("username");
+                String password = rs.getString("password");
+                String Gender = rs.getString("Gender");
+                String email = rs.getString("email");
+                String phone = rs.getString("mobile_num");
+                boolean status = rs.getBoolean("status");
+                boolean roleID = rs.getBoolean("role_id");
+                String avatar = rs.getString("avatar");
+
+                user = new userDTO(user_ID, userName, password, Gender, email, phone, status, roleID, avatar);
+            }
+        }
+    } finally {
+        if (rs != null) {
+            rs.close();
+        }
+        if (stm != null) {
+            stm.close();
+        }
+        if (con != null) {
+            con.close();
+        }
+    }
+    return user;
+}
+
 
 }

@@ -77,7 +77,7 @@
                             </div>
                             <div class="col">
                                 <div class="row">
-                                    <a href="profileMemberOther.html">
+                                    <a href="Profilemember?userId=${owner.user_ID}">
                                         <div class="profile-image-container">
                                             <img src="${owner.avatar}" alt="Profile Image" class="rounded-circle profile-image">
                                         </div>

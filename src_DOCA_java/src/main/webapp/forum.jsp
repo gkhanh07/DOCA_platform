@@ -55,10 +55,7 @@
         <jsp:include page="header.jsp" />
 
         <div class="main-content">
-
-
             <div class="row row-content justify-content-center">
-
                 <div class="col-sm-8 ">
                     <div class="card create-post-card mt-5">
                         <div class="card-body d-flex align-items-center">
@@ -138,7 +135,6 @@
 
                     </div>
 
-
                     <div class="container rounded-pill p-0" style="background-color: #CAD2C5;">
                         <nav class="navbar navbar-dark navbar-expand-xxl ">
 
@@ -162,8 +158,6 @@
                         </nav>
                     </div>
 
-
-
                     <div class="row justify-content-center">
                         <div class="tab-content col-md-10">
                             <c:forEach items="${Posts}" var="post">
@@ -175,6 +169,7 @@
                                                     <c:if test="${user.user_ID==post.userId}">
                                                         <c:set var="userName" value="${user.userName}"/>
                                                         <c:set var="userAvatar" value="${user.avatar}"/>
+                                                        <c:set var="userID" value="${user.user_ID}"/>
                                                     </c:if>
                                                 </c:forEach>
                                                 <img src="${userAvatar}"
@@ -182,7 +177,7 @@
                                                      class="rounded-circle profile-image">
                                                 <div class="profile-details">
 
-                                                    <a href="#" class="username">${userName}</a>
+                                                    <a href="Profilemember?userId=${userID}" class="username">${userName}</a>
                                                     <div class="post-time text-muted">${post.timePosted}</div>
                                                 </div>
                                             </div>

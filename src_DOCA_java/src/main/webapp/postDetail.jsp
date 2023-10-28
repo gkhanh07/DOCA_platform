@@ -93,7 +93,7 @@
                          class="rounded-circle profile-image">
                     <div class="profile-details">
 
-                        <a href="#" class="username">${owner.userName}</a>
+                        <a href="Profilemember?userId=${owner.user_ID}" class="username">${owner.userName}</a>
                         <div class="post-time text-muted">Ngày đăng bài: ${post.timePosted}</div>
                     </div>
                 </div>
