@@ -2,37 +2,34 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package com.mycompany.doca_java.Controller;
+package com.mycompany.doca_java.Controller.Chat;
 
-import com.mycompany.doca_java.DAO.PostDAO;
-import com.mycompany.doca_java.DAO.categoryDAO;
-import com.mycompany.doca_java.DAO.commentDAO;
-import com.mycompany.doca_java.DAO.likeDAO;
-import com.mycompany.doca_java.DAO.userDAO;
-import com.mycompany.doca_java.DTO.PostDTO;
-import com.mycompany.doca_java.DTO.categoryDTO;
-import com.mycompany.doca_java.DTO.commentDTO;
+import com.mycompany.doca_java.DAO.MessageDAO;
+import com.mycompany.doca_java.DTO.MessageDTO;
 import com.mycompany.doca_java.DTO.userDTO;
-import jakarta.servlet.RequestDispatcher;
+import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.io.IOException;
+import java.io.BufferedReader;
 import java.sql.SQLException;
-import java.util.List;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import javax.naming.NamingException;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 /**
  *
- * @author minhluan
+ * @author ADMIN
  */
-@WebServlet(name = "postDetailServlet", urlPatterns = {"/postDetailServlet"})
-public class postDetailServlet extends HttpServlet {
-
-    private final String postDetail_Page = "postDetail.jsp";
+@WebServlet(name = "createMessage", urlPatterns = {"/createMessage"})
+public class createMessage extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,54 +41,30 @@ public class postDetailServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException{
         response.setContentType("text/html;charset=UTF-8");
-        int postID = Integer.parseInt(request.getParameter("postId"));
+         HttpSession session = request.getSession();
+        userDTO account = (userDTO) session.getAttribute("USER_NAME");
         
-        String url = "";
-        try {
-            PostDAO dao = new PostDAO();
-            PostDTO postDetail = dao.getPostById(postID);
-            userDAO ownerDao = new userDAO();
-//            int commentID = Integer.parseInt(request.getParameter("commentId"));
-            if (postDetail != null) {
-                HttpSession session = request.getSession(true);
-                likeDAO likeDao= new likeDAO();
-                int likeCount=likeDao.getLikeCountByPostID(postID);
-                request.setAttribute("postDetail", postDetail);
-                request.setAttribute("likeCount", likeCount);
-
-                commentDAO cdao = new commentDAO();
-                cdao.getAllComment();
-                List<commentDTO> listOfComment = cdao.getListOfComment();
-                if (listOfComment != null) {
-                    request.setAttribute("listOfComment", listOfComment);
-                }
-//                boolean result = cdao.deleteComment(commentID);
-
-                userDTO owner = ownerDao.getUserbyPostID(postID);
-                request.setAttribute("owner", owner);
-                userDAO uDao = new userDAO();
-                uDao.getAllTheUser();
-                List<userDTO> ListOfUser = uDao.getListOfUser();
-                if (ListOfUser != null) {
-                    request.setAttribute("ListOfUser", ListOfUser);
-                }
-
-                url = postDetail_Page;
-
-            }
-        } catch (ClassNotFoundException ex) {
+        try  {
+            String message = request.getParameter("message");
+            int conversationID = Integer.parseInt(request.getParameter("conversationID"));
+            // Lấy ngày và giờ hiện tại
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            // Chuyển đổi thành kiểu dữ liệu Timestamp
+            Timestamp timePosted = Timestamp.valueOf(currentDateTime);
+            MessageDTO messageDTO= new MessageDTO(conversationID,account.getUser_ID(), message, timePosted);
+             MessageDAO dao = new MessageDAO();
+            dao.createMessage(messageDTO);
+        }catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         } catch (NamingException ex) {
             ex.printStackTrace();
         } catch (SQLException ex) {
             ex.printStackTrace();
-//        } catch (NumberFormatException ex) {
-//            ex.printStackTrace();
-        } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+        }
+        finally{
+            
         }
     }
 
@@ -122,6 +95,7 @@ public class postDetailServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        
     }
 
     /**

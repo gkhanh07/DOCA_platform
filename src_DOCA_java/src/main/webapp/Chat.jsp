@@ -64,7 +64,7 @@
                             <c:forEach items="${ListOfConversation}" var="conversation">
                                 <c:forEach items="${ListOfProductInConversation}" var="Product">
                                     <c:if test="${Product.productId == conversation.product_id }">
-                                        <li class="list-group-item border-0 m-1 ${stateConvers eq conversation_id?'active':''}" 
+                                        <li id="conver_${conversation.conversation_id}" class="Convert-li list-group-item border-0 m-1" 
                                             style="background-color: #A3B18A">
                                             <a class="text-white Conversation-name"
                                                onclick="loadMessages(${conversation.conversation_id});">
@@ -75,72 +75,115 @@
                             </c:forEach>
                         </ul>
                     </div>
-                    <script>
-                        function loadMessages(conversationID) {
-                            fetch('getMessageInConversation?conversationID=' + conversationID)
-                                    .then(response => response.json())
-                                    .then(data => {
-                                        renderMessages(data);
-                                    })
-                                    .catch(error => {
-                                        console.error('Error:', error);
-                                    });
-                        }
-                        function renderMessages(messages) {
-                            var messageContainer = document.getElementById('messageContainer');
-                            messageContainer.innerHTML = '';
-                            if (messages.length === 0) {
-                                messageContainer.innerHTML = `
-                                <div class="chat-message d-flex justify-content-center align-items-center" style=" height: 400px;">
-                                    <p>Chat để kết nối - Cùng nhau làm nên giao dịch tốt nhất!</p>
-                                </div>`;
-                            } else {
-                                var messageDivs = messages.map(function (message) {
-                                    if (message.user_id === ${Owner.user_ID}) {
-                                        console.log(message.messages_content)
-                                        messageDiv = `
-                                        <div class="col-6 offset-6 pt-2">
-                                           <div class="my-message bg-info text-white pt-2 pb-2 pl-3 pr-3">
-                                                ${message.messages_content}
-                                           </div>
-                                       </div>`;
-                                    } else {
-                                        messageDiv = `
-                                           <div class="col-6 pt-2">
-                                               <div class="their-message bg-secondary text-white pt-2 pb-2 pl-3 pr-3">
-                        ${message.messages_content}
-                                               </div>
-                                           </div>
-                                           <div class="col-6 pt-2">
-                                           </div>
-                                            `;
-                                    }
-                                    return messageDiv;
-                                });
-                                messageContainer.innerHTML = messageDivs.join('');
-                            }
-                        }
-                    </script>
-
-
                     <div class="listMessage col-sm-8 pr-0 " style=" height: 500px;background-color: #DAD7CD; " >
                         <!-- Message list content goes here -->
-
                         <div id="messageContainer" style="height: 440px; overflow:scroll;">
-
-
+                            <div id="slogan" class="chat-message d-flex justify-content-center align-items-center" style=" height: 400px;">
+                                <p>Chat để kết nối - Cùng nhau làm nên giao dịch tốt nhất!</p>
+                            </div>
                         </div>
-                        <div class="row mt-3">
-                            <div class="col-8">
-                                <input type="text" class="form-control" placeholder="Type your message">
-                            </div>
-                            <div class="col-4">
-                                <button class="btn btn-primary">Send</button>
-                            </div>
+                        <div class="row">
+                            <form id="message_input">
+                                <div class="row ">
+                                    <div class="col-10 pl-4">
+                                        <input type="text" class="form-control p-0" placeholder="" 
+                                               style="width: 300px">
+                                    </div>
+                                    <div class="col-2 p-0">
+                                        <button class="btn btn-primary">Send</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
 
             </div>
+        </div>
+        <script>
+            let currentConversationID;
+            function loadMessages(conversationID) {
+                currentConversationID = conversationID;
+                const liElements = document.getElementsByClassName("Convert-li");
+                for (let i = 0; i < liElements.length; i++) {
+                    const liElement = liElements[i];
+                    liElement.id !== "conver_" + conversationID ?
+                            liElement.classList.remove('active') : liElement.classList.add('active');
+                    //put active for conversation have been choosed
+                }
+                const fetchAndRenderMessages = () => {
+                    fetch('getMessageInConversation?conversationID=' + currentConversationID)
+                            .then(response => response.json())
+                            .then(data => {
+                                renderMessages(data);
+                            });
+                };
+                fetchAndRenderMessages();
+                setInterval(fetchAndRenderMessages, 1000);
+            }
+            function renderMessages(messages) {
+//                            var slogan = document.getElementById('slogan');
+//                            slogan.remove();
+                var messageContainer = document.getElementById('messageContainer');
+
+                messageContainer.innerHTML = '';
+                if (messages.content === "Không có tin nhắn.") {
+                    messageContainer.innerHTML = `
+                                <div class="default-message">
+                                <p>Bắt đầu nhắn tin để thực hiện mua bán</p>
+                                </div>`;
+                } else {
+                    var messageDivs = messages.map(function (message) {
+                        if (message.user_id === ${Owner.user_ID}) {
+                            console.log(message.messages_content)
+                            messageDiv = `
+                                       <div class="col-6 offset-6 pt-2">
+                                          <div class="my-message bg-info text-white pt-2 pb-2 pl-3 pr-3">`
+                                    + message.messages_content +
+                                    `</div>
+                                      </div>`;
+                        } else {
+                            console.log(message.messages_content)
+                            messageDiv = `
+                                          <div class="col-6 pt-2">
+                                              <div class="their-message bg-secondary text-white pt-2 pb-2 pl-3 pr-3">`
+                                    + message.messages_content +
+                                    `</div>
+                                          </div>
+                                          <div class="col-6 pt-2">
+                                          </div>
+                                           `;
+                        }
+                        return messageDiv;
+                    });
+                    messageContainer.innerHTML = messageDivs.join('');
+                    messageContainer.scrollTop = messageContainer.scrollHeight;
+                }
+            }
+
+            const form = document.getElementById('message_input');
+            const input = form.querySelector('input');
+            const button = form.querySelector('button');
+            button.addEventListener('click', sendMessage);
+            function sendMessage(event) {
+                event.preventDefault();
+                const message = input.value;
+                if (message.trim() === '') {
+                    return;
+                }
+                console.log(message)
+                const conversationID = currentConversationID;
+                console.log(conversationID)
+                fetch('createMessage?message=' + message + '&conversationID=' + conversationID)
+                        .then(response => response.json())
+                        .then(result => {
+                            console.log(result);
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                input.value = '';
+            }
+        </script>
     </body>
 </html>

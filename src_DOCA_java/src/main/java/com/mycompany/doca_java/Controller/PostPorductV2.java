@@ -92,6 +92,7 @@ public class PostPorductV2 extends HttpServlet {
             String inputFee = "0";
             if (price != null && price.equals("fee")) {
                 inputFee = request.getParameter("input-fee");
+                inputFee=inputFee.replaceAll("[^\\d]", "");
                 isFree = false;
                 // Xử lý giá trị của ô input khi radio button "Tính phí" được chọn
             } else {

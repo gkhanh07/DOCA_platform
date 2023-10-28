@@ -120,7 +120,7 @@ public class PostDAO {
                         this.ListOfPost = new ArrayList<>();
 
                     }
-                    if (post.isPublic() && post.getStatus().equals("accepted")) {
+                    if (post.isPublic() && post.getStatus().equals("approved")) {
                         this.ListOfPost.add(post);
                     }
                 }
@@ -172,7 +172,7 @@ public class PostDAO {
                             == null) {
                         this.ListOfPost = new ArrayList<>();
                     }
-                    if (post.isPublic() && (post.getStatus().equals("accepted"))) {
+                    if (post.isPublic() && (post.getStatus().equals("approved"))) {
                         this.ListOfPost.add(post);
                     }
                 }

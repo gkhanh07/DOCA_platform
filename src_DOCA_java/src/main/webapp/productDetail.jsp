@@ -90,7 +90,9 @@
                                             id="sellerPhone">hiện số người bán</button>
 
                                     <br><button class="btn btn-outline-secondary bg-light btn-block text-success mt-2">
-                                        <i class="fa fa-comments"></i> chat với người bán</button>
+                                        <a href="CreateConversation?ProductID=${product.productId}&sellerID=${product.userId}" >
+                                            <i class="fa fa-comments"></i> chat với người bán
+                                        </a>
                                 </div>
 
                             </div>

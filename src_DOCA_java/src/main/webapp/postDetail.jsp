@@ -114,6 +114,8 @@
             <div class="post-body">
                 <p class="post-text">${post.postContent}</p>
                 <img class="img-content col-sm-7"style="margin-left: 145px;" src="${post.postImage}" alt="Post Image">
+                
+                <p>${likeCount} like</p>
             </div>
             <c:forEach items="${listOfComment}" var="comment">
                 <c:if test="${comment.postId==post.postId}">

@@ -62,7 +62,7 @@
     </head>
 
     <body>
-         <jsp:include page="header.jsp" />
+        <jsp:include page="header.jsp" />
 
         <div class="main-content">
             <div class="row row-content justify-content-center">
@@ -101,6 +101,7 @@
                             <div id="input-container" style="display: none;">
                                 <label for="input-fee">Giá:</label>
                                 <input type="text" name="input-fee" id="input-fee" class="form-control" value="0">
+                                <input type="hidden" name="input-fee-hiden" value="" />
                                 <br>
                             </div>
                             <br>
@@ -215,22 +216,40 @@
                                 }
     </script>
     <script>
-  $(document).ready(function() {
-    $('#imgNewProduct').change(function() {
-      var input = this;
+        $(document).ready(function () {
+            $('#imgNewProduct').change(function () {
+                var input = this;
 
-      if (input.files && input.files[0]) {
-        var reader = new FileReader();
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
 
-        reader.onload = function(e) {
-          $('#preview-img').attr('src', e.target.result);
-          $('#preview-img').show();
-        };
+                    reader.onload = function (e) {
+                        $('#preview-img').attr('src', e.target.result);
+                        $('#preview-img').show();
+                    };
 
-        reader.readAsDataURL(input.files[0]);
-      }
-    });
-  });
-</script>
-    
+                    reader.readAsDataURL(input.files[0]);
+                }
+            });
+        });
+
+       
+        const inputFee = document.getElementById('input-fee');
+        inputFee.addEventListener('input', formatCurrency);
+        function formatCurrency() {
+            let value = inputFee.value;
+            value = value.replace(/[^0-9.]/g, '');
+            if (value !== '') {
+                value = parseFloat(value);
+                inputFee.value = value.toLocaleString('en-VN', {
+                    style: 'currency',
+                    currency: 'VND' 
+                });
+            } else {
+                inputFee.value = '0';
+            }
+        }
+
+    </script>
+
 </html>

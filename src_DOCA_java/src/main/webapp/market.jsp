@@ -81,12 +81,12 @@
                             <div  class="btn-group" style="width: 200px;">
                                 <select name="lowerPrice" class="form-control rounded-pill" style="width: 200px;" >
                                     <option value="0" ${selectedLowerPrice == 0 ? 'selected' : ''} >Chọn theo giá</option>
-                                    <option value="1000000" ${selectedLowerPrice == 1000000 ? 'selected' : ''}> giá bé hon 1tr</option>
-                                    <option value="700000" ${selectedLowerPrice == 700000 ? 'selected' : ''}> giá bé hon 700.000</option>
-                                    <option value="500000" ${selectedLowerPrice == 500000 ? 'selected' : ''}> giá bé hon 500.000</option>
-                                    <option value="300000" ${selectedLowerPrice == 300000 ? 'selected' : ''}> giá bé hon 300.000</option>
-                                    <option value="200000" ${selectedLowerPrice == 200000 ? 'selected' : ''}> giá bé hon 200.000</option>
-                                    <option value="100000" ${selectedLowerPrice == 100000 ? 'selected' : ''}> giá bé hon 100.000</option>
+                                    <option value="1000000" ${selectedLowerPrice == 1000000 ? 'selected' : ''}> giá bé hơn 1tr</option>
+                                    <option value="700000" ${selectedLowerPrice == 700000 ? 'selected' : ''}> giá bé hơn 700.000</option>
+                                    <option value="500000" ${selectedLowerPrice == 500000 ? 'selected' : ''}> giá bé hơn 500.000</option>
+                                    <option value="300000" ${selectedLowerPrice == 300000 ? 'selected' : ''}> giá bé hơn 300.000</option>
+                                    <option value="200000" ${selectedLowerPrice == 200000 ? 'selected' : ''}> giá bé hơn 200.000</option>
+                                    <option value="100000" ${selectedLowerPrice == 100000 ? 'selected' : ''}> giá bé hơn 100.000</option>
                                 </select>
                             </div>
 
@@ -103,11 +103,9 @@
 
                             </div>
 
-
-
                             <div style="width: 200px;">
                                 <input type="hidden" name="listOfProduct" value="${Products}" />
-                                <input class=" rounded-pill"  style="width: 100px; height: 38px" type="submit" name="btAction" value="Loc" />
+                                <input class=" rounded-pill"  style="width: 100px; height: 38px" type="submit" name="btAction" value="Lọc" />
                             </div>
                         </div>
 

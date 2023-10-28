@@ -69,7 +69,7 @@ public class DispatchServlet extends HttpServlet {
                 url = FORUM_Controller;
             }
 
-            if (button.equals("Loc")) {
+            if (button.equals("Lọc")) {
                 url = Fitler_Product;
             }
             if (button.equals("saveProduct")) {

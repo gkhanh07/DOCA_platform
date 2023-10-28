@@ -235,5 +235,21 @@
                 }
             });
         });
+         const inputFee = document.getElementById('input-fee');
+        inputFee.addEventListener('input', formatCurrency);
+        function formatCurrency() {
+            let value = inputFee.value;
+            value = value.replace(/[^0-9.]/g, '');
+            if (value !== '') {
+                value = parseFloat(value);
+                inputFee.value = value.toLocaleString('en-VN', {
+                    style: 'currency',
+                    currency: 'VND' 
+                });
+            } else {
+                inputFee.value = '0';
+            }
+        }
+        
     </script>
 </html>

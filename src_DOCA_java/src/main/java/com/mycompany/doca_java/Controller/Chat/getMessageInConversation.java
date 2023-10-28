@@ -36,15 +36,19 @@ public class getMessageInConversation extends HttpServlet {
         try {
             MessageDAO dao = new MessageDAO();
             dao.getListMessageByConversationID(conversation_id);
-            List<MessageDTO> ListOfMessage = dao.getListOfMessage();
-            if (ListOfMessage != null) {
-                String json = new Gson().toJson(ListOfMessage);
-                response.setContentType("application/json");
-                response.setCharacterEncoding("UTF-8");
-                response.getWriter().write(json);
+            List<MessageDTO> listOfMessage = dao.getListOfMessage();
+            String json;
+
+            if (listOfMessage != null) {
+                json = new Gson().toJson(listOfMessage);
+            } else {
+              json = "{\"content\": \"Không có tin nhắn.\"}";
             }
-            request.setAttribute("stateConvers", conversation_id);
-            url = CHAT_PAGE;
+
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(json);
+
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         } catch (NamingException ex) {

@@ -59,7 +59,7 @@ public class forumServlet extends HttpServlet {
                 request.setAttribute("indexcategoryID", indexcategoryID);
                 request.setAttribute("listInPage", listInPage);
                 request.setAttribute("numberPage", numberPage);
-                session.setAttribute("indexPageForum,", indexPage);    
+                session.setAttribute("indexPageForum", indexPage);    
             }
             categoryDAO cataDao= new categoryDAO();
             List<categoryDTO> listCategory= new ArrayList<>();

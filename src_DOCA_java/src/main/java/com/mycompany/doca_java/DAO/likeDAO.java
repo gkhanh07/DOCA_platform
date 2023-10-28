@@ -104,7 +104,7 @@ public class likeDAO {
         return result;
     }
 
-    public boolean deleteLike( int userId, int post_id) 
+    public boolean deleteLike(int userId, int post_id)
             throws SQLException, ClassNotFoundException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -167,4 +167,39 @@ public class likeDAO {
 
         return listOfLikes;
     }
+
+    public int getLikeCountByPostID(int postID) throws SQLException, ClassNotFoundException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        int likeCount = 0;
+
+        try {
+            con = DBconnect.makeConnection();
+            if (con != null) {
+                String sql = "SELECT COUNT(like_id) AS like_count FROM [DOCA_platform].[dbo].[like] WHERE post_id = ?";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, postID);
+
+                rs = stm.executeQuery();
+
+                if (rs.next()) {
+                    likeCount = rs.getInt("like_count");
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+
+        return likeCount;
+    }
+
 }

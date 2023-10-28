@@ -244,21 +244,15 @@
                                     </div>
                                 </div>
                             </c:forEach>
-
-
                         </div>
 
-
-
                     </div>
-
-
 
                     <nav aria-label="Page navigation ">
                         <c:set var="numberPage" value="${requestScope.numberPage}"/>
                         <ul class="pagination justify-content-center">
                             <c:forEach begin="1" end="${numberPage}" var="i">
-                                <li class="page-item rounded-pill ${indexPage==i?"active":""}" >
+                                <li class="page-item rounded-pill ${indexPageForum} ${indexPageForum==i?"active":""}" >
                                     <a class="page-link rounded-pill" href="forumServlet?index=${i}&categoryID=${indexcategoryID}">${i}</a>
                                 </li>
                             </c:forEach> 

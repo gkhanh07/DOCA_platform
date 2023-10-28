@@ -121,7 +121,7 @@ public class ProductDAO {
                     if (this.ListOfProduct == null) {
                         this.ListOfProduct = new ArrayList<>();
                     }//end account list has not existed
-                    if (product.isPublic() && (product.getStatus().equals("accepted"))) {
+                    if (product.isPublic() && (product.getStatus().equals("approved"))) {
                         this.ListOfProduct.add(product);
                     }
                 }//end map DB to DTO

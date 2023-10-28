@@ -27,7 +27,7 @@ public class MessageDAO {
         return ListOfMessage;
     }
 
-    public void getListMessageByConversationID(int conversation_id) 
+    public void getListMessageByConversationID(int conversation_id)
             throws SQLException, ClassNotFoundException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -36,9 +36,10 @@ public class MessageDAO {
             con = DBconnect.makeConnection();
             if (con != null) {
                 //2.create sql string
-                String sql = " SELECT [conversation_id], [user_id], [messages_content], [messages_time]\n"
+                String sql = "SELECT [conversation_id], [user_id], [messages_content], [messages_time]\n"
                         + "FROM [dbo].[messages]\n"
-                        + "WHERE [conversation_id] = ?";
+                        + "WHERE [conversation_id] = ?\n"
+                        + "ORDER BY [messages_time] ASC";
                 //3.create stm obj
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, conversation_id);
@@ -50,7 +51,7 @@ public class MessageDAO {
                     String messages_content = rs.getString("messages_content");
                     Timestamp messages_time = rs.getTimestamp("messages_time");
 
-                    MessageDTO message= new MessageDTO(conversation_id, user_id, messages_content, messages_time);
+                    MessageDTO message = new MessageDTO(conversation_id, user_id, messages_content, messages_time);
                     if (this.ListOfMessage
                             == null) {
                         this.ListOfMessage = new ArrayList<>();
@@ -65,6 +66,43 @@ public class MessageDAO {
 
             if (stm != null) {
                 con.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
+
+    public void createMessage(MessageDTO message) throws SQLException, ClassNotFoundException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            con = DBconnect.makeConnection();
+            if (con != null) {
+                // Create SQL string for inserting a new message
+                String sql = "INSERT INTO messages (conversation_id, user_id, messages_content, messages_time) "
+                        + "VALUES (?, ?, ?, ?)";
+
+                // Create PreparedStatement object
+                stm = con.prepareStatement(sql);
+
+                // Set the values for the parameters
+                stm.setInt(1, message.getConversation_id());
+                stm.setInt(2, message.getUser_id());
+                stm.setString(3, message.getMessages_content());
+                stm.setTimestamp(4, message.getMessages_time());
+
+                // Execute the SQL query
+                stm.executeUpdate();
+            }
+        } finally {
+            // Close the resources
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
             }
             if (con != null) {
                 con.close();
