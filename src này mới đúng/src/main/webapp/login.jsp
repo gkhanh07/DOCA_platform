@@ -50,14 +50,14 @@
                             <p class="mb-4">Platform for dog and cat lovers.</p>
                             <h3>Login to <strong>Doca</strong></h3>
 
-                            <form action="DispatchServlet">
+                            <form action="DispatchServlet" onsubmit="return validateForm()">
                                 <div class="form-group first">
                                     <label for="username">Username</label>
-                                    <input type="text"  name="username" id="username" class="form-control" placeholder="Enter your username" id="username">
+                                    <input type="text"  name="username" id="username" class="form-control" placeholder="Enter your username" id="username" >
                                 </div>
                                 <div class="form-group last mb-3">
                                     <label for="password">Password</label>
-                                    <input type="password"  name="password" id="password" class="form-control" placeholder="Enter your Password" id="password">
+                                    <input type="password"  name="password" id="password" class="form-control" placeholder="Enter your Password" id="password" >
                                 </div>
 
                                 <div class="d-flex mb-5 align-items-center">
@@ -83,5 +83,21 @@
 
         <script src="assets/js/login-main.js"></script>
     </body>
+<script>
+        function validateForm() {
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
 
+            if (username === "" && password === "") {
+                alert("Please enter a username and password.");
+                return false;
+            } else if (username === "") {
+                alert("Please enter a username.");
+                return false;
+            } else if (password === "") {
+                alert("Please enter a password.");
+                return false;
+            }
+        }
+    </script>
 </html>
