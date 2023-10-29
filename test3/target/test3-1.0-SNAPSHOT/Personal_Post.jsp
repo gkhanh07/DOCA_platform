@@ -40,6 +40,33 @@
         <link rel="stylesheet" href="assets/css/standar-style.css">
 
     </head>
+    <style>
+        .image-content{
+            margin-left: -15px;
+        }
+        .main{
+            background-color: #f4f4f4;
+        }
+        /*không hiểu sao không bootstrap được nên làm thủ công luôn*/
+        .edit{
+            background-color: #007bff;
+            color: #ffffff;
+            padding:6px 12px; 
+        }
+        .edit:hover{
+            color: #fff;
+            background-color: #0069d9;
+        }
+        .delete{
+            background-color: #dc3545;
+            color: #ffffff;
+            padding:6px 12px; 
+        }
+        .delete:hover{
+            color: #fff;
+            background-color: #c82333;
+        }
+    </style>
 
     <body>
         <jsp:include page="header.jsp" />
@@ -85,9 +112,9 @@
 
                             </div>
                             <!-- content -->
-                            <div class="tab-content mt-5 pb-5">
+                            <div class="tab-content pb-5">
 
-                                <div role="tabpanel" class="tab-pane fade show active" id="display"> 
+                                <div role="tabpanel" class="main tab-pane fade show active" id="display"> 
                                     <c:set var="countDisplay" value="0" />
                                     <c:forEach items="${listPostOfPersonal}" var="post">
                                         <c:if test="${post.status eq 'accepted'}">
@@ -97,8 +124,8 @@
                                             <div class="font">
                                                 <p>${post.postContent}</p>
                                             </div>
-                                            <input type="submit" value="sửa bài viết">
-                                            <input type="submit" value="xoá bài viết">
+                                            <input class="edit" type="submit" value="sửa bài viết">
+                                            <input class="delete" type="submit" value="xoá bài viết">
                                             <hr>
                                         </c:if>
                                     </c:forEach>
@@ -118,8 +145,8 @@
                                             <div class="font">
                                                 <p>${post.postContent}</p>
                                             </div>
-                                            <input type="submit" value="sửa bài viết">
-                                            <input type="submit" value="xoá bài viết">
+                                            <input class="edit" type="submit" value="sửa bài viết">
+                                            <input class="delete" type="submit" value="xoá bài viết">
                                             <hr>
                                         </c:if>
                                     </c:forEach>
@@ -132,14 +159,14 @@
                                     <c:forEach items="${listPostOfPersonal}" var="post">
                                         <c:if test="${post.status eq 'wating'}">
                                             <c:set var="countWaiting" value="${count + 1}" />
-                                             <c:set var="countDisplay" value="${count + 1}" />
+                                            <c:set var="countDisplay" value="${count + 1}" />
                                             <img class="col-sm-6 image-content mt-5 img-fluid"
                                                  src="${post.postImage}" alt="Hình ảnh">
                                             <div class="font">
                                                 <p>${post.postContent}</p>
                                             </div>
-                                            <input type="submit" value="sửa bài viết">
-                                            <input type="submit" value="xoá bài viết">
+                                            <input  class="edit" type="submit" value="sửa bài viết">
+                                            <input class="delete" type="submit" value="xoá bài viết">
                                             <hr>
                                         </c:if>
                                     </c:forEach>

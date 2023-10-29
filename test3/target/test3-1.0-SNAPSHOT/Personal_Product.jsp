@@ -45,6 +45,15 @@
         <link rel="stylesheet" href="assets/css/standar-style.css">
 
     </head>
+    <!--css trực tiếp-->
+    <style>
+        .image-content{
+            margin-left: -15px; 
+        }
+        .main{
+            background-color: #f4f4f4; 
+        }
+    </style>
 
     <body>
         <jsp:include page="header.jsp" />
@@ -92,8 +101,10 @@
 
                             </div>
                             <!-- content -->
-                            <div class="tab-content mt-5 pb-5">
-                                <div role="tabpanel" class="tab-pane fade ${IN eq 'display' ? 'show active' : ''}" id="display"> 
+                            <!--có xoá mt-5 ở đây-->
+                            <div class="tab-content pb-5">
+                                <!--có thêm 1 class main ở đây !!!-->
+                                <div role="tabpanel" class="main tab-pane fade ${IN eq 'display' ? 'show active' : ''}" id="display"> 
                                     <c:set var="countDisplay" value="0" />
                                     <c:forEach items="${listProductOfPersonal}" var="product">
                                         <c:if test="${product.status eq 'accepted'}">
@@ -116,7 +127,7 @@
                                             <a class="btn btn-secondary" href="SetIsPublic?ProductID=${product.productId}&isPublic=${product.isPublic()}&IN=display">
                                                 ${product.isPublic() ? "Ẩn bài bán" : "Hiện bài bán"}
                                             </a>
-                                            <hr>
+                                            <hr>    
                                         </c:if>
                                     </c:forEach>
                                     <c:if test="${countDisplay eq 0}">
