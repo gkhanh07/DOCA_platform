@@ -37,7 +37,7 @@
     <div class="container mt-5" style="background-color: #f9f9f9" >
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <form id="registrationForm" action="DispatchServlet" method="POST">
+                <form id="registrationForm" action="CreateNewAccountServlet" method="POST">
                     <h3 class="mb-4 text-center">Đăng ký tài khoản</h3>
                    
                     <div class="form-group">
@@ -120,7 +120,6 @@
     function validateForm() {
     var form = document.getElementById("registrationForm");
     var requiredFields = form.querySelectorAll('[required]');
-
     for (var i = 0; i < requiredFields.length; i++) {
         if (requiredFields[i].value.trim() === '') {
             alert("Vui lòng điền tất cả thông tin.");

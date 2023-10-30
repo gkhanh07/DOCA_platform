@@ -98,7 +98,7 @@
             <div class="card">
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item"> <a href="" style="color: black;">quản lý tài khoản</a></li>
+                        <li class="list-group-item"> <a href="accountmanage.jsp" style="color: black;">quản lý tài khoản</a></li>
                         <li class="list-group-item"><a href="getPersonalPost" style="color: black;">quản lý tin </a></li>
                         <li class="list-group-item"><a href="getPersonalProduct" style="color: black;">quản lý sản phẩm</a>
                         </li>

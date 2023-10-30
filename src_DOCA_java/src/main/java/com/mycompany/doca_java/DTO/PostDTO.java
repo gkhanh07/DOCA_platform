@@ -5,7 +5,9 @@
 package com.mycompany.doca_java.DTO;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,11 +26,36 @@ import lombok.ToString;
 public class PostDTO implements Serializable {
 
     private int postId;
+    private List<Integer> categoryId;
     private int userId;
     private String postContent;
     private String postImage;
     private boolean isPublic;
-    private Date timePosted;
+    private Timestamp timePosted;
     private String status;
     private String reason;
+
+    public PostDTO(int userId, String postContent, String postImage, boolean isPublic, Timestamp timePosted, String status, String reason) {
+        this.userId = userId;
+        this.postContent = postContent;
+        this.postImage = postImage;
+        this.isPublic = isPublic;
+        this.timePosted = timePosted;
+        this.status = status;
+        this.reason = reason;
+    }
+
+    public PostDTO(int postId, int userId, String postContent, String postImage, boolean isPublic, Timestamp timePosted, String status, String reason) {
+        this.postId = postId;
+        this.userId = userId;
+        this.postContent = postContent;
+        this.postImage = postImage;
+        this.isPublic = isPublic;
+        this.timePosted = timePosted;
+        this.status = status;
+        this.reason = reason;
+    }
+    
+    
+    
 }

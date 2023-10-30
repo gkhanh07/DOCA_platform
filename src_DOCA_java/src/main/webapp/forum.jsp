@@ -13,9 +13,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <!-- Bootstrap CSS -->
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
+
 
         <title>Forum</title>
         <!-- Link Iconn  -->
@@ -34,7 +32,7 @@
 
 
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
 
         <!--  -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
@@ -57,13 +55,12 @@
         <div class="main-content">
             <div class="row row-content justify-content-center">
                 <div class="col-sm-8 ">
-                    <div class="card create-post-card mt-5">
+                    <div class="card create-post-card">
                         <div class="card-body d-flex align-items-center">
-                            <!--chứa ảnh profile của người dùng-->
                             <div class="profile-image-container">
                                 <img src="assets/images/spa.jpg" alt="Profile Image" class="rounded-circle profile-image">
                             </div>
-                            <button type="button" class="btn btn-light btn-createpost btn-block p-0 ml-2 rounded-pill  "
+                            <button type="button" class="btn btn-light btn-createpost btn-block p-0 ml-2 rounded-pill "
                                     data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 <div class="d-flex justify-content-start">
                                     <i class="fa fa-edit ml-3 mt-1"></i>
@@ -71,69 +68,68 @@
                                 </div>
 
                             </button>
+
                             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                                  aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Your Post</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close">&times;</button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="mb-3">
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
-                                                           value="option1">
-                                                    <label class="form-check-label" for="inlineCheckbox1">Story</label>
+                                    <form action="PostForum" method="post" onsubmit="return validateCheckBoxes()" enctype="multipart/form-data">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Bài đăng của bạn</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close">&times;</button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="mb-3">
+                                                    <div class="form-check form-check-inline">
+                                                        <input name="category" class="form-check-input" type="checkbox" id="inlineCheckbox1"
+                                                               value="5" checked>
+                                                        <label class="form-check-label" for="inlineCheckbox1" >Câu chuyện</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input name="category" class="form-check-input" type="checkbox" id="inlineCheckbox2"
+                                                               value="6">
+                                                        <label class="form-check-label" for="inlineCheckbox2">Mẹo huấn luyệnn</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input name="category" class="form-check-input" type="checkbox" id="inlineCheckbox3"
+                                                               value="7">
+                                                        <label class="form-check-label" for="inlineCheckbox2">Mẹo chắm sóc</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input name="category" class="form-check-input" type="checkbox" id="inlineCheckbox4"
+                                                               value="8">
+                                                        <label class="form-check-label" for="inlineCheckbox2">Sự kiện</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input name="category" class="form-check-input" type="checkbox" id="inlineCheckbox5"
+                                                               value="9">
+                                                        <label class="form-check-label" for="inlineCheckbox2">Chó mèo thất lạc</label>
+                                                    </div>
+                                                    <p id="error-message" style="color: red; display: none;">Vui lòng chọn ít nhất một checkbox.</p>
                                                 </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
-                                                           value="option2">
-                                                    <label class="form-check-label" for="inlineCheckbox2">Training
-                                                        Tips</label>
+                                                <div class="mb-3">
+                                                    <label for="message-text" class="col-form-label">Nội dung:
+                                                    </label>
+                                                    <textarea name="content" class="form-control" id="message-text" rows="7"></textarea>
                                                 </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
-                                                           value="option3">
-                                                    <label class="form-check-label" for="inlineCheckbox2">Care
-                                                        Tips</label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
-                                                           value="option4">
-                                                    <label class="form-check-label" for="inlineCheckbox2">Events</label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
-                                                           value="option5">
-                                                    <label class="form-check-label" for="inlineCheckbox2">Lost</label>
+                                                <div class="mb-3">
+                                                    <label for="formFile" class="form-label"><i class="fa fa-picture-o"></i>
+                                                        Chọn ảnh: </label>
+                                                    <input class="form-control" type="file" id="formFile" name="file"  multiple>
+                                                    <img id="previewImage" src="#" alt="Preview" style="max-width: 200px; max-height: 200px; display: none;">
                                                 </div>
                                             </div>
-                                            <div class="mb-3">
-                                                <label for="message-text" class="col-form-label">Content:
-                                                </label>
-                                                <textarea class="form-control" id="message-text" rows="7"></textarea>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary" >Đăng</button>
                                             </div>
-                                            <div class="mb-3">
-                                                <label for="formFile" class="form-label"><i class="fa fa-picture-o"></i>
-                                                    Choose images: </label>
-                                                <input class="form-control" type="file" id="formFile">
-                                            </div>
-
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Post</button>
-                                        </div>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
+
 
                     <div class="container rounded-pill p-0" style="background-color: #CAD2C5;">
                         <nav class="navbar navbar-dark navbar-expand-xxl ">
@@ -198,8 +194,8 @@
                                         <div class="post-body">
                                             <p class="post-text" data-toggle="modal" data-target="#modalID${post.postId}">${post.postContent}</p>
                                             <a href="postDetailServlet?postId=${post.postId}" class="sell d-flex" style="width: 100%;">
-                                               <img class="img-content col-sm-7" data-toggle="modal" 
-                                                    style="margin-left: 145px;" data-target="#modalID${post.postId}" src="${post.postImage}" alt="Post Image">
+                                                <img class="img-content col-sm-7" data-toggle="modal" 
+                                                     style="margin-left: 145px;" data-target="#modalID${post.postId}" src="${post.postImage}" alt="Post Image">
                                             </a>
                                         </div>
                                         <div class="post-footer">
@@ -245,10 +241,10 @@
 
                     <nav aria-label="Page navigation ">
                         <c:set var="numberPage" value="${requestScope.numberPage}"/>
-                        <ul class="pagination justify-content-center">
+                        <ul class="pagination justify-content-center ">
                             <c:forEach begin="1" end="${numberPage}" var="i">
                                 <li class="page-item rounded-pill ${indexPageForum} ${indexPageForum==i?"active":""}" >
-                                    <a class="page-link rounded-pill" href="forumServlet?index=${i}&categoryID=${indexcategoryID}">${i}</a>
+                                    <a class="page-link rounded-pill ml-2 mt-4" href="forumServlet?index=${i}&categoryID=${indexcategoryID}">${i}</a>
                                 </li>
                             </c:forEach> 
 
@@ -263,7 +259,24 @@
             </div>
 
         </div>
-
+        <script>
+            function validateCheckBoxes() {
+                var checkboxes = document.getElementsByName('category');
+                var checked = false;
+                for (var i = 0; i < checkboxes.length; i++) {
+                    if (checkboxes[i].checked) {
+                        checked = true;
+                        break;
+                    }
+                }
+                if (!checked) {
+                    document.getElementById('error-message').style.display = 'block';
+                } else {
+                    document.getElementById('error-message').style.display = 'none';
+                }
+                return checked;
+            }
+        </script>
 
 
 
@@ -282,7 +295,15 @@
                 options.style.display = options.style.display === 'none' ? 'block' : 'none';
             }
         </script>
-
+        <!--        alert when success create -->
+        <script>
+            window.addEventListener('DOMContentLoaded', (event) => {
+                var successMessage = "<c:out value='${successMessage}' />";
+                if (successMessage) {
+                    alert(successMessage);
+                }
+            });
+        </script>
 
     </body>
 </html>

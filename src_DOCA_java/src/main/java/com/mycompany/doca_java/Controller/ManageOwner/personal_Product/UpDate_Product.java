@@ -4,8 +4,7 @@
  */
 package com.mycompany.doca_java.Controller.ManageOwner.personal_Product;
 
-import com.mycompany.doca_java.Controller.PostPorductV2;
-import static com.mycompany.doca_java.Controller.PostPorductV2.postSucc;
+import static com.mycompany.doca_java.Controller.ManageOwner.personal_Product.PostPorductV2.postSucc;
 import com.mycompany.doca_java.DAO.ProductDAO;
 import com.mycompany.doca_java.DTO.ProductDTO;
 import com.mycompany.doca_java.DTO.userDTO;

@@ -30,7 +30,7 @@ import jakarta.servlet.http.HttpSession;
 public class LoginServlet extends HttpServlet {
 
     private final String Market_Controller = "marketServlet";
-    private final String Admin_page = "";
+    private final String Admin_page = "AdminManageForumPostServlet";
    
 
     /**

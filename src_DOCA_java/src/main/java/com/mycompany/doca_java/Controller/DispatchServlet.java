@@ -28,6 +28,7 @@ public class DispatchServlet extends HttpServlet {
     private final String CREATE_COMMENT = "createCommentServlet";
     private final String SEARCH_IN_MARKET = "searchInMarketServlet";
     private final String SEARCH_IN_FORUM = "SearchInForumServlet";
+    private final String UPDATE_INFO_ACCOUNT = "UpdateAccountServlet";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -105,6 +106,9 @@ public class DispatchServlet extends HttpServlet {
                 session.removeAttribute("listOfPostSearch");
                 session.removeAttribute("LastSearch");
                 url = SEARCH_IN_FORUM;
+            }
+             if (button.equals("Lưu thay đổi")) {
+                url = UPDATE_INFO_ACCOUNT;
             }
             
         } finally {

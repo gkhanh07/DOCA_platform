@@ -239,7 +239,7 @@ public class userDAO {
                 ResultSet rs = ps.executeQuery();
                 if (rs.next()) {
                     int count = rs.getInt(1);
-                    return count == 0; // If count is 0, the username is available
+                    return count == 0; // If count is 0, the usernaDme is available
                 }
             }
         } catch (SQLException | ClassNotFoundException | NamingException e) {
@@ -283,12 +283,13 @@ public class userDAO {
 
         return false; // Return false in case of an error
     }
-     public userDTO getUserbyPostID(int postID)
+
+    public userDTO getUserbyPostID(int postID)
             throws SQLException, ClassNotFoundException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
-        userDTO user=null;
+        userDTO user = null;
         try {
             con = DBconnect.makeConnection();
             if (con != null) {
@@ -334,50 +335,99 @@ public class userDAO {
         }
         return user;
     }
-     public userDTO getUserbyUserID(int userID) throws SQLException, ClassNotFoundException, NamingException {
-    Connection con = null;
-    PreparedStatement stm = null;
-    ResultSet rs = null;
-    userDTO user = null;
 
-    try {
-        con = DBconnect.makeConnection();
-        if (con != null) {
-            String sql = "SELECT [user_id], [username], [password], [Gender], [email], [mobile_num], [status], [role_id], [avatar] " +
-                         "FROM [DOCA_platform].[dbo].[users] " +
-                         "WHERE [user_id] = ?";
-            
-            stm = con.prepareStatement(sql);
-            stm.setInt(1, userID);
-            rs = stm.executeQuery();
+    public userDTO getUserbyUserID(int userID) throws SQLException, ClassNotFoundException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        userDTO user = null;
 
-            while (rs.next()) {
-                int user_ID = rs.getInt("user_id");
-                String userName = rs.getString("username");
-                String password = rs.getString("password");
-                String Gender = rs.getString("Gender");
-                String email = rs.getString("email");
-                String phone = rs.getString("mobile_num");
-                boolean status = rs.getBoolean("status");
-                boolean roleID = rs.getBoolean("role_id");
-                String avatar = rs.getString("avatar");
+        try {
+            con = DBconnect.makeConnection();
+            if (con != null) {
+                String sql = "SELECT [user_id], [username], [password], [Gender], [email], [mobile_num], [status], [role_id], [avatar] "
+                        + "FROM [DOCA_platform].[dbo].[users] "
+                        + "WHERE [user_id] = ?";
 
-                user = new userDTO(user_ID, userName, password, Gender, email, phone, status, roleID, avatar);
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, userID);
+                rs = stm.executeQuery();
+
+                while (rs.next()) {
+                    int user_ID = rs.getInt("user_id");
+                    String userName = rs.getString("username");
+                    String password = rs.getString("password");
+                    String Gender = rs.getString("Gender");
+                    String email = rs.getString("email");
+                    String phone = rs.getString("mobile_num");
+                    boolean status = rs.getBoolean("status");
+                    boolean roleID = rs.getBoolean("role_id");
+                    String avatar = rs.getString("avatar");
+
+                    user = new userDTO(user_ID, userName, password, Gender, email, phone, status, roleID, avatar);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
             }
         }
-    } finally {
-        if (rs != null) {
-            rs.close();
-        }
-        if (stm != null) {
-            stm.close();
-        }
-        if (con != null) {
-            con.close();
-        }
+        return user;
     }
-    return user;
-}
 
+    public boolean updateAccount(int user_ID, String userName, String password, String gender, String email, String mobileNum, String avatar)
+            throws SQLException, NamingException, ClassNotFoundException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            // 1. Make the database connection
+            con = DBconnect.makeConnection();
+
+            if (con != null) {
+
+                // 2. Create the SQL update statement
+                String sql = "UPDATE dbo.users SET "
+                        + "username = ?, "
+                        + "password = ?, "
+                        + "Gender = ?, "
+                        + "email = ?, "
+                        + "mobile_num = ?, "
+                        + "avatar = ? "
+                        + "WHERE user_id = ?";
+
+                // 3. Create the PreparedStatement
+                stm = con.prepareStatement(sql);
+                stm.setString(1, userName);
+                stm.setString(2, password);
+                stm.setString(3, gender);
+                stm.setString(4, email);
+                stm.setString(5, mobileNum);
+                stm.setString(6, avatar);
+                stm.setInt(7, user_ID);
+
+                // 4. Execute the update
+                int rowsUpdated = stm.executeUpdate();
+
+                if (rowsUpdated > 0) {
+                    return true;
+                }
+
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return false;
+    }
 
 }

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package com.mycompany.doca_java.Controller;
+package com.mycompany.doca_java.Controller.loginSignup;
 
 import com.mycompany.doca_java.DAO.userDAO;
 import com.mycompany.doca_java.DTO.userDTO;
@@ -40,18 +40,7 @@ public class CreateNewAccountServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet CreateNewAccountServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet CreateNewAccountServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -80,30 +69,45 @@ public class CreateNewAccountServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        String username = request.getParameter("txtUsername");
+       String username = request.getParameter("txtUsername");
         String password = request.getParameter("txtPassword");
         String confirm = request.getParameter("txtConfirm");
         String gender = request.getParameter("txtGender");
         String email = request.getParameter("txtEmail");
         String mobileNum = request.getParameter("txtPhone");
         boolean status = true;  // Assuming the user is initially active
-        boolean roleID = true; // Adjust as needed
-        String avatar = "default.jpg"; // Default avatar image  
+        boolean roleID = true; // Adjust as needed   
+        String avatar = null;
         try {
-            userDTO user = new userDTO();
-            user.setUserName(username);
-            user.setPassword(password);
-            user.setGender(gender);
-            user.setEmail(email);
-            user.setMobileNum(mobileNum);
-            user.setStatus(status);
-            user.setRoleID(roleID);
-            user.setAvatar(avatar);
-
             userDAO userDAO = new userDAO();
-
             if (userDAO.isUsernameAvailable(username) && userDAO.isEmailAvailable(email)) {
+                Part filePart = request.getPart("avatarFile");
+                if (filePart != null && filePart.getSize() > 0) {
+                    String originalFileName = filePart.getSubmittedFileName();
+                    String uploadDir = "C:\\Users\\Admin\\Desktop\\FOR STUDY\\SWP\\Doca_java\\src\\main\\webapp\\imgIn_DOCA";
+                    int dotIndex = originalFileName.lastIndexOf(".");
+                    if (dotIndex != -1) {
+                        String extension = originalFileName.substring(dotIndex);
+                        avatar = username + "Avatar" + extension;
+                    } else {
+                        avatar = username + "Avatar";
+                    }
+                    String filePath = uploadDir + File.separator + avatar;
+                    filePart.write(filePath);
+                    avatar = "imgIn_DOCA/" + avatar;
+                } else {
+                    avatar = "default.jpg";// Default avatar image 
+                }
+                userDTO user = new userDTO();
+                user.setUserName(username);
+                user.setPassword(password);
+                user.setGender(gender);
+                user.setEmail(email);
+                user.setMobileNum(mobileNum);
+                user.setStatus(status);
+                user.setRoleID(roleID);
+                user.setAvatar(avatar);
+
                 boolean registrationSuccessful = userDAO.createUser(user);
                 if (registrationSuccessful) {
                     // Registration was successful, you can redirect the user to a success page

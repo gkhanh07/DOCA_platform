@@ -69,7 +69,49 @@
                                             <a class="text-white Conversation-name"
                                                onclick="loadMessages(${conversation.conversation_id});">
                                                 ${Product.title}</a>
+                                            <!--                                                just buyer can feedback -->
+                                            <c:if test="${conversation.buyer_id == Owner.user_ID}"> 
+                                                <a href="#" data-toggle="modal" data-target="#ratingModal">
+                                                    <p style="color: yellow">
+                                                        <small>Ðánh giá người bán</small>
+                                                    </p>
+                                                </a>
+                                            </c:if>
                                         </li>
+                                        <div class="modal fade" id="ratingModal" tabindex="-1" role="dialog" aria-labelledby="ratingModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <form>
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="ratingModalLabel">Đánh giá người bán</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+
+                                                            <div class="form-group">
+                                                                <label for="rating">Đánh giá:</label>
+                                                                <select class="form-control" id="rating">
+                                                                    <option value="5">5 sao</option>
+                                                                    <option value="4">4 sao</option>
+                                                                    <option value="3">3 sao</option>
+                                                                    <option value="2">2 sao</option>
+                                                                    <option value="1">1 sao</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="comment">Bình luận:</label>
+                                                                <textarea class="form-control" id="comment"></textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-primary">Gửi đánh giá</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
                                     </c:if>
                                 </c:forEach>
                             </c:forEach>
@@ -100,6 +142,7 @@
 
             </div>
         </div>
+
         <script>
             let currentConversationID;
             function loadMessages(conversationID) {
@@ -121,9 +164,8 @@
                 fetchAndRenderMessages();
                 setInterval(fetchAndRenderMessages, 1000);
             }
+            let FirstRender = true;
             function renderMessages(messages) {
-//                            var slogan = document.getElementById('slogan');
-//                            slogan.remove();
                 var messageContainer = document.getElementById('messageContainer');
 
                 messageContainer.innerHTML = '';
@@ -157,7 +199,10 @@
                         return messageDiv;
                     });
                     messageContainer.innerHTML = messageDivs.join('');
-                    messageContainer.scrollTop = messageContainer.scrollHeight;
+                    if (FirstRender) {
+                        messageContainer.scrollTop = messageContainer.scrollHeight;
+                        FirstRender = false; //just the fist time render it go the bottom of the chat
+                    }
                 }
             }
 

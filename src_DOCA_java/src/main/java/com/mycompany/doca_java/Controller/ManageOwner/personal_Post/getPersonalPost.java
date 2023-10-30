@@ -27,7 +27,7 @@ import javax.naming.NamingException;
 @WebServlet(name = "getPersonalPost", urlPatterns = {"/getPersonalPost"})
 public class getPersonalPost extends HttpServlet {
  private final String LOGIN_PAGE = "login.jsp";
-    private final String  PERSONAL_POST_PAGE= "Personal_Post.jsp";
+    private final String  PERSONAL_POST_PAGE= "Personal_PostV2.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -42,6 +42,10 @@ public class getPersonalPost extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession(true);
         userDTO account = (userDTO) session.getAttribute("USER_NAME");
+        String messageDel = (String) request.getAttribute("Message_Del");
+        if (messageDel != null) {
+            request.setAttribute("Message_Del", messageDel);
+        }
         String url="";
         try  {
              if (account != null) {
@@ -67,7 +71,7 @@ public class getPersonalPost extends HttpServlet {
             ex.printStackTrace();
         } 
         finally{
-              RequestDispatcher rd = request.getRequestDispatcher(url);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }
     }
