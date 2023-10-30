@@ -266,7 +266,7 @@
                         <ul class="pagination justify-content-center">
                             <c:forEach begin="1" end="${numberPage}" var="i">
                                 <li class="page-item rounded-pill ${indexPage==i?"active":""}" >
-                                    <a class="page-link rounded-pill ml-2 mt-4" href="forumServlet?index=${i}&categoryID=${indexcategoryID}">${i}</a>
+                                    <a class="page-link rounded-pill ml-2 mt-5" href="forumServlet?index=${i}&categoryID=${indexcategoryID}">${i}</a>
                                 </li>
                             </c:forEach> 
 
@@ -282,6 +282,7 @@
 
         </div>
 
+                        <jsp:include page="footer.jsp" />
 
 
 

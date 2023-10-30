@@ -72,7 +72,6 @@
         <jsp:include page="header.jsp" />
         <c:set var="listPostOfPersonal" value="${requestScope.listPostOfPersonal}"/>
         <c:set var="message" value="${requestScope.Message}"/>
-    <body>
         <div class="main-content">
 
             <div class="main-content">
