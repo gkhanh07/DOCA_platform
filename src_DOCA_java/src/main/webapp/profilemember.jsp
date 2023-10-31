@@ -73,6 +73,18 @@
                                     <h5 class="my-3">${OwnerProfile.userName}</h5>
 
                                 </div>
+                                <div>
+                                    <c:if test="${averageRate > 0.0}">
+                                        <div class="row ml-1 ">
+                                            <p class="mr-2">điểm trung bình:  ${averageRate}/5</p>
+                                            <a href="getListFeedbackServlet?seller_id=${OwnerProfile.user_ID}" >(${feedbackCount} đánh giá)</a>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="${averageRate == 0.0}">
+                                        <p>không có đánh giá</p>
+                                    </c:if>
+
+                                </div>
                             </div>
                             <div class="card mb-4 mb-lg-0">
                                 <div class="card-body p-0">
@@ -111,10 +123,11 @@
                                                             <h5 class="card-title">${product.title}</h5>
                                                             <h3 class="card-text">
                                                                 <fmt:formatNumber value="${product.price}" type="currency" currencyCode="VND" /></h3>
-                                                            <h6 class="card-text">${product.address}</h6>
-                                                            <h6 class="card-text">
-                                                                <fmt:formatDate pattern = "yyyy-MM-dd" 
-                                                                                value = "${product.timePosted}" />
+                                                            <p class="card-text"><small>${product.address}</small></p>
+                                                            <h6 class="card-text"><small>
+                                                                    <fmt:formatDate pattern = "yyyy-MM-dd" 
+                                                                                    value = "${product.timePosted}" />
+                                                                </small>
                                                             </h6>
                                                         </a>   
                                                     </div>
@@ -125,7 +138,7 @@
                                 </div>
 
                                 <div id="post" class="tab-pane fade">
-                                    <div class="card-group justify-content-center">
+                                    <div class="card-group container justify-content-center post">
                                         <div class="row">
                                             <c:forEach items="${postList}" var="post">
                                                 <div class="card col-sm-5">
@@ -134,8 +147,8 @@
                                                             <h5>
                                                                 <fmt:formatDate pattern = "yyyy-MM-dd" 
                                                                                 value = "${post.timePosted}" /></h5>
-                                                            <h5 class="card-title">${post.postContent}</h5>
-                                                            <img src="${post.postImage}" alt="alt"/> 
+                                                            <h5 class="card-title text-truncate">${post.postContent}</h5>
+                                                            <img class="card-img"  src="${post.postImage}" alt="alt"/> 
                                                         </a>   
                                                     </div>
                                                 </div>

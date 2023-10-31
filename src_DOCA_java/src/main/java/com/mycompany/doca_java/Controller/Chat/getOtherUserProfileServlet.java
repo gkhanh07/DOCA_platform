@@ -4,8 +4,8 @@
  */
 package com.mycompany.doca_java.Controller.Chat;
 
-import com.mycompany.doca_java.DAO.MessageDAO;
-import com.mycompany.doca_java.DTO.MessageDTO;
+import com.google.gson.Gson;
+import com.mycompany.doca_java.DAO.userDAO;
 import com.mycompany.doca_java.DTO.userDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,22 +14,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.io.BufferedReader;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import javax.naming.NamingException;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 /**
  *
- * @author ADMIN
+ * @author Admin
  */
-@WebServlet(name = "createMessage", urlPatterns = {"/createMessage"})
-public class createMessage extends HttpServlet {
+@WebServlet(name = "getOtherUserProfileServlet", urlPatterns = {"/getOtherUserProfileServlet"})
+public class getOtherUserProfileServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,30 +34,23 @@ public class createMessage extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException{
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
-        userDTO account = (userDTO) session.getAttribute("USER_NAME");
-        
-        try  {
-            String message = request.getParameter("message");
-            int conversationID = Integer.parseInt(request.getParameter("conversationID"));
-            // Lấy ngày và giờ hiện tại
-            LocalDateTime currentDateTime = LocalDateTime.now();
-            // Chuyển đổi thành kiểu dữ liệu Timestamp
-            Timestamp timePosted = Timestamp.valueOf(currentDateTime);
-            MessageDTO messageDTO= new MessageDTO(conversationID,account.getUser_ID(), message, timePosted);
-             MessageDAO dao = new MessageDAO();
-            dao.createMessage(messageDTO);
-        }catch (ClassNotFoundException ex) {
+        int userID = Integer.parseInt(request.getParameter("userID"));
+        try {
+            userDAO dao = new userDAO();
+            userDTO seller = dao.getUserbyUserID(userID);
+            String json;
+            json = new Gson().toJson(seller);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(json);
+        } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         } catch (NamingException ex) {
             ex.printStackTrace();
         } catch (SQLException ex) {
             ex.printStackTrace();
-        }
-        finally{
-            
         }
     }
 
@@ -95,7 +81,6 @@ public class createMessage extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
     }
 
     /**

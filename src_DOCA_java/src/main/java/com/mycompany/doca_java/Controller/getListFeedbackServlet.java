@@ -2,11 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package com.mycompany.doca_java.Controller.Chat;
+package com.mycompany.doca_java.Controller;
 
-import com.mycompany.doca_java.DAO.MessageDAO;
-import com.mycompany.doca_java.DTO.MessageDTO;
+import com.mycompany.doca_java.DAO.FeedbackDAO;
+import com.mycompany.doca_java.DAO.userDAO;
+import com.mycompany.doca_java.DTO.FeedbackDTO;
+import com.mycompany.doca_java.DTO.FeedbackWithBuyer;
 import com.mycompany.doca_java.DTO.userDTO;
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,22 +17,19 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.io.BufferedReader;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import javax.naming.NamingException;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 /**
  *
- * @author ADMIN
+ * @author Admin
  */
-@WebServlet(name = "createMessage", urlPatterns = {"/createMessage"})
-public class createMessage extends HttpServlet {
+@WebServlet(name = "getListFeedbackServlet", urlPatterns = {"/getListFeedbackServlet"})
+public class getListFeedbackServlet extends HttpServlet {
+    
+    private final String VIEW_FEEDBACK_PAGE = "viewFeedback.jsp";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,30 +41,36 @@ public class createMessage extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException{
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
-        userDTO account = (userDTO) session.getAttribute("USER_NAME");
-        
-        try  {
-            String message = request.getParameter("message");
-            int conversationID = Integer.parseInt(request.getParameter("conversationID"));
-            // Lấy ngày và giờ hiện tại
-            LocalDateTime currentDateTime = LocalDateTime.now();
-            // Chuyển đổi thành kiểu dữ liệu Timestamp
-            Timestamp timePosted = Timestamp.valueOf(currentDateTime);
-            MessageDTO messageDTO= new MessageDTO(conversationID,account.getUser_ID(), message, timePosted);
-             MessageDAO dao = new MessageDAO();
-            dao.createMessage(messageDTO);
-        }catch (ClassNotFoundException ex) {
+        int seller_id = Integer.parseInt(request.getParameter("seller_id"));
+        String url = "";
+        try {
+            FeedbackDAO dao = new FeedbackDAO();
+            List<FeedbackDTO> ListOfFeedback = dao.getListFeedbackBySellerId(seller_id);
+            userDAO uDao= new userDAO();
+            List<FeedbackWithBuyer> feedbackWithBuyerList = new ArrayList<>();
+            for (FeedbackDTO feedbackDTO : ListOfFeedback) {
+                userDTO buyer= uDao.getUserbyUserID(feedbackDTO.getBuyer_id());
+                FeedbackWithBuyer feedbackWithUser= new FeedbackWithBuyer(feedbackDTO, buyer);
+                feedbackWithBuyerList.add(feedbackWithUser);
+            }
+            userDTO seller=uDao.getUserbyUserID(seller_id);
+            
+            if (feedbackWithBuyerList != null) {
+                request.setAttribute("feedbackWithBuyerList", feedbackWithBuyerList);
+                request.setAttribute("seller", seller);
+                url = VIEW_FEEDBACK_PAGE;
+            }
+        } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         } catch (NamingException ex) {
             ex.printStackTrace();
         } catch (SQLException ex) {
             ex.printStackTrace();
-        }
-        finally{
-            
+        } finally {
+             RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
     }
 
@@ -95,7 +101,6 @@ public class createMessage extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
     }
 
     /**

@@ -6,7 +6,9 @@ package com.mycompany.doca_java.Controller.Chat;
 
 import com.google.gson.Gson;
 import com.mycompany.doca_java.DAO.MessageDAO;
+import com.mycompany.doca_java.DAO.userDAO;
 import com.mycompany.doca_java.DTO.MessageDTO;
+import com.mycompany.doca_java.DTO.userDTO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -36,7 +38,7 @@ public class getMessageInConversation extends HttpServlet {
         try {
             MessageDAO dao = new MessageDAO();
             dao.getListMessageByConversationID(conversation_id);
-            List<MessageDTO> listOfMessage = dao.getListOfMessage();
+            List<MessageDTO> listOfMessage = dao.getListOfMessage(); 
             String json;
 
             if (listOfMessage != null) {

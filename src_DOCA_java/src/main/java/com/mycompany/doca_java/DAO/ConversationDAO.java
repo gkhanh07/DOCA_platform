@@ -82,6 +82,7 @@ public class ConversationDAO {
         try {
             con = DBconnect.makeConnection();
             if (con != null) {
+                //check if the conversation have exited
                 String checkExistenceSql = "SELECT COUNT(*) AS count FROM [dbo].[conversation] WHERE [product_id] = ? AND [buyer_id] = ? AND [seller_id] = ?";
 
                 stm = con.prepareStatement(checkExistenceSql);

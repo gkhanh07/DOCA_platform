@@ -4,6 +4,9 @@
  */
 package com.mycompany.doca_java.Controller;
 
+import com.mycompany.doca_java.DAO.FeedbackDAO;
+import com.mycompany.doca_java.DTO.FeedbackDTO;
+import com.mycompany.doca_java.DTO.userDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -11,6 +14,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.sql.SQLException;
+import javax.naming.NamingException;
 
 /**
  *
@@ -31,17 +37,27 @@ public class CreateFeedbackServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet CreateFeedbackServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet CreateFeedbackServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        HttpSession session = request.getSession();
+        String feedback_conttent= request.getParameter("feedback_content");
+        double rate= Double.parseDouble(request.getParameter("rate"));
+        int prduct_id=Integer.parseInt(request.getParameter("product_id"));
+        int seller_id= Integer.parseInt(request.getParameter("seller_id"));
+        userDTO account = (userDTO) session.getAttribute("USER_NAME");
+        String url="";
+        try  {
+            FeedbackDTO feedback= 
+                    new FeedbackDTO(account.getUser_ID(), seller_id, rate, prduct_id, feedback_conttent);
+            FeedbackDAO dao= new FeedbackDAO();
+            dao.createFeedback(feedback);
+            url="getListFeedbackServlet?seller_id="+seller_id;
+        }catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (NamingException ex) {
+            ex.printStackTrace();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally{
+            response.sendRedirect(url);
         }
     }
 

@@ -4,6 +4,7 @@
  */
 package com.mycompany.doca_java.Controller;
 
+import com.mycompany.doca_java.DAO.FeedbackDAO;
 import com.mycompany.doca_java.DAO.PostDAO;
 import com.mycompany.doca_java.DAO.ProductDAO;
 import com.mycompany.doca_java.DAO.userDAO;
@@ -18,8 +19,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
 import java.util.List;
-
 
 /**
  *
@@ -43,25 +44,30 @@ public class Profilemember extends HttpServlet {
         int userID = Integer.parseInt(request.getParameter("userId"));
         try {
             ProductDAO productdao = new ProductDAO();
-            List<ProductDTO> productlist =  productdao.getProductsByUserId(userID);
-                 PostDAO postdao  = new PostDAO();
-            List<PostDTO> postlist= postdao.getPostsByUserID(userID);
+            List<ProductDTO> productlist = productdao.getProductsByUserId(userID);
+            PostDAO postdao = new PostDAO();
+            List<PostDTO> postlist = postdao.getPostsByUserID(userID);
             //get user by userID
-            userDAO uDAO= new userDAO();
-            userDTO OwnerProfile= uDAO.getUserbyUserID(userID);
+            userDAO uDAO = new userDAO();
+            userDTO OwnerProfile = uDAO.getUserbyUserID(userID);
             request.setAttribute("productlist", productlist);
             request.setAttribute("postlist", postlist);
             request.setAttribute("OwnerProfile", OwnerProfile);
-            
-            
+            FeedbackDAO fDao = new FeedbackDAO();
+            double averageRate = fDao.getAverageRateBySellerId(userID);
+            DecimalFormat decimalFormat = new DecimalFormat("#.##");
+            String formattedAverageRate = decimalFormat.format(averageRate);
+            int feedbackCount = fDao.getFeedbackCountBySellerId(userID);
+            request.setAttribute("averageRate", formattedAverageRate);
+            request.setAttribute("feedbackCount", feedbackCount);
+
             RequestDispatcher dispatcher = request.getRequestDispatcher("profilemember.jsp");
             dispatcher.forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
             // Handle exceptions appropriately, e.g., display an error page
         }
-        }
-    
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -75,9 +81,8 @@ public class Profilemember extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       processRequest(request, response);
-        }
-    
+        processRequest(request, response);
+    }
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -91,8 +96,7 @@ public class Profilemember extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
-       
+
     }
 
     /**
