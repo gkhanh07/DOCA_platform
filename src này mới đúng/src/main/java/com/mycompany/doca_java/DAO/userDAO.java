@@ -337,56 +337,83 @@ public class userDAO {
         return user;
     }
 
-    public boolean updateAccount(int user_ID, String userName, String password, String gender, String email, String mobileNum, String avatar)
+   public boolean updateAccount(int user_ID, String userName, String gender, String email, String mobileNum, String avatar)
             throws SQLException, NamingException, ClassNotFoundException {
-        Connection con = null;
-        PreparedStatement stm = null;
-        try {
-            // 1. Make the database connection
-            con = DBconnect.makeConnection();
+    Connection con = null;
+    PreparedStatement stm = null;
+    try {
+        // 1. Make the database connection
+        con = DBconnect.makeConnection();
 
-            if (con != null) {
+        if (con != null) {
 
-               
+            String sql = "UPDATE dbo.users SET "
+                    + "username = ?, "
+                    + "Gender = ?, "
+                    + "email = ?, "
+                    + "mobile_num = ?, "
+                    + "avatar = ? "
+                    + "WHERE user_id = ?";
 
-                
-                // 2. Create the SQL update statement
-                String sql = "UPDATE dbo.users SET "
-                        + "username = ?, "
-                        + "password = ?, "
-                        + "Gender = ?, "
-                        + "email = ?, "
-                        + "mobile_num = ?, "
-                        + "avatar = ? "
-                        + "WHERE user_id = ?";
+            stm = con.prepareStatement(sql);
+            stm.setString(1, userName);
+            stm.setString(2, gender);
+            stm.setString(3, email);
+            stm.setString(4, mobileNum);
+            stm.setString(5, avatar);
+            stm.setInt(6, user_ID);
 
-                // 3. Create the PreparedStatement
-                stm = con.prepareStatement(sql);
-                stm.setString(1, userName);
-                stm.setString(2, password);
-                stm.setString(3, gender);
-                stm.setString(4, email);
-                stm.setString(5, mobileNum);
-                stm.setString(6, avatar);
-                stm.setInt(7, user_ID);
+            int rowsUpdated = stm.executeUpdate();
 
-                // 4. Execute the update
-                int rowsUpdated = stm.executeUpdate();
-
-                if (rowsUpdated > 0) {
-                    return true;
-                }
-
+            if (rowsUpdated > 0) {
+                return true;
             }
-        } finally {
-            if (stm != null) {
-                stm.close();
-            }
-            if (con != null) {
-                con.close();
-            }
+
         }
-        return false;
+    } finally {
+        if (stm != null) {
+            stm.close();
+        }
+        if (con != null) {
+            con.close();
+        }
     }
+    return false;
+}
+   public boolean updatePassword(int user_ID, String password)
+            throws SQLException, NamingException, ClassNotFoundException {
+    Connection con = null;
+    PreparedStatement stm = null;
+    try {
+        // 1. Make the database connection
+        con = DBconnect.makeConnection();
+
+        if (con != null) {
+
+            String sql = "UPDATE dbo.users SET "
+                    + "password = ? "
+                    + "WHERE user_id = ?";
+
+            stm = con.prepareStatement(sql);
+            stm.setString(1, password);
+            stm.setInt(2, user_ID);
+
+            int rowsUpdated = stm.executeUpdate();
+
+            if (rowsUpdated > 0) {
+                return true;
+            }
+
+        }
+    } finally {
+        if (stm != null) {
+            stm.close();
+        }
+        if (con != null) {
+            con.close();
+        }
+    }
+    return false;
+}
 
 }
