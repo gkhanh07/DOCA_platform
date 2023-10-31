@@ -28,8 +28,8 @@ public class DispatchServlet extends HttpServlet {
     private final String CREATE_COMMENT = "createCommentServlet";
     private final String SEARCH_IN_MARKET = "searchInMarketServlet";
     private final String SEARCH_IN_FORUM = "SearchInForumServlet";
-    private final String Update_Servlet= "UpdateAccountServlet";
-
+    private final String Update_Servlet = "UpdateAccountServlet";
+    private final String Update_Password = "UpdatePassword";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -98,7 +98,7 @@ public class DispatchServlet extends HttpServlet {
                 url = SEARCH_IN_MARKET;
             }
             if (button.equals("searchForum")) {
-                 request.removeAttribute("listOfPost");
+                request.removeAttribute("listOfPost");
                 request.removeAttribute("indexcategoryID");
                 request.removeAttribute("listInPage");
                 request.removeAttribute("numberPage");
@@ -107,11 +107,13 @@ public class DispatchServlet extends HttpServlet {
                 session.removeAttribute("LastSearch");
                 url = SEARCH_IN_FORUM;
             }
-            if(button.equals("Update")){
+            if (button.equals("Thay ??i thông tin")) {
                 url = Update_Servlet;
             }
-            
-            
+            if (button.equals("Thay ??i m?t kh?u")) {
+                url = Update_Password;
+            }
+
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
