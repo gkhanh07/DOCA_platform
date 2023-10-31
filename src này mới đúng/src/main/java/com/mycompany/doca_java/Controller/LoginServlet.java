@@ -28,7 +28,7 @@ import jakarta.servlet.http.HttpSession;
  */
 @WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
 public class LoginServlet extends HttpServlet {
-
+    private final String log_in = "login.jsp";
     private final String Market_Controller = "marketServlet";
 
     /**
@@ -46,6 +46,7 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String url = "";
+        boolean loginfail = false;
         try {
             userDAO dao = new userDAO();
             userDTO result = dao.checkLogin(username, password);
@@ -56,6 +57,10 @@ public class LoginServlet extends HttpServlet {
 //                Cookie cookies = new Cookie(username, password);
 //                cookies.setMaxAge(60*10);
 //                response.addCookie(cookies);
+            }else{
+                loginfail = true;
+                url= log_in;
+                request.setAttribute("fail_login", loginfail);
             }
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
@@ -108,3 +113,4 @@ public class LoginServlet extends HttpServlet {
     }// </editor-fold>
 
 }
+

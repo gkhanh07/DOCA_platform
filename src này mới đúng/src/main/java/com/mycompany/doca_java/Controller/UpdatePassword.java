@@ -6,7 +6,6 @@ package com.mycompany.doca_java.Controller;
 
 import com.mycompany.doca_java.DAO.userDAO;
 import com.mycompany.doca_java.DTO.userDTO;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -15,7 +14,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import static java.lang.System.out;
 import java.sql.SQLException;
 import javax.naming.NamingException;
 
@@ -23,8 +21,8 @@ import javax.naming.NamingException;
  *
  * @author Admin
  */
-@WebServlet(name = "UpdateAccountServlet", urlPatterns = {"/UpdateAccountServlet"})
-public class UpdateAccountServlet extends HttpServlet {
+@WebServlet(name = "UpdatePassword", urlPatterns = {"/UpdatePassword"})
+public class UpdatePassword extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,44 +36,44 @@ public class UpdateAccountServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-         String url = "accountmanage.jsp";
-    boolean isUsernameTaken = false;
-    try {
-        HttpSession session = request.getSession();
-        userDTO account = (userDTO) session.getAttribute("USER_NAME");
-        String userName = request.getParameter("txtUsername");
-        String gender = request.getParameter("gender");
-        String email = request.getParameter("txtEmail");
-        String mobileNum = request.getParameter("txtPhone");
-        String avatar = request.getParameter("avatar");
-        userDAO userDao = new userDAO();
-        isUsernameTaken = !userDao.isUsernameAvailable(userName);
-        if (!isUsernameTaken) {
-            account.setUserName(userName);
-            boolean updateSuccessful = userDao.updateAccount(account.getUser_ID(), userName, gender, email, mobileNum, avatar);
+        String url = "accountmanage.jsp";
+        try {
+            HttpSession session = request.getSession();
+            userDTO account = (userDTO) session.getAttribute("USER_NAME");
+            String curPassword = request.getParameter("txtCurPass");
+            String password = request.getParameter("txtPassword");
+            String confirmPassword = request.getParameter("txtConfirm");
+            userDAO userDao = new userDAO();
 
-            if (updateSuccessful) {
-                session.setAttribute("USER_NAME", account);
-                // Redirect to a success page or display a success message
-                request.getRequestDispatcher(url).forward(request, response);
+            if (account.getPassword().equals(curPassword)) {
+                if (password.equals(confirmPassword)) {
+                    // Cập nhật mật khẩu
+                    boolean updateSuccessful = userDao.updatePassword(account.getUser_ID(), password);
 
+                    if (updateSuccessful) {
+                        // Hiển thị thông báo thành công bằng JavaScript
+                        String script = "alert('Cập nhật mật khẩu thành công');";
+                        request.setAttribute("javascript", script);
+                    } else {
+                        // Handle the case where the update was not successful
+                        response.sendRedirect("error.jsp");
+                        return;
+                    }
+                } else {
+                    request.setAttribute("isPasswordMismatch", true);
+                }
             } else {
-                // Handle the case where the update was not successful
-                response.sendRedirect("error.jsp");
+                request.setAttribute("isCurPasswordIncorrect", true);
             }
-        } else {
-            request.setAttribute("isUsernameTaken", isUsernameTaken);
+
             request.getRequestDispatcher(url).forward(request, response);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NamingException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
-
-    } catch (SQLException e) {
-        e.printStackTrace();
-    } catch (NamingException e) {
-        e.printStackTrace();
-    } catch (ClassNotFoundException e) {
-        e.printStackTrace();
-    }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -118,4 +116,3 @@ public class UpdateAccountServlet extends HttpServlet {
     }// </editor-fold>
 
 }
-

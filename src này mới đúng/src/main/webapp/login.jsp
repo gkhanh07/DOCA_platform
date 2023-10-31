@@ -65,9 +65,11 @@
                                         <input type="checkbox" checked="checked" />
                                         <div class="control__indicator"></div>
                                     </label>-->
-                                    <span class="ml-auto"><a href="#" class="forgot-pass">Forgot Password</a></span>
+                                   <c:if test="${requestScope.fail_login eq true}">
+                                       <h6 style="color: red">Sai toàn khoản hoặc tài khoản</h6>
+                                </c:if> <span class="ml-auto"><a href="#" class="forgot-pass">Forgot Password</a></span>
                                 </div>
-
+                                
                                 <input type="submit" value="Log In" name="btAction" class="btn btn-block btn-primary">
                                 <p class="footer">Chưa có tài khoản ? đăng kí<a href="signup.jsp"> tại đây </a></p>
                             </form>

@@ -15,6 +15,7 @@ Author : Admin
         <meta http-equiv="x-ua-compatible" content="ie=edge"> <!-- Bootstrap CSS --> <!-- Bootstrap CSS --> <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
         <title>Account</title>
+
         <!-- Link Iconn  -->
         <link rel="stylesheet" href="fontawesome-free-6.4.2-web/css/fontawesome.css"> 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -56,6 +57,7 @@ Author : Admin
 
         <c:set var="Owner" value="${sessionScope.USER_NAME}"/>
         <jsp:include page="header.jsp" />
+       
         <div class="main-content">
             <div class="row row-content justify-content-center">
                 <div class="col-sm-8">
@@ -68,119 +70,151 @@ Author : Admin
 
 
                             <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <button id="showAccountInfoButton" onclick="showAccountInfo()">Thông tin tài khoản</button>
+                                        <button id="showChangePasswordButton" onclick="showChangePassword()">Thay đổi mật khẩu</button>
+                                    </div>
+                                </div>
                                 <!-- Account details card-->
-                                <form action="DispatchServlet" method="post"  onsubmit="return validateForm()">
-                                    <div class="card mb-4 mb-xl-0">
-                                        <div class="card-header">Ảnh đại diện</div>
-                                        <div class="card-body text-center">
-                                            <!-- Profile picture image-->
-                                            <img class="img-account-profile rounded-circle" src="${Owner.avatar}"
-                                                 alt="">
-                                            <h6>${Owner.userName}</h6>
-                                            <hr />
-                                            <!-- Profile picture upload button-->
-                                            <div class="input-group">
-                                                <label class="input-group-text" for="inputGroupFile01">Tải lên</label>
-                                                <input type="file" class="form-control" id="inputGroupFile01" name="avatar" >
+                                <div id="accountInfo" >
+                                    <form action="DispatchServlet" method="post"  onsubmit="return validateForm()">
+
+                                        <div class="card mb-4">
+                                            <div class="card-header">Thông tin tài khoản</div>
+                                            <div class="card mb-4 mb-xl-0">
+                                                <div style="margin: 20px 0 0 20px">Ảnh đại diện</div>
+                                                <div class="card-body text-center">
+                                                    <!-- Profile picture image-->
+                                                    <img class="img-account-profile rounded-circle" src="${Owner.avatar}"
+                                                         alt="">
+                                                    <h6>${Owner.userName}</h6>
+                                                    <hr />
+                                                    <!-- Profile picture upload button-->
+                                                    <div class="input-group">
+                                                        <label class="input-group-text" for="inputGroupFile01">Tải lên</label>
+                                                        <input type="file" class="form-control" id="inputGroupFile01" name="avatar" >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+
+
+
+                                                <!-- Form Group (username)-->
+                                                <div class="mb-3">
+                                                    <label class="small mb-1" for="inputUsername" >Usename<span
+                                                            class="red-star">*</span></label>
+                                                    <input class="form-control" id="inputUsername" type="text"
+                                                           placeholder="Username" value="" name="txtUsername" >
+                                                    <c:if test="${not empty requestScope.isUsernameTaken}">
+                                                        <div class="text-danger">Tên người dùng đã tồn tại. Vui lòng chọn một tên khác.</div>
+                                                    </c:if>
+
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label class="small mb-1" for="inputUsername" >Email<span
+                                                            class="red-star">*</span></label>
+                                                    <input class="form-control" id="inputEmail" type="email"
+                                                           placeholder="" value="" name="txtEmail">
+                                                </div>
+                                                <!-- Form Group (Phone)-->
+                                                <div class="mb-3">
+                                                    <label class="small mb-1" for="inputPhone">Số điện thoại <span
+                                                            class="red-star">*</span></label>
+                                                    <input class="form-control" id="inputPhone" type="tel"
+                                                           placeholder="Enter your phone number" value="" name="txtPhone">
+                                                </div>
+
+                                                <!-- Form Address -->
+
+                                                <div class="mb-3">
+                                                    <label class="small mb-1">Giới tính</label><br>
+                                                    <input type="radio" id="male" name="gender" value="male">
+                                                    <label for="male">Nam</label>
+                                                    <input type="radio" id="female" name="gender" value="female">
+                                                    <label for="female">Nữ</label>
+                                                    <input type="radio" id="other" name="gender" value="other">
+                                                    <label for="other">Khác</label>
+                                                </div>
+
+                                                <!-- Form Row-->
+                                                <div class="row gx-3 mb-3">
+
+                                                </div>
+
+                                                <!-- Save changes button-->
+                                                <input type="submit" value="Thay đổi thông tin" name="btAction" class="btn btn-block btn-primary">
+
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="card mb-4">
-                                        <div class="card-header">Thông tin tài khoản</div>
-                                        <div class="card-body">
+                                    </form>
+                                </div>
+                                <div id="changePassword" style="display: none;">
+                                    <form action="DispatchServlet">
+
+                                        <div class="card mb-4">
+                                            <div class="card-header">Thông tin tài khoản</div>
+                                            <div class="card-body">
 
 
-                                        
-                                            <!-- Form Group (username)-->
-                                            <div class="mb-3">
-                                                <label class="small mb-1" for="inputUsername" >Usename<span
-                                                        class="red-star">*</span></label>
-                                                <input class="form-control" id="inputUsername" type="text"
-                                                       placeholder="Username" value="" name="txtUsername" >
-                                                <c:if test="${not empty requestScope.isUsernameTaken}">
-                                                    <div class="text-danger">Tên người dùng đã tồn tại. Vui lòng chọn một tên khác.</div>
-                                                </c:if>
 
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="small mb-1" for="inputUsername" >Email<span
-                                                        class="red-star">*</span></label>
-                                                <input class="form-control" id="inputEmail" type="email"
-                                                       placeholder="" value="" name="txtEmail">
-                                            </div>
-                                            <!-- Form Group (Phone)-->
-                                            <div class="mb-3">
-                                                <label class="small mb-1" for="inputPhone">Số điện thoại <span
-                                                        class="red-star">*</span></label>
-                                                <input class="form-control" id="inputPhone" type="tel"
-                                                       placeholder="Enter your phone number" value="" name="txtPhone">
-                                            </div>
 
-                                            <!-- Form Address -->
 
-                                            <div class="mb-3">
-                                                <label class="small mb-1">Giới tính</label><br>
-                                                <input type="radio" id="male" name="gender" value="male">
-                                                <label for="male">Nam</label>
-                                                <input type="radio" id="female" name="gender" value="female">
-                                                <label for="female">Nữ</label>
-                                                <input type="radio" id="other" name="gender" value="other">
-                                                <label for="other">Khác</label>
-                                            </div>
+                                                <!-- Form Row-->
 
-                                            <!-- Form Row-->
-                                            <div class="row gx-3 mb-3">
-
-                                            </div>
-                                            <div class="form-change-password">
-                                                <div class="row">
-                                                    <div class="col-12 col-sm-6 mb-3">
-                                                        <div class="mb-2"><b>Thay đổi mật khẩu</b></div>
-                                                        <div class="row">
-                                                            <div class="col">
-                                                                <div class="form-group">
-                                                                    <label class="small mb-1" for="inputCurPassword">Mật khẩu hiện tại <span
-                                                                            class="red-star">*</span></label>
-                                                                    <input class="form-control" id="inputCurPassword" type="password" name="txtCurPass"
-                                                                           placeholder="•••••">
-                                                                    <c:if test="${requestScope.isCurPasswordIncorrect}">
-                                                                        <div class="text-danger">Mật khẩu hiện tại không đúng. Vui lòng kiểm tra lại.</div>
-                                                                    </c:if>
+                                                <div class="form-change-password">
+                                                    <div class="row">
+                                                        <div class="col-12 col-sm-6 mb-3">
+                                                            <div class="mb-2"><b>Thay đổi mật khẩu</b></div>
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <div class="form-group">
+                                                                        <label class="small mb-1" for="inputCurPassword">Mật khẩu hiện tại <span
+                                                                                class="red-star">*</span></label>
+                                                                        <input class="form-control" id="inputCurPassword" type="password" name="txtCurPass"
+                                                                               placeholder="•••••">
+                                                                        <c:if test="${requestScope.isCurPasswordIncorrect}">
+                                                                            <div class="text-danger">Mật khẩu hiện tại không đúng. Vui lòng kiểm tra lại.</div>
+                                                                        </c:if>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col">
-                                                                <div class = "form-group">
-                                                                    <label class="small mb-1" for="inputPassword">Mật khẩu mới <span
-                                                                            class="red-star">*</span></label>
-                                                                    <input class="form-control" id="inputPassword" type="password" name="txtPassword"
-                                                                           placeholder="•••••">
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <div class = "form-group">
+                                                                        <label class="small mb-1" for="inputPassword">Mật khẩu mới <span
+                                                                                class="red-star">*</span></label>
+                                                                        <input class="form-control" id="inputPassword" type="password" name="txtPassword"
+                                                                               placeholder="•••••">
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col">
-                                                                <div class="form-group">
-                                                                    <label class="small mb-1" for="inputConfirm">Xác nhận mật khẩu <span
-                                                                            class="red-star">*</span></label>
-                                                                    <input class="form-control" id="inputConfirm" type="password"
-                                                                           placeholder="•••••" name="txtConfirm">
-                                                                    <c:if test="${requestScope.isPasswordMismatch}">
-                                                                        <div class="text-danger">Xác nhận mật khẩu không khớp. Vui lòng kiểm tra lại.</div>
-                                                                    </c:if>
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <div class="form-group">
+                                                                        <label class="small mb-1" for="inputConfirm">Xác nhận mật khẩu <span
+                                                                                class="red-star">*</span></label>
+                                                                        <input class="form-control" id="inputConfirm" type="password"
+                                                                               placeholder="•••••" name="txtConfirm">
+                                                                        <c:if test="${requestScope.isPasswordMismatch}">
+                                                                            <div class="text-danger">Xác nhận mật khẩu không khớp. Vui lòng kiểm tra lại.</div>
+                                                                        </c:if>
+
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <!-- Save changes button-->
-                                            <input type="submit" value="Update" name="btAction" class="btn btn-block btn-primary">
+                                                <!-- Save changes button-->
+                                                <input type="submit" value="Thay đổi mật khẩu" name="btAction" class="btn btn-block btn-primary">
 
+                                            </div>
                                         </div>
-                                    </div>
-                                </form>
+
+                                    </form>
+                                </div>    
                                 <script>
                                     function validateForm() {
                                         var username = document.getElementById("inputUsername").value;
@@ -233,5 +267,66 @@ Author : Admin
         </div>
     </body>
 
+    <script>
+        function showAccountInfo() {
+            var accountInfo = document.getElementById("accountInfo");
+            var changePassword = document.getElementById("changePassword");
 
+            if (accountInfo.style.display === "none") {
+                accountInfo.style.display = "block";
+                changePassword.style.display = "none";
+            }
+        }
+
+        function showChangePassword() {
+            var accountInfo = document.getElementById("accountInfo");
+            var changePassword = document.getElementById("changePassword");
+
+            if (changePassword.style.display === "none") {
+                accountInfo.style.display = "none";
+                changePassword.style.display = "block";
+            }
+        }
+
+        // Gọi một trong hai hàm ở đây để hiển thị một trong hai nội dung mặc định khi trang tải
+        //showAccountInfo();
+        //showChangePassword();
+
+        function showSuccessMessage() {
+            alert("Cập nhật thành công");
+            
+        }
+
+        function validateForm() {
+            var username = document.getElementById("inputUsername").value;
+            var email = document.getElementById("inputEmail").value;
+            var phone = document.getElementById("inputPhone").value;
+            var genderMale = document.getElementsByName("gender")[0].checked;
+            var genderFemale = document.getElementsByName("gender")[1].checked;
+            var genderOther = document.getElementsByName("gender")[2].checked;
+
+            if (username === "" || email === "" || phone === "" || (!genderMale && !genderFemale && !genderOther)) {
+                alert("Vui lòng điền đầy đủ thông tin vào các trường bắt buộc");
+                return false; // Ngăn việc gửi form nếu có trường bị để trống hoặc không có giới tính được chọn
+            }
+
+            if (!/^\d+$/.test(phone)) {
+                alert("Số điện thoại chỉ được chứa các chữ số.");
+                return false; // Ngăn việc gửi form nếu số điện thoại không hợp lệ
+            }
+
+            // Thực hiện cập nhật dữ liệu ở đây
+            // Sau khi cập nhật thành công, gọi hàm showSuccessMessage() để hiển thị thông báo
+            showSuccessMessage();
+
+            return true; // Cho phép gửi form nếu các trường đều đã được điền và giới tính đã được chọn và số điện thoại hợp lệ
+        }
+       
+    </script>
+    <% String javascript = (String) request.getAttribute("javascript");
+    if (javascript != null) { %>
+        <script>
+            <%= javascript %>
+        </script>
+    <% } %>
 </html>
