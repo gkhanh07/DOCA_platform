@@ -51,11 +51,6 @@ CREATE TABLE [like] (
 )
 GO
 
-CREATE TABLE [savePost] (
-  [post_id] integer NOT NULL,
-  [user_id] integer NOT NULL
-)
-GO
 
 CREATE TABLE [product] (
   [product_id] integer IDENTITY(1,1) PRIMARY KEY,
@@ -97,8 +92,7 @@ GO
 
 CREATE TABLE [messages] (
   [conversation_id] integer NOT NULL,
-  [buyer_id] integer NOT NULL,
-  [seller_id] integer NOT NULL,
+  [user_id] integer NOT NULL,
   [messages_content] nvarchar(Max) NOT NULL,
   [messages_time] datetime NOT NULL
 )
@@ -122,11 +116,6 @@ GO
 ALTER TABLE [like] ADD FOREIGN KEY ([post_id]) REFERENCES [post] ([post_id])
 GO
 
-ALTER TABLE [savePost] ADD FOREIGN KEY ([user_id]) REFERENCES [users] ([user_id])
-GO
-
-ALTER TABLE [savePost] ADD FOREIGN KEY ([post_id]) REFERENCES [post] ([post_id])
-GO
 
 ALTER TABLE [categoryLinkpost] ADD FOREIGN KEY ([post_id]) REFERENCES [post] ([post_id])
 GO
@@ -153,4 +142,6 @@ ALTER TABLE [conversation] ADD FOREIGN KEY ([buyer_id]) REFERENCES [users] ([use
 GO
 
 ALTER TABLE [messages] ADD FOREIGN KEY ([conversation_id]) REFERENCES [conversation] ([conversation_id])
+GO
+ALTER TABLE [messages] ADD FOREIGN KEY ([user_id]) REFERENCES [users] ([user_id])
 GO
