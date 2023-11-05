@@ -37,23 +37,6 @@
             <!--Grid column-->
             <hr>
             <!--Grid column-->
-            <div class="col-lg-12 col-md-6 mb-4 mb-md-0">
-                <h6 class="mb-0">Follow us</h6>
-                <section class="mb-4">
-                    <!-- Facebook -->
-                    <a class="btn text-white btn-floating m-1" style="background-color: #3b5998;" href="#!"
-                       role="button"><i class="fab fa-facebook-f"></i></a>
-                    <!-- Google -->
-                    <a class="btn text-white btn-floating m-1" style="background-color: #dd4b39;" href="#!"
-                       role="button"><i class="fab fa-google"></i></a>
-
-                    <!-- Instagram -->
-                    <a class="btn text-white btn-floating m-1" style="background-color: #d1297d;" href="#!"
-                       role="button"><i class="fab fa-instagram"></i></a>
-
-                </section>
-                <!-- Section: Social media -->
-            </div>
             <!--Grid column-->
         </div>
         <!--Grid row-->

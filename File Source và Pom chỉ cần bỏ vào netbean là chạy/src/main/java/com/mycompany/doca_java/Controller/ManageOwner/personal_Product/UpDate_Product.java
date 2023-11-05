@@ -4,10 +4,12 @@
  */
 package com.mycompany.doca_java.Controller.ManageOwner.personal_Product;
 
+import com.mycompany.doca_java.Constant.Folder_Up;
 import static com.mycompany.doca_java.Controller.ManageOwner.personal_Product.PostPorductV2.postSucc;
 import com.mycompany.doca_java.DAO.ProductDAO;
 import com.mycompany.doca_java.DTO.ProductDTO;
 import com.mycompany.doca_java.DTO.userDTO;
+import com.mycompany.doca_java.ProcessDetails.ProcessImg;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,6 +22,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.File;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -46,7 +49,7 @@ public class UpDate_Product extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
         userDTO account = (userDTO) session.getAttribute("USER_NAME");
-        String IN=request.getParameter("IN");
+        String IN = request.getParameter("IN");
         String url = "";
         try {
             int Productid = Integer.parseInt(request.getParameter("Productid"));
@@ -58,7 +61,7 @@ public class UpDate_Product extends HttpServlet {
             String inputFee = "0";
             if (price != null && price.equals("fee")) {
                 inputFee = request.getParameter("input-fee");
-                inputFee=inputFee.replaceAll("[^\\d]", "");
+                inputFee = inputFee.replaceAll("[^\\d]", "");
                 isFree = false;
                 // Xử lý giá trị của ô input khi radio button "Tính phí" được chọn
             } else {
@@ -77,39 +80,29 @@ public class UpDate_Product extends HttpServlet {
 // Lấy ngày và giờ hiện tại
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
             String timestamp = dateFormat.format(new Date());
-// Lấy phần tên file gốc
-            String uploadDir = "C:\\Users\\Admin\\Desktop\\FOR STUDY\\SWP\\Doca_java\\src\\main\\webapp\\imgIn_DOCA";
-            String fileName = null;
+            String imageUrl = "";
+            // Get the uploaded image file from the request
             Part filePart = request.getPart("file");
-
             if (filePart != null && filePart.getSize() > 0) {
-                // Có file mới được chọn, tiến hành lưu file mới
-                String originalFileName = filePart.getSubmittedFileName();
+                InputStream fileInputStream = filePart.getInputStream();
 
-                int dotIndex = originalFileName.lastIndexOf(".");
-                if (dotIndex != -1) {
-                    String extension = originalFileName.substring(dotIndex);
-                    fileName = timestamp + extension;
-                } else {
-                    fileName = timestamp;
-                }
-                String filePath = uploadDir + File.separator + fileName;
-                filePart.write(filePath);
-                fileName = "imgIn_DOCA/" + fileName;
+                // Upload the image to Cloudinary
+                // Process the image using the ImageProcessor class
+                ProcessImg imageProcessor = new ProcessImg();
+                imageUrl = imageProcessor.uploadImageToFolder(fileInputStream, Folder_Up.FORUM_UP);
             } else {
-                // Không có file mới được chọn, sử dụng đường dẫn của ảnh cũ
-                fileName = request.getParameter("OldImg");
+                imageUrl = request.getParameter("OldImg");
             }
 
             ProductDAO dao = new ProductDAO();
             ProductDTO product
-                    = new ProductDTO(Productid, account.getUser_ID(), Integer.parseInt(categoryPost), title, content, fileName,
+                    = new ProductDTO(Productid, account.getUser_ID(), Integer.parseInt(categoryPost), title, content, imageUrl,
                             isFree, Float.parseFloat(inputFee), address, timePosted, true, "pending", null);
             boolean result = false;
             result = dao.updateProduct(product);
             if (result == true) {
                 request.setAttribute("product", product);
-                session.setAttribute( "IN", IN);
+                session.setAttribute("IN", IN);
                 url = PERSONAL_PRODUCT_PAGE;
             }
 
@@ -120,7 +113,7 @@ public class UpDate_Product extends HttpServlet {
         } catch (NamingException ex) {
             Logger.getLogger(PostPorductV2.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-           RequestDispatcher rd = request.getRequestDispatcher(url);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }
 

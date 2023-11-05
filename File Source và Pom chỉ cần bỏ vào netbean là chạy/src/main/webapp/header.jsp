@@ -103,7 +103,7 @@
 
 
         </nav>
-        <div class="setting position-absolute shadow-lg bg-body rounded " id="settingForm" style="display: none; right: 3%;">
+        <div class="setting position-absolute shadow-lg bg-body rounded " id="settingForm" style="display: none; right: 3%; z-index: 3;">
             <div class="card">
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
@@ -111,7 +111,7 @@
                         <li class="list-group-item"><a href="getPersonalPost" style="color: black;">quản lý tin </a></li>
                         <li class="list-group-item"><a href="getPersonalProduct" style="color: black;">quản lý sản phẩm</a>
                         </li>
-                        <li class="list-group-item"><a href="ListProductSaved" style="color: black;">tin đã lưu</a></li>
+                        <li class="list-group-item"><a href="ListProductSaved" style="color: black;">sản phẩm đã lưu</a></li>
                         <li class="list-group-item"> <a href="LogOutServlet" style="color: black;">logout</a></li>
                     </ul>
 
@@ -132,6 +132,7 @@
 
 <script>
     function toggleMenuForm() {
+        console.log("checkform")
         const commentForm = document.getElementById('settingForm');
         commentForm.style.display = commentForm.style.display === 'none' ? 'block' : 'none';
     }

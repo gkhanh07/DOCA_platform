@@ -190,6 +190,7 @@
                                                                     <label for="formFile" class="form-label"><i class="fa fa-picture-o"></i>
                                                                         Chọn ảnh: </label>
                                                                     <input class="form-control" type="file" id="formFile" name="file"  multiple>
+                                                                    <input type="hidden" name="OldImg" value="${post.postImage}" />
                                                                     <img id="previewImage" src="#" alt="Preview" style="max-width: 200px; max-height: 200px; display: none;">
                                                                 </div>
                                                             </div>
