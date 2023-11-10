@@ -89,9 +89,16 @@
                             <div class="card mb-4 mb-lg-0">
                                 <div class="card-body p-0">
                                     <ul class="list-group list-group-flush rounded-3">
-                                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center p-2">
                                             <i class="fa fa-phone"></i>
-                                            <p class="mb-0">${OwnerProfile.mobileNum}</p>
+                                            <c:choose>
+                                                <c:when test="${OwnerProfile.getMobileNum() == 'null'}">
+                                                    <p class="mb-0 ml-3">Người dùng chưa cập nhật số điện thoại</p>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <p class="mb-0">${OwnerProfile.mobileNum}</p>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </li>
                                     </ul>
                                 </div>
@@ -116,8 +123,8 @@
                                     <div class="card-group container justify-content-center product">
                                         <div class="row">
                                             <c:forEach items="${productList}" var="product">
-                                                <div class="card col-sm-5">
-                                                    <div class="card-body">
+                                                <div class="col-sm-6  mt-1" >
+                                                    <div class="card" style="height: 100%;">
                                                         <a href="productDetailServlet?productId=${product.productId}">
                                                             <img class="card-img" src="${product.productImage}" alt="alt" />
                                                             <h5 class="card-title">${product.title}</h5>
@@ -137,25 +144,40 @@
                                     </div>
                                 </div>
 
+
                                 <div id="post" class="tab-pane fade">
-                                    <div class="card-group container justify-content-center post">
+                                    <div class="card-group container justify-content-center product">
                                         <div class="row">
                                             <c:forEach items="${postList}" var="post">
-                                                <div class="card col-sm-5">
-                                                    <div class="card-body">
-                                                        <a href="postDetailServlet?postId=${post.postId}">
-                                                            <h5>
-                                                                <fmt:formatDate pattern = "yyyy-MM-dd" 
-                                                                                value = "${post.timePosted}" /></h5>
-                                                            <h5 class="card-title text-truncate">${post.postContent}</h5>
-                                                            <img class="card-img"  src="${post.postImage}" alt="alt"/> 
-                                                        </a>   
+                                                <div class="col-sm-6  mt-1" >
+                                                    <div class="card" style="height: 100%;">
+                                                        <div class="card-body">
+                                                            <a href="postDetailServlet?postId=${post.postId}">
+                                                                <h5>
+                                                                    <fmt:formatDate pattern="yyyy-MM-dd" value="${post.timePosted}" />
+                                                                </h5>
+                                                                <h5 class="card-title post-content">${post.postContent}</h5>
+                                                                <img class="card-img" src="${post.postImage}" alt="alt" />
+                                                            </a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </c:forEach>
                                         </div>
                                     </div>
                                 </div>
+
+                                <script>
+                                    var postContentElements = document.getElementsByClassName("post-content");
+                                    var maxLength = 40;
+                                    for (var i = 0; i < postContentElements.length; i++) {
+                                        var postContent = postContentElements[i].textContent;
+                                        if (postContent.length > maxLength) {
+                                            postContentElements[i].textContent = postContent.substring(0, maxLength) + "...";
+                                        }
+                                    }
+                                </script>
+
                             </div>
 
 
@@ -164,6 +186,7 @@
                 </div>
             </div>
         </div>
+
     </body>
     <style>
         .card {

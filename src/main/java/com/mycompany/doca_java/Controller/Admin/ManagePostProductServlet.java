@@ -46,7 +46,7 @@ public class ManagePostProductServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-      
+
         String url = Error;
         LocalDateTime currentDateTime = LocalDateTime.now();
         Timestamp timeNotification = Timestamp.valueOf(currentDateTime);

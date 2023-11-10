@@ -2,29 +2,26 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package com.mycompany.doca_java.Controller.commentPost;
+package com.mycompany.doca_java.Controller.Admin;
 
-import com.mycompany.doca_java.DAO.commentDAO;
-import com.mycompany.doca_java.DTO.userDTO;
-import java.io.IOException;
-import java.io.PrintWriter;
+import com.mycompany.doca_java.DAO.userDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import javax.naming.NamingException;
+
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "createCommentServlet", urlPatterns = {"/createCommentServlet"})
-public class createCommentServlet extends HttpServlet {
-
-    private final String LOGIN_PAGE = "login.jsp";
+@WebServlet(name = "UpdateUserServlet", urlPatterns = {"/UpdateUserServlet"})
+public class UpdateUserServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,43 +33,29 @@ public class createCommentServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession(true);
-        userDTO account = (userDTO) session.getAttribute("USER_NAME");
-        int postID = Integer.parseInt(request.getParameter("postID"));
-        String commetDes = request.getParameter("commentDes");
-        int category = Integer.parseInt(request.getParameter("slectedCategoryID"));
-        int indexPage = session.getAttribute("indexPageForum") != null
-                ? (int) session.getAttribute("indexPageForum") : 1;
+    throws ServletException, IOException {
+    response.setContentType("text/html;charset=UTF-8");
+    try {
+        int userId = Integer.parseInt(request.getParameter("user_id"));
+        String username = request.getParameter("txtUsername"); // Get the new username from the request
+        String password = request.getParameter("txtPassword"); // Get the new password from the request
 
-        String url = "";
+        userDAO user = new userDAO();
+        boolean result =  user.updateUser(userId, username, password);
 
-        try {
-
-            if (account != null) {
-                int userID = account.getUser_ID();
-                commentDAO dao = new commentDAO();
-                boolean result = dao.insertComment(userID, postID, commetDes);
-                if (result) {
-                    url = "forumServlet"
-                            + "?categoryID=" + category
-                            + "&index=" + indexPage;
-
-                }
-            } else {
-                url = LOGIN_PAGE;
-            }
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
-        } catch (NamingException ex) {
-            ex.printStackTrace();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } finally {
-            response.sendRedirect(url);
+        if (result) {
+            response.sendRedirect("AllUserServlet");
+        } else {
+            response.getWriter().write("Failed to update username and password");
         }
+    } catch (ClassNotFoundException e) {
+        e.printStackTrace();
+    } catch (SQLException e) {
+        e.printStackTrace();
+    } catch (NamingException e) {
+        e.printStackTrace();
     }
+}
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

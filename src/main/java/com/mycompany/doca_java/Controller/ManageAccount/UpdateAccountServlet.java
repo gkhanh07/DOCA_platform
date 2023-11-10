@@ -10,6 +10,7 @@ import com.mycompany.doca_java.DTO.userDTO;
 import com.mycompany.doca_java.ProcessDetails.ProcessImg;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,6 +29,7 @@ import javax.naming.NamingException;
  * @author Admin
  */
 @WebServlet(name = "UpdateAccountServlet", urlPatterns = {"/UpdateAccountServlet"})
+@MultipartConfig
 public class UpdateAccountServlet extends HttpServlet {
 
     /**
@@ -45,19 +47,17 @@ public class UpdateAccountServlet extends HttpServlet {
         String url = "accountmanage.jsp";
         boolean isUsernameTaken = true;
         boolean isEmailTaken = true;
-        
         try {
             HttpSession session = request.getSession();
             userDTO account = (userDTO) session.getAttribute("USER_NAME");
             String userName = request.getParameter("txtUsername");
-            String gender = request.getParameter("gender");
-            request.setAttribute("selectedGender", gender);
+            String gender = request.getParameter("txtGender");
             String email = request.getParameter("txtEmail");
             String mobileNum = request.getParameter("txtPhone");
             String avatar = "";
             userDAO userDao = new userDAO();
             Part filePart = request.getPart("avatar");
-            if (filePart != null) {
+            if (filePart != null && filePart.getSize() > 0) {
                 InputStream fileInputStream = filePart.getInputStream();
                 // Upload the image to Cloudinary
                 // Process the image using the ImageProcessor class
@@ -67,6 +67,7 @@ public class UpdateAccountServlet extends HttpServlet {
             } else {
                 avatar = account.getAvatar();
             }
+            
             if(!userName.equals(account.getUserName())){
                  isUsernameTaken = userDao.isUsernameAvailable(userName);
             }
@@ -76,12 +77,11 @@ public class UpdateAccountServlet extends HttpServlet {
             if (isUsernameTaken && isEmailTaken) {
                 account.setUserName(userName);
                 boolean updateSuccessful = userDao.updateAccount(account.getUser_ID(), userName, gender, email, mobileNum, avatar);
-
+                userDTO newCount = new userDTO(account.getUser_ID(), userName, avatar, gender, email, mobileNum, account.isStatus(),account.isRoleID(), avatar);
                 if (updateSuccessful) {
-                    session.setAttribute("USER_NAME", account);
+                    session.setAttribute("USER_NAME", newCount);
                     // Redirect to a success page or display a success message
-                    request.getRequestDispatcher(url).forward(request, response);
-
+                    response.sendRedirect(url);
                 } else {
                     // Handle the case where the update was not successful
                     response.sendRedirect("error.jsp");

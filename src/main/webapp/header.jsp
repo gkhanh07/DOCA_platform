@@ -8,6 +8,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
+<link rel="stylesheet" href="assets/css/header-style.css"/>
 <style>
     #notiForm {
         position: absolute;
@@ -19,8 +20,56 @@
 <header>
     <c:set var="Owner" value="${sessionScope.USER_NAME}"/>
     <form action="DispatchServlet" method="post">
+        <div id="top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 offer mb-3 mb-lg-0"><a href="" class="ml-1">Welcome to Doca</a></div>
+                    <div class="col-lg-6 text-center text-lg-right">
 
-        <nav class="navbar navbar-dark navbar-expand-sm fixed-top navbar-color p-0 header">
+                        <ul class="menu list-inline mb-0">
+
+                            <li class="list-inline-item"><a href="login.jsp">Login</a></li>
+                            <li class="list-inline-item"><a href="signup.jsp">Register</a></li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- *** TOP BAR END ***-->
+
+
+        </div>  
+        <nav class="navbar navbar-expand-lg">
+            <div class="container"><a href="index.html" class="navbar-brand home"><img src="assets/images/logoDoca.png" alt="" class="imgheader d-none d-md-inline-block"><img src="img/logo-small.png" alt="Obaju logo" class="d-inline-block d-md-none"><span class="sr-only"></span></a>
+                <div class="navbar-buttons">
+
+                    <button type="button" data-toggle="collapse" data-target="#navigation" class="btn btn-outline-secondary navbar-toggler"><span class="sr-only">Toggle navigation</span><i class="fa fa-align-justify"></i></button>
+                    <button type="button" data-toggle="collapse" data-target="#search" class="btn btn-outline-secondary navbar-toggler"><span class="sr-only">Toggle search</span><i class="fa fa-search"></i></button><a href="basket.html" class="btn btn-outline-secondary navbar-toggler"><i class="fa fa-shopping-cart"></i></a>
+                </div>
+                <div id="navigation" class="collapse navbar-collapse">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item"><a id="marketLink" href="DispatchServlet?btAction=goTomarket" class="nav-link">Chợ</a></li>
+                        <li class="nav-item"><a id="forumLink" href="DispatchServlet?btAction=goToForum" class="nav-link">Bảng Tin</a></li>
+
+
+                    </ul>
+                    <div class="navbar-buttons d-flex justify-content-end">
+                        <!-- /.nav-collapse-->
+                        <a href="#" class="btn-notification btn  navbar-btn btn-primary d-none d-lg-inline-block" onclick="toggleMenuFormNoti()">
+                            <i class="fa fa-bell" ></i>
+                            <span class="badge p-0"></span>
+                        </a>
+                        <a class="btn navbar-btn btn-primary d-none d-lg-inline-block" href="getConversationServlet" role="button"><i
+                                class="fa-solid fa-message"></i></a>
+                        <div id="search-not-mobile" class="navbar-collapse collapse"></div><a data-toggle="collapse" href="#search" class="btn navbar-btn btn-primary d-none d-lg-inline-block"><span class="sr-only">Toggle search</span><i class="fa fa-search"></i></a>
+                        <div id="basket-overview" class="navbar-collapse collapse d-none d-lg-block"><a href="basket.html" class="btn btn-primary navbar-btn"><i class="fa fa-shopping-cart"></i><span>Tạo Bài Bán</span></a></div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <nav class="navbar navbar-dark navbar-expand-sm  navbar-color p-0 header">
+
             <div class="container-fluid d-flex justify-content-center">
                 <nav class="navbar navbar-light">
                     <a class="navbar-brand" href="#">
@@ -56,14 +105,9 @@
                         </form>
                     </div>
                     <div>
-                        <a href="#" class="btn-notification btn  btn-light border-0 rounded-pill button_in_header" onclick="toggleMenuFormNoti()">
-                            <i class="fa fa-bell" ></i>
-                            <span class="badge p-0"></span>
-                        </a>
-                        <a class="btn btn-light border-0 rounded-pill button_in_header" href="getConversationServlet" role="button"><i
-                                class="fa-solid fa-message"></i></a>
-                            <c:choose>
-                                <c:when test="${Owner eq null}">
+
+                        <c:choose>
+                            <c:when test="${Owner eq null}">
                                 <a class="btn btn-light border-0 rounded-pill button_in_header" href="login.jsp" role="button">
                                     <i class="fa-solid fa-pen-to-square"></i> Tạo Bài Bán
                                 </a>
@@ -103,7 +147,7 @@
 
 
         </nav>
-        <div class="setting position-absolute shadow-lg bg-body rounded " id="settingForm" style="display: none; right: 3%;">
+        <div class="setting position-absolute shadow-lg bg-body rounded " id="settingForm" style="display: none; right: 3%; z-index: 3;">
             <div class="card">
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
@@ -111,14 +155,14 @@
                         <li class="list-group-item"><a href="getPersonalPost" style="color: black;">quản lý tin </a></li>
                         <li class="list-group-item"><a href="getPersonalProduct" style="color: black;">quản lý sản phẩm</a>
                         </li>
-                        <li class="list-group-item"><a href="ListProductSaved" style="color: black;">tin đã lưu</a></li>
+                        <li class="list-group-item"><a href="ListProductSaved" style="color: black;">sản phẩm đã lưu</a></li>
                         <li class="list-group-item"> <a href="LogOutServlet" style="color: black;">logout</a></li>
                     </ul>
 
                 </div>
             </div>
         </div>
-        <div class="setting position-absolute shadow-lg bg-body rounded" id="notiForm" style="display: none; right: 18%; top:128px; position: absolute;">
+        <div class="setting position-absolute shadow-lg bg-body rounded" id="notiForm" style="display: none; right: 18%; top:0px; position: absolute;">
             <div class="card">
                 <h5 class="menu-title">Thông báo của bạn</h5>
                 <div class="notifications-wrapper" id="notificationsWrapper">
@@ -132,6 +176,7 @@
 
 <script>
     function toggleMenuForm() {
+        console.log("checkform")
         const commentForm = document.getElementById('settingForm');
         commentForm.style.display = commentForm.style.display === 'none' ? 'block' : 'none';
     }
@@ -247,4 +292,57 @@
         }
     });
 </script>
+<script>
+    var currentPage = "<%= request.getRequestURI() %>";
+    var searchInput = document.querySelector('input[name="search"]');
+    var searchButton = document.getElementById("searchButton");
 
+    if (currentPage.includes("forum.jsp")) {
+        searchInput.placeholder = "Tìm kiếm bài viết";
+        searchButton.setAttribute("href", "DispatchServlet?btAction=searchForum");
+    } else if (currentPage.includes("market.jsp")) {
+        searchInput.placeholder = "Tìm kiếm sản phẩm";
+        searchButton.setAttribute("href", "DispatchServlet?btAction=searchMarket");
+    } else {
+        // Nếu không ở trang "forum.jsp" hoặc "market.jsp", vô hiệu hóa khả năng tìm kiếm
+        searchInput.disabled = true;
+        searchButton.disabled = true;
+    }
+
+//    searchButton.addEventListener("click", function () {
+//        var searchValue = searchInput.value;
+//        var href = searchButton.getAttribute("href");
+//
+//
+//        if (searchValue) {
+//            var encodedSearchValue = encodeURIComponent(searchValue);
+//            var searchUrl = href + "&searchValue=" + encodedSearchValue;
+//            searchButton.setAttribute("href", searchUrl);
+//        }
+//    });
+    searchButton.addEventListener("click", function (event) {
+        if (searchInput.disabled) {
+            // Ngăn chặn tìm kiếm khi nút bị vô hiệu hóa
+            event.preventDefault();
+        } else {
+            var searchValue = searchInput.value;
+            var href = searchButton.getAttribute("href");
+
+            if (searchValue) {
+                var encodedSearchValue = encodeURIComponent(searchValue);
+                var searchUrl = href + "&searchValue=" + encodedSearchValue;
+                searchButton.setAttribute("href", searchUrl);
+            }
+        }
+    });
+</script>
+<script>
+$(document).click(function() {
+    var currentPath = window.location.pathname;
+    if (currentPath.includes("goTomarket")) {
+        $("#marketLink").addClass("active");
+    } else if (currentPath.includes("goToForum")) {
+        $("#forumLink").addClass("active");
+    }
+});
+</script>

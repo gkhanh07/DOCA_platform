@@ -3,9 +3,10 @@
     Created on : Oct 12, 2023, 10:29:19 AM
     Author     : Admin
 --%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -95,16 +96,20 @@
                                 <div class="product_info">
                                     <c:set var="title" value="${product.title}"/>
                                     <h2 class="title">${title}</h2>
-                                    <c:set var="price" value="${product.price}"/>
-                                    <h4 class="price">Giá: <fmt:formatNumber value="${price}" type="currency" currencyCode="VND"/></h4>
-
-                                    <p class="product_des">${product.description}</p>
-                                    <h4 class="text-secondary">Local</h4>
+                                     <c:if test="${!product.isFree()}">
+                                                    <h4 class="price text-danger">Giá: <fmt:formatNumber value="${product.price}" type="currency" currencyCode="VND" /></h4>
+                                                </c:if>
+                                                <c:if test="${product.isFree()}">
+                                                     <h4 class="price text-danger">Miễn phí</h4>
+                                                </c:if>
+                                    
+                                    <p class="product_des">${product.productContentFormat()}</p>
+                                    <h4 class="text-secondary">Khu Vực</h4>
                                     <p class="product_address">
                                         <i class="fa fa-location-dot"></i>
                                         ${product.address}
                                     </p>
-                                    <h5 class="text-secondary">Product Type</h5>
+                                    <h5 class="text-secondary">Loại sản phẩm</h5>
                                     <p>${category.categoryName}</p>
                                 </div>
 
@@ -152,7 +157,11 @@
                 mobileNum: ${owner.mobileNum}
             };
             button.addEventListener("click", function () {
-                button.textContent = owner.mobileNum; // Change the text when clicked
+                if (owner.mobileNum === null) {
+                    button.textContent = "Người bán chưa cập nhật số điện thoại";
+                } else {
+                    button.textContent = owner.mobileNum;
+                }
             });
         </script>
     </body>

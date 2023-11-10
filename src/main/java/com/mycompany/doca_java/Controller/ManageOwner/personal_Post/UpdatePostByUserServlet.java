@@ -4,8 +4,10 @@
  */
 package com.mycompany.doca_java.Controller.ManageOwner.personal_Post;
 
+import com.mycompany.doca_java.Constant.Folder_Up;
 import com.mycompany.doca_java.DAO.PostDAO;
 import com.mycompany.doca_java.DTO.PostDTO;
+import com.mycompany.doca_java.ProcessDetails.ProcessImg;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,6 +19,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import java.io.File;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -52,29 +55,24 @@ public class UpdatePostByUserServlet extends HttpServlet {
         String postId = request.getParameter("postId");
         String[] categories = request.getParameterValues("categoryInUpdate");
         String updateContent = request.getParameter("content");
+        String imageUrl = "";
+        // Get the uploaded image file from the request
         Part filePart = request.getPart("file");
-        String uploadDir = "C:\\Users\\Admin\\Desktop\\FOR STUDY\\SWP\\Doca_java\\src\\main\\webapp\\imgIn_DOCA";
-        String fileName = null;
-        String originalFileName = filePart.getSubmittedFileName();
-        // Tạo tên file mới
-        int dotIndex = originalFileName.lastIndexOf(".");
-        if (dotIndex != -1) {
-            String extension = originalFileName.substring(dotIndex);
-            String timestamp = Long.toString(System.currentTimeMillis());
-            fileName = "forum" + timestamp + extension;
-        } else {
-            String timestamp = Long.toString(System.currentTimeMillis());
-            fileName =  "forum" + timestamp;
+        if (filePart != null && filePart.getSize() > 0) {
+            InputStream fileInputStream = filePart.getInputStream();
+
+            // Upload the image to Cloudinary
+            // Process the image using the ImageProcessor class
+            ProcessImg imageProcessor = new ProcessImg();
+            imageUrl = imageProcessor.uploadImageToFolder(fileInputStream, Folder_Up.FORUM_UP);
+        }else{
+            imageUrl=request.getParameter("OldImg");
         }
-        // Tạo đường dẫn file trên server
-        String filePath = uploadDir + File.separator + fileName;
-        // Lưu file
-        filePart.write(filePath);
-        fileName = "imgIn_DOCA/" + fileName;
+
         PostDAO dao = new PostDAO();
         if (categories != null) {
             try {
-                boolean result = dao.updatePostByUser(Integer.parseInt(postId), categories, updateContent, fileName);
+                boolean result = dao.updatePostByUser(Integer.parseInt(postId), categories, updateContent, imageUrl);
                 if (result) {
                     url = personalPost;
                     request.setAttribute("successMessage", "Cập nhật thành công!");
@@ -86,7 +84,7 @@ public class UpdatePostByUserServlet extends HttpServlet {
             } catch (NamingException ex) {
                 Logger.getLogger(UpdatePostByUserServlet.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
-               response.sendRedirect(url);
+                response.sendRedirect(url);
             }
         }
     }

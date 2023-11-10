@@ -75,6 +75,13 @@
                                 <input type="submit" value="Log In" name="btAction" class="btn btn-block btn-primary">
                                 <p class="footer">Chưa có tài khoản ? đăng kí<a href="signup.jsp"> tại đây </a></p>
                             </form>
+                            <% 
+// Hiển thị thông báo nếu có lỗi
+String errorMessage = (String)request.getAttribute("errorMessage");
+if (errorMessage != null) {
+out.println("<p style='color: red;'>" + errorMessage + "</p>");
+}
+                            %>
                         </div>
                     </div>
                 </div>

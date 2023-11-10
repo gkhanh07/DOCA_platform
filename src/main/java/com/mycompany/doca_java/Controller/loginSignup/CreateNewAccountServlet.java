@@ -27,9 +27,8 @@ import javax.naming.NamingException;
  *
  * @author Admin
  */
-
 @WebServlet(name = "CreateNewAccountServlet", urlPatterns = {"/CreateNewAccountServlet"})
-
+@MultipartConfig
 public class CreateNewAccountServlet extends HttpServlet {
 
     /**
@@ -95,7 +94,6 @@ public class CreateNewAccountServlet extends HttpServlet {
         boolean roleID = true; // Adjust as needed
         // Get the uploaded image file from the request
         String avatar = ""; // Default avatar image  
-
         try {
             Part filePart = request.getPart("avatarFile");
             if (filePart != null) {
@@ -104,11 +102,19 @@ public class CreateNewAccountServlet extends HttpServlet {
                 // Process the image using the ImageProcessor class
                 ProcessImg imageProcessor = new ProcessImg();
                 String imageUrl = imageProcessor.uploadImageToFolder(fileInputStream, Folder_Up.USER_UP);
-                avatar = imageUrl;
+                avatar=imageUrl;
             } else {
                 avatar = "default.jpg";
             }
-            userDTO user = new userDTO(username, password, gender, email, mobileNum, status, roleID, avatar);
+            userDTO user = new userDTO();
+            user.setUserName(username);
+            user.setPassword(password);
+            user.setGender(gender);
+            user.setEmail(email);
+            user.setMobileNum(mobileNum);
+            user.setStatus(status);
+            user.setRoleID(roleID);
+            user.setAvatar(avatar);
 
             userDAO userDAO = new userDAO();
 
@@ -116,7 +122,6 @@ public class CreateNewAccountServlet extends HttpServlet {
                 boolean registrationSuccessful = userDAO.createUser(user);
                 if (registrationSuccessful) {
                     // Registration was successful, you can redirect the user to a success page
-                    request.setAttribute("loginSuccess", "Chào bạn: " + username +"đã đăng kí thành công");
                     response.sendRedirect("login.jsp");
                 } else {
                     // Registration failed, you can redirect the user to an error page

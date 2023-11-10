@@ -2,9 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package com.mycompany.doca_java.Controller;
+package com.mycompany.doca_java.Controller.Admin;
 
 import com.mycompany.doca_java.DAO.userDAO;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -15,13 +16,12 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import javax.naming.NamingException;
 
-
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "DeleteUserServlet", urlPatterns = {"/DeleteUserServlet"})
-public class DeleteUserServlet extends HttpServlet {
+@WebServlet(name = "DeleteUserSerlvet", urlPatterns = {"/DeleteUserSerlvet"})
+public class DeleteUserSerlvet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,29 +35,32 @@ public class DeleteUserServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        String userIdParam = request.getParameter("user_id");
+        try {
+            int userId = Integer.parseInt(request.getParameter("user_id"));
+            userDAO user = new userDAO();
 
-        if (userIdParam != null && !userIdParam.isEmpty()) {
-            try {
-                int userId = Integer.parseInt(userIdParam);
+            // Check if the request is for banning or unbanning
+            String action = request.getParameter("action");
+            boolean result = false;
 
-                // Call the deleteUser method (assuming it's in a UserManager or similar class)
-                userDAO user = new userDAO(); // You should replace this with your actual user management class
-                user.deleteUser(userId);
+            if ("ban".equals(action)) {
+                result = user.banUser(userId);
+            } else if ("unban".equals(action)) {
+                result = user.unbanUser(userId);
+            }
 
-                // Redirect to a success page or show a success message
-                response.sendRedirect("alluser.jsp");
-        }catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
-        } catch (NamingException ex) {
-            ex.printStackTrace();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } finally{
-            response.sendRedirect("alluser.jsp");
+            if (result) {
+                response.sendRedirect("AllUserServlet");
+                
+//                RequestDispatcher dispatcher = request.getRequestDispatcher("All");
+//                dispatcher.forward(request, response);
+            } else {
+                response.getWriter().write("Failed to perform the action");
+            }
+        } catch (ClassNotFoundException | SQLException | NamingException e) {
+            e.printStackTrace();
         }
-    }}
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

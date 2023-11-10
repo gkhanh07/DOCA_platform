@@ -35,6 +35,9 @@
 
 
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
+
+        <!--  -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
         <!-- <link rel="stylesheet" href="assets/css/forum-style.css"> -->
         <link rel="stylesheet" href="assets/css/standar-style.css">
@@ -132,53 +135,6 @@
                 cursor: pointer;
                 border-radius: 4px;
             }
-
-            a.username {
-                color: #050505;
-            }
-            .post-time.text-muted {
-                color: #adaeb0;
-            }
-            .post.my-4.border.rounded.position-relative {
-                background-color: #ffffff;
-            }
-            p.post-text {
-                color: #050505;
-                margin-left: 60px;
-                margin-right: 60px;
-            }
-            a.sell.d-flex {
-                width: 120%;
-            }
-            /*>>>>>>>>>>>>>>>>>>>>>>>>>>> css moi postdetail.jsp*/
-            img.img-content.col-sm-7 {
-                margin-left: 290px;
-                border-radius: 5%;
-                padding: 0;
-            }
-            .like-count {
-                border-top: 1px solid #ccc; /* Màu và độ dày của đường kẻ phía trên */
-                border-bottom: 1px solid #ccc; /* Màu và độ dày của đường kẻ phía dưới */
-                padding: 10px 0; /* Khoảng cách giữa đường kẻ và nội dung */
-                margin-top: 10px;
-                color: blue;
-            }
-            .delete-comment {
-                display: inline-block; /* Để nút hiển thị trên cùng một hàng với văn bản */
-                padding: 5px 10px; /* Điều chỉnh kích thước của nút */
-                border: none; /* Loại bỏ viền của nút */
-                border-radius: 20px; /* Bo tròn viền của nút */
-                background-color: #FF5733; /* Màu nền của nút */
-                color: #fff; /* Màu chữ trắng */
-                text-decoration: none; /* Loại bỏ gạch chân mặc định của liên kết */
-                transition: background-color 0.3s; /* Hiệu ứng thay đổi màu nền */
-            }
-
-            /* CSS khi di chuột vào nút */
-            .delete-comment:hover {
-                background-color: #E64222; /* Thay đổi màu nền khi di chuột vào nút */
-            }
-
         </style>
     </head>
 
@@ -189,68 +145,75 @@
 
         <jsp:include page="header.jsp" />
 
+        <div class="main-content">
+            <div class="row row-content justify-content-center">
+                <div class="col-sm-8 ">
+                    <div class="post main-content my-4 border rounded position-relative">
+                        <div class="post-header">
+                            <div class="profile-info">
 
-        <div class="post my-4 border rounded position-relative">
-            <div class="post-header"style="margin-top:85px">
-                <div class="profile-info">
+                                <img src="${owner.avatar}"
+                                     alt="Profile Image"
+                                     class="rounded-circle profile-image">
+                                <div class="profile-details">
 
-                    <img src="${owner.avatar}"
-                         alt="Profile Image"
-                         class="rounded-circle profile-image">
-                    <div class="profile-details">
-
-                        <a href="#" class="username">${owner.userName}</a>
-                        <div class="post-time text-muted">Ngày đăng bài: ${post.formatTimeDifference()}</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="post-body">
-                <p class="post-text">${post.postContent}</p>
-                <img class="img-content col-sm-7"src="${post.postImage}" alt="Post Image">
-                <p class="like-count">số lượt like của bài viết này: ${likeCount}</p>
-            </div>
-            <button id="shareButton">Chia sẻ</button>
-            <div class="popup" id="sharePopup">
-                <div class="popup-content">
-                    <span onclick="closePopup()" style="float: right; cursor: pointer;">&times;</span>
-                    <p id="shareURL">URL bài viết: </p>
-                    <button id="copyButton">Copy Link</button>
-                </div>
-            </div>
-            <c:forEach items="${listOfComment}" var="comment">
-                <c:if test="${comment.postId==post.postId}">
-                    <div class="comment mt-5">
-                        <c:forEach items="${ListOfUser}" var="user">
-                            <c:if test="${user.user_ID==comment.userId}">
-                                <c:set var="userName" value="${user.userName}"/>
-                                <c:set var="userAvatar" value="${user.avatar}"/>
-                            </c:if>
-                        </c:forEach>
-                        <div class="user-info-container">
-                            <img src=${userAvatar} alt="Avatar" class="profile-image">
-                            <p class="comment-username">${userName}</p>
-                        </div>
-                        <div class="comment-wrapper mt-3 d-inline-block">
-                            <div class="comment-details mt-3">
-                                <p class="comment-content">${comment.commentDes}</p>
+                                    <a href="#" class="username">${owner.userName}</a>
+                                    <div class="post-time text-muted">Ngày đăng bài: ${post.formatTimeDifference()}</div>
+                                </div>
                             </div>
                         </div>
+
+                        <div class="post-body ">
+                            <div class="d-flex justify-content-center">
+                                <p class="post-text">
+                                    ${post.postContentFormat()}
+                                </p>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <img class="img-content"src="${post.postImage}" alt="Post Image"  style=" object-fit: cover;
+                                     border-radius: 10%;">
+                            </div>
+                            <p class="like-count">số lượt like của bài viết này: ${likeCount}</p>
+                        </div>
+                        <button id="shareButton">Chia sẻ</button>
+                        <div class="popup" id="sharePopup">
+                            <div class="popup-content">
+                                <span onclick="closePopup()" style="float: right; cursor: pointer;">&times;</span>
+                                <p id="shareURL">URL bài viết: </p>
+                                <button id="copyButton">Copy Link</button>
+                            </div>
+                        </div>
+                        <c:forEach items="${listOfComment}" var="comment">
+                            <c:if test="${comment.postId==post.postId}">
+                                <div class="comment mt-5">
+                                    <c:forEach items="${ListOfUser}" var="user">
+                                        <c:if test="${user.user_ID==comment.userId}">
+                                            <c:set var="userName" value="${user.userName}"/>
+                                            <c:set var="userAvatar" value="${user.avatar}"/>
+                                        </c:if>
+                                    </c:forEach>
+                                    <div class="user-info-container">
+                                        <img src=${userAvatar} alt="Avatar" class="profile-image">
+                                        <p class="comment-username">${userName}</p>
+                                    </div>
+                                    <div class="comment-wrapper mt-3 d-inline-block">
+                                        <div class="comment-details mt-3">
+                                            <p class="comment-content">${comment.commentDes}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--xoá comment-->
+                                <c:if test="${OwnerComment.user_ID==comment.userId}">
+                                    <a href="deleteCommentServlet?commentId=${comment.commentId}&postId=${post.postId}">Xoá comment</a>
+                                </c:if>
+                            </c:if>
+
+                        </c:forEach>
+
                     </div>
-                    <!--xoá comment-->
-                    <c:if test="${OwnerComment.user_ID==comment.userId}">
-                        <a href="deleteCommentServlet?commentId=${comment.commentId}&postId=${post.postId}">Xoá comment</a>
-                    </c:if>
-                </c:if>
-
-            </c:forEach>
-
-
-
-
-
+                </div>
+            </div>
         </div>
-
 
     </body>
     <script>
@@ -274,6 +237,7 @@
         });
 
         function closePopup() {
+            console.log("close");
             var sharePopup = document.getElementById('sharePopup');
             sharePopup.style.display = 'none';
         }

@@ -66,8 +66,10 @@ Author : Admin
                         <hr class="mt-0 mb-4">
 
                         <div class="row">
-
-
+                            
+                                <c:if test="${Owner.getMobileNum() == 'null'}">
+                                    <p class="mb-0 ml-3">Để trải nghiệm tốt hơn, vui lòng cung cấp thông tin còn thiếu.</p>
+                                </c:if >
 
                             <div class="col-sm-12">
                                 <div class="row">
@@ -78,7 +80,7 @@ Author : Admin
                                 </div>
                                 <!-- Account details card-->
                                 <div id="accountInfo" >
-                                    <form action="DispatchServlet" method="post"  onsubmit="return validateForm()" enctype="multipart/form-data">
+                                    <form action="DispatchServlet" method="post"  onsubmit="return validateForm()" enctype="multipart/form-data" >
 
                                         <div class="card mb-4">
                                             <div class="card-header">Thông tin tài khoản</div>
@@ -127,57 +129,57 @@ Author : Admin
                                                 <div class="mb-3">
                                                     <label class="small mb-1" for="inputPhone">Số điện thoại <span
                                                             class="red-star">*</span></label>
-                                                    <input class="form-control" id="inputPhone" type="tel"
+                                                    <input class="form-control" id="inputPhone" type="number"
                                                            placeholder="Enter your phone number" value="${Owner.mobileNum}" name="txtPhone" required="bắt buộc">
                                                 </div>
 
                                                 <!-- Form Address -->
 
                                                 <div class="mb-3">
-                                                    <label class="small mb-1" for="gender">Giới tính</label><br>
-                                                    <select class="form-control" name="gender" >
-                                                        <option value="male" <c:if test="${selectedGender == 'male'}">selected</c:if>>Nam</option>
-                                                        <option value="female" <c:if test="${selectedGender == 'female'}">selected</c:if>>Nữ</option>
-                                                        <option value="other" <c:if test="${selectedGender == 'other'}">selected</c:if>>Khác</option>
-                                                        </select>
-                                                    </div>
+                                                    <select id="gender" class="form-control" name="txtGender" required>
+                                                        <option value="" disabled selected>Chọn giới tính</option>
+                                                        <option value="male" ${Owner.gender == 'male'? 'selected' : ''}>Nam</option>
+                                                        <option value="female" ${Owner.gender == 'female'? 'selected' : ''}>Nữ</option>
+                                                        <option value="other" ${Owner.gender == 'other'? 'selected' : ''}>Khác</option>
+                                                    </select>
+                                                </div>
 
-                                                    <!-- Form Row-->
-                                                    <div class="row gx-3 mb-3">
-
-                                                    </div>
-
-                                                    <!-- Save changes button-->
-                                                    <input type="submit" value="Thay đổi thông tin" name="btAction" class="btn btn-block btn-primary">
+                                                <!-- Form Row-->
+                                                <div class="row gx-3 mb-3">
 
                                                 </div>
+
+                                                <!-- Save changes button-->
+                                                <input type="submit" value="Thay đổi thông tin" name="btAction" class="btn btn-block btn-primary">
+
                                             </div>
-                                        </form>
-                                    </div>
-                                    <div id="changePassword" style="display: none;">
-                                        <form action="DispatchServlet">
+                                        </div>
+                                    </form>
+                                </div>
+                                <div id="changePassword" style="display: none;">
+                                    <form action="DispatchServlet">
 
-                                            <div class="card mb-4">
-                                                <div class="card-header">Thông tin tài khoản</div>
-                                                <div class="card-body">
-
-
-
+                                        <div class="card mb-4">
+                                            <div class="card-header">Thông tin tài khoản</div>
+                                            <div class="card-body">
 
 
-                                                    <!-- Form Row-->
 
-                                                    <div class="form-change-password">
-                                                        <div class="row">
-                                                            <div class="col-12 col-sm-6 mb-3">
-                                                                <div class="mb-2"><b>Thay đổi mật khẩu</b></div>
-                                                                <div class="row">
-                                                                    <div class="col">
-                                                                        <div class="form-group">
-                                                                            <label class="small mb-1" for="inputCurPassword">Mật khẩu hiện tại <span
-                                                                                    class="red-star">*</span></label>
-                                                                            <input class="form-control" id="inputCurPassword" type="password" name="txtCurPass"
-                                                                                   placeholder="">
+
+
+                                                <!-- Form Row-->
+
+                                                <div class="form-change-password">
+                                                    <div class="row">
+                                                        <div class="col-12 col-sm-6 mb-3">
+                                                            <div class="mb-2"><b>Thay đổi mật khẩu</b></div>
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <div class="form-group">
+                                                                        <label class="small mb-1" for="inputCurPassword">Mật khẩu hiện tại <span
+                                                                                class="red-star">*</span></label>
+                                                                        <input class="form-control" id="inputCurPassword" type="password" name="txtCurPass"
+                                                                               placeholder="">
                                                                         <c:if test="${requestScope.isCurPasswordIncorrect}">
                                                                             <div class="text-danger">Mật khẩu hiện tại không đúng. Vui lòng kiểm tra lại.</div>
                                                                         </c:if>
@@ -219,23 +221,6 @@ Author : Admin
 
                                     </form>
                                 </div>    
-                                <script>
-                                    function validateForm() {
-                                        var username = document.getElementById("inputUsername").value;
-                                        var email = document.getElementById("inputEmail").value;
-                                        var phone = document.getElementById("inputPhone").value;
-                                        var genderMale = document.getElementsByName("gender")[0].checked;
-                                        var genderFemale = document.getElementsByName("gender")[1].checked;
-                                        var genderOther = document.getElementsByName("gender")[2].checked;
-
-                                        if (username === "" || email === "" || phone === "" || (!genderMale && !genderFemale && !genderOther)) {
-                                            alert("Vui lòng điền đầy đủ thông tin vào các trường bắt buộc");
-                                            return false; // Ngăn việc gửi form nếu có trường bị để trống hoặc không có giới tính được chọn
-                                        }
-
-                                        return true; // Cho phép gửi form nếu các trường đều đã được điền và giới tính đã được chọn
-                                    }
-                                </script>
 
                                 <div class="card mb-4">
                                     <div class="card-header">Liên kết mạng xã hội</div>
@@ -313,6 +298,10 @@ Author : Admin
                 alert("Vui lòng điền đầy đủ thông tin vào các trường bắt buộc");
                 return false; // Ngăn việc gửi form nếu có trường bị để trống hoặc không có giới tính được chọn
             }
+            if (phone.length != 10) {
+                alert("Số điện thoại phải có độ dài 10 chữ số");
+                return false; // Ngăn việc gửi form nếu số điện thoại không đúng độ dài
+            }
 
             if (!/^\d+$/.test(phone)) {
                 alert("Số điện thoại chỉ được chứa các chữ số.");
@@ -325,19 +314,7 @@ Author : Admin
 
             return true; // Cho phép gửi form nếu các trường đều đã được điền và giới tính đã được chọn và số điện thoại hợp lệ
         }
-        function displayRadioValue() {
-            var ele = document.getElementsByName('gender');
-            var selectedGender = '';
 
-            for (i = 0; i < ele.length; i++) {
-                if (ele[i].checked) {
-                    selectedGender = ele[i].value;
-                }
-            }
-
-            // Now you can use 'selectedGender' to perform any further actions.
-            document.getElementById("result").innerHTML = "Selected Gender: " + selectedGender;
-        }
     </script>
     <% String javascript = (String) request.getAttribute("javascript");
     if (javascript != null) { %>
