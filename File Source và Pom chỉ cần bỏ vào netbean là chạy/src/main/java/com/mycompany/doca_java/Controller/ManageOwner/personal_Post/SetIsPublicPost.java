@@ -1,38 +1,29 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package com.mycompany.doca_java.Controller.loginSignup;
+package com.mycompany.doca_java.Controller.ManageOwner.personal_Post;
 
-import com.mycompany.doca_java.DAO.userDAO;
+import com.mycompany.doca_java.DAO.PostDAO;
 import com.mycompany.doca_java.DTO.userDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.naming.NamingException;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.sql.SQLException;
+import javax.naming.NamingException;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
-public class LoginServlet extends HttpServlet {
-
-    private final String Market_Controller = "marketServlet";
-    private final String Admin_page = "AdminManageForumPostServlet";
-    private final String Erro = "login.jsp";
-
+@WebServlet(name = "SetIsPublicPost", urlPatterns = {"/SetIsPublicPost"})
+public class SetIsPublicPost extends HttpServlet {
+ public static final String PERSONAL_POST_PAGE = "getPersonalPost";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -45,40 +36,21 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+        int postID = Integer.parseInt(request.getParameter("postId"));
+        boolean isPublic = Boolean.parseBoolean(request.getParameter("isPublic"));
+        HttpSession session = request.getSession();
+        userDTO account = (userDTO) session.getAttribute("USER_NAME");
         String url = "";
         try {
-            userDAO dao = new userDAO();
-            userDTO account = dao.checkLogin(username, password);
-            if (account != null) {
-                if (account.isStatus() == true) {
-                    if (account.isRoleID()) {
-                        url = Market_Controller;
-                        HttpSession session = request.getSession(true);
-                        session.setAttribute("USER_NAME", account);
-//                Cookie cookies = new Cookie(username, password);
-//                cookies.setMaxAge(60*10);
-//                response.addCookie(cookies);
-                    }
-                    if (!account.isRoleID()) {
-                        url = Admin_page;
-                        HttpSession session = request.getSession(true);
-                        session.setAttribute("USER_NAME", account);
-                    }
-                } else {
-                    request.setAttribute("errorMessage", "Tài khoản đã hết hiệu lực .");
-                    url = Erro;
-                    RequestDispatcher rd = request.getRequestDispatcher(url);
-                    rd.forward(request, response);
-                }
+            if (isPublic == true) {
+                isPublic = false;
             } else {
-                // Thông báo khi nhập sai tài khoản hoặc mật khẩu
-                request.setAttribute("errorMessage", "Sai tài khoản hoặc mật khẩu, xin hãy thử lại.");
-                url = Erro;
-                RequestDispatcher rd = request.getRequestDispatcher(url);
-                rd.forward(request, response);
+                isPublic = true;
             }
+            PostDAO dao = new PostDAO();
+            dao.updatePostIsPublic(postID, isPublic);
+
+            url = PERSONAL_POST_PAGE;
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         } catch (NamingException ex) {
