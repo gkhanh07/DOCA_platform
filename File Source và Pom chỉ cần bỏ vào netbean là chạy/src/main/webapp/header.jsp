@@ -119,10 +119,10 @@
                 </div>
             </div>
         </div>
-        <div class="setting position-absolute shadow-lg bg-body rounded" id="notiForm" style="display: none; right: 18%; top:0px; position: absolute; max-width: 380px; ">
+        <div class="setting position-absolute shadow-lg bg-body rounded" id="notiForm" style="display: none; right: 18%; top:0px; position: absolute; max-width: 380px; min-width: 300px; ">
             <div class="card">
-                <h5 class="menu-title">Thông báo của bạn</h5>
-                <div class="notifications-wrapper" id="notificationsWrapper" style="overflow: scroll; height: 490px;">
+                <h4 class="menu-title">Thông báo </h4>
+                <div class="notifications-wrapper" id="notificationsWrapper" style="overflow: scroll; max-height:490px; height: 100%; ">
                     <!-- Dữ liệu từ server sẽ được render vào đây -->
                 </div>
             </div>
@@ -166,10 +166,12 @@
 
             const itemTitle = document.createElement('p');
             itemTitle.classList.add('item-title');
-            itemTitle.style.color = 'gray';
-//            itemTitle.textContent = notify.formatTimeDifference();
+            itemTitle.style.color = '#33FFA2';
+            itemTitle.style.margin = '0';
+            itemTitle.textContent = formatTimeDifference(notify.timeNotification);
 
-            const itemInfo1 = document.createElement('h5');
+
+            const itemInfo1 = document.createElement('h6');
             itemInfo1.classList.add('item-info');
             itemInfo1.style.color = 'black';
             itemInfo1.textContent = notify.notification_value.split('-')[0];
@@ -187,26 +189,40 @@
             notificationsWrapper.appendChild(document.createElement('hr'));
         });
     };
+    const formatTimeDifference = (timeNotification) => {
+        const currentTime = new Date();
+        const notificationTime = new Date(timeNotification);
+        const timeDifference = currentTime - notificationTime;
 
-    function formatTimeDifference(timeNotification) {
-        var currentTime = new Date();
-        var timeDifferenceMillis = currentTime.getTime() - timeNotification.getTime();
+        const millisecondsInSecond = 1000;
+        const millisecondsInMinute = millisecondsInSecond * 60;
+        const millisecondsInHour = millisecondsInMinute * 60;
+        const millisecondsInDay = millisecondsInHour * 24;
+        const millisecondsInMonth = millisecondsInDay * 30;
+        const millisecondsInYear = millisecondsInMonth * 12;
 
-        var days = Math.floor(timeDifferenceMillis / (1000 * 60 * 60 * 24));
-        var hours = Math.floor((timeDifferenceMillis / (1000 * 60 * 60)) % 24);
-        var minutes = Math.floor((timeDifferenceMillis / (1000 * 60)) % 60);
+        if (timeDifference < millisecondsInMinute) {
+            const seconds = Math.floor(timeDifference / millisecondsInSecond);
+            return seconds + `giây trước`;
+        } else if (timeDifference < millisecondsInHour) {
+            const minutes = Math.floor(timeDifference / millisecondsInMinute);
 
-        var formattedTimeDifference;
-        if (days > 0) {
-            formattedTimeDifference = days + " ngày trước";
-        } else if (hours > 0) {
-            formattedTimeDifference = hours + " giờ trước";
+            return minutes + ` phút trước`;
+        } else if (timeDifference < millisecondsInDay) {
+            const hours = Math.floor(timeDifference / millisecondsInHour);
+            return hours + ` giờ trước`;
+        } else if (timeDifference < millisecondsInMonth) {
+            const days = Math.floor(timeDifference / millisecondsInDay);
+            return days + ` ngày trước`;
+        } else if (timeDifference < millisecondsInYear) {
+            const months = Math.floor(timeDifference / millisecondsInMonth);
+            return months + ` tháng trước`;
         } else {
-            formattedTimeDifference = minutes + " phút trước";
+            const years = Math.floor(timeDifference / millisecondsInYear);
+            return years + ` năm trước`;
         }
 
-        return formattedTimeDifference;
-    }
+    };
 
 
 
