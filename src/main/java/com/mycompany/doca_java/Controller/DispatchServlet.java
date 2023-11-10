@@ -33,7 +33,7 @@ public class DispatchServlet extends HttpServlet {
     private final String UPDATE_INFO_ACCOUNT = "UpdateAccountServlet";
     private final String ADMIN_UPDATE_SERVLET = "UpdateUserServlet";
     private final String SEARCH_BY_USERNAME = "SearchByUserName";
-
+    private final String UPDATE_PASSWORD_SERVLET = "UpdatePassword";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -113,6 +113,9 @@ public class DispatchServlet extends HttpServlet {
             }
             if (button.equals("Thay đổi thông tin")) {
                 url = UPDATE_INFO_ACCOUNT;
+            }
+            if(button.equals("Thay đổi mật khẩu")){
+                url = UPDATE_PASSWORD_SERVLET;
             }
             if (button.equals("UpdateUser")) {
                 url = ADMIN_UPDATE_SERVLET;

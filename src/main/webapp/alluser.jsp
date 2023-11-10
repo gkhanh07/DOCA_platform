@@ -28,7 +28,7 @@
                         <tr>
                             <th>User ID</th>
                             <th>Username</th>
-                            <th>Password</th>
+                       
                             <th>Gender</th>
                             <th>Email</th>
                             <th>Mobile Number</th>
@@ -42,8 +42,8 @@
                             <tr>
                         <form action="DispatchServlet" method="Post">
                             <td><input type="hidden" name="user_id" value="${user.user_ID}">${user.user_ID}</td>
-                            <td><input type="text" name="txtUsername" value="${user.userName}"></td>
-                            <td><input type="text" name="txtPassword" value="${user.password}"></td>
+                            <td>${user.userName}</td>
+
                             <td>${user.gender}</td>
                             <td>${user.email}</td>
                             <td>${user.mobileNum}</td>
@@ -66,7 +66,7 @@
                                     </c:otherwise>
                                 </c:choose></td>
                            
-                            <td><button class="btn btn-primary" name="btAction" value="UpdateUser">Update</button></td>
+                           
                         </form>
                         </tr>
                     </c:forEach>

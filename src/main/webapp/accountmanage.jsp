@@ -192,7 +192,7 @@ Author : Admin
                                                                         <label class="small mb-1" for="inputPassword">Mật khẩu mới <span
                                                                                 class="red-star">*</span></label>
                                                                         <input class="form-control" id="inputPassword" type="password" name="txtPassword"
-                                                                               placeholder="•••••">
+                                                                               placeholder="•••••" required>
                                                                     </div>
                                                                 </div>
                                                             </div>
