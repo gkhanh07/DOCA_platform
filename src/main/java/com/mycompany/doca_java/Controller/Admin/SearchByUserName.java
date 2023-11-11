@@ -37,19 +37,23 @@ public class SearchByUserName extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet SearchByUserName</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet SearchByUserName at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+      String username = request.getParameter("txtSearch").trim();
+
+        try {
+            userDAO userDAO = new userDAO();
+            List<userDTO> userList = userDAO.searchByUsername(username);
+            
+            // Set the search results as a request attribute
+            request.setAttribute("userList", userList);
+
+            // Forward the request to the JSP page to display the results
+            RequestDispatcher dispatcher = request.getRequestDispatcher("alluser.jsp");
+            dispatcher.forward(request, response);
+        } catch (SQLException | ClassNotFoundException | NamingException e) {
+            e.printStackTrace(); // Handle exceptions appropriately in a production environment
         }
     }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -75,23 +79,9 @@ public class SearchByUserName extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("txtSearch").trim();
-
-        try {
-            userDAO userDAO = new userDAO();
-            List<userDTO> userList = userDAO.searchByUsername(username);
-            
-            // Set the search results as a request attribute
-            request.setAttribute("userList", userList);
-
-            // Forward the request to the JSP page to display the results
-            RequestDispatcher dispatcher = request.getRequestDispatcher("alluser.jsp");
-            dispatcher.forward(request, response);
-        } catch (SQLException | ClassNotFoundException | NamingException e) {
-            e.printStackTrace(); // Handle exceptions appropriately in a production environment
-        }
+       processRequest(request, response);
     }
 
     /**

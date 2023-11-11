@@ -5,6 +5,7 @@
 package com.mycompany.doca_java.Controller.Admin;
 
 import com.mycompany.doca_java.DAO.userDAO;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -35,6 +36,7 @@ public class UpdateUserServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
+    
     try {
         int userId = Integer.parseInt(request.getParameter("user_id"));
         String username = request.getParameter("txtUsername"); // Get the new username from the request
@@ -42,9 +44,12 @@ public class UpdateUserServlet extends HttpServlet {
 
         userDAO user = new userDAO();
         boolean result =  user.updateUser(userId, username, password);
-
+ 
+        
+        
         if (result) {
-            response.sendRedirect("AllUserServlet");
+            response.sendRedirect("SearchByUserName");
+                
         } else {
             response.getWriter().write("Failed to update username and password");
         }

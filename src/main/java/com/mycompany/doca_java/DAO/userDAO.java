@@ -522,38 +522,54 @@ public class userDAO {
 
         return user;
     }
- public boolean unbanUser(int userId) throws SQLException, ClassNotFoundException, NamingException {
-    Connection con = null;
-    PreparedStatement stm = null;
 
-    try {
-        con = DBconnect.makeConnection();
-        if (con != null) {
-            String sql = "UPDATE users SET status = ? WHERE user_id = ?";
-            stm = con.prepareStatement(sql);
+    public boolean unbanUser(int userId) throws SQLException, ClassNotFoundException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
 
-            // Set status to true (unbanned)
-            stm.setBoolean(1, true);
-            stm.setInt(2, userId);
+        try {
+            con = DBconnect.makeConnection();
+            if (con != null) {
+                String sql = "UPDATE users SET status = ? WHERE user_id = ?";
+                stm = con.prepareStatement(sql);
 
-            int rowsAffected = stm.executeUpdate();
+                // Set status to true (unbanned)
+                stm.setBoolean(1, true);
+                stm.setInt(2, userId);
 
-            return rowsAffected > 0;
-        } else {
-            throw new SQLException("Database connection is not established.");
-        }
-    } finally {
-        // Close resources
-        if (stm != null) {
-            stm.close();
-        }
-        if (con != null) {
-            con.close();
+                int rowsAffected = stm.executeUpdate();
+
+                String updatePostsSQL = "UPDATE post SET isPublic = 1 WHERE user_id = ?";
+                stm = con.prepareStatement(updatePostsSQL);
+                stm.setInt(1, userId);
+                int postsRowsAffected = stm.executeUpdate();
+                
+                
+                if (rowsAffected > 0 || postsRowsAffected > 0) {
+                    // At least one update was successful
+                    con.commit(); // Commit the transaction
+                    return true;
+                } else {
+                    // No user found with the given user_id, or the updates had no effect
+                    con.rollback(); // Rollback the transaction
+                    return false;
+                }
+
+            } else {
+                throw new SQLException("Database connection is not established.");
+            }
+        } finally {
+            // Close resources
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
         }
     }
-}
 
-    public boolean updateUser(int userId, String username,String password ) throws SQLException, NamingException, ClassNotFoundException {
+    public boolean updateUser(int userId, String username, String password) throws SQLException, NamingException, ClassNotFoundException {
         Connection con = null;
         PreparedStatement stm = null;
 
@@ -562,7 +578,7 @@ public class userDAO {
             if (con != null) {
                 String sql = "UPDATE users SET username = ?, password = ? WHERE user_id = ?";
                 stm = con.prepareStatement(sql);
-                stm.setString(1, username); 
+                stm.setString(1, username);
                 stm.setString(2, password); // Replace newPassword with the new password you want to set
                 stm.setInt(3, userId);
                 int rowsAffected = stm.executeUpdate();
@@ -595,61 +611,63 @@ public class userDAO {
             }
         }
     }
-public List<userDTO> searchByUsername(String username) throws SQLException, ClassNotFoundException, NamingException {
-    Connection con = null;
-    PreparedStatement stm = null;
-    ResultSet rs = null;
-    List<userDTO> userList = new ArrayList<>();
 
-    try {
-        con = DBconnect.makeConnection();
-        if (con != null) {
-            String sql = "SELECT [user_id], [username], [password], [Gender], [email], [mobile_num], [status], [role_id], [avatar]\n"
-                    + "FROM [DOCA_platform].[dbo].[users]\n"
-                    + "WHERE [username] LIKE ?;";
-            stm = con.prepareStatement(sql);
-            stm.setString(1, "%" + username + "%"); // Use '%' as a wildcard for a partial match
+    public List<userDTO> searchByUsername(String username) throws SQLException, ClassNotFoundException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<userDTO> userList = new ArrayList<>();
 
-            rs = stm.executeQuery();
+        try {
+            con = DBconnect.makeConnection();
+            if (con != null) {
+                String sql = "SELECT [user_id], [username], [password], [Gender], [email], [mobile_num], [status], [role_id], [avatar]\n"
+                        + "FROM [DOCA_platform].[dbo].[users]\n"
+                        + "WHERE [username] LIKE ?;";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, "%" + username + "%"); // Use '%' as a wildcard for a partial match
 
-            while (rs.next()) {
-                int user_ID = rs.getInt("user_id");
-                String userName = rs.getString("username");
-                String password = rs.getString("password");
-                String Gender = rs.getString("Gender");
-                String email = rs.getString("email");
-                String phone = rs.getString("mobile_num");
-                boolean status = rs.getBoolean("status");
-                boolean roleID = rs.getBoolean("role_id");
-                String avatar = rs.getString("avatar");
+                rs = stm.executeQuery();
 
-                userDTO user = new userDTO(user_ID, userName, password, Gender, email, phone, status, roleID, avatar);
+                while (rs.next()) {
+                    int user_ID = rs.getInt("user_id");
+                    String userName = rs.getString("username");
+                    String password = rs.getString("password");
+                    String Gender = rs.getString("Gender");
+                    String email = rs.getString("email");
+                    String phone = rs.getString("mobile_num");
+                    boolean status = rs.getBoolean("status");
+                    boolean roleID = rs.getBoolean("role_id");
+                    String avatar = rs.getString("avatar");
 
-                if (this.ListOfUser == null) {
-                    this.ListOfUser = new ArrayList<>();
-                }
+                    userDTO user = new userDTO(user_ID, userName, password, Gender, email, phone, status, roleID, avatar);
 
-                if (user.isRoleID()) {
-                    this.ListOfUser.add(user);
+                    if (this.ListOfUser == null) {
+                        this.ListOfUser = new ArrayList<>();
+                    }
+
+                    if (user.isRoleID()) {
+                        this.ListOfUser.add(user);
+                    }
                 }
             }
+        } finally {
+            // Close resources
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
         }
-    } finally {
-        // Close resources
-        if (rs != null) {
-            rs.close();
-        }
-        if (stm != null) {
-            stm.close();
-        }
-        if (con != null) {
-            con.close();
-        }
+
+        return ListOfUser;
     }
 
-    return ListOfUser;
-}
-public boolean banUser(int userId) throws SQLException, NamingException, ClassNotFoundException {
+    public boolean banUser(int userId) throws SQLException, NamingException, ClassNotFoundException {
         Connection con = null;
         PreparedStatement stm = null;
 
@@ -662,11 +680,18 @@ public boolean banUser(int userId) throws SQLException, NamingException, ClassNo
                 stm.setInt(2, userId);
                 int rowsAffected = stm.executeUpdate();
 
+                String updatePostsSQL = "UPDATE post SET isPublic = 0 WHERE user_id = ?";
+                stm = con.prepareStatement(updatePostsSQL);
+                stm.setInt(1, userId);
+                int postsRowsAffected = stm.executeUpdate();
+
                 if (rowsAffected > 0) {
                     // Update was successful
+                    con.commit();
                     return true;
                 } else {
                     // No user found with the given user_id, or the update had no effect
+                    con.rollback();
                     return false;
                 }
             } else {
@@ -690,7 +715,8 @@ public boolean banUser(int userId) throws SQLException, NamingException, ClassNo
             }
         }
     }
-public List<userDTO> getUsersByRoleIdTrue() throws SQLException, ClassNotFoundException, NamingException {
+
+    public List<userDTO> getUsersByRoleIdTrue() throws SQLException, ClassNotFoundException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
