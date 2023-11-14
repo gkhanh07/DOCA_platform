@@ -25,12 +25,48 @@
                 <div class="row">
                     <div class="col-lg-6 offer mb-3 mb-lg-0"><a href="" class="ml-1">Welcome to Doca</a></div>
                     <div class="col-lg-6 text-center text-lg-right">
+                        <c:choose>
+                            <c:when test="${Owner eq null}">
+                                <ul class="menu list-inline mb-0">
 
-                        <ul class="menu list-inline mb-0">
+                                    <li class="list-inline-item"><a href="login.jsp" role="button">Login</a></li>
+                                    <li class="list-inline-item"><a href="signup.jsp" role="button">Register</a></li>
+                                </ul>
+                            </c:when>
+                            <c:otherwise>
 
-                            <li class="list-inline-item"><a href="login.jsp">Login</a></li>
-                            <li class="list-inline-item"><a href="signup.jsp">Register</a></li>
-                        </ul>
+                                <a class="btn btn-light border-0 rounded-pill button_in_header" href="#" role="button" onclick="toggleMenuForm()">
+                                    <img src="${Owner.avatar}"
+                                         alt=""
+                                         class="rounded-circle profile-image" 
+                                         style="width: 30px; height: 30px;">
+                                    <div style="color: black"></div>
+
+                                </a>
+
+                                <div class="setting position-absolute shadow-lg bg-body rounded text" id="settingForm" style="display: none; right: -7%; z-index: 3; text-align: left; margin-top: 10px">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item" style="font-family: inherit">
+                                                    <img style="width: 50px; height: 45px" class="rounded-circle profile-image"  src="${Owner.avatar}"> 
+                                                    <strong> ${Owner.userName}</strong></li>
+                                                <li class="list-group-item"> <a href="accountmanage.jsp" style="color: black;">quản lý tài khoản</a></li>
+                                                <li class="list-group-item"><a href="getPersonalPost" style="color: black;">quản lý tin </a></li>
+                                                <li class="list-group-item"><a href="getPersonalProduct" style="color: black;">quản lý sản phẩm</a>
+                                                </li>
+                                                <li class="list-group-item"><a href="ListProductSaved" style="color: black;">sản phẩm đã lưu</a></li>
+                                                <li class="list-group-item"> <a href="LogOutServlet" style="color: black;">logout</a></li>
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                            </c:otherwise>
+                        </c:choose>
 
                     </div>
                 </div>
@@ -45,7 +81,8 @@
                 <div class="navbar-buttons">
 
                     <button type="button" data-toggle="collapse" data-target="#navigation" class="btn btn-outline-secondary navbar-toggler"><span class="sr-only">Toggle navigation</span><i class="fa fa-align-justify"></i></button>
-                    <button type="button" data-toggle="collapse" data-target="#search" class="btn btn-outline-secondary navbar-toggler"><span class="sr-only">Toggle search</span><i class="fa fa-search"></i></button><a href="basket.html" class="btn btn-outline-secondary navbar-toggler"><i class="fa fa-shopping-cart"></i></a>
+                    <button type="button" data-toggle="collapse" data-target="#search" class="btn btn-outline-secondary navbar-toggler"><span class="sr-only">Toggle search</span><i class="fa fa-search"></i></button>
+                    <a href="basket.html" class="btn btn-outline-secondary navbar-toggler"><i class="fa fa-shopping-cart"></i></a>
                 </div>
                 <div id="navigation" class="collapse navbar-collapse">
                     <ul class="navbar-nav mr-auto">
@@ -56,19 +93,47 @@
                     </ul>
                     <div class="navbar-buttons d-flex justify-content-end">
                         <!-- /.nav-collapse-->
+                        <div><input style="
+                                    width: 479px;" type="text" class="form-control" placeholder=""
+                                    value="${LastSearch}"
+                                    name="search"  id="searchInput"></div>
+                       <a id="searchButton"  type="submit" href="#search" class="btn navbar-btn btn-primary d-none d-lg-inline-block"><span class="sr-only">Toggle search</span><i class="fa fa-search"></i></a>
                         <a href="#" class="btn-notification btn  navbar-btn btn-primary d-none d-lg-inline-block" onclick="toggleMenuFormNoti()">
                             <i class="fa fa-bell" ></i>
                             <span class="badge p-0"></span>
                         </a>
+                       
+                       
                         <a class="btn navbar-btn btn-primary d-none d-lg-inline-block" href="getConversationServlet" role="button"><i
                                 class="fa-solid fa-message"></i></a>
-                        <div id="search-not-mobile" class="navbar-collapse collapse"></div><a data-toggle="collapse" href="#search" class="btn navbar-btn btn-primary d-none d-lg-inline-block"><span class="sr-only">Toggle search</span><i class="fa fa-search"></i></a>
-                        <div id="basket-overview" class="navbar-collapse collapse d-none d-lg-block"><a href="basket.html" class="btn btn-primary navbar-btn"><i class="fa fa-shopping-cart"></i><span>Tạo Bài Bán</span></a></div>
-                    </div>
+
+                        <div id="basket-overview" class="navbar-collapse collapse d-none d-lg-block">
+                            <c:choose>
+                                <c:when test="${Owner eq null}">
+                                    <a href="login.jsp" class="btn btn-primary navbar-btn" role="button">
+                                        <i class="fa fa-shopping-cart"></i><span>Tạo Bài Bán</span></a></div>
+                                        </c:when>
+                                        <c:otherwise>
+                                <a href="postProduct.jsp" class="btn btn-primary navbar-btn" role="button">
+                                    <i class="fa fa-shopping-cart"></i><span>Tạo Bài Bán</span></a></div>
+                                    </c:otherwise>
+                                </c:choose>
                 </div>
             </div>
+            </div>
         </nav>
-        <nav class="navbar navbar-dark navbar-expand-sm  navbar-color p-0 header">
+
+
+
+
+
+
+
+
+
+<!--old header-->
+
+<!--        <nav class="navbar navbar-dark navbar-expand-sm  navbar-color p-0 header">
 
             <div class="container-fluid d-flex justify-content-center">
                 <nav class="navbar navbar-light">
@@ -161,7 +226,14 @@
 
                 </div>
             </div>
-        </div>
+        </div>-->
+
+
+
+<!------------------------------------->
+
+
+
         <div class="setting position-absolute shadow-lg bg-body rounded" id="notiForm" style="display: none; right: 18%; top:0px; position: absolute;">
             <div class="card">
                 <h5 class="menu-title">Thông báo của bạn</h5>
@@ -337,12 +409,12 @@
     });
 </script>
 <script>
-$(document).click(function() {
-    var currentPath = window.location.pathname;
-    if (currentPath.includes("goTomarket")) {
-        $("#marketLink").addClass("active");
-    } else if (currentPath.includes("goToForum")) {
-        $("#forumLink").addClass("active");
-    }
-});
+    $(document).click(function () {
+        var currentPath = window.location.pathname;
+        if (currentPath.includes("goTomarket")) {
+            $("#marketLink").addClass("active");
+        } else if (currentPath.includes("goToForum")) {
+            $("#forumLink").addClass("active");
+        }
+    });
 </script>
