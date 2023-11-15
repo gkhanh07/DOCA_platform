@@ -1,10 +1,10 @@
 .header{
     background-color: #588157;
-    
+
 }
 .button_in_header {
     background-color: #dad7cd;
-} 
+}
 
 .button-search {
     background-color: #dad7cd;
@@ -23,6 +23,12 @@ body{
     height: 25px;
     object-fit: cover; /* This ensures the image is fully contained within the defined dimensions */
     border-radius: 50%; /* This will make the image a circle */
+}
+img[src=""] {
+    display: none;
+}
+#footerPageDOCA{
+    margin-top: 150px !important;
 }
 /* body {
     padding: 120px 0px 0px 0px;

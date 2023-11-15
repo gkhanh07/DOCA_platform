@@ -40,53 +40,53 @@
         <!-- Link CSS -->
         <link rel="stylesheet" href="assets/css/standar-style.css">
         <link rel="stylesheet" href="assets/css/forum-style-V3.css">
-<!--        <style>
-            a.username {
-                color: #050505;
-            }
-            .post-time.text-muted {
-                color: #adaeb0;
-            }
-            .post.my-4.border.rounded.position-relative {
-                background-color: #ffffff;
-            }
-            p.post-text {
-                color: #050505;
-                margin-left: 60px;
-                margin-right: 60px;
-            }
-/*            a.sell.d-flex {
-                width: 120%;
-            }*/
-            /*>>>>>>>>>>>>>>>>>>>>>>>>>>> css moi postdetail.jsp*/
-            img.img-content.col-sm-7 {
-                margin-left: 290px;
-                border-radius: 5%;
-                padding: 0;
-            }
-            .like-count {
-                border-top: 1px solid #ccc; /* Màu và độ dày của đường kẻ phía trên */
-                border-bottom: 1px solid #ccc; /* Màu và độ dày của đường kẻ phía dưới */
-                padding: 10px 0; /* Khoảng cách giữa đường kẻ và nội dung */
-                margin-top: 10px;
-                color: blue;
-            }
-            .delete-comment {
-                display: inline-block; /* Để nút hiển thị trên cùng một hàng với văn bản */
-                padding: 5px 10px; /* Điều chỉnh kích thước của nút */
-                border: none; /* Loại bỏ viền của nút */
-                border-radius: 20px; /* Bo tròn viền của nút */
-                background-color: #FF5733; /* Màu nền của nút */
-                color: #fff; /* Màu chữ trắng */
-                text-decoration: none; /* Loại bỏ gạch chân mặc định của liên kết */
-                transition: background-color 0.3s; /* Hiệu ứng thay đổi màu nền */
-            }
-
-            /* CSS khi di chuột vào nút */
-            .delete-comment:hover {
-                background-color: #E64222; /* Thay đổi màu nền khi di chuột vào nút */
-            }
-        </style>-->
+        <!--        <style>
+                    a.username {
+                        color: #050505;
+                    }
+                    .post-time.text-muted {
+                        color: #adaeb0;
+                    }
+                    .post.my-4.border.rounded.position-relative {
+                        background-color: #ffffff;
+                    }
+                    p.post-text {
+                        color: #050505;
+                        margin-left: 60px;
+                        margin-right: 60px;
+                    }
+        /*            a.sell.d-flex {
+                        width: 120%;
+                    }*/
+                    /*>>>>>>>>>>>>>>>>>>>>>>>>>>> css moi postdetail.jsp*/
+                    img.img-content.col-sm-7 {
+                        margin-left: 290px;
+                        border-radius: 5%;
+                        padding: 0;
+                    }
+                    .like-count {
+                        border-top: 1px solid #ccc; /* Màu và độ dày của đường kẻ phía trên */
+                        border-bottom: 1px solid #ccc; /* Màu và độ dày của đường kẻ phía dưới */
+                        padding: 10px 0; /* Khoảng cách giữa đường kẻ và nội dung */
+                        margin-top: 10px;
+                        color: blue;
+                    }
+                    .delete-comment {
+                        display: inline-block; /* Để nút hiển thị trên cùng một hàng với văn bản */
+                        padding: 5px 10px; /* Điều chỉnh kích thước của nút */
+                        border: none; /* Loại bỏ viền của nút */
+                        border-radius: 20px; /* Bo tròn viền của nút */
+                        background-color: #FF5733; /* Màu nền của nút */
+                        color: #fff; /* Màu chữ trắng */
+                        text-decoration: none; /* Loại bỏ gạch chân mặc định của liên kết */
+                        transition: background-color 0.3s; /* Hiệu ứng thay đổi màu nền */
+                    }
+        
+                    /* CSS khi di chuột vào nút */
+                    .delete-comment:hover {
+                        background-color: #E64222; /* Thay đổi màu nền khi di chuột vào nút */
+                    }
+                </style>-->
     </head>
 
     <body>
@@ -164,7 +164,7 @@
                                                 <div class="mb-3">
                                                     <label for="message-text" class="col-form-label">Nội dung:
                                                     </label>
-                                                    <textarea name="content" class="form-control" id="message-text" rows="7"></textarea>
+                                                    <textarea name="content" class="form-control" id="message-text" rows="7" required=""></textarea>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="formFile" class="form-label"><i class="fa fa-picture-o"></i>
@@ -275,7 +275,7 @@
                                 </div>
                             </c:forEach>
                             <c:if test="${count==0}">
-                                <p>không có nội dung bạn tìm kiếm</p>
+                                <p >không có nội dung bạn tìm kiếm</p>
                             </c:if>
 
                         </div>
@@ -300,6 +300,7 @@
             </div>
 
         </div>
+  
         <script>
             function validateCheckBoxes() {
                 var checkboxes = document.getElementsByName('category');
