@@ -85,13 +85,33 @@
                                                 <h6 style="color:rgb(242, 106, 106);"><fmt:formatNumber value="${porduct.price}" type="currency" currencyCode="VND" /></h6>
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <h6 style="font-size: 15px; opacity: 0.5;">${porduct.address}</h6>
-                                                    <span class="like-icon">
-                                                        <a href="DeleteSaveProduct_InSavePage?productID=${porduct.productId}" class="like-button">
-                                                            <i class="fa fa-heart" style="color: red;"></i>
-                                                        </a>
-                                                    </span>
-                                                </div>
+                                                    <c:set var="countReject" value="0"/>
+                                                    <c:forEach items="${listSaveHaveReject}" var="productHaveReject">
+                                                        <c:if test="${productHaveReject==porduct.productId}">
 
+                                                            <c:set var="countReject" value="1"/>
+                                                        </c:if>
+                                                    </c:forEach>
+                                                    <c:choose>
+                                                        <c:when test="${countReject==0}">
+                                                            <span class="like-icon">
+                                                                <a href="DeleteSaveProduct_InSavePage?productID=${porduct.productId}" class="like-button">
+                                                                    <i class="fa fa-heart" style="color: red;"></i>
+                                                                </a>
+                                                            </span>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <span class="like-icon">
+                                                                <a href="DeleteSaveProduct_InSavePage?productID=${porduct.productId}" class="like-button">
+                                                                    <i class="fa fa-heart-crack" style="color: #6B1F20;"></i>
+                                                                </a>
+                                                            </span>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </div>
+                                                    <c:if test="${countReject!=0}">
+                                                        <p>Sản phẩm này đã được bán cho người khác</p>
+                                                    </c:if>
                                             </div>
 
                                         </div>
@@ -111,7 +131,7 @@
                 </div>
             </div>
         </div>
-      
+
     </body>
     <script>
         var likeButtons = document.querySelectorAll(".like-button");
