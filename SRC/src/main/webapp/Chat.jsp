@@ -120,7 +120,7 @@
                                                         <c:if test="${conversation.status=='approve'}">
                                                             <div class="row">
                                                                 <div class="col-md-6 p-0">
-                                                                    <p>Giao dịch hoàn tất</p>
+                                                                    <p style="color: #0085A3;">Giao dịch hoàn tất</p> 
                                                                 </div>
                                                                 <div class="col-md-6 p-0">
                                                                     <a onclick="openFeedbackForm(${conversation.conversation_id})">
@@ -131,21 +131,57 @@
                                                                 </div>
                                                             </div>
                                                         </c:if>
-                                                    </c:if>
-                                                    <c:choose>
-                                                        <c:when test="${Product.status=='saled'}">
+                                                        <c:if test="${conversation.status == 'reject'}">
+                                                            <p>
+                                                                <small class="text-danger">Giao dịch đã bị hủy 
+                                                                    <i class="fa fa-exclamation"></i>
+                                                                    Bạn không thể theo dõi sản phẩm này nữa
+                                                                </small>
+                                                            </p>
+
+                                                        </c:if>
+                                                        <c:if test="${Product.status=='saled'}">
                                                             <c:if test="${conversation.status !='approve'}">
-                                                                <p>Sản phẩm đã được bán cho người khác</p>
+                                                                <p><small style="color: #6330B7;">Rất tiếc: Sản phẩm đã bán cho người khác</small></p>
                                                             </c:if>
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            <c:if test="${conversation.seller_id == Owner.user_ID}">
-                                                                <a href="confirmSave?buyerID=${conversation.buyer_id }&producID=${Product.productId}">
-                                                                    <button>Xác nhận đã bán</button>
-                                                                </a>
+                                                        </c:if> 
+                                                    </c:if>
+                                                    <c:if test="${conversation.seller_id == Owner.user_ID}">
+                                                        <c:if test="${conversation.status == 'approve'}">
+                                                            <div class="row m-0">
+                                                                <div class="col-md-7 pr-0">
+                                                                    <p style="color: #0085A3;">Giao dịch hoàn tất</p> 
+                                                                </div>
+                                                                <div class="col-md-5 p-0">
+                                                                    <button class="rounded-pill" style="background-color: #F63C13;" >
+                                                                        <a class="text-dark" href="cancelTransaction?buyerID=${conversation.buyer_id }&producID=${Product.productId}">
+                                                                            Hủy giao dịch
+                                                                        </a>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </c:if>
+                                                        <c:if test="${conversation.status == 'waiting'}">
+                                                            <c:if test="${Product.status=='saled'}">
+                                                                <p><small style="color: #F02100;">Sản phẩm đã giao dịch thành công với khách hàng khác</small></p>
                                                             </c:if>
-                                                        </c:otherwise>
-                                                    </c:choose>
+                                                            <c:if test="${Product.status =='approved'}">
+                                                                <button class="rounded-pill" style="background-color: #7FD80E;" >
+                                                                    <a class="text-dark" href="confirmSave?buyerID=${conversation.buyer_id }&producID=${Product.productId}">
+                                                                        Hoàn thành giao dịch
+                                                                    </a>
+                                                                </button>
+                                                            </c:if>
+                                                        </c:if>
+                                                        <c:if test="${conversation.status == 'reject'}">
+                                                            <p>
+                                                                <small class="text-danger">Giao dịch đã bị hủy
+                                                                    <i class="fa fa-exclamation"></i>
+                                                                </small>
+                                                            </p>
+
+                                                        </c:if>
+                                                    </c:if>
 
 
 
@@ -364,6 +400,14 @@
                 var successMessage = "<c:out value='${MssSaledSuccess}' />";
                 if (successMessage) {
                     alert(successMessage);
+                }
+            });
+        </script>
+        <script>
+            window.addEventListener('DOMContentLoaded', (event) => {
+                var successCancel= "<c:out value='${MssCancelSuccess}' />";
+                if (successCancel) {
+                    alert(successCancel);
                 }
             });
         </script>
