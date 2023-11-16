@@ -16,9 +16,11 @@
         z-index: 9999;
     }
 </style>
+
 <header>
     <c:set var="Owner" value="${sessionScope.USER_NAME}"/>
-    <form action="DispatchServlet" method="post">
+
+<!--    <form action="DispatchServlet" method="post">-->
 
         <nav class="navbar navbar-dark navbar-expand-sm fixed-top navbar-color p-0 header">
             <div class="container-fluid d-flex justify-content-center">
@@ -34,8 +36,8 @@
                             <i class="fa fa-bars" aria-hidden="true"></i><span id="currentPageName"> Danh mục</span>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="DispatchServlet?btAction=goToForum">Bảng tin</a>
-                            <a class="dropdown-item" href="DispatchServlet?btAction=goTomarket">Chợ</a>
+                            <a class="dropdown-item" href="DispatchServlet?btAction=goToForum"><i class="fa-solid fa-dog"></i>Bảng tin</a>
+                            <a class="dropdown-item" href="DispatchServlet?btAction=goTomarket"><i class="fa-solid fa-cat"></i>Chợ</a>
 
                         </div>
                     </div>
@@ -60,17 +62,18 @@
                             <i class="fa fa-bell" ></i>
                             <span class="badge p-0"></span>
                         </a>
+                        
                         <a class="btn btn-light border-0 rounded-pill button_in_header" href="getConversationServlet" role="button"><i
                                 class="fa-solid fa-message"></i></a>
                             <c:choose>
                                 <c:when test="${Owner eq null}">
                                 <a class="btn btn-light border-0 rounded-pill button_in_header" href="login.jsp" role="button">
-                                    <i class="fa-solid fa-pen-to-square"></i> Tạo Bài Bán
+                                    <i class="fa-solid fa-pen-to-square"></i> Tạo bài bán
                                 </a>
                             </c:when>
                             <c:otherwise>
                                 <a class="btn btn-light border-0 rounded-pill button_in_header" href="postProduct.jsp" role="button">
-                                    <i class="fa-solid fa-pen-to-square"></i> Tạo Bài Bán
+                                    <i class="fa-solid fa-pen-to-square"></i> Tạo bài bán
                                 </a>
                             </c:otherwise>
                         </c:choose>
@@ -78,10 +81,10 @@
                         <c:choose>
                             <c:when test="${Owner eq null}">
                                 <a class="btn btn-light border-0 rounded-pill button_in_header" href="login.jsp" role="button">
-                                    <i class="fa fa-arrow-right-to-bracket"></i>Login
+                                    <i class="fa fa-arrow-right-to-bracket"></i>Đăng nhập
                                 </a>
                                 <a class="btn btn-light border-0 rounded-pill button_in_header" href="signup.jsp" role="button">
-                                    <i class=" fa fa-user-plus"></i> SignUp
+                                    <i class=" fa fa-user-plus"></i> Đăng ký
                                 </a>
                             </c:when>
                             <c:otherwise>
@@ -107,13 +110,12 @@
             <div class="card">
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item"> <a href="accountmanage.jsp" style="color: black;">Quản lý tài khoản</a></li>
-                        <li class="list-group-item"><a href="getPersonalPost" style="color: black;">Quản lý tin </a></li>
-                        <li class="list-group-item"><a href="getPersonalProduct" style="color: black;">Quản lý sản phẩm</a>
-                        </li>
-                        <li class="list-group-item"><a href="getListFeedbackServlet?seller_id=${Owner.user_ID}" style="color: black;">Xem đánh giá của bạn</a></li>
-                        <li class="list-group-item"><a href="ListProductSaved" style="color: black;">Sản phẩm đã lưu</a></li>
-                        <li class="list-group-item"> <a href="LogOutServlet" style="color: black;">Đăng xuất</a></li>
+                        <li class="list-group-item"> <a href="accountmanage.jsp" style="color: black;"><i class="fa-solid fa-address-card"></i>Quản lý tài khoản</a></li>
+                        <li class="list-group-item"><a href="getPersonalPost" style="color: black;"><i class="fa-solid fa-newspaper"></i>Quản lý tin của bạn</a></li>
+                        <li class="list-group-item"><a href="getPersonalProduct" style="color: black;"><i class="fa fa-archive"></i>Quản lý sản phẩm</a></li>
+                        <li class="list-group-item"><a href="getListFeedbackServlet?seller_id=${Owner.user_ID}" style="color: black;"><i class="fa-solid fa-star"></i>Xem đánh giá của bạn</a></li>
+                        <li class="list-group-item"><a href="ListProductSaved" style="color: black;"><i class="fa-solid fa-bookmark"></i>Sản phẩm đã lưu</a></li>
+                        <li class="list-group-item"> <a href="LogOutServlet" style="color: black;"><i class="fa-sharp fa-solid fa-arrow-right-from-bracket"></i>Đăng xuất</a></li>
                     </ul>
                 </div>
             </div>
@@ -126,7 +128,7 @@
                 </div>
             </div>
         </div>
-    </form>
+<!--    </form>-->
 
 </header>
 
@@ -207,7 +209,7 @@
 
             return minutes + ` phút trước`;
         } else if (timeDifference < millisecondsInDay) {
-            
+
             const hours = Math.floor(timeDifference / millisecondsInHour);
 //            console.log(millisecondsInHour);
 //            console.log(hours);
@@ -218,7 +220,7 @@
         } else if (timeDifference < millisecondsInYear) {
             const months = Math.floor(timeDifference / millisecondsInMonth);
             return months + ` tháng trước`;
-            
+
         } else {
             const years = Math.floor(timeDifference / millisecondsInYear);
             return years + ` năm trước`;
@@ -233,7 +235,7 @@
 
     var currentURL = window.location.href;
 
-   
+
     var currentPageName = document.getElementById("currentPageName");
 
     // Kiểm tra URL và đặt nội dung cho phần tử <span>
@@ -254,47 +256,12 @@
     } else if (currentPage.includes("market.jsp")) {
         searchInput.placeholder = "Tìm kiếm sản phẩm";
         searchButton.setAttribute("href", "DispatchServlet?btAction=searchMarket");
-    }
-
-    searchButton.addEventListener("click", function () {
-        var searchValue = searchInput.value;
-        var href = searchButton.getAttribute("href");
-
-        if (searchValue) {
-            var encodedSearchValue = encodeURIComponent(searchValue);
-            var searchUrl = href + "&searchValue=" + encodedSearchValue;
-            searchButton.setAttribute("href", searchUrl);
-        }
-    });
-</script>
-<script>
-    var currentPage = "<%= request.getRequestURI() %>";
-    var searchInput = document.querySelector('input[name="search"]');
-    var searchButton = document.getElementById("searchButton");
-
-    if (currentPage.includes("forum.jsp")) {
-        searchInput.placeholder = "Tìm kiếm bài viết";
-        searchButton.setAttribute("href", "DispatchServlet?btAction=searchForum");
-    } else if (currentPage.includes("market.jsp")) {
-        searchInput.placeholder = "Tìm kiếm sản phẩm";
-        searchButton.setAttribute("href", "DispatchServlet?btAction=searchMarket");
     } else {
         // Nếu không ở trang "forum.jsp" hoặc "market.jsp", vô hiệu hóa khả năng tìm kiếm
         searchInput.disabled = true;
         searchButton.disabled = true;
     }
 
-//    searchButton.addEventListener("click", function () {
-//        var searchValue = searchInput.value;
-//        var href = searchButton.getAttribute("href");
-//
-//
-//        if (searchValue) {
-//            var encodedSearchValue = encodeURIComponent(searchValue);
-//            var searchUrl = href + "&searchValue=" + encodedSearchValue;
-//            searchButton.setAttribute("href", searchUrl);
-//        }
-//    });
     searchButton.addEventListener("click", function (event) {
         if (searchInput.disabled) {
             // Ngăn chặn tìm kiếm khi nút bị vô hiệu hóa
@@ -311,4 +278,5 @@
         }
     });
 </script>
+
 
