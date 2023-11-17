@@ -22,7 +22,7 @@ public class DBconnect {
 //        Connection con = DriverManager.getConnection(url, "quangtm", "@Quangse173475");
 //        return con;
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        String url = "jdbc:sqlserver://localhost:1433;databaseName=DOCA_platform;encrypt=true;trustServerCertificate=true;";
+        String url = "jdbc:sqlserver://localhost:1433;databaseName=DOCA_platform";
         Connection con = DriverManager.getConnection(url, "sa", "12345");
         return con;
     }

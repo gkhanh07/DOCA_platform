@@ -6,3 +6,10 @@ maket.jsp
 16/11/2023
 fix chính tả, sửa lại thành tiếng việt
 thêm icons header
+đổi màu header, button
+
+17/11/2023
+fix chính tả
+bỏ title của các trang, thêm title vào phần header
+!!!trang login đổi title khác
+!!!trang đăng ký đổi title khác
