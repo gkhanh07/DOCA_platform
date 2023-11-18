@@ -45,7 +45,20 @@
         <link rel="stylesheet" href="assets/css/standar-style.css">
 
     </head>
+    <style>
+        .nav-link {
+            transition: transform 0.3s, filter 0.3s;
+        }
 
+        .nav-link:hover {
+            transform: scale(1.05); /* Hiệu ứng nổi lên khi di chuột vào */
+            filter: brightness(90%); /* Màu tối đi khi di chuột vào */
+        }
+        .nav-item {
+            margin-right: 10px; /* Thay đổi giá trị theo mong muốn của bạn */
+            margin-left: 10px;
+        }
+    </style>
     <body>
         <jsp:include page="header.jsp" />
         <c:set var="listProductOfPersonal" value="${requestScope.listProductOfPersonal}"/>
@@ -183,6 +196,6 @@
 
             </div>
         </div>
-      
+
     </body>
 </html>

@@ -47,6 +47,28 @@
 
     </head>
 
+    <style>
+        #rating {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
+
+        #rating option {
+            background-repeat: no-repeat;
+            padding-left: 20px; /* Để tạo khoảng cách giữa icon và văn bản */
+        }
+
+        #rating option[data-icon="fa-solid fa-star"] {
+            background-image: url('path/to/your/fa-star-icon.png'); /* Thay đổi đường dẫn hình ảnh sao của bạn */
+        }
+        .Conversation-name{
+            cursor: pointer;
+        }
+        .rate{
+            cursor: pointer;
+        }
+    </style>
     <body>
         <c:set var="ListOfConversation" value="${sessionScope.ListOfConversation}"/>
         <c:set var="ListOfProductInConversation" value="${sessionScope.ListOfProductInConversation}"/>
@@ -114,9 +136,9 @@
                                                     </c:forEach>
                                                     <!-- just buyer can feedback -->
                                                     <c:if test="${conversation.buyer_id == Owner.user_ID}"> 
-                                                        <a  onclick="openFeedbackForm(${conversation.conversation_id})">
+                                                        <a class="chat" onclick="openFeedbackForm(${conversation.conversation_id})">
                                                             <p style="color: yellow">
-                                                                <small>Ðánh giá người bán</small>
+                                                                <small class="rate">Ðánh giá người bán</small>
                                                             </p>
                                                         </a>
                                                     </c:if>
@@ -126,7 +148,7 @@
                                                         <form action="CreateFeedbackServlet" method="post">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <h5 class="modal-title" id="ratingModalLabel">Đánh giá người bán </h5>
+                                                                    <h5 class="modal-title" id="ratingModalLabel">Ðánh giá người bán</h5>
                                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                                                                 </div>
                                                                 <div class="modal-body">
@@ -134,11 +156,11 @@
                                                                     <div class="form-group">
                                                                         <label for="rating">Đánh giá:</label>
                                                                         <select name="rate" class="form-control" id="rating">
-                                                                            <option value="5">5 sao</option>
-                                                                            <option value="4">4 sao</option>
-                                                                            <option value="3">3 sao</option>
-                                                                            <option value="2">2 sao</option>
-                                                                            <option value="1">1 sao</option>
+                                                                            <option value="5">5 ⭐</option>
+                                                                            <option value="4">4 ⭐</option>
+                                                                            <option value="3">3 ⭐</option>
+                                                                            <option value="2">2 ⭐</option>
+                                                                            <option value="1">1 ⭐</option>
                                                                         </select>
                                                                     </div>
                                                                     <div class="form-group">
@@ -198,7 +220,7 @@
                 </div>
             </div>
         </div>
-        
+
         <script>
             function openFeedbackForm(conversationid) {
                 $('#ratingModal' + conversationid).modal('show');
@@ -328,6 +350,6 @@
                 input.value = '';
             }
         </script>
-        
+
     </body>
 </html>

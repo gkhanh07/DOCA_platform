@@ -70,6 +70,23 @@
             .frame a{
                 text-decoration: none;
             }
+            .love {
+                transition: transform 0.3s, filter 0.3s;
+            }
+
+            .love:hover {
+                transform: scale(1.05); /* Hiệu ứng nổi lên khi di chuột vào */
+                filter: brightness(90%); /* Màu tối đi khi di chuột vào */
+            }
+            .page-link {
+                transition: transform 0.3s, filter 0.3s;
+            }
+
+            .page-link:hover {
+                transform: scale(1.05); /* Hiệu ứng nổi lên khi di chuột vào */
+                filter: brightness(90%); /* Màu tối đi khi di chuột vào */
+            }
+            
         </style>
     </head>
 
@@ -89,7 +106,7 @@
                                     <select name="city" class="form-select form-select-sm rounded-pill fillter" style="width: 100%;" id="city"
                                             aria-label=".form-select-sm">
                                         <option value="" >
-                                            Toàn quốc
+                                            Toàn quốc 
                                         </option>
                                     </select> 
 
@@ -165,7 +182,7 @@
                                             <c:param name="productIDChangeSave" value="${productIDChangeSave}"></c:param>
                                         </c:url>
                                         <span class="like-icon">
-                                            <a class="fa fa-heart border-0 p-0" 
+                                            <a class="fa fa-heart border-0 p-0 love" 
                                                href="${saveProductLink}"
                                                style="color: ${isSaved=="true"? "red":"gray"}; cursor: pointer; position: absolute; bottom: 30px; right: 40px;">
 
