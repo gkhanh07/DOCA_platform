@@ -45,6 +45,40 @@
         .tab-content.col-md-10 {
             margin-top: -5px;
         }
+        a.nav-link {
+            display: inline-block;
+            padding: 10px 20px;
+            transition: box-shadow 0.3s, transform 0.3s;
+            margin-right: 10px;
+        }
+
+        a.nav-link:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            transform: scale(1.05);
+        }
+        .btn-createpost:hover {
+            filter: brightness(90%);
+        }
+        .btn_in_post {
+            transition: transform 0.3s, filter 0.3s;
+        }
+
+        .btn_in_post:hover {
+            transform: scale(1.05);
+            filter: brightness(90%);
+        }
+
+        .btn_in_post.active {
+            filter: brightness(100%);
+        }
+        #page {
+            transition: transform 0.3s, filter 0.3s;
+        }
+
+        #page:hover {
+            transform: scale(1.05); /* Hiệu ứng nổi lên khi di chuột vào */
+            filter: brightness(90%); /* Màu tối đi khi di chuột vào */
+        }
     </style>
 
     <body>
@@ -216,7 +250,7 @@
                                                 </button>
                                             </a>
 
-                                            <button class="btn  flex-grow-1 btn-light btn_in_post" 
+                                            <button class="btn flex-grow-1 btn-light btn_in_post" 
                                                     onclick="toggleCommentForm('${post.postId}')">
                                                 <i class="fas fa-comment"></i> Bình luận
                                             </button>
@@ -245,7 +279,7 @@
                         <ul class="pagination justify-content-center ">
                             <c:forEach begin="1" end="${numberPage}" var="i">
                                 <li class="page-item rounded-pill ${indexPageForum} ${indexPageForum==i?"active":""}" >
-                                    <a class="page-link rounded-pill ml-2 mt-4" href="forumServlet?index=${i}&categoryID=${indexcategoryID}">${i}</a>
+                                    <a id='page' class="page-link rounded-pill ml-2 mt-4" href="forumServlet?index=${i}&categoryID=${indexcategoryID}">${i}</a>
                                 </li>
                             </c:forEach> 
 

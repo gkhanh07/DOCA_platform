@@ -48,6 +48,28 @@
             .btn1.d-flex {
                 margin-left: 130px;
             }
+            .fillter {
+                transition: transform 0.3s, filter 0.3s;
+            }
+
+            .fillter:hover {
+                transform: scale(1.05); /* Hiệu ứng nổi lên khi di chuột vào */
+                filter: brightness(90%); /* Màu tối đi khi di chuột vào */
+            }
+            .tab-content {
+                margin-top: 10px;
+            }
+            .sell {
+                transition: transform 0.3s, filter 0.3s;
+            }
+
+            .sell:hover {
+                transform: scale(1.05); /* Hiệu ứng nổi lên khi di chuột vào */
+                filter: brightness(90%); /* Màu tối đi khi di chuột vào */
+            }
+            .frame a{
+                text-decoration: none;
+            }
         </style>
     </head>
 
@@ -64,7 +86,7 @@
                         <div class="product-post col-sm-12 mt-2">
                             <div class="btn1 d-flex ">
                                 <div class="btn-group" style="width: 200px;">
-                                    <select name="city" class="form-select form-select-sm rounded-pill" style="width: 100%;" id="city"
+                                    <select name="city" class="form-select form-select-sm rounded-pill fillter" style="width: 100%;" id="city"
                                             aria-label=".form-select-sm">
                                         <option value="" >
                                             Toàn quốc
@@ -73,7 +95,7 @@
 
                                 </div>
 
-                                <div  class="btn-group" style="width: 200px;">
+                                <div  class="btn-group fillter" style="width: 200px;">
                                     <select name="lowerPrice" class="form-control rounded-pill" style="width: 200px;" >
                                         <option value="0" ${selectedLowerPrice == 0 ? 'selected' : ''} >Chọn theo giá</option>
                                         <option value="1000000" ${selectedLowerPrice == 1000000 ? 'selected' : ''}> giá bé hơn 1tr</option>
@@ -87,7 +109,7 @@
 
 
 
-                                <div class="dropdown" style="width: 200px;">
+                                <div class="dropdown fillter" style="width: 200px;">
                                     <select name="category" class="form-control  rounded-pill" style="width: 200px;">
                                         <option value="0" ${selectedCategory == 0 ? 'selected' : ''}>Danh mục</option>
                                         <option value="1" ${selectedCategory == 1 ? 'selected' : ''}>Phụ Kiện</option>
@@ -100,7 +122,7 @@
 
                                 <div style="width: 200px;">
                                     <input type="hidden" name="listOfProduct" value="${Products}" />
-                                    <input class=" rounded-pill"  style="width: 100px; height: 38px" type="submit" name="btAction" value="Lọc" />
+                                    <input class=" rounded-pill fillter"  style="width: 100px; height: 38px" type="submit" name="btAction" value="Lọc" />
                                 </div>
                             </div>
 
@@ -108,7 +130,7 @@
                                 <c:set var="countDisplay" value="0" />
                                 <c:forEach items="${Products}" var="product">
                                     <c:set var="countDisplay" value="${count + 1}" />
-                                    <div  style="position: relative; border-bottom: 1px solid rgb(224, 224, 224);">
+                                    <div class="frame"  style="position: relative; border-bottom: 1px solid rgb(224, 224, 224);">
                                         <a href="productDetailServlet?productId=${product.productId}" class="sell d-flex" style="width: 100%;">
                                             <c:set var="img" value="${product.productImage}"/>
                                             <img class="image" src=${img} alt="${product.title}">

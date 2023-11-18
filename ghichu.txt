@@ -13,3 +13,6 @@ fix chính tả
 bỏ title của các trang, thêm title vào phần header
 !!!trang login đổi title khác
 !!!trang đăng ký đổi title khác
+
+18/11/2023 
+big update các nút bấm
