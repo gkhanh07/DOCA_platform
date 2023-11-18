@@ -37,7 +37,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <!--  -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
         <!-- Link CSS -->
 
         <link rel="stylesheet" href="assets/css/marketv2.css">
@@ -109,7 +109,7 @@
                                     <div  style="position: relative; border-bottom: 1px solid rgb(224, 224, 224);">
                                         <a href="productDetailServlet?productId=${product.productId}" class="sell d-flex" style="width: 100%;">
                                             <c:set var="img" value="${product.productImage}"/>
-                                            <img class="image" src=${img} alt="${product.title}">
+                                            <img style="height: 190px" class="image" src=${img} alt="${product.title}">
                                             <div class="font">
                                                 <c:set var="title" value="${product.title}"/>
                                                 <h5><strong>${title}</strong></h5>
@@ -150,7 +150,7 @@
                                     </div>
                                 </c:forEach>
                                 <c:if test="${countDisplay eq 0}">
-                                    <p>Không có sản phẩm nào</p>
+                                    <p >Không có sản phẩm nào</p>
                                 </c:if>
                             </div>  
                         </div>
@@ -174,9 +174,6 @@
             </div>
         </div>
 
-        <footer>
-
-        </footer>
 
     </body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>

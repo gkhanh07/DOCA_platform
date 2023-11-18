@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -45,9 +46,11 @@
         <jsp:include page="header.jsp" />
         <c:set var="feedbackList" value="${requestScope.feedbackWithBuyerList}" />
         <c:set var="seller" value="${requestScope.seller}" />
+        <c:set var="listProduct" value="${requestScope.listProduct}" />
         <div class="main-content">
             <div class="row row-content justify-content-center">
                 <div class="col-sm-8 ">
+                    <p class="text-warning">${haveFeedback}</p>
                     <div class="container mt-5 justify-content-center">
                         <div class="row profile-seller-info mt-5 rounded-pill" style="background-color:#CAD2C5">
                             <img src="${seller.avatar}"
@@ -55,12 +58,30 @@
                                  class="rounded-circle profile-image" style=" object-fit: cover;
                                  border-radius: 50%;  width: 80px;
                                  height: 80px;">
-                            <a id="profileLink" href="Profilemember?userId=${seller.user_ID}" class="username ml-2 mt-2 text-dark">
-                                ${seller.userName}</a>
-
+                            <div>
+                                <a id="profileLink" href="Profilemember?userId=${seller.user_ID}" class="username ml-2 mt-2 text-dark">
+                                    ${seller.userName}</a>
+                                    <c:if test="${averageRate > 0.0}">
+                                    <div class="row ml-1 ">
+                                        <p class="mr-2 mb-1">Điểm đánh giá: ${averageRate}/5</p> 
+                                    </div>
+                                    <div class="row ml-1 ">
+                                        <c:set var="averageRateStr" value="${averageRate}" />
+                                        <c:set var="firstDigit" value="${fn:substring(averageRateStr, 0, 1)}" />
+                                        <div class="stars-rating">
+                                            <c:forEach begin="1" end="${firstDigit}">
+                                                <i class="fa fa-star"></i>
+                                            </c:forEach>
+                                        </div>
+                                    </div>
+                                </c:if>
+                                <c:if test="${averageRate == 0.0}">
+                                    <p class="ml-2">Không có đánh giá</p>
+                                </c:if>
+                            </div>
                         </div> 
                         <hr>
-                        <div class=" container feedbackList p-0">
+                        <div class="container feedbackList p-0">
                             <c:forEach items="${feedbackList}" var="feedbackWBuyer">
                                 <div class="row profile-seller-info mt-2">
                                     <img src="${feedbackWBuyer.getBuyer().getAvatar()}"
@@ -68,13 +89,37 @@
                                          class="rounded-circle profile-image" style=" object-fit: cover;
                                          border-radius: 50%;  width: 32px;
                                          height: 32px;">
-                                    <a id="profileLink" href="" class="username text-dark">${feedbackWBuyer.getBuyer().getUserName()}</a>
+                                    <a id="profileLink" href="Profilemember?userId=${feedbackWBuyer.getBuyer().user_ID}" class="username text-dark">${feedbackWBuyer.getBuyer().getUserName()}</a>
                                 </div>
                                 <div class="row feedback_content">
                                     <p>${feedbackWBuyer.getFeedback().getFeedback_content()}</p>
                                 </div>
                                 <div class="row rate">
-                                    <p>đánh giá: ${feedbackWBuyer.getFeedback().getRate()}/5</p>
+
+
+                                    <c:set var="averageRateStr" value="${feedbackWBuyer.getFeedback().getRate()}" />
+                                    <c:set var="firstDigit" value="${fn:substring(averageRateStr, 0, 1)}" />
+                                    <div class="stars-rating">
+                                        <c:forEach begin="1" end="${firstDigit}">
+                                            <i class="fa fa-star"></i>
+                                        </c:forEach>
+                                    </div>
+
+                                </div>
+                                <div class="row product ">
+                                    <c:forEach items="${listProduct}" var="product">
+                                        <c:if test="${product.productId == feedbackWBuyer.getFeedback().getProduct_id()}">
+                                            <a href="productDetailServlet?productId=${product.productId}" class="row m-0" style="width: 100%" >
+                                                <img src="${product.productImage}"
+                                                     class="col-sm-4 p-0"
+                                                     alt="product Image"
+                                                     style=" object-fit: cover;
+                                                     border-radius: 10%;  max-width: 56px;
+                                                     max-height: 56px;">
+                                                <p class="col-sm-8">${product.title}</p>
+                                            </a>
+                                        </c:if>
+                                    </c:forEach>
                                 </div>
                                 <hr class="m-0">
                             </c:forEach>
@@ -83,6 +128,7 @@
                 </div>
             </div>
         </div>
+                                 
     </body>
 </html>
 

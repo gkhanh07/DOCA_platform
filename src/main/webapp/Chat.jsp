@@ -91,20 +91,22 @@
                                                                                  border-radius: 50%;  width: 46px;
                                                                                  height: 46px;">
                                                                         </div>
-                                                                        <div class="col-sm-6 p-0">
+                                                                        <div class="col-lg-6 p-0">
                                                                             <p class="mb-1">${partner.userName}</p>
 
-                                                                            <a class=" Conversation-name"
+
+                                                                            <a class=" Conversation-name "
                                                                                onclick="loadMessages(${conversation.conversation_id},${AnotherUserID});">  
-                                                                                <small class="text-muted"> ${Product.title}</small>
+                                                                                <small  style="color: #D1F0E8 ;"> ${Product.title}</small>
                                                                             </a>
+
                                                                         </div>
-                                                                        <div class="col-sm-3 p-0">
+                                                                        <div class="col-xl-3 p-0">
                                                                             <img src="${Product.productImage}"
                                                                                  alt="Product Image"
                                                                                  class="Product-image ml-1 " style=" object-fit: cover;
-                                                                                 border-radius: 10%;  width: 60px;
-                                                                                 height: 60px;">
+                                                                                 border-radius: 10%;  max-width: 60px;
+                                                                                 max-height: 60px;">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -127,9 +129,7 @@
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
                                                                     <h5 class="modal-title" id="ratingModalLabel">Đánh giá người bán </h5>
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
                                                                 </div>
                                                                 <div class="modal-body">
 
@@ -164,7 +164,7 @@
                             </ul>
                         </div>
                         <div class="listMessage col-sm-8 pr-0 " style=" height: 590px;background-color: #DAD7CD; " >
-                            <div style="height: 56px; " >
+                            <div style="height: 50px; " >
                                 <div class="row profile-seller-info mt-2" style="display: none;">
                                     <img src=""
                                          alt="Profile Image"
@@ -182,13 +182,15 @@
                             </div>
                             <div > 
                                 <form id="message_input" style="display: none;">
-                                    <div class="row ">
-                                        <div class="col-10 pl-1">
+                                    <div class="row d-flex justify-content-between m-0">
+                                        <div class=" pl-0 flex-grow-1">
                                             <input type="text" class="form-control p-0" placeholder="" 
-                                                   style="width: 420px">
+                                                   style="width: 100%">
                                         </div>
-                                        <div class="col-2 p-0">
-                                            <button class="btn btn-primary">Send</button>
+                                        <div class="mr-3">
+                                            <button class="btn btn-primary">
+                                                <i class="fa fa-paper-plane"></i>
+                                            </button>
                                         </div>
                                     </div>
                                 </form>
@@ -198,6 +200,7 @@
                 </div>
             </div>
         </div>
+        
         <script>
             function openFeedbackForm(conversationid) {
                 $('#ratingModal' + conversationid).modal('show');
@@ -327,5 +330,6 @@
                 input.value = '';
             }
         </script>
+        
     </body>
 </html>

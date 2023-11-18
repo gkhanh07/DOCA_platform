@@ -47,7 +47,42 @@
         <link rel="stylesheet" href="assets/css/forum-style-V3.css">
         <!-- Link JS -->
 
+ <script>
+        // Function to submit the form on page load
+        window.onload = function () {
+            var categorySelect = document.getElementById("categorySelect");
+            var storedCategory = localStorage.getItem("selectedCategory");
 
+            // Check if there's a stored value and set the dropdown value
+            if (storedCategory) {
+                categorySelect.value = storedCategory;
+            }
+
+            // Submit the form
+            document.forms["productForm"].submit();
+        };
+
+        // Function to submit the form when the category is changed
+        function submitForm() {
+            var categorySelect = document.getElementById("categorySelect");
+            localStorage.setItem("selectedCategory", categorySelect.value);
+            document.forms["productForm"].submit();
+        }
+
+        // Function to redirect to post servlet
+        function redirectToPostServlet() {
+            // Implement redirection logic if needed
+            // For now, just alert
+            alert("Redirecting to Post Servlet");
+        }
+
+        // Function to redirect to user servlet
+        function redirectToUserServlet() {
+            // Implement redirection logic if needed
+            // For now, just alert
+            alert("Redirecting to User Servlet");
+        }
+    </script>
 
     </head>
     <body>
@@ -57,16 +92,32 @@
         <jsp:include page="headerAdmin.jsp" />
 
         <div class="container"  style="margin-top: 150px;">
-           
+
             <ul class="nav nav-tabs mb-4">
                 <li class="nav-item">
-                    <a class="nav-link " data-bs-toggle="tab" onclick="redirectToPostServlet()">Forum</a>
+                    <a class="nav-link " data-bs-toggle="tab" onclick="redirectToPostServlet()">Bài viết</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" data-bs-toggle="tab" href="#product">Product</a>
+                    <a class="nav-link active" data-bs-toggle="tab" href="#product" onclick="submitForm()">Sản phẩm</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab"  onclick="redirectToUserServlet()">Tài khoản</a>
                 </li>
             </ul>
+           
+            <form name="productForm" action="AdminManageProductPostServlet" onsubmit="saveCategory()">
+                <div class="dropdown mb-3">
+                    <label for="categorySelect" class="form-label">Chọn danh mục:</label>
+                    <select class="form-select" id="categorySelect" name="category" onchange="submitForm()">
+                        <option value="0">Tất cả</option>
+                        <option value="1">Phụ kiện</option>
+                        <option value="2">Thức ăn</option>
+                        <option value="3">Chuồng động vật</option>
+                        <option value="4">Khác</option>
+                    </select>
+                </div>
 
+            </form>
             <div class="tab-content">
                 <div class="tab-pane fade show active container" id="product">
                     <div class="row">
@@ -105,6 +156,7 @@
                                                         <form action="ManagePostProductServlet">
                                                             <input type="hidden" name="productId" value="${product.productId}" />
                                                             <input type="hidden" name="productTitle" value="${product.title}" />
+                                                            <input type="hidden" name="userId" value="${product.userId}" />
                                                             <button class="btn btn-success approval-button" name="status" value="approve"><i class="fa-solid fa-check"></i> Duyệt</button>
                                                         </form>
                                                     </div>
@@ -132,14 +184,38 @@
                                                 <input type="hidden" name="status" value="reject" />
                                                 <input type="hidden" name="productTitle" value="${product.title}" />
                                                 <input type="hidden" name="productId" value="${product.productId}" />
+                                                <input type="hidden" name="userId" value="${product.userId}" />
                                                 <input type="submit" name="" value="Gửi" />
                                             </form>
                                         </div>
                                     </div>
                                 </div>
+
+                                <script>
+                                    // Function to save the selected category to local storage
+                                    function saveCategory() {
+                                        var categorySelect = document.getElementById("categorySelect");
+                                        var selectedCategory = categorySelect.value;
+                                        localStorage.setItem("selectedCategory", selectedCategory);
+                                    }
+
+                                    // Function to set the dropdown value on page load
+                                    window.onload = function () {
+                                        var categorySelect = document.getElementById("categorySelect");
+                                        var storedCategory = localStorage.getItem("selectedCategory");
+
+                                        // Check if there's a stored value and set the dropdown value
+                                        if (storedCategory) {
+                                            categorySelect.value = storedCategory;
+                                        }
+                                    };
+                                </script>
                                 <script>
                                     function redirectToPostServlet() {
                                         window.location.href = "AdminManageForumPostServlet";
+                                    }
+                                    function redirectToUserServlet() {
+                                        window.location.href = "AllUserServlet";
                                     }
                                 </script>
                                 <!--</form>-->

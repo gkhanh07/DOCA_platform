@@ -195,7 +195,7 @@ public class PostDAO {
         }
     }
 
-    public List<PostDTO> getPostsByUserID(int userID)
+    public List<PostDTO> getPostsByUserID(int userID, int index, String status)
             throws SQLException, ClassNotFoundException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -216,11 +216,14 @@ public class PostDAO {
                         + "      ,[status]\n"
                         + "      ,[reason]\n"
                         + "  FROM [dbo].[post]"
-                        + " WHERE user_id = ?"
-                        + " ORDER BY timePosted DESC";
+                        + " WHERE user_id = ? AND status = ?"
+                        + " ORDER BY timePosted DESC"
+                        + " OFFSET ? ROWS FETCH NEXT 6 ROWS ONLY";
                 // Create prepared statement
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, userID);
+                stm.setString(2, status);
+                stm.setInt(3, (index - 1) * 6);
                 // Execute query
                 rs = stm.executeQuery();
                 // Process the result set
@@ -232,11 +235,11 @@ public class PostDAO {
                     String postImage = rs.getString("post_image");
                     boolean isPublic = rs.getBoolean("isPublic");
                     Timestamp timePosted = rs.getTimestamp("timePosted");
-                    String status = rs.getString("status");
+                    String postStatus = rs.getString("status");
                     String reason = rs.getString("reason");
                     PostDAO daoCategory = new PostDAO();
                     List<Integer> categorys = daoCategory.categorys(postId);
-                    PostDTO post = new PostDTO(postId, categorys, userId, postContent, postImage, isPublic, timePosted, status, reason);
+                    PostDTO post = new PostDTO(postId, categorys, userId, postContent, postImage, isPublic, timePosted, postStatus, reason);
                     listOfPosts.add(post);
                 }
 
@@ -580,52 +583,6 @@ public class PostDAO {
 
     }
 
-    public boolean delPost(String postId) throws SQLException, ClassNotFoundException, NamingException {
-        Connection con = null;
-        PreparedStatement stmCategory = null;
-        PreparedStatement stmPost = null;
-        boolean result = false;
-        try {
-            //1. make connection 
-            con = DBconnect.makeConnection();
-            if (con != null) {
-                //2.create sql String
-                String sqlDelCategory = "DELETE FROM [dbo].[categoryLinkpost]\n"
-                        + "      WHERE post_id = ?";
-                //3.create stm obj
-                stmCategory = con.prepareStatement(sqlDelCategory);
-                stmCategory.setString(1, postId);
-                //4.execute
-                int effectRowsCategory = stmCategory.executeUpdate();
-                //5.Process
-                if (effectRowsCategory <= 0) {
-                    return result;
-                }
-                String sqlDelPost = "DELETE FROM [dbo].[post]\n"
-                        + "      WHERE post_id = ?";
-                stmPost = con.prepareStatement(sqlDelPost);
-                stmPost.setString(1, postId);
-                int effectRowsPost = stmPost.executeUpdate();
-                if (effectRowsPost > 0) {
-                    result = true;
-                }
-
-            }
-        } finally {
-
-            if (stmCategory != null) {
-                stmCategory.close();
-            }
-            if (stmPost != null) {
-                stmPost.close();
-            }
-            if (con != null) {
-                con.close();
-            }
-        }
-        return result;
-    }
-
     public List<Integer> categorys(int postId) throws SQLException, ClassNotFoundException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -696,7 +653,7 @@ public class PostDAO {
                         }
                     }
 
-                    String updatePost = "Update post Set post_content = ? , post_image = ? where post_id = ? ";
+                    String updatePost = "Update post Set post_content = ? , post_image = ? , status = 'pending' where post_id = ? ";
                     stmUpdate = con.prepareStatement(updatePost);
                     stmUpdate.setString(1, updateContent);
                     stmUpdate.setString(2, updateImg);
@@ -725,4 +682,241 @@ public class PostDAO {
         }
         return result;
     }
+
+    public void updatePostIsPublic(int postId, boolean isPublic) throws SQLException, ClassNotFoundException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            con = DBconnect.makeConnection();
+            if (con != null) {
+                // Create SQL string
+                String sql = "UPDATE [dbo].[post] SET isPublic = ? WHERE post_id = ?";
+                // Create statement object
+                stm = con.prepareStatement(sql);
+                stm.setBoolean(1, isPublic);
+                stm.setInt(2, postId);
+                // Execute update
+                stm.executeUpdate();
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
+
+    public int getTotalPostsByUserId(int userId, String status) throws SQLException, ClassNotFoundException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+
+        int totalPosts = 0;
+
+        try {
+            con = DBconnect.makeConnection();
+
+            String sql = "SELECT COUNT(*) FROM post WHERE user_id = ? AND status = ?";
+            stm = con.prepareStatement(sql);
+            stm.setInt(1, userId);
+            stm.setString(2, status);
+
+            rs = stm.executeQuery();
+
+            if (rs.next()) {
+                totalPosts = rs.getInt(1);
+            }
+        } finally {
+            // Close resources in the reverse order of their creation
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+
+        return totalPosts;
+    }
+
+    public List<PostDTO> pagingAccount(int user_ID, int index) throws SQLException, ClassNotFoundException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<PostDTO> listOfPagingPost = new ArrayList<>();
+        try {
+            con = DBconnect.makeConnection();
+            if (con != null) {
+                String sql = "SELECT * From post \n"
+                        + "WHERE user_id = ? \n"
+                        + "OFFSET ? ROW FETCH NEXT 6 ROWS ONLY";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, user_ID);
+                stm.setInt(2, (index - 1) * 6);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    int postId = rs.getInt("post_id");
+                    int userId = rs.getInt("user_id");
+                    String postContent = rs.getString("post_content");
+                    String postImage = rs.getString("post_image");
+                    boolean isPublic = rs.getBoolean("isPublic");
+                    Timestamp timePosted = rs.getTimestamp("timePosted");
+                    String status = rs.getString("status");
+                    String reason = rs.getString("reason");
+                    PostDTO post = new PostDTO(postId, userId, postContent, postImage, isPublic, timePosted, status, reason);
+                    listOfPagingPost.add(post);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+
+        }
+
+        return listOfPagingPost;
+    }
+
+    public List<PostDTO> pagingPost(int curStatus, int index) throws SQLException, ClassNotFoundException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<PostDTO> listOfPagingPost = new ArrayList<>();
+        try {
+            con = DBconnect.makeConnection();
+            if (con != null) {
+                String sql = "SELECT * From post \n"
+                        + "WHERE status = 'pending' \n "
+                        + "ORDER BY timePosted DESC \n"
+                        + "OFFSET ? ROWS FETCH NEXT 6 ROWS ONLY";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, curStatus);
+                stm.setInt(2, (index - 1) * 6);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    int postId = rs.getInt("post_id");
+                    int userId = rs.getInt("user_id");
+                    String postContent = rs.getString("post_content");
+                    String postImage = rs.getString("post_image");
+                    boolean isPublic = rs.getBoolean("isPublic");
+                    Timestamp timePosted = rs.getTimestamp("timePosted");
+                    String status = rs.getString("status");
+                    String reason = rs.getString("reason");
+                    PostDTO post = new PostDTO(postId, userId, postContent, postImage, isPublic, timePosted, status, reason);
+                    listOfPagingPost.add(post);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+
+        }
+
+        return listOfPagingPost;
+    }
+
+    public int countPostsByStatus(String statusNow) throws SQLException, ClassNotFoundException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        int postCount = 0;
+
+        try {
+            con = DBconnect.makeConnection();
+            if (con != null) {
+                String sql = "SELECT COUNT(*) AS postCount FROM [dbo].[post] WHERE status = ?";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, statusNow);
+
+                rs = stm.executeQuery();
+
+                if (rs.next()) {
+                    postCount = rs.getInt("postCount");
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+
+            if (stm != null) {
+                stm.close();
+            }
+
+            if (con != null) {
+                con.close();
+            }
+        }
+
+        return postCount;
+    }
+public List<PostDTO> getPostByCategoryIDv2(int categoryID) throws SQLException, ClassNotFoundException, NamingException {
+    List<PostDTO> listOfPost = new ArrayList<>();
+    Connection con = null;
+    PreparedStatement stm = null;
+    ResultSet rs = null;
+
+    try {
+        con = DBconnect.makeConnection();
+        if (con != null) {
+            String sql = "SELECT p.post_id, p.user_id, p.post_content, p.post_image, p.isPublic, p.timePosted, p.status, p.reason "
+                    + "FROM post p "
+                    + "JOIN categoryLinkpost clp ON p.post_id = clp.post_id "
+                    + "WHERE clp.category_id = ?"
+                    + " ORDER BY timePosted DESC";
+            
+            stm = con.prepareStatement(sql);
+            stm.setInt(1, categoryID);
+            rs = stm.executeQuery();
+
+            while (rs.next()) {
+                int postId = rs.getInt("post_id");
+                int userId = rs.getInt("user_id");
+                String postContent = rs.getString("post_content");
+                String postImage = rs.getString("post_image");
+                boolean isPublic = rs.getBoolean("isPublic");
+                Timestamp timePosted = rs.getTimestamp("timePosted");
+                String status = rs.getString("status");
+                String reason = rs.getString("reason");
+
+                PostDTO post = new PostDTO(postId, userId, postContent, postImage, isPublic, timePosted, status, reason);
+                listOfPost.add(post);
+            }
+        }
+    } finally {
+            if (rs != null) {
+                rs.close();
+            }
+
+            if (stm != null) {
+                stm.close();
+            }
+
+            if (con != null) {
+                con.close();
+            }
+        }
+
+    return listOfPost;
+}
+    
+
 }

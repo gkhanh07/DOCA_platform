@@ -43,17 +43,32 @@ public class AdminManageProductPostServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String url = "Error.html";
+        String category = request.getParameter("category");
+        String indexPage = request.getParameter("index");   
+        if(indexPage == null){
+            indexPage = "1";
+        }
+        int index = Integer.parseInt(indexPage);
         try {
             response.setContentType("text/html;charset=UTF-8");
 
             ProductDAO dao = new ProductDAO();
-            dao.getProductsbyStatus(status);
+            
+//            int countProduct = dao.countPendingProducts();
+//            int endPage = countProduct / 6;
+//                if(countProduct % 6 != 0){
+//                    endPage++;
+//                }
+//            request.setAttribute("endPage", endPage);    
+            
+            dao.getProductsbyStatus(status, category);
             List<ProductDTO> listProductByStatus = dao.getListProductByStatus();
+            
+           
             if (listProductByStatus != null) {
                 request.setAttribute("listOfProduct", listProductByStatus);
-                url = adminShowProduct;
             }
-
+            url = adminShowProduct;
         } catch (SQLException ex) {
             Logger.getLogger(AdminManageProductPostServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {

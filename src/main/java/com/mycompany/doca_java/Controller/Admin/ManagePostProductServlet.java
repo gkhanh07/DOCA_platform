@@ -59,20 +59,20 @@ public class ManagePostProductServlet extends HttpServlet {
             String productId = request.getParameter("productId");;
             String status = request.getParameter("status");
             String productTitle = request.getParameter("productTitle");
-
+            int userId = Integer.parseInt(request.getParameter("userId"));
             String first80Chars = productTitle.substring(0, Math.min(productTitle.length(), 80));
             String noDes = "";
             //chi lay 15 ky tu tu chuoi
             if (status.equals("approve")) {
                 setStatus = statusApprove;
                 noDes = messageApprove + "-" + first80Chars + "...";
-                resultInsNotifi = notiDao.insertNotification(2, noDes, timeNotification);
+                resultInsNotifi = notiDao.insertNotification(userId, noDes, timeNotification);
 
             } else {
                 setStatus = statusReject;
                 reason = request.getParameter("reasonSelect");
                 noDes = messageReject + reason + "-" + first80Chars + "...";
-                resultInsNotifi = notiDao.insertNotification(2, noDes, timeNotification);
+                resultInsNotifi = notiDao.insertNotification(userId, noDes, timeNotification);
             }
 
             ProductDAO dao = new ProductDAO();

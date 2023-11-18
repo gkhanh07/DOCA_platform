@@ -499,34 +499,6 @@ public class ProductDAO {
         return result;
     }
 
-    public boolean deleteProduct(int productId) throws SQLException, ClassNotFoundException, NamingException {
-        Connection con = null;
-        PreparedStatement stm = null;
-        boolean result = false;
-        try {
-            con = DBconnect.makeConnection();
-            if (con != null) {
-                String sql = "DELETE FROM product WHERE product_id = ?";
-                stm = con.prepareStatement(sql);
-                stm.setInt(1, productId);
-
-                // Execute the query
-                int rowsAffected = stm.executeUpdate();
-                if (rowsAffected > 0) {
-                    result = true;
-                }
-            }
-        } finally {
-            if (stm != null) {
-                stm.close();
-            }
-            if (con != null) {
-                con.close();
-            }
-        }
-        return result;
-    }
-
     public boolean updateIsPublic(int productId, boolean isPublic) throws SQLException, ClassNotFoundException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -562,7 +534,7 @@ public class ProductDAO {
         return ListProductByStatus;
     }
 
-    public void getProductsbyStatus(String statusNow) throws SQLException, ClassNotFoundException, NamingException {
+    public void getProductsbyStatus(String statusNow, String category) throws SQLException, ClassNotFoundException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -570,23 +542,19 @@ public class ProductDAO {
             con = DBconnect.makeConnection();
             if (con != null) {
                 //2.create sql string
-                String sql = "SELECT [product_id]\n"
-                        + "      ,[user_id]\n"
-                        + "      ,[category_id]\n"
-                        + "      ,[title]\n"
-                        + "      ,[description]\n"
-                        + "      ,[product_image]\n"
-                        + "      ,[is_free]\n"
-                        + "      ,[price]\n"
-                        + "      ,[address]\n"
-                        + "      ,[timePosted]\n"
-                        + "      ,[isPublic]\n"
-                        + "      ,[status]\n"
-                        + "      ,[reason]\n"
-                        + "  FROM [dbo].[product]" + " Where status =? ";
-                //3.create stm obj
-                stm = con.prepareStatement(sql);
-                stm.setString(1, statusNow);
+                String sql;
+                if ("0".equals(category)) {
+                    // If category is "Tất cả" (All), retrieve all products regardless of the category
+                    sql = "SELECT [product_id], [user_id], [category_id], [title], [description], [product_image], [is_free], [price], [address], [timePosted], [isPublic], [status], [reason] FROM [dbo].[product] WHERE status = ?";
+                    stm = con.prepareStatement(sql);
+                    stm.setString(1, statusNow);
+                } else {
+                    // If a specific category is selected, retrieve products with that category
+                    sql = "SELECT [product_id], [user_id], [category_id], [title], [description], [product_image], [is_free], [price], [address], [timePosted], [isPublic], [status], [reason] FROM [dbo].[product] WHERE status = ? AND category_id = ?";
+                    stm = con.prepareStatement(sql);
+                    stm.setString(1, statusNow);
+                    stm.setString(2, category);
+                }
                 //4.execute
                 rs = stm.executeQuery();
                 //5.process (Note: Luu y Khi SU DUNG IF/WHILE)
@@ -665,4 +633,5 @@ public class ProductDAO {
         return result;
 
     }
+    
 }

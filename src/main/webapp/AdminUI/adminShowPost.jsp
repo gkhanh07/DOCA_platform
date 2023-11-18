@@ -23,7 +23,7 @@
         <!-- Link Iconn  -->
         <link rel="stylesheet" href="fontawesome-free-6.4.2-web/css/fontawesome.css"> 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <!-- jQuery first, then Popper.js, then Bootstrap JS. -->
 
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -51,21 +51,47 @@
     <body>
         <!--set var-->
         <c:set var="listPost" value="${requestScope.listofPost}"/>
+        <c:set var="currentPage" value="${requestScope.currentPage}" />
         <jsp:include page="headerAdmin.jsp" />
 
         <div class="container " style="margin-top: 150px;">
             <ul class="nav nav-tabs mb-4">
                 <li class="nav-item">
-                    <a class="nav-link active" data-bs-toggle="tab" href="AdminManageForumPostServlet">Forum</a>
+                    <a class="nav-link active" data-bs-toggle="tab" href="AdminManageForumPostServlet">Bài viết</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="tab" 
-                       onclick="redirectToProductServlet()">Product</a>
+                       onclick="redirectToProductServlet()">Sản phẩm</a>
                 </li>
-                <li>
-                    <a class="nav-link"  href="AllUserServlet">Manage User</a>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab"  onclick="redirectToUserServlet()">Tài khoản</a>
                 </li>
             </ul>
+
+
+
+            <form id="filterForm" action="AdminManageForumPostServlet" method="GET">
+                <!-- Add this script to submit the form -->
+                <script>
+                    function filterByCategory() {
+                        document.getElementById("filterForm").submit();
+                    }
+                </script>
+
+                <!-- Modify the select element to include onchange event -->
+                <select class="form-select" id="categorySelect" name="categorypost" onchange="filterByCategory()">
+                    <option value="0">Tất cả</option>
+                    <option value="5">Câu chuyện</option>
+                    <option value="6">Mẹo huấn luyện</option>
+                    <option value="7">Mẹo chăm sóc</option>
+                    <option value="8">Sự kiện</option>
+                    <option value="9">Thất lạc</option>
+                </select>
+
+                <!-- Add a submit button -->
+               
+            </form>
+
 
             <div class="tab-content ">
                 <div class=" tab-pane fade show active container" id="forum">
@@ -77,17 +103,14 @@
                                     <div class="post my-4 border rounded position-relative">
                                         <div class="post-header">
                                             <div class="profile-info">
-                                                <img src="assets/images/doge.jpeg" alt="Profile Image"
-                                                     class="rounded-circle profile-image">
                                                 <div class="profile-details">
-                                                    <a href="#" class="username">${post.userId}</a>
                                                     <div class="post-time text-muted">${post.timePosted}</div>
                                                 </div>
                                             </div>
 
                                         </div>
                                         <div class="post-body">
-                                            <p class="post-text">${post.postContent}</p>
+                                            <p class="post-text ml-0">${post.postContent}</p>
                                             <img src="${post.postImage}" alt="Post Img" class="d-flex mx-auto" style="max-width: 300px; max-height: 300px; border-radius: 2%;">
                                         </div>
                                         <div class="post-footer ">
@@ -97,6 +120,7 @@
                                                         <form action="ManagePostForumServlet">
                                                             <input type="hidden" name="postId" value="${post.postId}" />
                                                             <input type="hidden" name="postDes" value="${post. postContentFormat()}" />
+                                                            <input type="hidden" name="userId" value="${post.userId}" />
                                                             <button class="btn btn-success approval-button" name="status" value="approved"><i class="fa-solid fa-check"></i>Duyệt</button>
                                                         </form>
                                                     </div>
@@ -122,6 +146,7 @@
                                                 </div>
                                                 <input type="hidden" name="status" value="rejected" />
                                                 <input type="hidden" name="postDes" value="${post.postContent}" />
+                                                <input type="hidden" name="userId" value="${post.userId}" />
                                                 <input type="hidden" name="postId" value="${post.postId}" />
                                                 <input type="submit" name="" value="Gửi" />
                                             </form>
@@ -129,14 +154,32 @@
                                     </div>
                                 </div>
                             </c:forEach>
+
+
+
                         </div>
+
                         <div class="col-sm-2"></div>
                     </div>
+
                 </div>
+
             </div>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <c:forEach begin="1" end="${endPage}" var="i">
+                        <li class="page-item ${i eq currentPage ? 'active' : ''}">
+                            <a class="page-link" href="AdminManageForumPostServlet?index=${i}" style="text-decoration: none; padding: 5px; border: 1px solid #ccc;">${i}</a>
+                        </li>
+                    </c:forEach>
+                </ul>
+            </nav>
             <script>
                 function redirectToProductServlet() {
                     window.location.href = "AdminManageProductPostServlet";
+                }
+                function redirectToUserServlet() {
+                    window.location.href = "AllUserServlet";
                 }
             </script>
             <script>
@@ -144,7 +187,6 @@
                     var reasonForm = document.getElementById("reasonForm" + postId);
                     reasonForm.style.display = "block";
                 }
-
                 function hideForm() {
                     var reasonForm = document.getElementById("reasonForm");
                     reasonForm.style.display = "none";
@@ -157,7 +199,6 @@
                 function approveAction() {
                     hideForm();
                 }
-
                 function submitReason() {
                     var reasonInput = document.getElementById("reasonInput").value;
                     // Thực hiện xử lý với reasonInput ở đây (ví dụ: gửi dữ liệu lên máy chủ)

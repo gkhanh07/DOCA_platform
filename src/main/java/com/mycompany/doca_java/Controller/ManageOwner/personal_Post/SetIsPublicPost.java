@@ -2,38 +2,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package com.mycompany.doca_java.Controller;
+package com.mycompany.doca_java.Controller.ManageOwner.personal_Post;
 
 import com.mycompany.doca_java.DAO.PostDAO;
-import com.mycompany.doca_java.DAO.categoryDAO;
-import com.mycompany.doca_java.DAO.commentDAO;
-import com.mycompany.doca_java.DAO.likeDAO;
-import com.mycompany.doca_java.DAO.userDAO;
-import com.mycompany.doca_java.DTO.PostDTO;
-import com.mycompany.doca_java.DTO.categoryDTO;
-import com.mycompany.doca_java.DTO.commentDTO;
 import com.mycompany.doca_java.DTO.userDTO;
-import jakarta.servlet.RequestDispatcher;
+import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 import javax.naming.NamingException;
 
 /**
  *
- * @author minhluan
+ * @author Admin
  */
-@WebServlet(name = "postDetailServlet", urlPatterns = {"/postDetailServlet"})
-public class postDetailServlet extends HttpServlet {
-
-    private final String postDetail_Page = "postDetail.jsp";
-
+@WebServlet(name = "SetIsPublicPost", urlPatterns = {"/SetIsPublicPost"})
+public class SetIsPublicPost extends HttpServlet {
+ public static final String PERSONAL_POST_PAGE = "getPersonalPost";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -47,51 +37,28 @@ public class postDetailServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         int postID = Integer.parseInt(request.getParameter("postId"));
-        
+        boolean isPublic = Boolean.parseBoolean(request.getParameter("isPublic"));
+        HttpSession session = request.getSession();
+        userDTO account = (userDTO) session.getAttribute("USER_NAME");
         String url = "";
         try {
-            PostDAO dao = new PostDAO();
-            PostDTO postDetail = dao.getPostById(postID);
-            userDAO ownerDao = new userDAO();
-//            int commentID = Integer.parseInt(request.getParameter("commentId"));
-            if (postDetail != null) {
-                HttpSession session = request.getSession(true);
-                likeDAO likeDao= new likeDAO();
-                int likeCount=likeDao.getLikeCountByPostID(postID);
-                request.setAttribute("postDetail", postDetail);
-                request.setAttribute("likeCount", likeCount);
-
-                commentDAO cdao = new commentDAO();
-                cdao.getAllComment();
-                List<commentDTO> listOfComment = cdao.getListOfComment();
-                if (listOfComment != null) {
-                    request.setAttribute("listOfComment", listOfComment);
-                }
-//                boolean result = cdao.deleteComment(commentID);
-
-                userDTO owner = ownerDao.getUserbyPostID(postID);
-                request.setAttribute("owner", owner);
-                userDAO uDao = new userDAO();
-                uDao.getAllTheUser();
-                List<userDTO> ListOfUser = uDao.getListOfUser();
-                if (ListOfUser != null) {
-                    request.setAttribute("ListOfUser", ListOfUser);
-                }
-
-                url = postDetail_Page;
-
+            if (isPublic == true) {
+                isPublic = false;
+            } else {
+                isPublic = true;
             }
+            PostDAO dao = new PostDAO();
+            dao.updatePostIsPublic(postID, isPublic);
+
+            url = PERSONAL_POST_PAGE;
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         } catch (NamingException ex) {
             ex.printStackTrace();
         } catch (SQLException ex) {
             ex.printStackTrace();
-//        } catch (NumberFormatException ex) {
-//            ex.printStackTrace();
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            response.sendRedirect(url);
         }
     }
 

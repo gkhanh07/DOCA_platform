@@ -58,20 +58,21 @@ public class ManagePostForumServlet extends HttpServlet {
             String postId = request.getParameter("postId");
             String status = request.getParameter("status");
             String postDes = request.getParameter("postDes");
+            int userId = Integer.parseInt(request.getParameter("userId"));
 
             String first80Chars = postDes.substring(0, Math.min(postDes.length(), 80));
             String noDes = "";
             //chi lay 15 ky tu tu chuoi
-            if (status.equals("approve")) {
+            if (status.equals("approved")) {
                 setStatus = statusApprove;
                 noDes = messageApprove + "-" + first80Chars + "...";
-                resultInsNotifi = notiDao.insertNotification(2, noDes, timeNotification);
+                resultInsNotifi = notiDao.insertNotification(userId, noDes, timeNotification);
 
             } else {
                 setStatus = statusReject;
                 reason = request.getParameter("reasonSelect");
                 noDes = messageReject + reason + "-" + first80Chars + "...";
-                resultInsNotifi = notiDao.insertNotification(2, noDes, timeNotification);
+                resultInsNotifi = notiDao.insertNotification(userId, noDes, timeNotification);
             }
 
             PostDAO dao = new PostDAO();

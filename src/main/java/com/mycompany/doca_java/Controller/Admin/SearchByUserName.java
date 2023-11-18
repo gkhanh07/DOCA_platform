@@ -25,6 +25,8 @@ import javax.naming.NamingException;
 @WebServlet(name = "SearchByUserName", urlPatterns = {"/SearchByUserName"})
 public class SearchByUserName extends HttpServlet {
 
+    private final String adminShowUser = "AdminUI/alluser.jsp";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,23 +39,38 @@ public class SearchByUserName extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-      String username = request.getParameter("txtSearch").trim();
+        String username = request.getParameter("txtSearch").trim();
+        String indexPage = request.getParameter("index");
+        if (indexPage == null) {
+            indexPage = "1";
+        }
+        int index = Integer.parseInt(indexPage);
 
         try {
             userDAO userDAO = new userDAO();
-            List<userDTO> userList = userDAO.searchByUsername(username);
-            
-            // Set the search results as a request attribute
-            request.setAttribute("userList", userList);
+            int count = userDAO.countSearch(username);
+            int endPage = count / 6;
+            if (count % 6 != 0) {
+                endPage++;
+            }
+            request.setAttribute("endPage", endPage);
+
+            List<userDTO> userList = userDAO.searchByUsername(username, index);
+            if (userList != null) {
+                // Set the search results as a request attribute
+                request.setAttribute("userList", userList);
+                request.setAttribute("save", username);
+            } else {
+                request.setAttribute("ErroMessage", "Không tìm thấy tài khoản có tên : ");
+            }
 
             // Forward the request to the JSP page to display the results
-            RequestDispatcher dispatcher = request.getRequestDispatcher("alluser.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher(adminShowUser);
             dispatcher.forward(request, response);
         } catch (SQLException | ClassNotFoundException | NamingException e) {
             e.printStackTrace(); // Handle exceptions appropriately in a production environment
         }
     }
-    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -79,9 +96,9 @@ public class SearchByUserName extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-     protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       processRequest(request, response);
+        processRequest(request, response);
     }
 
     /**

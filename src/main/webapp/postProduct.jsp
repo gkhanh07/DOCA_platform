@@ -74,7 +74,7 @@
 
                     <h1>Bài đăng bán của bạn</h1>
 
-                    <form action="PostPorductV2" method="post" enctype="multipart/form-data"   >
+                    <form action="PostPorductV2" method="post" onsubmit="return validateForm()" enctype="multipart/form-data"   >
                         <h5>Danh mục đăng tin</h5>
                         <div class="dropdown mt-3 mb-3">
                             <select class="form-select" aria-label="Default select example" name="category_Product">
@@ -102,13 +102,14 @@
                                 <label for="input-fee">Giá:</label>
                                 <input type="text" name="input-fee" id="input-fee" class="form-control" value="0">
                                 <input type="hidden" name="input-fee-hiden" value="" />
+                                <p id="ErrorFee" class="mb-0 text-danger"></p>
                                 <br>
                             </div>
                             <br>
 
                             <label for="radio-free">Miễn phí:</label>
                             <input type="radio" name="fee" value="free" id="radio-free" onclick="hideInput()">
-
+                            <p id="ErrorRadio" class="mb-0 text-danger"></p>
 
                         </div>
                         <div class="mb-3">
@@ -116,35 +117,35 @@
                             <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
                         </div>
                         <!-- bat dau modal -->
-                        <div class="container mt-3">
+                        <div class="container mt-3 p-0">
                             <!--Button mở modal--> 
                             <button type="button" class="btn btn-primary form-control" data-toggle="modal"
                                     data-target="#myModal">
                                 Địa chỉ
                             </button>
-
+                            <div id="addressResult" class="text-warning"></div>
                             <!--Modal--> 
                             <div class="modal" id="myModal">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <!--Modal Header--> 
                                         <div class="modal-header" data-toggle="collapse" data-target="#categoryList">
-                                            <h4 class="modal-title">Địa chỉ</h4>
+                                            <h4 class="modal-title ">Địa chỉ</h4>
                                         </div>
 
                                         <!--Modal body--> 
 
                                         <div class="col-6">
 
-                                            <select class="form-select form-select-sm mb-3" id="city" aria-label=".form-select-sm" name="city">
+                                            <select class="form-select form-select-sm mb-3" id="city" aria-label=".form-select-sm" name="city" >
                                                 <option value="" selected>Chọn tỉnh thành</option>
                                             </select>
 
-                                            <select class="form-select form-select-sm mb-3" id="district" aria-label=".form-select-sm" name="district">
+                                            <select class="form-select form-select-sm mb-3" id="district" aria-label=".form-select-sm" name="district" >
                                                 <option value="" selected>Chọn quận huyện</option>
                                             </select>
 
-                                            <select class="form-select form-select-sm mb-3" id="ward" aria-label=".form-select-sm" name="ward">
+                                            <select class="form-select form-select-sm mb-3" id="ward" aria-label=".form-select-sm" name="ward" >
                                                 <option value="" selected>Chọn phường xã</option>
                                             </select>
 
@@ -157,7 +158,7 @@
                                             <button type="submit" class="btn btn-secondary"
                                                     data-dismiss="modal">Đóng</button>
                                             <button type="submit" class="btn btn-secondary"
-                                                    data-dismiss="modal">Xong</button>
+                                                    data-dismiss="modal" onclick="displayAddress()">Xong</button>
 
                                         </div>
                                     </div>
@@ -170,50 +171,60 @@
                 </div>
             </div>
         </div>
-        <div id="footer"></div>
+       
     </body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
     <script>
-                                var cities = document.getElementById("city");
-                                var districts = document.getElementById("district");
-                                var wards = document.getElementById("ward");
-                                var Parameter = {
-                                    url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
-                                    method: "GET",
-                                    responseType: "application/json"
-                                };
-                                var promise = axios(Parameter);
-                                promise.then(function (result) {
-                                    renderCity(result.data);
-                                });
+                                                        var cities = document.getElementById("city");
+                                                        var districts = document.getElementById("district");
+                                                        var wards = document.getElementById("ward");
+                                                        var Parameter = {
+                                                            url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+                                                            method: "GET",
+                                                            responseType: "application/json"
+                                                        };
+                                                        var promise = axios(Parameter);
+                                                        promise.then(function (result) {
+                                                            renderCity(result.data);
+                                                        });
 
-                                function renderCity(data) {
-                                    for (const city of data) {
-                                        cities.options[cities.options.length] = new Option(city.Name, city.Name);
-                                    }
-                                    cities.onchange = function () {
-                                        districts.length = 1;
-                                        wards.length = 1;
-                                        if (this.value !== "") {
-                                            const selectedCity = data.find(city => city.Name === this.value);
+                                                        function renderCity(data) {
+                                                            for (const city of data) {
+                                                                cities.options[cities.options.length] = new Option(city.Name, city.Name);
+                                                            }
+                                                            cities.onchange = function () {
+                                                                districts.length = 1;
+                                                                wards.length = 1;
+                                                                if (this.value !== "") {
+                                                                    const selectedCity = data.find(city => city.Name === this.value);
 
-                                            for (const district of selectedCity.Districts) {
-                                                districts.options[districts.options.length] = new Option(district.Name, district.Name);
-                                            }
-                                        }
-                                    };
-                                    districts.onchange = function () {
-                                        wards.length = 1;
-                                        const selectedCity = data.find(city => city.Name === cities.value);
-                                        if (this.value !== "") {
-                                            const selectedDistrict = selectedCity.Districts.find(district => district.Name === this.value);
+                                                                    for (const district of selectedCity.Districts) {
+                                                                        districts.options[districts.options.length] = new Option(district.Name, district.Name);
+                                                                    }
+                                                                }
+                                                            };
+                                                            districts.onchange = function () {
+                                                                wards.length = 1;
+                                                                const selectedCity = data.find(city => city.Name === cities.value);
+                                                                if (this.value !== "") {
+                                                                    const selectedDistrict = selectedCity.Districts.find(district => district.Name === this.value);
 
-                                            for (const ward of selectedDistrict.Wards) {
-                                                wards.options[wards.options.length] = new Option(ward.Name, ward.Name);
-                                            }
-                                        }
-                                    };
-                                }
+                                                                    for (const ward of selectedDistrict.Wards) {
+                                                                        wards.options[wards.options.length] = new Option(ward.Name, ward.Name);
+                                                                    }
+                                                                }
+                                                            };
+                                                        }
+
+                                                        function displayAddress() {
+                                                            var selectedCity = cities.value;
+                                                            var selectedDistrict = districts.value;
+                                                            var selectedWard = wards.value;
+
+                                                            var address = selectedCity + " - " + selectedDistrict + " - " + selectedWard;
+                                                            document.getElementById("addressResult").textContent = address;
+                                                            document.getElementById("hiddenAddress").value = address;
+                                                        }
     </script>
     <script>
         $(document).ready(function () {
@@ -233,7 +244,7 @@
             });
         });
 
-       
+
         const inputFee = document.getElementById('input-fee');
         inputFee.addEventListener('input', formatCurrency);
         function formatCurrency() {
@@ -243,13 +254,44 @@
                 value = parseFloat(value);
                 inputFee.value = value.toLocaleString('en-VN', {
                     style: 'currency',
-                    currency: 'VND' 
+                    currency: 'VND'
                 });
             } else {
                 inputFee.value = '0';
             }
         }
 
+    </script>
+
+    <script>
+        function validateForm() {
+
+            var fee = document.querySelector('input[name="fee"]:checked');
+            var city = document.getElementById("city").value;
+            var district = document.getElementById("district").value;
+            var ward = document.getElementById("ward").value;
+            var errorFee = document.getElementById("ErrorFee");
+            var ErrorRadio = document.getElementById("ErrorRadio");
+            errorFee.innerHTML = "";
+
+            if (!fee) {
+                ErrorRadio.innerHTML = "Lựa chọn hình thức bán ";
+                return false;
+            }
+
+            if (fee.value == "fee" && (document.getElementById("input-fee").value == "0" ||document.getElementById("input-fee").value == "₫0" ) ) {
+
+                errorFee.innerHTML = "Vui lòng điền giá tiền";
+                 ErrorRadio.innerHTML = "";
+                return false;
+            }
+
+            if (city == "" || district == "" || ward == "") {
+             
+                 document.getElementById("addressResult").textContent = "Vui lòng chọn địa chỉ đầy đủ";
+                return false;
+            }
+        }
     </script>
 
 </html>

@@ -33,7 +33,7 @@ public class DeleteUserSerlvet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
@@ -52,9 +52,9 @@ public class DeleteUserSerlvet extends HttpServlet {
 
             if (result) {
                 String txtSearch = request.getParameter("txtSearch");
-                
+
                 response.sendRedirect("SearchByUserName?txtSearch=" + URLEncoder.encode(txtSearch, "UTF-8"));
-                
+
 //                RequestDispatcher dispatcher = request.getRequestDispatcher("All");
 //                dispatcher.forward(request, response);
             } else {

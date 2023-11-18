@@ -26,8 +26,10 @@ import javax.naming.NamingException;
  */
 @WebServlet(name = "getPersonalPost", urlPatterns = {"/getPersonalPost"})
 public class getPersonalPost extends HttpServlet {
- private final String LOGIN_PAGE = "login.jsp";
-    private final String  PERSONAL_POST_PAGE= "Personal_PostV2.jsp";
+
+    private final String LOGIN_PAGE = "login.jsp";
+    private final String PERSONAL_POST_PAGE = "Personal_PostV2.jsp";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -43,34 +45,82 @@ public class getPersonalPost extends HttpServlet {
         HttpSession session = request.getSession(true);
         userDTO account = (userDTO) session.getAttribute("USER_NAME");
         String messageDel = (String) request.getAttribute("Message_Del");
+        
+        
+// approved page {     
+        String indexPage = request.getParameter("index");
+        if (indexPage == null) {
+            indexPage = "1";
+        }
+        int index = Integer.parseInt(indexPage);
+//                                                    }                                                    
+
+//pending page {       
+        String indexpen = request.getParameter("indexpen");
+
+        if (indexpen == null) {
+            indexpen = "1";
+        }
+        int indexpending = Integer.parseInt(indexpen);
+//                                                      }
+
+//reject page{
+        String indexreject = request.getParameter("indexReject");
+        if (indexreject == null) {
+            indexreject = "1";
+        }
+        int indexRejectPage = Integer.parseInt(indexreject);
+
+// }
         if (messageDel != null) {
             request.setAttribute("Message_Del", messageDel);
         }
-        String url="";
-        try  {
-             if (account != null) {
-                 PostDAO dao = new PostDAO();
-                List<PostDTO> listOfPost = dao.getPostsByUserID(account.getUser_ID());
+        String url = "";
+        try {
+            if (account != null) {
+                PostDAO dao = new PostDAO();
+                int endPage = dao.getTotalPostsByUserId(account.getUser_ID(), "approved") / 6;
+                if (endPage % 6 != 0) {
+                    endPage++;
+                }
+
+                int endPendingPage = dao.getTotalPostsByUserId(account.getUser_ID(), "pending") / 6;
+                if (endPendingPage % 6 != 0) {
+                    endPendingPage++;
+                }
+
+                int endRejectPage = dao.getTotalPostsByUserId(account.getUser_ID(), "rejected") / 6;
+                if (endRejectPage % 6 != 0) {
+                    endRejectPage++;
+                }
+
+                List<PostDTO> listOfPost = dao.getPostsByUserID(account.getUser_ID(), "approved");
+                List<PostDTO> listOfPendingPosts = dao.getPostsByUserID(account.getUser_ID(),  "pending");
+                List<PostDTO> listOfPRejectPosts = dao.getPostsByUserID(account.getUser_ID(),  "rejected");
                 if (listOfPost != null) {
+                    request.setAttribute("endP", endPage);
+                    request.setAttribute("endPendingPage", endPendingPage);
+                    request.setAttribute("endRejectPage", endRejectPage);
                     request.setAttribute("listPostOfPersonal", listOfPost);
-                     request.setAttribute("Message", "không có bài viết nào");
+                    request.setAttribute("listOfPendingPosts", listOfPendingPosts);
+                    request.setAttribute("listOfPRejectPosts", listOfPRejectPosts);
+                    request.setAttribute("Message", "không có bài viết nào");
+                    request.setAttribute("currentTab", currentTab);
                     url = PERSONAL_POST_PAGE;
-                }else{
+                } else {
                     request.setAttribute("Message", "không có bài viết nào");
                     url = PERSONAL_POST_PAGE;
                 }
             } else {
                 url = LOGIN_PAGE;
             }
-        }
-        catch (ClassNotFoundException ex) {
+        } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         } catch (NamingException ex) {
             ex.printStackTrace();
         } catch (SQLException ex) {
             ex.printStackTrace();
-        } 
-        finally{
+        } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }

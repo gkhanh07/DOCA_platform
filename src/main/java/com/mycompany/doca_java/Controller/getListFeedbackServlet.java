@@ -5,9 +5,11 @@
 package com.mycompany.doca_java.Controller;
 
 import com.mycompany.doca_java.DAO.FeedbackDAO;
+import com.mycompany.doca_java.DAO.ProductDAO;
 import com.mycompany.doca_java.DAO.userDAO;
 import com.mycompany.doca_java.DTO.FeedbackDTO;
 import com.mycompany.doca_java.DTO.FeedbackWithBuyer;
+import com.mycompany.doca_java.DTO.ProductDTO;
 import com.mycompany.doca_java.DTO.userDTO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -18,6 +20,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.naming.NamingException;
@@ -55,11 +58,22 @@ public class getListFeedbackServlet extends HttpServlet {
                 FeedbackWithBuyer feedbackWithUser= new FeedbackWithBuyer(feedbackDTO, buyer);
                 feedbackWithBuyerList.add(feedbackWithUser);
             }
+            ProductDAO pdao= new ProductDAO();
+             List<ProductDTO> listProduct = new ArrayList<>();
+              for (FeedbackDTO feedbackDTO : ListOfFeedback) {
+                ProductDTO product= pdao.getProductById(feedbackDTO.getProduct_id());
+               
+                listProduct.add(product);
+            }
             userDTO seller=uDao.getUserbyUserID(seller_id);
-            
+            double averageRate = dao.getAverageRateBySellerId(seller_id);
+            DecimalFormat decimalFormat = new DecimalFormat("#.##");
+            String formattedAverageRate = decimalFormat.format(averageRate);
             if (feedbackWithBuyerList != null) {
+                request.setAttribute("averageRate", formattedAverageRate);
                 request.setAttribute("feedbackWithBuyerList", feedbackWithBuyerList);
                 request.setAttribute("seller", seller);
+                request.setAttribute("listProduct", listProduct);
                 url = VIEW_FEEDBACK_PAGE;
             }
         } catch (ClassNotFoundException ex) {

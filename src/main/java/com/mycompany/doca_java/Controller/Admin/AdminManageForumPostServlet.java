@@ -46,11 +46,39 @@ public class AdminManageForumPostServlet extends HttpServlet {
         String url = "";
         HttpSession session = request.getSession();
         userDTO account = (userDTO) session.getAttribute("USER_NAME");
+//        String selectedCategory = request.getParameter("categorypost");
+//        if (selectedCategory == null) {
+//            selectedCategory = "0";
+//        }
+//        int category = Integer.parseInt(selectedCategory);
+//        String indexPage = request.getParameter("index");
+//        if(indexPage == null){
+//            indexPage = "1";
+//        }
+//        int index = Integer.parseInt(indexPage);
         try {
             if (!account.isRoleID()) {
                 response.setContentType("text/html;charset=UTF-8");
                 PostDAO dao = new PostDAO();
-                List<PostDTO> listPost = (List<PostDTO>) dao.getPostForumsbyStatus(status);
+                //pagination
+//                int countPost = dao.countPostsByStatus("pending");
+//                int endPage = countPost / 6;
+//                if(countPost % 6 != 0){
+//                    endPage++;
+//                }
+
+                String selectedCategory = request.getParameter("categorypost");
+                List<PostDTO> listPost;
+
+                if (selectedCategory != null && !selectedCategory.isEmpty()) {
+                    int categoryId = Integer.parseInt(selectedCategory);
+                    listPost = dao.getPostByCategoryIDv2(categoryId);
+                } else {
+                    listPost = dao.getPostForumsbyStatus(status);
+                }
+
+//                request.setAttribute("endPage", endPage);
+//                request.setAttribute("currentPage", index);
                 if (listPost != null) {
                     request.setAttribute("listofPost", listPost);
                     url = adminShowProduct;

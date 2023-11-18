@@ -28,7 +28,10 @@ import javax.naming.NamingException;
  */
 @WebServlet(name = "productDetailServlet", urlPatterns = {"/productDetailServlet"})
 public class productDetailServlet extends HttpServlet {
-private final String productdetail_Page = "productDetail.jsp";
+
+    private final String productdetail_Page = "productDetail.jsp";
+
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -46,18 +49,24 @@ private final String productdetail_Page = "productDetail.jsp";
         try {
             ProductDAO dao = new ProductDAO();
             ProductDTO productDetail = dao.getProductById(productID);
-            userDAO ownerDao= new userDAO();
+            userDAO ownerDao = new userDAO();
             if (productDetail != null) {
-                HttpSession session = request.getSession(true);
-                request.setAttribute("productDetail", productDetail);
-                int categoryID = productDetail.getCategoryId();
-                categoryDAO daoCate = new categoryDAO();
-                categoryDTO category = daoCate.getCategoryById(categoryID);
-                request.setAttribute("category", category);
-                userDTO owner=ownerDao.getUserbyProductID(productID);
-                request.setAttribute("owner", owner);
-                url=productdetail_Page;
+                if (productDetail.isPublic() == true) {
+                    HttpSession session = request.getSession(true);
+                    request.setAttribute("productDetail", productDetail);
+                    int categoryID = productDetail.getCategoryId();
+                    categoryDAO daoCate = new categoryDAO();
+                    categoryDTO category = daoCate.getCategoryById(categoryID);
+                    request.setAttribute("category", category);
+                    userDTO owner = ownerDao.getUserbyProductID(productID);
+                    request.setAttribute("owner", owner);
+                    url = productdetail_Page;
+                } else {
+                    request.setAttribute("Message", "Tin đăng này đã hết hạn hoặc đã ẩn/ đã bán. Hãy thử những tin đăng khác, bạn nhé.");
+                    url = productdetail_Page;
+                }
             }
+
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         } catch (NamingException ex) {
