@@ -19,7 +19,7 @@
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
 
-
+        <title>Forum</title>
         <!-- Link Iconn  -->
         <link rel="stylesheet" href="fontawesome-free-6.4.2-web/css/fontawesome.css"> 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -110,12 +110,12 @@
                     <div class="container pt-5">
                         <c:if test="${empty product}">
                             <div class="row  ml-0  d-flex justify-content-center" style="margin-top: 300px;">
-                                
-                                    <h3>Sản phẩm không còn tồn tại</h3>
-                                    <h4 >${MessageERRO}</h4>
-                                    <form action="DispatchServlet" >
+
+                                <h3>Sản phẩm không còn tồn tại</h3>
+                                <h4 >${MessageERRO}</h4>
+                                <form action="DispatchServlet" >
                                     <button class="btn btn-warning text-white" name="btAction" value="goTomarket">Về trang chợ</button>
-                                    </form>
+                                </form>
                             </div>
                         </c:if>
                         <c:if test="${not empty product}">
@@ -157,6 +157,7 @@
                                         </a>
                                     </div>
                                     <div class="row mt-5">
+                                        <p>Sản phẩm có  ${countSave} lượt quan tâm</p>
                                         <button class="btn btn-outline-secondary bg-light btn-block text-success"
                                                 id="sellerPhone"><i class="fa-solid fa-phone"></i> Hiện số người bán</button>
 

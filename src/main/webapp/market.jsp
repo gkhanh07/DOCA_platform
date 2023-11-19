@@ -18,6 +18,7 @@
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
 
+        <title>Forum</title>
         <!-- Link Iconn  -->
         <link rel="stylesheet" href="fontawesome-free-6.4.2-web/css/fontawesome.css"> 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -86,14 +87,14 @@
                 transform: scale(1.05); /* Hiệu ứng nổi lên khi di chuột vào */
                 filter: brightness(90%); /* Màu tối đi khi di chuột vào */
             }
-            
+
         </style>
     </head>
 
     <body>
         <c:set var="Products" value="${requestScope.listInPage}"/>
         <c:set var="SaveProductsList" value="${sessionScope.listOfSaveProduct}"/>
-
+        <c:set var="Owner" value="${sessionScope.USER_NAME}"/>
         <jsp:include page="header.jsp" />
 
         <div class="main-content">
@@ -105,8 +106,8 @@
                                 <div class="btn-group" style="width: 200px;">
                                     <select name="city" class="form-select form-select-sm rounded-pill fillter" style="width: 100%;" id="city"
                                             aria-label=".form-select-sm">
-                                        <option value="" >
-                                            Toàn quốc 
+                                        <option value="">
+                                            Toàn quốc
                                         </option>
                                     </select> 
 
@@ -127,7 +128,7 @@
 
 
                                 <div class="dropdown fillter" style="width: 200px;">
-                                    <select name="category" class="form-control  rounded-pill" style="width: 200px;">
+                                    <select name="category" class="form-control rounded-pill" style="width: 200px;">
                                         <option value="0" ${selectedCategory == 0 ? 'selected' : ''}>Danh mục</option>
                                         <option value="1" ${selectedCategory == 1 ? 'selected' : ''}>Phụ Kiện</option>
                                         <option value="2" ${selectedCategory == 2 ? 'selected' : ''}>Thức Ăn</option>
@@ -147,7 +148,7 @@
                                 <c:set var="countDisplay" value="0" />
                                 <c:forEach items="${Products}" var="product">
                                     <c:set var="countDisplay" value="${count + 1}" />
-                                    <div class="frame"  style="position: relative; border-bottom: 1px solid rgb(224, 224, 224);">
+                                    <div  class="frame" style="position: relative; border-bottom: 1px solid rgb(224, 224, 224);">
                                         <a href="productDetailServlet?productId=${product.productId}" class="sell d-flex" style="width: 100%;">
                                             <c:set var="img" value="${product.productImage}"/>
                                             <img class="image" src=${img} alt="${product.title}">
@@ -168,26 +169,97 @@
                                                 </h6>
                                             </div>
                                         </a>
-                                        <c:set var="isSaved" value="false"/>
+                                        <c:set var="isSaved" value=""/>
                                         <c:set var="productIDChangeSave" value="${product.productId}"/>
-
-                                        <c:forEach items="${SaveProductsList}" var="saveProduct" >
-                                            <c:if test="${saveProduct.productId == product.productId }">
-                                                <c:set var="isSaved" value="true"/>
+                                        <c:if test="${product.userId!=Owner.user_ID}">
+                                            <c:forEach items="${SaveProductsList}" var="saveProduct" >
+                                                <c:if test="${saveProduct.productId == product.productId }"> 
+                                                    <c:if test="${saveProduct.statusMatch=='waiting'}">
+                                                        <c:set var="isSaved" value="waiting"/>
+                                                    </c:if>
+                                                    <c:if test="${saveProduct.statusMatch=='saled'}">
+                                                        <c:set var="isSaved" value="saled"/>
+                                                    </c:if>
+                                                    <c:if test="${saveProduct.statusMatch=='reject'}">
+                                                        <c:set var="isSaved" value="reject"/>
+                                                    </c:if>
+                                                    <c:if test="${saveProduct.statusMatch=='ban'}">
+                                                        <c:set var="isSaved" value="ban"/>
+                                                    </c:if>
+                                                    <c:if test="${saveProduct.statusMatch=='unfollow'}">
+                                                        <c:set var="isSaved" value="unfollow"/>
+                                                    </c:if>
+                                                    <c:if test="${saveProduct.statusMatch=='resale'}">
+                                                        <c:set var="isSaved" value="resale"/>
+                                                    </c:if>
+                                                </c:if>
+                                            </c:forEach>
+                                            <c:url var="saveProductLink" value="DispatchServlet" >
+                                                <c:param name="btAction" value="saveProduct"></c:param>
+                                                <c:param name="isSaved" value="${isSaved}"></c:param>
+                                                <c:param name="productIDChangeSave" value="${productIDChangeSave}"></c:param>
+                                            </c:url>
+                                            <c:if test="${isSaved==''||isSaved=='unfollow'}">
+                                                <span class="like-icon">
+                                                    <a class="fa fa-heart love" 
+                                                       href="${saveProductLink}"
+                                                       style="color: #D9D9D9; cursor: pointer; position: absolute; bottom: 30px; right: 40px;"
+                                                       data-toggle="tooltip"
+                                                       data-placement="top" title="Lưu sản phẩm"
+                                                       >
+                                                    </a>
+                                                </span>
                                             </c:if>
-                                        </c:forEach>
-                                        <c:url var="saveProductLink" value="DispatchServlet" >
-                                            <c:param name="btAction" value="saveProduct"></c:param>
-                                            <c:param name="isSaved" value="${isSaved}"></c:param>
-                                            <c:param name="productIDChangeSave" value="${productIDChangeSave}"></c:param>
-                                        </c:url>
-                                        <span class="like-icon">
-                                            <a class="fa fa-heart border-0 p-0 love" 
-                                               href="${saveProductLink}"
-                                               style="color: ${isSaved=="true"? "red":"gray"}; cursor: pointer; position: absolute; bottom: 30px; right: 40px;">
+                                            <c:if test="${isSaved=='waiting'}">
+                                                <span class="like-icon">
+                                                    <a class="fa fa-heart border-0 p-0" 
+                                                       href="${saveProductLink}"
+                                                       style="color: red; cursor: pointer; position: absolute; bottom: 30px; right: 40px;"
+                                                       data-toggle="tooltip"
+                                                       data-placement="top" title="Sản phẩm đang quan tâm"
+                                                       >
+                                                    </a>
+                                                </span>
+                                            </c:if>
+                                            <c:if test="${isSaved=='saled'}">
+                                                <span class="like-icon">
+                                                    <a class="d-flex align-items-center" style="color: #00BF71; cursor: pointer; position: absolute; bottom: 30px; right: 40px;">
+                                                        <span class="fa fa-circle-check border-0 p-0"
+                                                              data-toggle="tooltip"
+                                                              data-placement="top" title="Sản phẩm bạn đã mua"
+                                                              ></span>
 
-                                            </a>
-                                        </span>
+                                                    </a>
+                                                </span>
+                                            </c:if>
+                                            <c:if test="${isSaved=='ban'}">
+                                                <span class="like-icon">
+                                                    <a class="d-flex align-items-center" style="color: black; cursor: pointer; position: absolute; bottom: 30px; right: 40px;"> 
+                                                        <span class="fa fa-ban border-0 p-0" data-toggle="tooltip"
+                                                              data-placement="top" title="Bạn bị từ chối quan tâm tới sản phẩm này!"></span>
+
+                                                    </a>
+                                                </span>
+                                            </c:if>
+                                            <c:if test="${isSaved=='resale'}">
+                                                <span class="like-icon">
+                                                    <a class="d-flex align-items-center"
+                                                       href="${saveProductLink}"
+                                                       style="color: #FFC9D3; cursor: pointer; position: absolute; bottom: 30px; right: 40px;"> 
+                                                        <span class="fa fa-heart border-0 p-0" data-toggle="tooltip" data-placement="top" title="Sản phẩm bạn từng quan tâm đã trở lại"></span>
+                                                        <p class="mb-0 ml-2">Sản phẩm từng quan tâm</p>
+                                                    </a>
+                                                </span>
+                                            </c:if>
+
+                                        </c:if>
+                                        <c:if test="${product.userId==Owner.user_ID}">
+                                            <span class="like-icon">
+                                                <div class="d-flex align-items-center" style=" cursor: pointer; position: absolute; bottom: 30px; right: 40px;">
+                                                    <p class="mb-0 ml-2 d-flex align-items-center">Sản phẩm của bạn</p>
+                                                </div>
+                                            </span>
+                                        </c:if>
                                     </div>
                                 </c:forEach>
                                 <c:if test="${countDisplay eq 0}">

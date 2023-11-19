@@ -10,7 +10,7 @@
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
 
-        <title>Đăng Nhập | DOCA</title>
+        <title>Forum</title>
         <!-- Link Iconn  -->
         <link rel="stylesheet" href="fontawesome-free-6.4.2-web/css/fontawesome.css"> 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -76,7 +76,7 @@
                                 <p style="color: red;">  ${errorMessage} </p>
 
                                 <input type="submit" value="Log In" name="btAction" class="btn btn-block btn-primary">
-                                <p class="footer">Chưa có tài khoản ? đăng kí<a href="signup.jsp"> tại đây </a></p>
+                                <p class="footer">Don't have account? signup<a href="signup.jsp"> here </a></p>
                             </form>
                         </div>
                     </div>
@@ -87,6 +87,13 @@
 
 
         <script src="assets/js/login-main.js"></script>
+        <%-- Kiểm tra giá trị của messShift và hiển thị thông báo alert --%>
+        <% if (request.getAttribute("messnotShift") != null) { %>
+        <script>
+                alert("<%= request.getAttribute("messnotShift") %>");
+        </script>
+        <% } %>
+        <!--set var-->
     </body>
 
 </html>

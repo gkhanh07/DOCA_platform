@@ -2,11 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package com.mycompany.doca_java.Controller.Admin;
+package com.mycompany.doca_java.Controller.ManageOwner.savedProduct;
 
-import com.mycompany.doca_java.DAO.PostDAO;
-import com.mycompany.doca_java.DTO.PostDTO;
-import com.mycompany.doca_java.DTO.userDTO;
+import com.mycompany.doca_java.DAO.ConversationDAO;
+import com.mycompany.doca_java.DAO.ProductDAO;
+import com.mycompany.doca_java.DAO.saveProductDAO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,22 +15,21 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.naming.NamingException;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "AdminManageForumPostServlet", urlPatterns = {"/AdminManageForumPostServlet"})
-public class AdminManageForumPostServlet extends HttpServlet {
+@WebServlet(name = "confirmSave", urlPatterns = {"/confirmSave"})
+public class confirmSave extends HttpServlet {
 
-    private final String adminShowProduct = "AdminUI/adminShowPost.jsp";
-    private final String status = "pending";
+    private final String statusSaled = "saled";
+    private final String statusWating = "waiting";
+    private final String statusReject = "reject";
+    private final String GET_CONVERSATIONLIST = "getConversationServlet";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,39 +42,37 @@ public class AdminManageForumPostServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
         String url = "";
-        HttpSession session = request.getSession();
-        userDTO account = (userDTO) session.getAttribute("USER_NAME");
-        request.getAttribute("messShift");
-        String selectedCategory;
-        selectedCategory = (String) request.getAttribute("categoryId");
-        if (selectedCategory == null || selectedCategory.isEmpty()) {
-            selectedCategory = request.getParameter("selectedCategory");
-        }
         try {
-            if (!account.isRoleID()) {
-                response.setContentType("text/html;charset=UTF-8");
-                List<PostDTO> listPost;
-                PostDAO dao = new PostDAO();
-                if (selectedCategory != null && !selectedCategory.isEmpty() && !selectedCategory.equals("0")) {
-                    int categoryId = Integer.parseInt(selectedCategory);
-                    request.setAttribute("selectedCategory", selectedCategory);
-                    listPost = dao.getPostByCategoryIDAndStatus(categoryId, status);
-                } else {
-                    request.setAttribute("selectedCategory", "0");
-                    listPost = dao.getPostForumsbyStatus(status);
-                }
-                if (listPost != null) {
-                    request.setAttribute("listofPost", listPost);
-                    url = adminShowProduct;
-                }
+            response.setContentType("text/html;charset=UTF-8");
+            String buyerId = request.getParameter("buyerID");
+            String productId = request.getParameter("producID");
+            saveProductDAO dao = new saveProductDAO();
+            ProductDAO pdao = new ProductDAO();
+            ConversationDAO cdao= new ConversationDAO();
+            boolean result = false;
+            if (buyerId != null) {
+                result = dao.setMatchProduct(Integer.parseInt(buyerId), Integer.parseInt(productId), statusSaled);
+                dao.setStatusSaveProduct(Integer.parseInt(productId), statusWating, statusReject);
+                
+                pdao.setStatusProduct(Integer.parseInt(productId), statusSaled);
+                cdao.updateStatusToApprove(Integer.parseInt(productId), Integer.parseInt(buyerId));
+            } else {
+                result = dao.setStatusSaveProduct(Integer.parseInt(productId), statusWating, statusReject);
+                pdao.setStatusProduct(Integer.parseInt(productId), statusSaled);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(AdminManageForumPostServlet.class.getName()).log(Level.SEVERE, null, ex);
+            if (result) {
+                request.setAttribute("MssSaledSuccess", "Xác nhận bán thành công");
+                url = GET_CONVERSATIONLIST;
+            }
+
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AdminManageForumPostServlet.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         } catch (NamingException ex) {
-            Logger.getLogger(AdminManageForumPostServlet.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

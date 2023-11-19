@@ -4,7 +4,10 @@
  */
 package com.mycompany.doca_java.Controller.ManageOwner.savedProduct;
 
+import com.mycompany.doca_java.DAO.NotificationDAO;
+import com.mycompany.doca_java.DAO.ProductDAO;
 import com.mycompany.doca_java.DAO.saveProductDAO;
+import com.mycompany.doca_java.DTO.ProductDTO;
 import com.mycompany.doca_java.DTO.userDTO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,6 +18,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import javax.naming.NamingException;
 
 /**
@@ -24,6 +29,12 @@ import javax.naming.NamingException;
 @WebServlet(name = "updateSaveProductServlet", urlPatterns = {"/updateSaveProductServlet"})
 public class updateSaveProductServlet extends HttpServlet {
 
+    private final String statusSaled = "saled";
+    private final String statusWating = "waiting";
+    private final String statusReject = "reject";
+    private final String statusBanned = "ban";
+    private final String statusUnfollow = "unfollow";
+    private final String statusResale = "resale";
     private final String LOGIN_PAGE = "login.jsp";
 
     /**
@@ -40,25 +51,38 @@ public class updateSaveProductServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession(true);
 
-        String local = session.getAttribute("selectedLocal") != null ? 
-                (String) session.getAttribute("selectedLocal") : "";
-        float lowerPrice = session.getAttribute("selectedLowerPrice") != null ? 
-                (float) session.getAttribute("selectedLowerPrice") : 0.0f;
-        int category = session.getAttribute("selectedCategory") != null ? 
-                (int) session.getAttribute("selectedCategory") : 0;
+        String local = session.getAttribute("selectedLocal") != null
+                ? (String) session.getAttribute("selectedLocal") : "";
+        float lowerPrice = session.getAttribute("selectedLowerPrice") != null
+                ? (float) session.getAttribute("selectedLowerPrice") : 0.0f;
+        int category = session.getAttribute("selectedCategory") != null
+                ? (int) session.getAttribute("selectedCategory") : 0;
         int productID = Integer.parseInt(request.getParameter("productIDChangeSave"));
         userDTO account = (userDTO) session.getAttribute("USER_NAME");
-        boolean isSaved = Boolean.parseBoolean(request.getParameter("isSaved"));
+        String isSaved = request.getParameter("isSaved");
 
-       int indexPage = session.getAttribute("indexPageMarket") != null ? 
-                (int) session.getAttribute("indexPageMarket") : 1;
+        int indexPage = session.getAttribute("indexPageMarket") != null
+                ? (int) session.getAttribute("indexPageMarket") : 1;
 
         String url = "";
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        Timestamp timeNotification = Timestamp.valueOf(currentDateTime);
         try {
+            //ai dó dã lai bài vi?t .... c?a banbj
+            ProductDAO pDao = new ProductDAO();
+            ProductDTO product = pDao.getProductById(productID);
+            String title = product.getTitle();
+            String first80Chars = title.substring(0, Math.min(title.length(), 80));
+            String noDes = "";
+            String Username = account.getUserName();
+            NotificationDAO notiDao = new NotificationDAO();
+            int OnerProductID = product.getUserId();
             if (account != null) {
                 saveProductDAO dao = new saveProductDAO();
-                if (!isSaved) {
+                if (isSaved.equals("")) {
                     boolean result = dao.createSaveProduct(account.getUser_ID(), productID);//get userID form sessionScope
+                    noDes = Username + " đã quan tâm sản phẩm " + " - " + first80Chars;
+                    notiDao.insertNotification(OnerProductID, noDes, timeNotification);
                     if (result) {
                         url = "filterProduct"
                                 + "?city=" + local
@@ -66,8 +90,26 @@ public class updateSaveProductServlet extends HttpServlet {
                                 + "&category=" + category
                                 + "&indexFromSaveProduct=" + indexPage;
                     }
-                } else {
-                    boolean result = dao.deleteSaveProduct(account.getUser_ID(), productID);//get userID form sessionScope
+                } else if (isSaved.equals(statusWating)) {
+                    boolean result = dao.setStatusSaveProductByUID(account.getUser_ID(), productID, isSaved, statusUnfollow);//get userID form sessionScope
+                    if (result) {
+                        url = "filterProduct"
+                                + "?city=" + local
+                                + "&lowerPrice=" + lowerPrice
+                                + "&category=" + category
+                                + "&indexFromSaveProduct=" + indexPage;
+                    }
+                } else if (isSaved.equals(statusUnfollow)) {
+                    boolean result = dao.setStatusSaveProductByUID(account.getUser_ID(), productID, isSaved, statusWating);//get userID form sessionScope
+                    if (result) {
+                        url = "filterProduct"
+                                + "?city=" + local
+                                + "&lowerPrice=" + lowerPrice
+                                + "&category=" + category
+                                + "&indexFromSaveProduct=" + indexPage;
+                    }
+                } else if (isSaved.equals(statusResale)) {
+                    boolean result = dao.setStatusSaveProductByUID(account.getUser_ID(), productID, isSaved, statusWating);//get userID form sessionScope
                     if (result) {
                         url = "filterProduct"
                                 + "?city=" + local

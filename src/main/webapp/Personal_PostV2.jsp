@@ -11,6 +11,9 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <!-- Bootstrap CSS -->
         <!-- Bootstrap CSS -->
+
+
+        <title>Forum</title>
         <!-- Link Iconn  -->
         <link rel="stylesheet" href="fontawesome-free-6.4.2-web/css/fontawesome.css"> 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -38,20 +41,6 @@
 
 
     </head>
-    <style>
-        .nav-link {
-            transition: transform 0.3s, filter 0.3s;
-        }
-
-        .nav-link:hover {
-            transform: scale(1.05); /* Hiệu ứng nổi lên khi di chuột vào */
-            filter: brightness(90%); /* Màu tối đi khi di chuột vào */
-        }
-        .nav-item {
-            margin-right: 10px; /* Thay đổi giá trị theo mong muốn của bạn */
-            margin-left: 10px;
-        }
-    </style>
 
     <body>
         <jsp:include page="header.jsp" />
@@ -135,6 +124,10 @@
                                             </span>
                                         </p>
                                         <button class="btn btn-primary" onclick="openEditForm(${post.postId})">Sửa bài viết</button>
+                                        <!--                                        <form action="DeletePostByUserServlet">
+                                                                                    <input type="hidden" name="postId" value="${post.postId}" />
+                                                                                    <input type="submit" value="xoá bài viết">
+                                                                                </form>-->
                                         <a class="btn btn-secondary" href="SetIsPublicPost?postId=${post.postId}&isPublic=${post.isPublic()}">
                                             <c:choose>
                                                 <c:when test="${post.isPublic()}">
@@ -148,7 +141,7 @@
                                         <!-- Popup Form -->
                                         <div class="modal fade" id="edit-form${post.postId}" tabindex="-1" aria-labelledby="exampleModalLabel"
                                              aria-hidden="true">
-                                            <div class="modal-dialog">
+                                            <div class="modal-dialog ">
                                                 <form  action="UpdatePostByUserServlet" onsubmit="return validateFormUpdate()" method="post" enctype="multipart/form-data" >
                                                     <div class="modal-content">
                                                         <div class="modal-header">
@@ -320,7 +313,7 @@
                                                                 <img id="previewImage" src="#" alt="Preview" style="max-width: 200px; max-height: 200px; display: none;">
                                                             </div>
                                                         </div>
-                                                        <div class="modal-footer container">
+                                                       <div class="modal-footer container">
                                                             <input type="hidden" name="postId" value="${post.postId}" />
                                                             <div class="row">
                                                                 <p class="col-sm-10 m-0 text-warning">Xác nhận cập nhật sẽ đưa bài viết của bạn về trạng thái chờ duyệt hãy chắc rằng những thay đổi của bạn là hợp lý</p>
@@ -448,7 +441,7 @@
 
             </div>
         </div>
-
+                                
         <script>
             function validateFormUpdate() {
                 var checkboxes = document.querySelectorAll('input[name="categoryInUpdate"]');
@@ -515,6 +508,6 @@
                 reader.readAsDataURL(file);
             });
         </script>
-
+      
     </body>
 </html>

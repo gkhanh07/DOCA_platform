@@ -18,7 +18,7 @@
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
 
-
+        <title>Forum</title>
         <!-- Link Iconn  -->
         <link rel="stylesheet" href="fontawesome-free-6.4.2-web/css/fontawesome.css"> 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -46,17 +46,20 @@
 
     </head>
     <style>
-        .nav-link {
-            transition: transform 0.3s, filter 0.3s;
+        .product-container {
+            display: flex;
+            align-items: center;
         }
 
-        .nav-link:hover {
-            transform: scale(1.05); /* Hiệu ứng nổi lên khi di chuột vào */
-            filter: brightness(90%); /* Màu tối đi khi di chuột vào */
+        .product-image {
+            width: 144px;
+            height: 144px;
+            object-fit: cover; /* Giữ tỷ lệ khung hình ảnh */
+            margin-right: 10px; /* Điều chỉnh khoảng cách giữa ảnh và nội dung */
         }
-        .nav-item {
-            margin-right: 10px; /* Thay đổi giá trị theo mong muốn của bạn */
-            margin-left: 10px;
+
+        .product-details {
+            flex: 1; /* Nội dung mở rộng để đối ứng với ảnh */
         }
     </style>
     <body>
@@ -99,6 +102,11 @@
                                                 <strong style="color: black;">Chờ duyệt</strong>
                                             </a>
                                         </li>
+                                        <li class="nav-item rounded-pill">
+                                            <a class="nav-link ${IN eq 'saled' ? 'active' : ''} rounded-pill mt-1" href="#saled" role="tab" data-toggle="tab">
+                                                <strong style="color: black;">Đã bán</strong>
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
                             </nav>
@@ -111,21 +119,27 @@
                                 <c:forEach items="${listProductOfPersonal}" var="product">
                                     <c:if test="${product.status eq 'approved'}">
                                         <c:set var="countDisplay" value="${count + 1}" />
-                                        <img class="col-sm-6 image-content mt-5 img-fluid"
-                                             src="${product.productImage}" alt="Hình ảnh">
-                                        <div class="font">
-                                            <h5>${product.title}</h5>
-                                            <h6>giá tiền: <fmt:formatNumber value="${product.price}" type="currency" currencyCode="VND" /></h6>
-                                            <p>${product.address}</p>
-                                            <p>
-                                                Sản phẩm đang ở chế độ:
-                                                <span class="${product.isPublic() ? 'text-success' : 'text-danger'}">
-                                                    ${product.isPublic() ? 'Công khai' : 'Ẩn'}
-                                                </span>
-                                            </p>
+                                        <div class="product-container">
+                                            <img class="product-image" src="${product.productImage}" alt="Hình ảnh">
+                                            <div class="product-details">
+                                                <h5>${product.title}</h5>
+                                                <h6>Giá tiền: <fmt:formatNumber value="${product.price}" type="currency" currencyCode="VND" /></h6>
+                                                <p>${product.address}</p>
+                                                <p>
+                                                    Sản phẩm đang ở chế độ:
+                                                    <span class="${product.isPublic() ? 'text-success' : 'text-danger'}">
+                                                        ${product.isPublic() ? 'Công khai' : 'Ẩn'}
+                                                    </span>
+                                                </p>
+                                                <c:forEach items="${listOfCountSaveproduct}" var="countSave">
+                                                    <c:if test="${countSave.productId== product.productId}">
+                                                        <a href="getListUserHavedSaveProduct?productId=${product.productId}">Sản phẩm có ${countSave.countSave} lượt quan tâm</a>
+                                                    </c:if>
+                                                </c:forEach>
+                                            </div>
                                         </div>
                                         <a class="btn btn-primary" href="goUpdateProduct?ProductID=${product.productId}&IN=display" >sửa sản phẩm</a>
-                                        <a class="btn btn-secondary" href="SetIsPublic?ProductID=${product.productId}&isPublic=${product.isPublic()}&IN=display">
+<!--                                        <a class="btn btn-secondary" href="SetIsPublic?ProductID=${product.productId}&isPublic=${product.isPublic()}&IN=display">
 
                                             <c:choose>
                                                 <c:when test="${product.isPublic()}">
@@ -135,7 +149,7 @@
                                                     Hiện sản phẩm <i class="fa fa-eye"></i>
                                                 </c:otherwise>
                                             </c:choose>
-                                        </a>
+                                        </a>-->
                                         <hr>
                                     </c:if>
                                 </c:forEach>
@@ -186,6 +200,31 @@
                                     </c:if>
                                 </c:forEach>
                                 <c:if test="${countWaiting eq 0}">
+                                    <p>${message}</p>
+                                </c:if>
+                            </div>
+
+
+
+                            <div role="tabpanel" class="tab-pane fade  ${IN eq 'saled' ? 'show active' : ''}  " id="saled">
+                                <c:set var="countsaled" value="0" />
+                                <c:forEach items="${listProductOfPersonal}" var="product">
+                                    <c:if test="${product.status eq 'saled'}">
+                                        <c:set var="countsaled" value="${count + 1}" />
+                                        <img class="col-sm-6 image-content mt-5 img-fluid"
+                                             src="${product.productImage}" alt="Hình ảnh">
+                                        <div class="font">
+                                            <h5>${product.title}</h5>
+                                            <h6>giá tiền: <fmt:formatNumber value="${product.price}" type="currency" currencyCode="VND" /></h6>
+                                            <p>${product.address}</p>
+                                            <p>Đã bán </p>     
+                                        </div>
+                                        <a class="btn btn-primary" href="resaledProduct?producID=${product.productId}" >Bán lại sản phẩm</a>
+
+                                        <hr> 
+                                    </c:if>
+                                </c:forEach>
+                                <c:if test="${countsaled eq 0}">
                                     <p>${message}</p>
                                 </c:if>
                             </div>

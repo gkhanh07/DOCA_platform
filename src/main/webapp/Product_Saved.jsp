@@ -18,7 +18,7 @@
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
 
-
+        <title>Forum</title>
         <!-- Link Iconn  -->
         <link rel="stylesheet" href="fontawesome-free-6.4.2-web/css/fontawesome.css"> 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -42,38 +42,41 @@
 
         <!-- Link CSS -->
         <link rel="stylesheet" href="assets/css/standar-style.css">
+        <style>
+            .fa-heart {
+                transition: transform 0.3s, filter 0.3s;
+            }
+
+            .fa-heart:hover {
+                transform: scale(1.05); /* Hiệu ứng nổi lên khi di chuột vào */
+                filter: brightness(90%); /* Màu tối đi khi di chuột vào */
+            }
+            .saved {
+                transition: transform 0.3s, filter 0.3s;
+            }
+
+            .saved:hover {
+                transform: scale(1.05);
+                filter: brightness(90%);
+            }
+            .font a{
+                text-decoration: none;
+            }
+        </style>
 
     </head>
-    <style>
-        .fa-heart {
-            transition: transform 0.3s, filter 0.3s;
-        }
 
-        .fa-heart:hover {
-            transform: scale(1.05); /* Hiệu ứng nổi lên khi di chuột vào */
-            filter: brightness(90%); /* Màu tối đi khi di chuột vào */
-        }
-        .saved {
-            transition: transform 0.3s, filter 0.3s;
-        }
-
-        .saved:hover {
-            transform: scale(1.05);  
-            filter: brightness(90%); 
-        }
-        .font a{
-            text-decoration: none;
-        }
-    </style>
     <body>
         <jsp:include page="header.jsp" />
+        <c:set var="listOfProduct" value="${requestScope.listOfProduct}"/>
+        <c:set var="Owner" value="${sessionScope.USER_NAME}"/>
         <c:set var="listOfSaved" value="${requestScope.listOfSaved}"/>
         <c:set var="message" value="${requestScope.Message}"/>
         <div class="main-content">
             <div class="row row-content justify-content-center">
 
                 <div class="col-sm-8 ">
-                    <div class="row m-5">
+                    <div class="row m-4">
                         <div class="nav nav-tabs" id="myTabs">
                             <div class="nav-item ">
                                 <a class="nav-link text-dark active" id="product-tab" data-toggle="tab" href="#product">Sản
@@ -82,56 +85,117 @@
 
                         </div>
                     </div>
-                    <div class="tab-content  ">
-                        <div id="product" class="tab-pane fade show active ">
-                            <div class="row justify-content-center" >
-                                <label>${message}</label>
+                    <div class="row mr-5 ml-5">
+                        <div class="tab-content  ">
+                            <div id="product" class="tab-pane fade show active ">
+                                <div class="row justify-content-center" >
+                                    <label>${message}</label>
 
-                            </div>
-                            <div class="row justify-content-start" >
+                                </div>
+                                <div class="row justify-content-start" >
 
-                                <c:forEach items="${listOfSaved}" var="porduct">
-                                    <div class=" card col-3 justify-content-center saved">
-                                        <img class="image" src="${porduct.productImage}" alt="Hình ảnh">
-                                        <div class="card-body">
-                                            <div class="font">
-                                                <a href="productDetailServlet?productId=${porduct.productId}">
-                                                    <h5>
-                                                        <strong>
-                                                            ${porduct.title}
-                                                        </strong>
-                                                    </h5>
-                                                </a>
-                                                <h6 style="color:rgb(242, 106, 106);"><fmt:formatNumber value="${porduct.price}" type="currency" currencyCode="VND" /></h6>
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <h6 style="font-size: 15px; opacity: 0.5;">${porduct.address}</h6>
-                                                    <span class="like-icon">
-                                                        <a href="DeleteSaveProduct_InSavePage?productID=${porduct.productId}" class="like-button">
-                                                            <i class="fa fa-heart" style="color: red;"></i>
-                                                        </a>
-                                                    </span>
+                                    <c:forEach items="${listOfProduct}" var="porduct">
+                                        <div class=" card  col-3 justify-content-center saved">
+                                            <img class="image" src="${porduct.productImage}" alt="Hình ảnh">
+                                            <div class="card-body">
+                                                <div class="font">
+                                                    <a href="productDetailServlet?productId=${porduct.productId}">
+                                                        <h5>
+                                                            <strong>
+                                                                ${porduct.title}
+                                                            </strong>
+                                                        </h5>
+                                                    </a>
+                                                    <h6 style="color:rgb(242, 106, 106);"><fmt:formatNumber value="${porduct.price}" type="currency" currencyCode="VND" /></h6>
+
+                                                    <c:forEach items="${listOfSaved}" var="save">
+                                                        <c:if test="${save.productId==porduct.productId}">
+                                                            <c:if test="${porduct.userId!=Owner.user_ID}">
+                                                                <c:if test="${save.statusMatch=='waiting'}">
+                                                                    <div class="d-flex justify-content-between align-items-center">
+                                                                        <h6 style="font-size: 15px; opacity: 0.5;">${porduct.address}</h6>
+                                                                        <span class="like-icon">
+                                                                            <a href="DeleteSaveProduct_InSavePage?productID=${porduct.productId}&isSaved=${save.statusMatch}" class="like-button">
+                                                                                <i class="fa fa-heart" style="color: red;"></i>
+                                                                            </a>
+                                                                        </span>
+                                                                    </div>
+                                                                </c:if>
+                                                                <c:if test="${save.statusMatch=='reject'}">
+                                                                    <div class="d-flex justify-content-between align-items-center">
+                                                                        <h6 style="font-size: 15px; opacity: 0.5;">${porduct.address}</h6>
+                                                                        <span class="like-icon">
+                                                                            <a href="DeleteSaveProduct_InSavePage?productID=${porduct.productId}&isSaved=${save.statusMatch}" class="like-button">
+                                                                                <i class="fa fa-heart-crack" style="color: #6B1F20;"
+                                                                                   data-toggle="tooltip"
+                                                                                   data-placement="top" title="Sản phẩm này đã được bán cho người khác"
+                                                                                   ></i>
+                                                                            </a>
+                                                                        </span>
+                                                                    </div>
+                                                                    <p>Rất tiếc: Sản phẩm này đã được bán cho người khác</p>
+                                                                </c:if>
+                                                                <c:if test="${save.statusMatch=='resale'}">
+                                                                    <div class="d-flex justify-content-between align-items-center">
+                                                                        <h6 style="font-size: 15px; opacity: 0.5;">${porduct.address}</h6>
+                                                                        <span class="like-icon">
+                                                                            <a href="DeleteSaveProduct_InSavePage?productID=${porduct.productId}&isSaved=${save.statusMatch}" class="like-button">
+                                                                                <i class="fa fa-heart" style="color: #FFC9D3;"
+                                                                                   data-toggle="tooltip"
+                                                                                   data-placement="top" title="Sản phẩm bạn từng quan tâm đã trở lại"
+                                                                                   ></i>
+                                                                            </a>
+                                                                        </span>
+                                                                    </div>
+                                                                    <p>Sản phẩm từng quan tâm</p>
+                                                                </c:if>    
+
+                                                                <c:if test="${save.statusMatch=='saled'}">
+                                                                    <div class="d-flex justify-content-between align-items-center">
+                                                                        <h6 style="font-size: 15px; opacity: 0.5;">${porduct.address}</h6>
+                                                                        <span class="like-icon">
+                                                                            <a href="DeleteSaveProduct_InSavePage?productID=${porduct.productId}" class="like-button">
+                                                                                <i class="fa fa-circle-check" style="color: #00BF71;"
+                                                                                   data-toggle="tooltip"
+                                                                                   data-placement="top" title="Sản phẩm bạn đã mua"></i>
+
+                                                                            </a>
+                                                                        </span>
+                                                                    </div>
+                                                                    <p>Bạn đã mua sản phẩm này</p>
+                                                                </c:if>
+                                                            </c:if>
+
+
+
+                                                        </c:if>
+                                                    </c:forEach>
+
+
+
+
+
                                                 </div>
 
                                             </div>
+                                            <div class="card-footer">
+                                                <small class="text-muted">Thời gian đăng: ${porduct.formatTimeDifference()}</small>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
 
-                                        </div>
-                                        <div class="card-footer">
-                                            <small class="text-muted">Thời gian đăng: ${porduct.formatTimeDifference()}</small>
-                                        </div>
-                                    </div>
-                                </c:forEach>
+                                </div>
+
 
                             </div>
 
 
                         </div>
-
-
                     </div>
                 </div>
             </div>
         </div>
-      
+
     </body>
     <script>
         var likeButtons = document.querySelectorAll(".like-button");

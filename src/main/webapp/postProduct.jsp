@@ -7,27 +7,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <style>
-        .submit {
-            transition: transform 0.3s, filter 0.3s;
-        }
-
-        .submit:hover {
-            transform: scale(1.05); /* Hiệu ứng nổi lên khi di chuột vào */
-            filter: brightness(90%); /* Màu tối đi khi di chuột vào */
-        }
-        .address {
-            transition: transform 0.3s, filter 0.3s;
-        }
-
-        .address:hover {
-            transform: scale(1.05); /* Hiệu ứng nổi lên khi di chuột vào */
-            filter: brightness(90%); /* Màu tối đi khi di chuột vào */
-        }
-        .col-sm-8{
-            background-color: antiquewhite;
-        }
-    </style>
     <head>
         <!-- Required meta tags always come first -->
         <meta charset="utf-8">
@@ -37,7 +16,7 @@
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
 
-
+        <title>Forum</title>
         <!-- Link Iconn  -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
@@ -80,6 +59,27 @@
                 inputContainer.style.display = "none";
             }
         </script>
+        <style>
+            .submit {
+                transition: transform 0.3s, filter 0.3s;
+            }
+
+            .submit:hover {
+                transform: scale(1.05); /* Hiệu ứng nổi lên khi di chuột vào */
+                filter: brightness(90%); /* Màu tối đi khi di chuột vào */
+            }
+            .address {
+                transition: transform 0.3s, filter 0.3s;
+            }
+
+            .address:hover {
+                transform: scale(1.05); /* Hiệu ứng nổi lên khi di chuột vào */
+                filter: brightness(90%); /* Màu tối đi khi di chuột vào */
+            }
+            .col-sm-8{
+                background-color: antiquewhite;
+            }
+        </style>
     </head>
 
     <body>
@@ -88,7 +88,7 @@
         <div class="main-content">
             <div class="row row-content justify-content-center">
 
-                <div class="col-sm-8">
+                <div class="col-sm-8 mt-5">
 
                     <!-- viết code vào đây -->
 

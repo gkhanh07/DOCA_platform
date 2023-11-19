@@ -200,7 +200,7 @@ public class ProductDAO {
                 String sql = "SELECT p.[product_id], p.[user_id], p.[category_id], p.[title], p.[description], p.[product_image], p.[is_free], p.[price], p.[address], p.[timePosted], p.[isPublic], p.[status], p.[reason]\n"
                         + "FROM [DOCA_platform].[dbo].[product] p\n"
                         + "INNER JOIN [DOCA_platform].[dbo].[saveProduct] s ON p.[product_id] = s.[product_id]\n"
-                        + "WHERE s.[user_id] = ?";
+                        + "WHERE s.[user_id] = ? AND s.[statusMatch] NOT IN ('unfollow', 'ban')";
                 //3.create stm obj
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, userID);
@@ -499,7 +499,6 @@ public class ProductDAO {
         return result;
     }
 
-  
     public boolean updateIsPublic(int productId, boolean isPublic) throws SQLException, ClassNotFoundException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -529,40 +528,25 @@ public class ProductDAO {
         return result;
     }
 
-    private List<ProductDTO> ListProductByStatus;
+    public List<ProductDTO> getProductsByStatus(String statusNow) throws SQLException, ClassNotFoundException, NamingException {
+        List<ProductDTO> productListByStatus = new ArrayList<>(); // Tạo một danh sách mới để chứa kết quả truy vấn
 
-    public List<ProductDTO> getListProductByStatus() {
-        return ListProductByStatus;
-    }
-
-    public void getProductsbyStatus(String statusNow) throws SQLException, ClassNotFoundException, NamingException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
+
         try {
             con = DBconnect.makeConnection();
             if (con != null) {
-                //2.create sql string
-                String sql = "SELECT [product_id]\n"
-                        + "      ,[user_id]\n"
-                        + "      ,[category_id]\n"
-                        + "      ,[title]\n"
-                        + "      ,[description]\n"
-                        + "      ,[product_image]\n"
-                        + "      ,[is_free]\n"
-                        + "      ,[price]\n"
-                        + "      ,[address]\n"
-                        + "      ,[timePosted]\n"
-                        + "      ,[isPublic]\n"
-                        + "      ,[status]\n"
-                        + "      ,[reason]\n"
-                        + "  FROM [dbo].[product]" + " Where status =? ";
-                //3.create stm obj
+                String sql = "SELECT [product_id], [user_id], [category_id], [title], [description], [product_image], [is_free], [price], [address], [timePosted], [isPublic], [status], [reason] "
+                        + "FROM [dbo].[product] "
+                        + "WHERE status = ?";
+
                 stm = con.prepareStatement(sql);
                 stm.setString(1, statusNow);
-                //4.execute
+
                 rs = stm.executeQuery();
-                //5.process (Note: Luu y Khi SU DUNG IF/WHILE)
+
                 while (rs.next()) {
                     int productId = rs.getInt("product_id");
                     int userId = rs.getInt("user_id");
@@ -578,19 +562,69 @@ public class ProductDAO {
                     String status = rs.getString("status");
                     String reason = rs.getString("reason");
 
-                    //5.1.2 set properties of pro
                     ProductDTO product = new ProductDTO(productId, userId, categoryId, title, description, productImage, isFree, price, address, (Timestamp) timePosted, isPublic, status, reason);
 
-                    //5.2 add data to list
-                    if (this.ListProductByStatus
-                            == null) {
-                        this.ListProductByStatus = new ArrayList<>();
+                    productListByStatus.add(product); // Thêm dữ liệu vào danh sách mới tạo
+                }
+            }
+        } finally {
+            // Đóng tất cả các kết nối và tài nguyên
+            if (rs != null) {
+                rs.close();
+            }
 
-                    }//end account list has not existed
+            if (stm != null) {
+                stm.close();
+            }
 
-                    this.ListProductByStatus.add(product);
-                }//end map DB to DTO
-            }//end connect is available
+            if (con != null) {
+                con.close();
+            }
+        }
+
+        return productListByStatus; // Trả về danh sách sản phẩm
+    }
+
+    public List<ProductDTO> getProductsByStatusAndCategory(String statusNow, int categoryId) throws SQLException, ClassNotFoundException, NamingException {
+        List<ProductDTO> productListByStatusAndCategory = new ArrayList<>();
+
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+
+        try {
+            con = DBconnect.makeConnection();
+            if (con != null) {
+                String sql = "SELECT [product_id], [user_id], [category_id], [title], [description], [product_image], [is_free], [price], [address], [timePosted], [isPublic], [status], [reason] "
+                        + "FROM [dbo].[product] "
+                        + "WHERE status = ? AND category_id = ?";
+
+                stm = con.prepareStatement(sql);
+                stm.setString(1, statusNow);
+                stm.setInt(2, categoryId);
+
+                rs = stm.executeQuery();
+
+                while (rs.next()) {
+                    int productId = rs.getInt("product_id");
+                    int userId = rs.getInt("user_id");
+                    int fetchedCategoryId = rs.getInt("category_id");
+                    String title = rs.getString("title");
+                    String description = rs.getString("description");
+                    String productImage = rs.getString("product_image");
+                    boolean isFree = rs.getBoolean("is_free");
+                    float price = rs.getFloat("price");
+                    String address = rs.getString("address");
+                    Timestamp timePosted = rs.getTimestamp("timePosted");
+                    boolean isPublic = rs.getBoolean("isPublic");
+                    String status = rs.getString("status");
+                    String reason = rs.getString("reason");
+
+                    ProductDTO product = new ProductDTO(productId, userId, fetchedCategoryId, title, description, productImage, isFree, price, address, (Timestamp) timePosted, isPublic, status, reason);
+
+                    productListByStatusAndCategory.add(product);
+                }
+            }
         } finally {
             if (rs != null) {
                 rs.close();
@@ -599,10 +633,13 @@ public class ProductDAO {
             if (stm != null) {
                 stm.close();
             }
+
             if (con != null) {
                 con.close();
             }
         }
+
+        return productListByStatusAndCategory;
     }
 
     public boolean setStatusProductPostByAdmin(String productId, String status, String reason) throws SQLException, ClassNotFoundException, NamingException {
@@ -620,6 +657,39 @@ public class ProductDAO {
                 stm.setString(1, status);
                 stm.setString(2, reason);
                 stm.setString(3, productId);
+                int effectRows = stm.executeUpdate();
+                //5.Process
+                if (effectRows > 0) {
+                    result = true;
+                }
+            }
+
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return result;
+
+    }
+
+    public boolean setStatusProduct(int productId, String status) throws SQLException, ClassNotFoundException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+
+        boolean result = false;
+        try {
+            con = DBconnect.makeConnection();
+            if (con != null) {
+                String sql = "UPDATE product "
+                        + "SET status = ? "
+                        + "WHERE product_id = ?";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, status);
+                stm.setInt(2, productId);
                 int effectRows = stm.executeUpdate();
                 //5.Process
                 if (effectRows > 0) {

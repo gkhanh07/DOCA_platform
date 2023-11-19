@@ -47,8 +47,6 @@
         <link rel="stylesheet" href="assets/css/forum-style-V3.css">
         <!-- Link JS -->
 
-
-
     </head>
     <body>
         <!--set var-->
@@ -69,7 +67,24 @@
                     <a class="nav-link" data-bs-toggle="tab"  onclick="redirectToUserServlet()">Tài khoản</a>
                 </li>
             </ul>
+            <form id="filterForm" action="AdminManageProductPostServlet" >
+                <script>
+                    function filterByCategory() {
+                        document.getElementById("filterForm").submit();
+                    }
+                </script>
+                <div class="dropdown mb-3">
+                    <!--                    <label for="categorySelect" class="form-label">Chọn danh mục:</label>-->
+                    <select class="form-select" id="categorySelect" name="selectedCategory" onchange="filterByCategory()">
+                        <option value="0" ${selectedCategory == 0 ? 'selected' : ''}>Danh mục</option>
+                        <option value="1" ${selectedCategory == 1 ? 'selected' : ''}>Phụ Kiện</option>
+                        <option value="2" ${selectedCategory == 2 ? 'selected' : ''}>Thức Ăn</option>
+                        <option value="3" ${selectedCategory == 3 ? 'selected' : ''}>Chuồng thú cưng</option>
+                        <option value="4" ${selectedCategory == 4 ? 'selected' : ''}>Khác</option>
+                    </select>
+                </div>
 
+            </form>
             <div class="tab-content">
                 <div class="tab-pane fade show active container" id="product">
                     <div class="row">
@@ -106,6 +121,7 @@
                                                 <div class="row">
                                                     <div class="col-sm-3">
                                                         <form action="ManagePostProductServlet">
+                                                            <input type="hidden" name="selectedCategory" value="${selectedCategory}" />
                                                             <input type="hidden" name="productId" value="${product.productId}" />
                                                             <input type="hidden" name="productTitle" value="${product.title}" />
                                                             <input type="hidden" name="userId" value="${product.userId}" />
@@ -133,6 +149,7 @@
                                                         <option >Giá cả không hợp lý</option>
                                                     </select>
                                                 </div>
+                                                <input type="hidden" name="selectedCategory" value="${selectedCategory}" />
                                                 <input type="hidden" name="status" value="reject" />
                                                 <input type="hidden" name="productTitle" value="${product.title}" />
                                                 <input type="hidden" name="productId" value="${product.productId}" />

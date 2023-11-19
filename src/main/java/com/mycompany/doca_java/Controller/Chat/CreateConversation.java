@@ -5,6 +5,7 @@
 package com.mycompany.doca_java.Controller.Chat;
 
 import com.mycompany.doca_java.DAO.ConversationDAO;
+import com.mycompany.doca_java.DAO.saveProductDAO;
 import com.mycompany.doca_java.DTO.ConversationDTO;
 import com.mycompany.doca_java.DTO.userDTO;
 import jakarta.servlet.RequestDispatcher;
@@ -49,28 +50,30 @@ public class CreateConversation extends HttpServlet {
 
         try {
             if (account != null) {
-                int buyerID = account.getUser_ID();
-                int sellerID = Integer.parseInt(request.getParameter("sellerID"));
+                int sellerID;
+                int buyerID;
+                String sellerIDParameter = request.getParameter("sellerID");
+                String buyerIDParameter = request.getParameter("buyerID");
+                if (sellerIDParameter != null && !sellerIDParameter.isEmpty()) {
+                    sellerID = Integer.parseInt(sellerIDParameter);
+                } else {
+                    sellerID = account.getUser_ID();
+                }
+                if (buyerIDParameter != null && !buyerIDParameter.isEmpty()) {
+                    buyerID = Integer.parseInt(buyerIDParameter);
+                } else {
+                    buyerID = account.getUser_ID();
+                }
+                saveProductDAO sdao = new saveProductDAO();
+                sdao.createSaveProduct(buyerID, ProductID);
                 ConversationDTO NewConversation = new ConversationDTO(ProductID, buyerID, sellerID);
                 //check if the conversation have exited
                 ConversationDAO dao = new ConversationDAO();
-                dao.getListTheConversationByUserID(account.getUser_ID());
-                List<ConversationDTO> ListOfConversation = dao.getListOfConversation();
-
-                if (ListOfConversation != null) {
-                    int count = 0;
-                    for (ConversationDTO conversationDTO : ListOfConversation) {
-                        if (conversationDTO.getProduct_id() == NewConversation.getBuyer_id()) {
-                            count++;
-                        }
-                    }
-                    if (count == 0) {
-                        dao.insertConversation(NewConversation);
-                    }
-                } else {
-                    dao.insertConversation(NewConversation);
+                boolean result = dao.insertConversation(NewConversation);
+                if (result == false) {
+                    ConversationDTO stayConversation = dao.getOldConversation(ProductID, buyerID, sellerID);
+                    request.setAttribute("stayConversation", stayConversation);
                 }
-
                 url = GET_CONVERSATIONLIST;
             } else {
                 url = LOGIN_PAGE;
@@ -88,7 +91,7 @@ public class CreateConversation extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
