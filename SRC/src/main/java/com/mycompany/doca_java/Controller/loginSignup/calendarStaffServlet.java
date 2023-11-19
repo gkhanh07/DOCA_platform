@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package com.mycompany.doca_java.Controller.Admin.calendar;
+package com.mycompany.doca_java.Controller.loginSignup;
 
 import com.mycompany.doca_java.DAO.CalendarAdminDAO;
 import com.mycompany.doca_java.DTO.CelanderAdminDTO;
@@ -36,7 +36,7 @@ import javax.naming.NamingException;
 public class calendarStaffServlet extends HttpServlet {
 
     private final String Admin_page = "AdminManageForumPostServlet";
-    private final String calendarAd = "AdminUI/CalendarAd.jsp";
+    private final String Erro = "login.jsp";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -90,9 +90,11 @@ public class calendarStaffServlet extends HttpServlet {
             // Kiểm tra foundShift và thực hiện xử lý tương ứng
             if (!foundShift) {
                 // Xử lý khi không tìm thấy ca làm việc phù hợp
-                CelanderAdminDTO shiftNear = dao.getNearShiftAdById(admin.getUser_ID(), dateNow);
-                request.setAttribute("messnotShift", "Chưa đến ca làm của bạn. Ca làm việc của bạn sẽ bắt đầu lúc : " + shiftNear.getStartTime() + "-" + shiftNear.getEndTime() + " /Ngày: " + shiftNear.getDate());
-                url = calendarAd;
+//                CelanderAdminDTO shiftNear = dao.getNearShiftAdById(admin.getUser_ID(), dateNow);
+                request.setAttribute("messnotShift",
+                        "Chưa đến ca làm của bạn.");
+                //+ "Ca làm việc của bạn sẽ bắt đầu lúc : " + shiftNear.getStartTime() + "-" + shiftNear.getEndTime() + " /Ngày: " + shiftNear.getDate()
+                url = Erro;
             }
 
         } catch (SQLException ex) {

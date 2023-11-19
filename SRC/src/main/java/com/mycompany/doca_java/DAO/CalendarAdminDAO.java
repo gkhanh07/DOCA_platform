@@ -34,26 +34,22 @@ public class CalendarAdminDAO {
 
             if (con != null) {
                 // Create SQL query
-                String sql = "SELECT ca.staff_Id, ca.shift_Id, cd.date, cd.status, s.shiftCategory, s.timeStart, s.timeEnd "
-                        + "FROM calendarAdmin ca "
-                        + "LEFT JOIN calendarDetail cd ON ca.shift_Id = cd.shift_Id "
-                        + "LEFT JOIN shift s ON s.shiftCategory = cd.shift "
-                        + "WHERE DATEDIFF(cd.date, ?, ?) >= 0 AND ca.staff_Id = ? "
-                        + "ORDER BY ABS(DATEDIFF(cd.date, ?, ?)) ASC "
-                        + "LIMIT 1;";
+                String sql = "SELECT ca.staff_Id , ca.shift_Id, cd.date,  cd.status , s.shiftCategory,s.timeStart, s.timeEnd \n"
+                        + "FROM calendarAdmin ca\n"
+                        + "LEFT JOIN calendarDetail cd ON ca.shift_Id = cd.shift_Id\n"
+                        + "LEFT JOIN shift s ON s.shiftCategory = cd.shift\n"
+                        + "WHERE cd.date = ? AND ca.staff_Id = ?;";
                 // Create prepared statement
                 stm = con.prepareStatement(sql);
                 stm.setDate(1, date);
-                stm.setDate(2, date);
-                stm.setInt(3, staff_Id);
-                stm.setDate(4, date);
-                stm.setDate(5, date);
+                stm.setInt(2, staff_Id);
                 // Execute query
                 rs = stm.executeQuery();
                 // Process the result set
 
                 while (rs.next()) {
-                    CelanderAdminDTO dto = new CelanderAdminDTO(rs.getInt("staff_Id"), rs.getInt("shift_Id"), rs.getDate("date"), rs.getString("shiftCategory"), rs.getString("status"), rs.getTime("timeStart"), rs.getTime("timeEnd"));
+                    CelanderAdminDTO dto
+                            = new CelanderAdminDTO(rs.getInt("staff_Id"), rs.getInt("shift_Id"), rs.getDate("date"), rs.getString("shiftCategory"), rs.getString("status"), rs.getTime("timeStart"), rs.getTime("timeEnd"));
                     listCelander.add(dto);
                 }
 
