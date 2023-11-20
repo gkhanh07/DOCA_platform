@@ -16,3 +16,15 @@ bỏ title của các trang, thêm title vào phần header
 
 18/11/2023 
 big update các nút bấm
+
+19/11/2023
+fix giao diện trang quản lý
+
+20/11/2023
+fix giao diện trang quản lý, nút bấm
+Chat.jsp
+Personal_PostV2.jsp
+Personal_Product.jsp
+header.jsp(noti)
+UpdateProduct.jsp
+listMemberHaveLikeProduct.jsp

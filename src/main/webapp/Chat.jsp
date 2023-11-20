@@ -63,6 +63,25 @@
                 color: orange;
 
             }
+            .chat-point:hover{
+                cursor: pointer;
+            }
+            .cancel {
+                transition: transform 0.3s, filter 0.3s;
+            }
+
+            .cancel:hover {
+                transform: scale(1.05); /* Hiệu ứng nổi lên khi di chuột vào */
+                filter: brightness(90%); /* Màu tối đi khi di chuột vào */
+            }
+            .success {
+                transition: transform 0.3s, filter 0.3s;
+            }
+
+            .success:hover {
+                transform: scale(1.05); /* Hiệu ứng nổi lên khi di chuột vào */
+                filter: brightness(90%); /* Màu tối đi khi di chuột vào */
+            }
         </style>
     </head>
 
@@ -115,7 +134,7 @@
 
                                                                             <a class=" Conversation-name "
                                                                                onclick="loadMessages(${conversation.conversation_id},${AnotherUserID});">  
-                                                                                <small class="d-inline-block text-truncate"  style="color: black;max-width: 150px; max-height: 3em;"> ${Product.title}</small>
+                                                                                <small class="d-inline-block text-truncate chat-point"  style="color: black;max-width: 150px; max-height: 3em;"> ${Product.title}</small>
                                                                             </a>
 
                                                                         </div>
@@ -170,7 +189,7 @@
                                                                     <p style="color: #119077;">Giao dịch hoàn tất</p> 
                                                                 </div>
                                                                 <div class="col-md-5 p-0">
-                                                                    <button class="rounded-pill" style="background-color: #EC7063;" >
+                                                                    <button class="cancel rounded-pill" style="background-color: #EC7063;" >
                                                                         <a class="text-dark" href="cancelTransaction?buyerID=${conversation.buyer_id }&producID=${Product.productId}">
                                                                             Hủy giao dịch
                                                                         </a>
@@ -183,7 +202,7 @@
                                                                 <p><small style="color: #F02100;">Sản phẩm đã giao dịch thành công với khách hàng khác</small></p>
                                                             </c:if>
                                                             <c:if test="${Product.status =='approved'}">
-                                                                <button class="rounded-pill" style="background-color: #4BAC74;" >
+                                                                <button class="success rounded-pill" style="background-color: #4BAC74;" >
                                                                     <a class="text-dark" href="confirmSave?buyerID=${conversation.buyer_id }&producID=${Product.productId}">
                                                                         Hoàn thành giao dịch
                                                                     </a>
