@@ -4,6 +4,7 @@
  */
 package com.mycompany.doca_java.Controller.Admin;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mycompany.doca_java.DAO.userDAO;
 import com.mycompany.doca_java.DTO.userDTO;
 import jakarta.servlet.RequestDispatcher;
@@ -47,6 +48,10 @@ public class RankForumOfUserServlet extends HttpServlet {
             userDAO dao = new userDAO();
             List<userDTO> listUserByRank = dao.getRankUserInForum(status);
             request.setAttribute("TopUserPost", listUserByRank);
+//            ObjectMapper mapper = new ObjectMapper();
+//            String json = mapper.writeValueAsString(listUserByRank);
+//            response.getWriter().write(json);
+
             url = DashBoardPage;
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -55,8 +60,8 @@ public class RankForumOfUserServlet extends HttpServlet {
         } catch (NamingException ex) {
             Logger.getLogger(RankForumOfUserServlet.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-            dispatcher.forward(request, response);
+//            RequestDispatcher dispatcher = request.getRequestDispatcher(url);
+//            dispatcher.forward(request, response);
         }
     }
 

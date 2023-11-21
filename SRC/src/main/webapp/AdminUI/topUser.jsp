@@ -13,7 +13,7 @@
     </head>
 
     <body> 
-        <h1 class="text-center">Thành viên đóng góp nhiều bài viết trong tháng</h1>
+       
         <div class="container" style="width: 500px">
 
             <canvas id="postChart"></canvas>
@@ -81,6 +81,7 @@
                                             },
                                             color: '#000', // Set the color of the data labels
                                             font: {
+                                            size: 16,
                                             weight: 'bold' // Set the font weight of the data labels
                                             },
                                             offset: 0, // Set the offset of the data labels
