@@ -51,17 +51,22 @@ public class cancelTransaction extends HttpServlet {
             String buyerID = request.getParameter("buyerID");
             saveProductDAO dao = new saveProductDAO();
             ConversationDAO cDao = new ConversationDAO();
-            cDao.updateConversationToReject(Integer.parseInt(productId), Integer.parseInt(buyerID));
-            ProductDAO pdao = new ProductDAO();
-            boolean result = false;
-            dao.setStatusSaveProduct(Integer.parseInt(productId), statusReject, statusResale);
-            dao.setStatusSaveProduct(Integer.parseInt(productId), statusUnfollow, statusResale);
-            dao.setStatusSaveProductByUID(Integer.parseInt(buyerID), Integer.parseInt(productId), statusSaled, statusBanned);
+            boolean rs = cDao.updateConversationToReject(Integer.parseInt(productId), Integer.parseInt(buyerID));
+            if (rs) {
+                ProductDAO pdao = new ProductDAO();
+                boolean result = false;
+                dao.setStatusSaveProduct(Integer.parseInt(productId), statusReject, statusResale);
+                dao.setStatusSaveProduct(Integer.parseInt(productId), statusUnfollow, statusResale);
+                dao.setStatusSaveProductByUID(Integer.parseInt(buyerID), Integer.parseInt(productId), statusSaled, statusBanned);
 //            dao.setRejectSaveProduct(Integer.parseInt(productId), statusSaled, statusBanned);
-            pdao.setStatusProduct(Integer.parseInt(productId), statusApprove);
+                pdao.setStatusProduct(Integer.parseInt(productId), statusApprove);
 
-            request.setAttribute("MssCancelSuccess", "Xác nhận hủy giao dịch thành công");
-            url = GET_CONVERSATIONLIST;
+                request.setAttribute("MssCancelSuccess", "Xác nhận hủy giao dịch thành công");
+                url = GET_CONVERSATIONLIST;
+            } else {
+                request.setAttribute("MssCancelSuccess", "Người mua đã xác nhận nhận được hàng");
+                url = GET_CONVERSATIONLIST;
+            }
 
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
