@@ -5,8 +5,10 @@
 package com.mycompany.doca_java.Controller.ManageOwner.savedProduct;
 
 import com.mycompany.doca_java.DAO.ConversationDAO;
+import com.mycompany.doca_java.DAO.NotificationDAO;
 import com.mycompany.doca_java.DAO.ProductDAO;
 import com.mycompany.doca_java.DAO.saveProductDAO;
+import com.mycompany.doca_java.DTO.ProductDTO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,6 +18,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.logging.Level;
 import javax.naming.NamingException;
 
@@ -44,18 +49,20 @@ public class confirmSave extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = "";
+//         LocalDateTime currentDateTime = LocalDateTime.now();
+//        Timestamp timeNotification = Timestamp.valueOf(currentDateTime);
         try {
             response.setContentType("text/html;charset=UTF-8");
             String buyerId = request.getParameter("buyerID");
             String productId = request.getParameter("producID");
             saveProductDAO dao = new saveProductDAO();
             ProductDAO pdao = new ProductDAO();
-            ConversationDAO cdao= new ConversationDAO();
+            ConversationDAO cdao = new ConversationDAO();
             boolean result = false;
             if (buyerId != null) {
                 result = dao.setMatchProduct(Integer.parseInt(buyerId), Integer.parseInt(productId), statusSaled);
                 dao.setStatusSaveProduct(Integer.parseInt(productId), statusWating, statusReject);
-                
+
                 pdao.setStatusProduct(Integer.parseInt(productId), statusSaled);
                 cdao.updateStatusToApprove(Integer.parseInt(productId), Integer.parseInt(buyerId));
             } else {
@@ -63,7 +70,19 @@ public class confirmSave extends HttpServlet {
                 pdao.setStatusProduct(Integer.parseInt(productId), statusSaled);
             }
             if (result) {
-                request.setAttribute("MssSaledSuccess", "Xác nhận bán thành công");
+//                ProductDTO product = pdao.getProductById(Integer.parseInt(productId));
+//                String title = product.getTitle();
+//                String first80Chars = title.substring(0, Math.min(title.length(), 80));
+//                String noDes = "";
+//                NotificationDAO notiDao = new NotificationDAO();
+//                noDes = "Sản phẩm bạn quan tâm: " + first80Chars + " - " + "Đã được giao dịch với người khác";
+//                List<Integer> listUserID = dao.getUserIDsByProductID(Integer.parseInt(productId));
+//                for (Integer userID : listUserID) {
+//                    if (userID != Integer.parseInt(buyerId)) {
+//                        notiDao.insertNotification(userID, noDes, timeNotification);
+//                    }
+//                }
+                request.setAttribute("MssSaledSuccess", "Xác nhận giao dịch thành công");
                 url = GET_CONVERSATIONLIST;
             }
 

@@ -2,11 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package com.mycompany.doca_java.Controller.ManageOwner.personal_Product;
+package com.mycompany.doca_java.Controller.Admin;
 
-import com.mycompany.doca_java.DAO.ConversationDAO;
-import com.mycompany.doca_java.DAO.ProductDAO;
-import com.mycompany.doca_java.DAO.saveProductDAO;
+import com.mycompany.doca_java.DAO.CalendarAdminDAO;
+import com.mycompany.doca_java.DAO.dateDAO;
+import com.mycompany.doca_java.DTO.CelanderAdminDTO;
+import com.mycompany.doca_java.DTO.dateDTO;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,23 +18,20 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.naming.NamingException;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "cancelTransaction", urlPatterns = {"/cancelTransaction"})
-public class cancelTransaction extends HttpServlet {
+@WebServlet(name = "MangeDateInWeek", urlPatterns = {"/MangeDateInWeek"})
+public class MangeDateInWeek extends HttpServlet {
 
-    private final String statusSaled = "saled";
-    private final String statusWating = "waiting";
-    private final String statusReject = "reject";
-    private final String statusBanned = "ban";
-    private final String statusUnfollow = "unfollow";
-    private final String statusResale = "resale";
-    private final String statusApprove = "approved";
-    private final String GET_CONVERSATIONLIST = "getConversationServlet";
+    private final String manageCelendarJsp = "AdminUI/manageCelendar.jsp";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,29 +45,25 @@ public class cancelTransaction extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = "";
+        ServletContext context = getServletContext();
+        String selectedWeek = request.getParameter("selectedWeek");
+        String[] dates = selectedWeek.split("/");
+        String startDateStr = dates[0];
+        String endDateStr = dates[1];
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate startDate = LocalDate.parse(startDateStr, formatter);
+        LocalDate endDate = LocalDate.parse(endDateStr, formatter);
         try {
-            String productId = request.getParameter("producID");
-            String buyerID = request.getParameter("buyerID");
-            saveProductDAO dao = new saveProductDAO();
-            ConversationDAO cDao = new ConversationDAO();
-            boolean rs = cDao.updateConversationToReject(Integer.parseInt(productId), Integer.parseInt(buyerID));
-            if (rs) {
-                ProductDAO pdao = new ProductDAO();
-                boolean result = false;
-                dao.setStatusSaveProduct(Integer.parseInt(productId), statusReject, statusResale);
-                dao.setStatusSaveProduct(Integer.parseInt(productId), statusUnfollow, statusResale);
-                dao.setStatusSaveProductByUID(Integer.parseInt(buyerID), Integer.parseInt(productId), statusSaled, statusBanned);
-//            dao.setRejectSaveProduct(Integer.parseInt(productId), statusSaled, statusBanned);
-                pdao.setStatusProduct(Integer.parseInt(productId), statusApprove);
-
-                request.setAttribute("MssCancelSuccess", "Xác nhận hủy giao dịch thành công");
-                url = GET_CONVERSATIONLIST;
-            } else {
-                request.setAttribute("MssCancelSuccess", "Người mua đã xác nhận nhận được hàng");
-                url = GET_CONVERSATIONLIST;
+            dateDAO dDao = new dateDAO();
+            List<dateDTO> listDateInWeek = dDao.getWeeksInRange(startDate, endDate);
+            if (listDateInWeek != null) {
+                context.setAttribute("listDateInWeek", listDateInWeek);
             }
-
+            CalendarAdminDAO clDao = new CalendarAdminDAO();
+            List<CelanderAdminDTO> listCelanderAdmin = clDao.getAllCalendarAdBetweenDates(startDate, endDate);
+            request.setAttribute("listCelanderAdmin", listCelanderAdmin);
+            request.setAttribute("inWeek", startDate.toString());
+            context.setAttribute("lastSelectedWeek", selectedWeek);
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         } catch (NamingException ex) {
@@ -75,7 +71,8 @@ public class cancelTransaction extends HttpServlet {
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
-            response.sendRedirect(url);
+            RequestDispatcher dispatcher = request.getRequestDispatcher(manageCelendarJsp);
+            dispatcher.forward(request, response);
         }
     }
 

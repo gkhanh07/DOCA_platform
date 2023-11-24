@@ -2,11 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package com.mycompany.doca_java.Controller.ManageOwner.personal_Product;
+package com.mycompany.doca_java.Controller.Chat;
 
 import com.mycompany.doca_java.DAO.ConversationDAO;
-import com.mycompany.doca_java.DAO.ProductDAO;
-import com.mycompany.doca_java.DAO.saveProductDAO;
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -21,16 +20,9 @@ import javax.naming.NamingException;
  *
  * @author Admin
  */
-@WebServlet(name = "cancelTransaction", urlPatterns = {"/cancelTransaction"})
-public class cancelTransaction extends HttpServlet {
+@WebServlet(name = "completeConversation", urlPatterns = {"/completeConversation"})
+public class completeConversation extends HttpServlet {
 
-    private final String statusSaled = "saled";
-    private final String statusWating = "waiting";
-    private final String statusReject = "reject";
-    private final String statusBanned = "ban";
-    private final String statusUnfollow = "unfollow";
-    private final String statusResale = "resale";
-    private final String statusApprove = "approved";
     private final String GET_CONVERSATIONLIST = "getConversationServlet";
 
     /**
@@ -45,29 +37,12 @@ public class cancelTransaction extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = "";
+        String buyerId = request.getParameter("buyerID");
+        String productId = request.getParameter("producID");
+        String url = GET_CONVERSATIONLIST;
         try {
-            String productId = request.getParameter("producID");
-            String buyerID = request.getParameter("buyerID");
-            saveProductDAO dao = new saveProductDAO();
-            ConversationDAO cDao = new ConversationDAO();
-            boolean rs = cDao.updateConversationToReject(Integer.parseInt(productId), Integer.parseInt(buyerID));
-            if (rs) {
-                ProductDAO pdao = new ProductDAO();
-                boolean result = false;
-                dao.setStatusSaveProduct(Integer.parseInt(productId), statusReject, statusResale);
-                dao.setStatusSaveProduct(Integer.parseInt(productId), statusUnfollow, statusResale);
-                dao.setStatusSaveProductByUID(Integer.parseInt(buyerID), Integer.parseInt(productId), statusSaled, statusBanned);
-//            dao.setRejectSaveProduct(Integer.parseInt(productId), statusSaled, statusBanned);
-                pdao.setStatusProduct(Integer.parseInt(productId), statusApprove);
-
-                request.setAttribute("MssCancelSuccess", "Xác nhận hủy giao dịch thành công");
-                url = GET_CONVERSATIONLIST;
-            } else {
-                request.setAttribute("MssCancelSuccess", "Người mua đã xác nhận nhận được hàng");
-                url = GET_CONVERSATIONLIST;
-            }
-
+            ConversationDAO cdao = new ConversationDAO();
+            cdao.updateStatusToComplete(Integer.parseInt(productId), Integer.parseInt(buyerId));
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         } catch (NamingException ex) {
@@ -75,7 +50,8 @@ public class cancelTransaction extends HttpServlet {
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
-            response.sendRedirect(url);
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
     }
 

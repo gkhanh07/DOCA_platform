@@ -17,7 +17,6 @@
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
 
-        <title>Forum</title>
         <!-- Link Iconn  -->
         <link rel="stylesheet" href="fontawesome-free-6.4.2-web/css/fontawesome.css"> 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -49,10 +48,11 @@
 
 
     </head>
-    
-        <style>
+
+    <style>
         .button {
             transition: transform 0.3s, filter 0.3s;
+            cursor: pointer;
         }
 
         .button:hover {
@@ -60,21 +60,24 @@
             filter: brightness(90%); /* Màu tối đi khi di chuột vào */
         }
     </style>
-    
+
     <body>
         <jsp:include page="headerAdmin.jsp" />
 
         <div class="container" style="margin-top: 150px;">
             <ul class="nav nav-tabs mb-4">
                 <li class="nav-item">
-                    <a class="nav-link " data-bs-toggle="tab" onclick="redirectToPostServlet()">Bài viết</a>
+                    <a class="nav-link button" data-bs-toggle="tab" onclick="redirectToPostServlet()">Bài viết</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" 
+                    <a class="nav-link button" data-bs-toggle="tab" 
                        onclick="redirectToProductServlet()">Sản phẩm</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item button">
                     <a class="nav-link active" data-bs-toggle="tab"  href="#">Tài khoản</a>
+                </li>
+                <li class="nav-item button">
+                    <a class="nav-link" data-bs-toggle="tab"  onclick="redirectToCelendar()">Lịch làm việc</a>
                 </li>
             </ul>
             <form action="DispatchServlet" method="POST" class="mb-3">
@@ -147,7 +150,17 @@
                     </tbody>
                 </table>
             </div>
+            <nav aria-label="Page navigation ">
+                <ul class="pagination justify-content-center">
+                    <c:forEach begin="1" end="${endPage}" var="a">
+                        <li class="page-item  ${indexStay==a?"active":""}" >
+                            <a class="page-link  ml-2 mt-4" href="SearchByUserName?index=${a}&txtSearch=${save}">${a}</a>
+                        </li>
+                    </c:forEach>
+                </ul>
+            </nav>
         </div>
+
 
         <script>
             function redirectToProductServlet() {
@@ -155,6 +168,9 @@
             }
             function redirectToPostServlet() {
                 window.location.href = "AdminManageForumPostServlet";
+            }
+            function redirectToCelendar() {
+                window.location.href = "manageCalendar";
             }
         </script>
     </body>

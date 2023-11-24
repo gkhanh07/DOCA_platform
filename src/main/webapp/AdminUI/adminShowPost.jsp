@@ -19,7 +19,6 @@
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
 
-        <title>Forum</title>
         <!-- Link Iconn  -->
         <link rel="stylesheet" href="fontawesome-free-6.4.2-web/css/fontawesome.css"> 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -48,18 +47,22 @@
         <link rel="stylesheet" href="assets/css/forum-style-V3.css">
         <!-- Link JS -->
     </head>
-    
+
     <style>
         .button {
             transition: transform 0.3s, filter 0.3s;
+            cursor: pointer;
         }
 
         .button:hover {
             transform: scale(1.05); /* Hiệu ứng nổi lên khi di chuột vào */
             filter: brightness(90%); /* Màu tối đi khi di chuột vào */
         }
+        html{
+            background-color: #f0f2f5;
+        }
     </style>
-    
+
     <body>
         <!--set var-->
         <c:set var="listPost" value="${requestScope.listofPost}"/>
@@ -69,14 +72,17 @@
         <div class="container " style="margin-top: 150px;">
             <ul class="nav nav-tabs mb-4">
                 <li class="nav-item">
-                    <a class="nav-link active" data-bs-toggle="tab" href="AdminManageForumPostServlet">Bài viết</a>
+                    <a class="nav-link active button" data-bs-toggle="tab" href="AdminManageForumPostServlet">Bài viết</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" 
+                    <a class="nav-link button" data-bs-toggle="tab" 
                        onclick="redirectToProductServlet()">Sản phẩm</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab"  onclick="redirectToUserServlet()">Tài khoản</a>
+                    <a class="nav-link button" data-bs-toggle="tab"  onclick="redirectToUserServlet()">Tài khoản</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link button" data-bs-toggle="tab"  onclick="redirectToCelendar()">Lịch làm việc</a>
                 </li>
             </ul>
 
@@ -89,7 +95,7 @@
                 </script>
 
                 <!-- Modify the select element to include onchange event -->
-                <select class="form-select" id="categorySelect" name="selectedCategory" onchange="filterByCategory()">
+                <select class="form-select button" id="categorySelect" name="selectedCategory" onchange="filterByCategory()">
                     <option value="0" ${selectedCategory == 0 ? 'selected' : ''}>Tất cả</option>
                     <option value="5" ${selectedCategory == 5 ? 'selected' : ''}>Câu chuyện</option>
                     <option value="6" ${selectedCategory == 6 ? 'selected' : ''}>Mẹo huấn luyện</option>
@@ -104,8 +110,8 @@
             <div class="tab-content ">
                 <div class=" tab-pane fade show active container" id="forum">
                     <div class="row">
-                        <div class="col-sm-2"></div>
-                        <div class="list-group col-sm-8">
+
+                        <div class="list-group col-md-8">
                             <c:forEach items="${listPost}" var="post">
                                 <div class="list-group-item list-group-item-action">
                                     <div class="post my-4 border rounded position-relative">
@@ -165,7 +171,11 @@
                                 </div>
                             </c:forEach>
                         </div>
-                        <div class="col-sm-2"></div>
+                        <div class="col-md-4">
+                            <c:set var="listTop" value="${requestScope.TopUserPost}"/>
+                            <jsp:include page="topUser.jsp" />
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -175,6 +185,9 @@
                 }
                 function redirectToUserServlet() {
                     window.location.href = "AllUserServlet";
+                }
+                function redirectToCelendar() {
+                    window.location.href = "manageCalendar";
                 }
             </script>
             <script>
@@ -212,10 +225,12 @@
             <%-- Kiểm tra giá trị của messShift và hiển thị thông báo alert --%>
             <% if (request.getAttribute("messShift") != null) { %>
             <script>
-            alert("<%= request.getAttribute("messShift") %>");
+                alert("<%= request.getAttribute("messShift") %>");
             </script>
             <% } %>
             <!--set var-->
+
+
 
         </div>
     </body>

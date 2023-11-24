@@ -17,8 +17,6 @@
         <!-- Bootstrap CSS -->
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
-
-        <title>Forum</title>
         <!-- Link Iconn  -->
         <link rel="stylesheet" href="fontawesome-free-6.4.2-web/css/fontawesome.css"> 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -52,6 +50,7 @@
     <style>
         .button {
             transition: transform 0.3s, filter 0.3s;
+            cursor: pointer;
         }
 
         .button:hover {
@@ -70,13 +69,16 @@
 
             <ul class="nav nav-tabs mb-4">
                 <li class="nav-item">
-                    <a class="nav-link " data-bs-toggle="tab" onclick="redirectToPostServlet()">Bài viết</a>
+                    <a class="nav-link button" data-bs-toggle="tab" onclick="redirectToPostServlet()">Bài viết</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" data-bs-toggle="tab" href="#product">Sản phẩm</a>
+                    <a class="nav-link active button" data-bs-toggle="tab" href="#product">Sản phẩm</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab"  onclick="redirectToUserServlet()">Tài khoản</a>
+                    <a class="nav-link button" data-bs-toggle="tab"  onclick="redirectToUserServlet()">Tài khoản</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link button" data-bs-toggle="tab"  onclick="redirectToCelendar()">Lịch làm việc</a>
                 </li>
             </ul>
             <form id="filterForm" action="AdminManageProductPostServlet" >
@@ -177,6 +179,9 @@
                                     }
                                     function redirectToUserServlet() {
                                         window.location.href = "AllUserServlet";
+                                    }
+                                    function redirectToCelendar() {
+                                        window.location.href = "manageCalendar";
                                     }
                                 </script>
                                 <!--</form>-->

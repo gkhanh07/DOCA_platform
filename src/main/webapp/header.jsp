@@ -211,7 +211,7 @@
         <div class="container-fluid d-flex justify-content-center">
             <nav class="navbar navbar-light">
                 <a class="navbar-brand" href="DispatchServlet?btAction=goToForum">
-                    <img src="assets/images/logoDoca.png" class="rounded-circle" width="100px" height="100px" alt="logo">
+                    <img src="assets/images/logo.png" class="rounded-circle" width="100px" height="100px" alt="logo">
                 </a>
             </nav>
             <div class="container-fluid d-flex justify-content-between navbar-contain mt-5   ">
