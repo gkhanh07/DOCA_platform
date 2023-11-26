@@ -44,8 +44,6 @@
         <!-- <link rel="stylesheet" href="assets/css/personal-post-style.css"> -->
         <link rel="stylesheet" href="assets/css/standar-style.css">
 
-
-
     </head>
 
     <body>
@@ -109,7 +107,7 @@
                                              src="${product.productImage}" alt="Hình ảnh">
                                         <div class="font">
                                             <h5>${product.title}</h5>
-                                            <h6>giá tiền: <span id="productPrice-${product.productId}">${product.price}</span></h6>
+                                            <h6>giá tiền: <fmt:formatNumber value="${product.price}" type="currency" currencyCode="VND" /></h6>
                                             <p>${product.address}</p>
                                             <p>
                                                 Sản phẩm đang ở chế độ:
@@ -136,167 +134,99 @@
                                             </c:choose>
                                         </a>
                                         <c:if test="${product.price > 0}">
+                                            <!--nn-->
                                             <button class="btn btn-danger" data-toggle="modal" data-target="#discountModal-${product.productId}">
                                                 Giảm giá sản phẩm <i class="fas fa-percent"></i>
                                             </button>
                                         </c:if>
 
-
-
-                                        <div class="modal fade" id="discountModal-${product.productId}" tabindex="-1" role="dialog" aria-labelledby="discountModalLabel-${product.productId}"
-                                             aria-hidden="true">
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="discountModal-${product.productId}" tabindex="-1" role="dialog" aria-labelledby="discountModalLabel-${product.productId}" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="discountModalLabel-${product.productId}">Tạo mã giảm giá</h5>
+                                                        <h5 class="modal-title" id="discountModalLabel-${product.productId}">Chọn mã giảm giá</h5>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <div class="discount-suggestions">
-                                                            <button class="btn btn-outline-secondary" onclick="applyDiscountSuggestion(${product.productId}, 10)">10%</button>
-                                                            <button class="btn btn-outline-secondary" onclick="applyDiscountSuggestion(${product.productId}, 20)">20%</button>
-                                                            <button class="btn btn-outline-secondary" onclick="applyDiscountSuggestion(${product.productId}, 50)">50%</button>
+                                                        <p>Gợi ý mã giảm giá:</p>
+                                                        <ul>
+                                                            <li><a href="#" class="discount-option" data-discount-type="percentage" data-discount-value="10" data-product-id="${product.productId}">10%</a></li>
+                                                            <li><a href="#" class="discount-option" data-discount-type="percentage" data-discount-value="20" data-product-id="${product.productId}">20%</a></li>
+                                                            <li><a href="#" class="discount-option" data-discount-type="percentage" data-discount-value="50" data-product-id="${product.productId}">50%</a></li>
+                                                            <li><a href="#" class="custom-discount-option" data-discount-type="percentage" data-product-id="${product.productId}">Nhập phần trăm giảm</a></li>
+                                                            <li><a href="#" class="custom-discount-option" data-discount-type="amount" data-product-id="${product.productId}">Nhập giá tiền giảm</a></li>
+                                                        </ul>
+                                                        <div class="form-group custom-discount-input" data-product-id="${product.productId}" style="display: none;">
+                                                            <label for="customDiscount-${product.productId}">
+                                                                <span class="custom-discount-label" data-discount-type="percentage">Nhập phần trăm giảm:</span>
+                                                                <span class="custom-discount-label" data-discount-type="amount">Nhập giá tiền giảm (VND):</span>
+                                                            </label>
+                                                            <input type="text" class="form-control custom-discount-field" id="customDiscount-${product.productId}">
                                                         </div>
-                                                        <div class="form-group">
-                                                            <label for="discountType-${product.productId}">Loại giảm giá:</label>
-                                                            <select class="form-control" id="discountType-${product.productId}" onchange="updateDiscountLabel(${product.productId})">
-                                                                <option value="percentage">Phần trăm</option>
-                                                                <option value="amount">Số tiền</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="discountValue-${product.productId}">Giá trị giảm giá:</label>
-                                                            <div class="input-group">
-                                                                <input type="text" class="form-control" id="discountValue-${product.productId}" oninput="updateDiscountResult(${product.productId})">
-                                                                <div class="input-group-append">
-                                                                    <span class="input-group-text" id="discountLabel-${product.productId}"></span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="discountStartDate-${product.productId}">Ngày bắt đầu giảm giá:</label>
-                                                            <input type="date" class="form-control" name="dateStart" id="discountStartDate-${product.productId}">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="discountEndDate-${product.productId}">Ngày kết thúc giảm giá:</label>
-                                                            <input type="date" class="form-control" name="dateEnd"  id="discountEndDate-${product.productId}">
-                                                        </div>
-
-                                                        <div id="discountResult-${product.productId}" style="display: none;">
-                                                            Giá trị giảm giá của bạn cho sản phẩm này là: <span id="discountAmount-${product.productId}"></span>
-                                                        </div>
-                                                        <div>
-                                                            Giá sau khi giảm giá: <span id="newPrice-${product.productId}"></span>
-                                                        </div>
+                                                        <div class="selected-discount" data-product-id="${product.productId}" style="display: none;"></div>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                                                        <form action="DiscountProductServlet">
-                                                            <!-- Các trường ẩn để lưu trữ các giá trị -->
-                                                            <input type="hidden" name="productId" id="productId" value="${product.productId}">
-                                                            <input type="hidden" name="priceOriginal" id="priceOri" value="${product.price}">
-                                                            <input type="hidden" name="discountType" id="discountType" value="">
-                                                            <input type="hidden" name="discountValue" id="discountValue" value="">
-                                                            <input type="hidden" name="discountStartDate" id="discountStartDate" value="">
-                                                            <input type="hidden" name="discountEndDate" id="discountEndDate" value="">
-
-                                                            <button type="submit" class="btn btn-success">Giảm giá</button>
-                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <script>
+                                            $(document).ready(function () {
+                                            // Tạo một đối tượng để lưu trữ thông tin về giá sản phẩm
+                                            var productPrices = {
+                                            <c:forEach items="${listProductOfPersonal}" var="product" varStatus="loop">
+                                                <c:if test="${product.status eq 'approved'}">
+                                            '${product.productId}': ${product.price}<c:if test="${!loop.last}">,</c:if>
+                                                </c:if>
+                                            </c:forEach>
+                                            };
 
-                                            function updateDiscountLabel(productId) {
-                                                var discountType = document.getElementById("discountType-" + productId).value;
-                                                var discountLabel = document.getElementById("discountLabel-" + productId);
+                                            $('.discount-option').click(function () {
+                                                var discountType = $(this).data('discount-type');
+                                                var discountValue = $(this).data('discount-value');
+                                                var productId = $(this).data('product-id');
+                                                var originalPrice = productPrices[productId]; // Lấy giá sản phẩm từ đối tượng productPrices
+                                                $('.selected-discount[data-product-id="' + productId + '"]').text('Bạn đã chọn giảm giá ' + discountValue + (discountType === 'percentage' ? '%' : ' VND') + ' cho sản phẩm này').show();
+                                                applyDiscount(discountValue, discountType, productId, originalPrice);
+                                            });
 
-                                                if (discountType === "percentage") {
-                                                    discountLabel.textContent = "%";
-                                                } else if (discountType === "amount") {
-                                                    discountLabel.textContent = "VND";
-                                                }
-                                            }
-                                            function updateDiscountStartDate(productId) {
-                                                var discountStartDateInput = document.getElementById("discountStartDate-" + productId);
-                                                var discountStartDateHiddenInput = document.getElementById("discountStartDate");
+                                            $('.custom-discount-option').click(function () {
+                                                var discountType = $(this).data('discount-type');
+                                                var productId = $(this).data('product-id');
+                                                $('.custom-discount-input[data-product-id="' + productId + '"]').show();
+                                                $('.custom-discount-label[data-discount-type="' + discountType + '"]').closest('.form-group').siblings('.form-group').hide();
+                                            });
 
-                                                discountStartDateInput.addEventListener("change", function () {
-                                                    var startDateValue = discountStartDateInput.value;
-                                                    discountStartDateHiddenInput.value = startDateValue;
-                                                });
-                                            }
+                                            $('.customdiscount-field').keyup(function () {
+                                                var discountType = $('.custom-discount-label:visible').data('discount-type');
+                                                var discountValue = $(this).val();
+                                                var productId = $(this).closest('.custom-discount-input').data('product-id');
+                                                var originalPrice = productPrices[productId]; // Lấy giá sản phẩm từ đối tượng productPrices
+                                                $('.selected-discount[data-product-id="' + productId + '"]').text('Bạn đã chọn giảm giá ' + discountValue + (discountType === 'percentage' ? '%' : ' VND') + ' cho sản phẩm này').show();
+                                                applyDiscount(discountValue, discountType, productId, originalPrice);
+                                            });
 
-                                            function updateDiscountEndDate(productId) {
-                                                var discountEndDateInput = document.getElementById("discountEndDate-" + productId);
-                                                var discountEndDateHiddenInput = document.getElementById("discountEndDate");
+                                            function applyDiscount(discountValue, discountType, productId, originalPrice) {
+                                                var discount = parseFloat(discountValue);
+                                                var discountedPrice;
 
-                                                discountEndDateInput.addEventListener("change", function () {
-                                                    var endDateValue = discountEndDateInput.value;
-                                                    discountEndDateHiddenInput.value = endDateValue;
-                                                });
-                                            }
-
-                                            function updateDiscountResult(productId) {
-
-                                                var discountType = document.getElementById("discountType-" + productId).value;
-                                                var discountValue = document.getElementById("discountValue-" + productId).value;
-                                                var discountAmount = document.getElementById("discountAmount-" + productId);
-                                                var productPriceElement = document.getElementById("productPrice-" + productId);
-                                                var productPrice = parseFloat(productPriceElement.textContent);
-
-                                                if (discountType === "percentage") {
-                                                    var discountedPrice = productPrice * (100 - discountValue) / 100;
-                                                    var discountPercentage = discountValue + "%";
-                                                    discountAmount.textContent = discountPercentage;
-                                                } else if (discountType === "amount") {
-                                                    var discountedPrice = productPrice - discountValue;
-                                                    var discountPercentage = ((productPrice - discountedPrice) / productPrice) * 100 + "%";
-                                                    var roundedPercentage = parseFloat(discountPercentage).toFixed(1);
-                                                    discountAmount.textContent = discountValue + " VND (" + roundedPercentage + "%)";
+                                                if (discountType === 'percentage') {
+                                                    discountedPrice = originalPrice - (originalPrice * discount / 100);
+                                                } else if (discountType === 'amount') {
+                                                    discountedPrice = originalPrice - discount;
                                                 }
 
-                                                document.getElementById("discountResult-" + productId).style.display = "block";
+                                                $('.selected-discount[data-product-id="' + productId + '"]').text('Bạn đã chọn giảm giá ' + discountValue + (discountType === 'percentage' ? '%' : ' VND') + ' cho sản phẩm này. Số tiền sau khi giảm: ' + discountedPrice.toFixed(2) + ' VND').show();
 
-                                                // Hiển thị giá trị mới của product.price
-                                                var newPriceElement = document.getElementById("newPrice-" + productId);
-                                                newPriceElement.textContent = discountedPrice.toFixed(2); // Làm tròn đến 2 chữ số thập phân
-                                                // Cập nhật giá trị của input hidden
-                                                var discountValueInput = document.getElementById("discountValue");
-                                                discountValueInput.value = discountValue;
-
-
-                                                // Cập nhật giá trị của các trường ẩn
-
-                                                document.querySelector(`input[name="discountType"][value="${productId}"]`).value = discountType;
-                                                document.querySelector(`input[name="discountValue"][value="${productId}"]`).value = discountValue;
-                                                // Gọi hàm cập nhật giá trị discountStartDate
-                                                updateDiscountStartDate(productId);
-// Gọi hàm cập nhật giá trị discountEndDate
-                                                updateDiscountEndDate(productId);
-
+                                                $('#discountModal-' + productId).modal('hide');
+                                                }
                                             }
-
-
-                                            function applyDiscountSuggestion(productId, discountPercentage) {
-                                                document.getElementById("discountType-" + productId).value = "percentage";
-                                                document.getElementById("discountValue-" + productId).value = discountPercentage;
-                                                updateDiscountLabel(productId);
-                                                updateDiscountResult(productId);
-
-                                                // Cập nhật giá trị của các trường ẩn
-
-                                                document.querySelector(`input[name="discountType"][value="${productId}"]`).value = "percentage";
-                                                document.querySelector(`input[name="discountValue"][value="${productId}"]`).value = discountPercentage;
-                                                // Gọi hàm cập nhật giá trị discountStartDate
-                                                updateDiscountStartDate(productId);
-                                                // Gọi hàm cập nhật giá trị discountEndDate
-                                                updateDiscountEndDate(productId);
-                                            }
+                                            );
                                         </script>
                                         <hr>
                                     </c:if>
