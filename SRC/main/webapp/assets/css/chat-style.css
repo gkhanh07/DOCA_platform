@@ -1,0 +1,24 @@
+
+.list-group-item.active,
+.list-group-item:hover {
+    background-color:  #BEE8E1 !important;
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+}
+.Conversation-name{
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}
+.my-message{
+    border-top-right-radius: 0.5em 0.5em;
+    border-top-left-radius:  0.5em 0.5em;
+    border-bottom-left-radius:0.5em 0.5em;
+}
+.their-message{
+    border-top-right-radius: 0.5em 0.5em;
+    border-top-left-radius:  0.5em 0.5em;
+    border-bottom-right-radius:0.5em 0.5em;
+}
+
