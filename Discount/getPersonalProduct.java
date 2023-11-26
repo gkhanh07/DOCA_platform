@@ -4,8 +4,10 @@
  */
 package com.mycompany.doca_java.Controller.ManageOwner.personal_Product;
 
+import com.mycompany.doca_java.DAO.DiscountDAO;
 import com.mycompany.doca_java.DAO.ProductDAO;
 import com.mycompany.doca_java.DAO.saveProductDAO;
+import com.mycompany.doca_java.DTO.DiscountDTO;
 import com.mycompany.doca_java.DTO.ProductDTO;
 import com.mycompany.doca_java.DTO.saveProductDTO;
 import com.mycompany.doca_java.DTO.userDTO;
@@ -52,13 +54,21 @@ public class getPersonalProduct extends HttpServlet {
         userDTO account = (userDTO) session.getAttribute("USER_NAME");
         String IN = (String) session.getAttribute("IN") != null ? (String) session.getAttribute("IN") : "display";
         session.setAttribute("IN", IN);
+        
         String url = "";
         try {
             if (account != null) {
                 ProductDAO dao = new ProductDAO();
                 List<ProductDTO> listOfProduct = dao.getProductsByUserId(account.getUser_ID());
+                //Saled
+                DiscountDAO daoSale = new DiscountDAO();
+                //
+                for (ProductDTO pro : listOfProduct) {
+                    pro.setListSaled(daoSale.listSaled(pro.getProductId(), account.getUser_ID()));
+                }
 
                 if (listOfProduct != null) {
+
                     List<saveProductDTO> listOfSaveproduct = new ArrayList<>();
                     saveProductDAO sdao = new saveProductDAO();
                     for (ProductDTO productDTO : listOfProduct) {
@@ -78,6 +88,7 @@ public class getPersonalProduct extends HttpServlet {
             } else {
                 url = LOGIN_PAGE;
             }
+
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         } catch (NamingException ex) {
